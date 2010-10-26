@@ -307,8 +307,8 @@ class MeioUploadBehavior extends ModelBehavior {
 	}
 
 /**
- * Initializes the upload
- *
+ * Initializes the upload and mark any previous file related to the registry to be deleted if field is being updated
+ * 
  * @param object $model Reference to model
  * @return boolean Whether the upload completed
  * @access public
@@ -316,12 +316,11 @@ class MeioUploadBehavior extends ModelBehavior {
 	function beforeSave(&$model) {
         
         if (isset($model->data)) {
-			
             foreach ($this->__fields[$model->alias] as $field => $options) {
                 if(!empty($model->id)){
-                    $fieldname = $model->field($field,$model->id);
+                    $fieldname = $model->field($field);
                     if(!empty($fieldname)){
-                        $this->_deleteFiles($model, $field, $fieldname, $options['thumbnailDir']);
+                        $this->_setFileToRemove($model, $field, $options['thumbnailDir']);
                     }
                 }
             }
@@ -1253,15 +1252,9 @@ class MeioUploadBehavior extends ModelBehavior {
 			$sizes = array_keys($this->__fields[$model->alias][$field]['thumbsizes']);
 			foreach ($sizes as $size) {
 				$file =& new File($dir . DS . $size . DS . $filename);
-                if($file->delete()){
-                    echo 'yeah! ';
-                }else{
-                    echo 'no! ';
-                }
+                $file->delete();
 			}
 		}
-        //echo 'here';
-        exit;
 		return true;
 	}
 

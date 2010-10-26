@@ -200,7 +200,7 @@
             }
             if ($this->Usuario->delete($id)) {
                 $this->Session->setFlash(__('Usuario deleted', true));
-                $this->redirect(array('action'=>'index'));
+                //$this->redirect(array('action'=>'index'));
             }
             
         }
