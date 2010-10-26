@@ -27,5 +27,5 @@
         </span>
         <?php   echo $html->link(__('Cancelar', true),
                             'javascript:;',
-                            array('onclick' => 'confirmar('.$registros[$_Model]['cancelar'].',\''.$registros[$_Model]['cancelar'].'\')')); ?>
+                            array('onclick' => 'cancelar('.$registros[$_Model]['id'].',\''.$_Model.'\')')); ?>
     </div>  

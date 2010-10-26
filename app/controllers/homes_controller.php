@@ -13,9 +13,7 @@ class HomesController extends AppController{
     
     function index(){
         
-        
-        
-        
+
         $inicial    = date('Y-m-d 00:00:00');
         $final      = $this->Data->somaDias(date('Y-m-d H:i:s'), 30, 2, '-');
         
@@ -276,7 +274,6 @@ class HomesController extends AppController{
         
         $totalGanhoULtimoMes = $this->Valor->formataValor($ganhosULtimoMes[0][0]['total'],2);
         return array('gastos' => $totalGastoULtimoMes, 'ganhos' => $totalGanhoULtimoMes);  
-        
     }
     
     

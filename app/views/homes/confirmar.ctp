@@ -8,6 +8,5 @@
     
     <?php   echo $html->link(__('Cancelar', true),
                         'javascript:;',
-                        array('class' => 'colorbox-edit',
-                              'onclick' => 'cancelar('.$registros['id'].',\''.$registros['tipo'].'\')')); ?>
+                        array('onclick' => 'cancelar('.$registros['id'].',\''.$registros['tipo'].'\')')); ?>
     
