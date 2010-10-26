@@ -57,18 +57,13 @@
                                                   'class' => 'l-input')); ?>
             </div>
             
-            <!--<input name="" type="checkbox" value="" /> <span class="termos">Por favor me envie e-mail de atualizações!</span>-->
             <p class="termos">
                 Ao clicar em "Criar minha conta", abaixo, você concorda com os <a href="#">Termos de serviço</a> e a 
                 <a href="#">Política de Privacidade</a>.
             </p>
                 
                 <?php echo $form->end(array('label' => 'Criar Minha Conta', 'class' => 'botao-cadastro', 'div' => false));?>
-                <!--
-                <label class="botao-cadastro">
-                        <input type="button" value="Criar minha conta" />
-                </label>
-                -->
+                
             </form>
              
     </div>

@@ -6,8 +6,8 @@ class Usuario extends AppModel {
     var $actsAs = array(
         'MeioUpload.MeioUpload' =>
             array('foto' =>
-                    array(//'allowedMime' => array('image/jpeg'),
-                          //'allowedExt' => array('.jpg', '.jpeg'),
+                    array('allowedMime' => array('image/jpeg'),
+                          'allowedExt' => array('.jpg', '.jpeg'),
                           'thumbnails' => true,
                           'thumbsizes' =>
                                 array(  'topo' =>
