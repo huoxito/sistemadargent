@@ -1,0 +1,188 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ margin:0 auto; background:url(../img/bg_body.gif) top repeat-x #9bd252;}
+
+#container{  margin:0 auto;}
+
+#header{ /*border:1px solid #000;*/
+    
+    height:180px;
+    margin:10px auto 0;
+    overflow:hidden;
+    width:960px;
+
+}
+
+#header h1{ font-size:20px; margin-bottom:15px; margin-left: 10px;}
+
+.log{ font-size:13px;}
+
+#logo{ /*border:1px solid #006;*/  padding:30px 0 20px 0; text-align:center; float:left;}
+
+img{  border:none;}
+
+#content { height: auto; overflow: hidden; margin: 20px auto 10px auto; width:960px;  }
+
+#user{ font-family:Arial, Helvetica, sans-serif; color:#666666; font-size:14px; /*background:url(../img/img_div.gif) top no-repeat;*/ padding-top:17px; /*border:1px solid #006;*/ float:right; width:480px;}
+
+h1{font-style:normal; font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; font-weight:normal; font-size:25px; color:#666666;}
+
+#sobre p{ padding:0 80px 0 80px; text-align:center;}
+
+#footer{ font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; color:#FFF; font-size:11px; text-align:center; margin-top:50px; }
+
+#footer ul li{list-style:none; display:inline; padding-right:20px; }
+
+#footer ul li a{ text-decoration:none; color:#FFF;}
+
+#footer ul li a:hover{ text-decoration:underline; color:#fff;}
+
+#footer p{ text-align:center; float: inherit;}
+
+#c-cadastro {margin-left: 30px;}
+
+#c-vantagens {margin-left: 30px;}
+
+#c-login {margin-left: 30px;}
+
+#c-vantagens, #c-cadastro, #c-login{/*text-shadow:#000 0px 1px;*/ border-right:1px solid #7cae3e; border-bottom:2px solid #7cae3e; padding:20px;}
+
+#c-vantagens, #c-cadastro { height:350px; width:216px; background:#FFF; float:left; margin-right:14px;}
+
+#c-login { height:350px; width:216px; background:#FFF; float:left; margin-right:1px;}
+
+#c-vantagens h1, #c-login h1, #c-cadastro h1 { border-bottom:1px solid #f0f0f0; padding-bottom: 25px;}
+
+#c-vantagens ul li{ list-style:none; margin-left:-40px; padding:15px 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
+
+#c-cadastro p, #c-login p {list-style:none; padding:15px 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
+
+#c-vantagens span{ font-family: "Times New Roman", Times, serif,  Arial Narrow, Helvetica, sans-serif; font-size:50px; float:left; padding-right:10px; color:#ccc;}
+
+#content-home{ overflow:hidden; padding-top:20px; background:url(../img/bg_content.png) center top no-repeat;}
+
+a.botao{
+        text-decoration: none;
+        background:#a3d953;
+        -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+        font-size:28px;
+        font-family:Arial, Helvetica, sans-serif;
+        font-weight:bold;
+        text-align:center;
+        color:#FFF;
+        text-shadow: #5ba61a 0 1px;
+        display:block;
+        padding: 20px;
+}
+
+
+
+a.botao:hover, input.botao-cadastro:hover{
+    
+    text-decoration:none;
+    background:#b0e356;
+
+}
+
+.botao-login{ width:80px; height:30px; background:#a3d953; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; font-size:13px; text-transform: uppercase; font-family:Arial, Helvetica, sans-serif; font-weight:bold; text-align:center; color:#FFF; text-shadow: #5ba61a 0 1px; display:block; border:none; float: right; margin-right:6px;}
+
+.senha{ margin: 6px 10px 0 0; float:right; font-size:12px;}
+
+.senha a{ margin-top: 1px; float:right; color:#666; text-decoration:none;}
+
+.senha a:hover{ margin-top: 1px; float:right; text-decoration:underline; color:#690;}
+
+.l-input, .l-nome, .l-senha{ -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; height:20px; width:150px; margin-bottom:10px; padding:5px;}
+
+.l-nome{ margin-right:5px; }
+
+-l-senha{float:right;}
+
+#cadastro{  font-family:Arial, Helvetica, sans-serif; background:#fff; padding:15px 50px 50px 50px; margin-top:20px; border-right:1px solid #7cae3e; border-bottom:2px solid #7cae3e; overflow:hidden; color:#666; font-size:14px;}
+
+#cadastro h1 { border-bottom:1px solid #efefef; padding-bottom:15px;}
+
+.l-input{   -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+            height:25px;
+            width:300px;
+            margin-bottom:10px;
+            padding:5px;
+}
+
+#form {	width: 100%; float: left; }
+
+#form div {
+    
+    padding: 0 0 0 95px;
+    
+}
+
+#form div label {
+    
+    margin:0 0 5px;
+    display: block;
+    float: none;
+    font-size: 15px;
+}
+
+#form input{float:none; }
+
+#form span.error{ 
+    
+    margin-top:13px;
+    overflow:hidden;
+    padding:0 0 0 55px;
+    color: #940000;
+
+}
+
+.login {float: left; height: auto; overflow: hidden;}
+
+.termos{ margin-left:95px;}
+
+.termos a{ color:#090; text-decoration:none;}
+
+.termos a:hover{ color:#090; text-decoration:underline;}
+
+input.botao-cadastro  {
+    padding:10px;
+    margin-left: 95px;
+    background:#a3d953;
+    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+    font-size:28px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    text-align:center;
+    color:#FFF;
+    text-shadow: #5ba61a 0 1px;
+    display:block;
+    border:none;
+    cursor: pointer;
+}
+
+.botao-cadastro { margin-left:-55px;}
+
+.a-ler a{ color:#690; text-decoration:none;}
+
+.a-ler a:hover{ color:#690; text-decoration:underline;}
+
+/*.footer-redes{ padding:0; margin:0 auto; text-align:center; width:800px; clear:both; float:none; border:1px solid #000; overflow:hidden;}
+
+.footer-redes li{ width:55px; height:20px; display:block; text-align:center;} 
+
+.footer-redes li a{width:75px; height:20px; display:block;  float:left;}
+
+.footer-redes li a.icone{ background: url(../img/tweet.png) 0 0 no-repeat;}
+
+.footer-redes li a.icone.tweet{ background: url(../img/tweet.png) 0 0 no-repeat;}
+
+.footer-redes li a.icone.tweet:hover{ background: url(../img/tweet.png) 0 -21px no-repeat;}
+
+.footer-redes li a.icone{ background:  url(../img/imgCurtir.gif) 0 0 no-repeat;}
+
+.footer-redes li a.icone.facebook{ background: url(../img/imgCurtir.gif) 0 0 no-repeat;}
+
+.footer-redes li a.icone.facebooktweet:hover{ background: url(../img/tweet.png) 0 -21px no-repeat;}
+
+.m-footer{ text-align:center; float:none; display:block; width:90%; border:1px solid #000; overflow:hidden;}*/
