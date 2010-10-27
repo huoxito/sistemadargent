@@ -2,8 +2,8 @@
     class SugestoesController extends AppController {
         
         var $uses = array('Sugestao');
-        var $helpers = array('Html', 'Form');
         var $components = array('Email');
+        var $paginate = array('order' => 'Sugestao.id DESC');
         
         
         function index() {
@@ -20,7 +20,7 @@
         }
         
         
-        function _sendEmail($id){       # PRIVATE METHOD?!
+        function _sendEmail($id){   
             
             $sugestao = $this->Sugestao->read(null, $id);
             
@@ -49,22 +49,18 @@
             
             if (!empty($this->data)) {
                 
-                $this->Sugestao->create();
+                //$this->Sugestao->create();
                 $this->Sugestao->set('usuario_id', $this->Auth->user('id'));
                 if ($this->Sugestao->save($this->data)) {
                     
                     $this->Session->setFlash(__('Sugestão salva com sucesso', true));
                     $this->_sendEmail( $this->Sugestao->id );
-                    $this->redirect(array('controller' => 'sugestoes', 'action' => 'index'));
+                    //$this->redirect(array('controller' => 'sugestoes', 'action' => 'index'));
                     
                 } else {
                     
-                    $this->Session->setFlash(__('The Sugestao could not be saved. Please, try again.', true));
                 }
             }
-            
-            $usuarios = $this->Sugestao->Usuario->find('list');
-            $this->set(compact('fontes', 'usuarios'));
         }
     
         function delete($id = null) {

@@ -65,8 +65,8 @@ class Usuario extends AppModel {
 			'fields' => '',
 			'exclusive' => true, 
 		),
-        'Sugesto' => array(
-			'className' => 'Sugesto',
+        'Sugestao' => array(
+			'className' => 'Sugestao',
 			'foreignKey' => 'usuario_id',
 			'dependent' => true,
 			'fields' => '',
