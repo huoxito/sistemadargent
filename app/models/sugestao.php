@@ -18,7 +18,8 @@
                 )
             ),
             'texto' => array(
-                'notempty' => array('rule' => array('notempty'), 'message' => 'campo obrigatório'),
+                'notempty' => array('rule' => array('notempty'),
+                                    'message' => 'campo obrigatório'),
             ),
         );
         
@@ -31,6 +32,11 @@
                     'order' => ''
                 ),
         );
+        
+        function afterValidate(){
+            return false;
+        }
+        
         //The Associations below have been created with all possible keys, those that are not needed can be removed
     }
     

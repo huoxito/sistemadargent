@@ -67,29 +67,6 @@
             $this->set(compact('fontes', 'usuarios'));
         }
     
-        function edit($id = null) {
-            
-            if (!$id && empty($this->data)) {
-                $this->Session->setFlash(__('Invalid Sugestao', true));
-                $this->redirect(array('action' => 'index'));
-            }
-            if (!empty($this->data)) {
-                if ($this->Sugestao->save($this->data)) {
-                    $this->Session->setFlash(__('The Sugestao has been saved', true));
-                    $this->redirect(array('action' => 'index'));
-                } else {
-                    $this->Session->setFlash(__('The Sugestao could not be saved. Please, try again.', true));
-                }
-            }
-            if (empty($this->data)) {
-                $this->data = $this->Sugestao->read(null, $id);
-            }
-            $fontes = $this->Sugestao->Fonte->find('list');
-            $usuarios = $this->Sugestao->Usuario->find('list');
-            $this->set(compact('fontes', 'usuarios'));
-        
-        }
-    
         function delete($id = null) {
         
                 if (!$id) {
