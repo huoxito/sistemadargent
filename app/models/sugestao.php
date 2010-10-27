@@ -42,10 +42,11 @@ class Sugestao extends AppModel {
     );
         
     function beforeValidate(){
-        //return false;
+        App::import('Sanitize');
+        Sanitize::html(&$this->data['Sugestao']['titulo'],array('remove'=>true));
+        return true;
     }
-    
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
+
 }
     
 ?>
