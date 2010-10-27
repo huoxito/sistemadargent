@@ -5,6 +5,12 @@ class Sugestao extends AppModel {
     var $name = 'Sugestao';
     var $useTable = 'sugestos';
     var $displayField = 'titulo';
+    var $actsAs = array(
+        'Purifiable' => array(
+            'fields' => array('texto'),
+            'overwrite' => true
+        )
+    );
     
     var $belongsTo = array(
             'Usuario' => array(
