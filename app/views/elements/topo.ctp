@@ -17,10 +17,18 @@
         ?>
         <p style="margin: 10px 0 0 10px; float: left;"><?php echo $usuarioLogado; ?></p>
     
-        <?php echo $html->link('Sugestões', array('controller' => 'sugestos', 'action' => 'add'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('Sugestões', true), 'title'=> __('Sugestões', true))); ?>
-        <?php echo $html->link('Logout', array('controller' => 'usuarios', 'action' => 'logout'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('sair', true), 'title'=> __('sair', true))); ?>
+        <?php
+        
+            echo $html->link('Sugestões', array('controller' => 'sugestos', 'action' => 'add'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('Sugestões', true), 'title'=> __('Sugestões', true)));
+        
+            echo $html->link('Logout', array('controller' => 'usuarios', 'action' => 'logout'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('sair', true), 'title'=> __('sair', true)));
+        
+        ?>
+        
         <?php if( !empty($userFoto) ){   ?>
-        <img src="<?php echo $this->Html->url('/'); ?>uploads/usuario/foto/thumb/topo/<?php echo $session->read('Auth.Usuario.foto'); ?>" alt="<?php echo $session->read('Auth.Usuario.nome'); ?>" />
+        <div style="margin: 5px; float: right;" id="perfil-t">
+            <img src="<?php echo $this->Html->url('/'); ?>uploads/usuario/foto/thumb/topo/<?php echo $session->read('Auth.Usuario.foto'); ?>" alt="<?php echo $session->read('Auth.Usuario.nome'); ?>" />
+        </div>
         <?php   }   ?>
         
     </div>

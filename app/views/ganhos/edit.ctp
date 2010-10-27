@@ -106,7 +106,7 @@
                 beforeSend: function(){
                     $('.submit img').remove();
                     $('.submit span').remove();
-                     $('.submit').append('<img style="float: left; margin-left: 15px;" src="../../../<?php echo IMAGES_URL; ?>ajax-loader.gif" title="excluindo ... " alt="excluindo ... " />');
+                    $('.submit').append('<img style="float: left; margin-left: 15px;" src="../../../<?php echo IMAGES_URL; ?>ajax-loader.gif" title="excluindo ... " alt="excluindo ... " />');
                 },
                 success: function(result){
                     

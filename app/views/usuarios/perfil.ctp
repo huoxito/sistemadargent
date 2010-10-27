@@ -33,7 +33,7 @@
             <div style="float: left; width: 100%;">
                 
                 <?php if( !empty($userFoto) ){   ?>
-                <div style="float: left; postition: absolute;">
+                <div style="float: left; position: absolute;" id="perfil-p">
                     <img src="<?php echo $this->Html->url('/'); ?>uploads/usuario/foto/thumb/gerenciador/<?php echo $session->read('Auth.Usuario.foto'); ?>" alt="<?php echo $session->read('Auth.Usuario.nome'); ?>" />    
                 </div>
                 <?php   }   ?>
@@ -144,7 +144,7 @@
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 data: ({ campo: campo, value: value }),
                 beforeSend: function(){
-                    $('#user' + campo).append(' <?php echo $this->Html->image('ajax-loader-p.gif',array('alt' => 'carregando ...'));?>');
+                    $('#user' + campo).append('<?php echo $this->Html->image('ajax-loader-p.gif',array('alt' => 'carregando ...'));?>');
                 },
                 success: function(result){
                 

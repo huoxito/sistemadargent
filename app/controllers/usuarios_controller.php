@@ -221,11 +221,19 @@
                     $this->Usuario->id = $this->Auth->user('id');
                     $value = $this->Usuario->field('foto');
                     $this->Session->write('Auth.Usuario.foto', $value);
-                    
+                    # executo na view javascript p/ fechar colorbox e mudar imagens no layout
+                    $this->set('runAjax', true);
                 }else{
                     
                 }
             } 
+        }
+        
+        function imageResponseP(){
+            $this->layout = 'ajax';
+        }
+        function imageResponseT(){
+            $this->layout = 'ajax';
         }
         
         function mudarSenha(){
@@ -239,7 +247,6 @@
                     $this->redirect(array('action'=>'index'));    
                 } else {
                     $errors = $this->validateErrors($this->Usuario);  
-                    //$this->Session->setFlash(__('Sua senha não pôde ser alterada', true));
                 }
             }
         }
