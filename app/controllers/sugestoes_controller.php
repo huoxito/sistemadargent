@@ -1,28 +1,28 @@
 <?php
     class SugestoesController extends AppController {
         
-        //var $uses = array('Sugesto');
+        var $uses = array('Sugestao');
         var $helpers = array('Html', 'Form');
         var $components = array('Email');
         
         
         function index() {
-            $this->Sugesto->recursive = 0;
+            $this->Sugestao->recursive = 0;
             $this->set('sugestos', $this->paginate());
         }
     
         function view($id = null) {
             if (!$id) {
-                $this->Session->setFlash(__('Invalid Sugesto', true));
+                $this->Session->setFlash(__('Invalid Sugestao', true));
                 $this->redirect(array('action' => 'index'));
             }
-            $this->set('sugesto', $this->Sugesto->read(null, $id));
+            $this->set('sugesto', $this->Sugestao->read(null, $id));
         }
         
         
         function _sendEmail($id){       # PRIVATE METHOD?!
             
-            $sugestao = $this->Sugesto->read(null, $id);
+            $sugestao = $this->Sugestao->read(null, $id);
             
             #### ENVIO DO EMAIL
             $this->Email->to = 'huoxito@gmail.com';
@@ -36,8 +36,8 @@
             //$this->Email->delivery = 'debug';
             //Set view variables as normal
             $this->set('usuario', $sugestao['Usuario']['nome']);
-            $this->set('titulo', $sugestao['Sugesto']['titulo']);
-            $this->set('texto', $sugestao['Sugesto']['texto']);
+            $this->set('titulo', $sugestao['Sugestao']['titulo']);
+            $this->set('texto', $sugestao['Sugestao']['texto']);
             //Do not pass any args to send()
             $this->Email->send();
             
@@ -49,43 +49,43 @@
             
             if (!empty($this->data)) {
                 
-                $this->Sugesto->create();
-                $this->Sugesto->set('usuario_id', $this->Auth->user('id')); # SETO O USUÁRIO LOGADO COMO O RESPONSÁVEL PELO REGISTRO
-                if ($this->Sugesto->save($this->data)) {
+                $this->Sugestao->create();
+                $this->Sugestao->set('usuario_id', $this->Auth->user('id'));
+                if ($this->Sugestao->save($this->data)) {
                     
                     $this->Session->setFlash(__('Sugestão salva com sucesso', true));
-                    $this->_sendEmail( $this->Sugesto->id );
-                    $this->redirect(array('controller' => 'usuarios', 'action' => 'index'));
+                    $this->_sendEmail( $this->Sugestao->id );
+                    $this->redirect(array('controller' => 'sugestoes', 'action' => 'index'));
                     
                 } else {
                     
-                    $this->Session->setFlash(__('The Sugesto could not be saved. Please, try again.', true));
+                    $this->Session->setFlash(__('The Sugestao could not be saved. Please, try again.', true));
                 }
             }
             
-            $usuarios = $this->Sugesto->Usuario->find('list');
+            $usuarios = $this->Sugestao->Usuario->find('list');
             $this->set(compact('fontes', 'usuarios'));
         }
     
         function edit($id = null) {
             
             if (!$id && empty($this->data)) {
-                $this->Session->setFlash(__('Invalid Sugesto', true));
+                $this->Session->setFlash(__('Invalid Sugestao', true));
                 $this->redirect(array('action' => 'index'));
             }
             if (!empty($this->data)) {
-                if ($this->Sugesto->save($this->data)) {
-                    $this->Session->setFlash(__('The Sugesto has been saved', true));
+                if ($this->Sugestao->save($this->data)) {
+                    $this->Session->setFlash(__('The Sugestao has been saved', true));
                     $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('The Sugesto could not be saved. Please, try again.', true));
+                    $this->Session->setFlash(__('The Sugestao could not be saved. Please, try again.', true));
                 }
             }
             if (empty($this->data)) {
-                $this->data = $this->Sugesto->read(null, $id);
+                $this->data = $this->Sugestao->read(null, $id);
             }
-            $fontes = $this->Sugesto->Fonte->find('list');
-            $usuarios = $this->Sugesto->Usuario->find('list');
+            $fontes = $this->Sugestao->Fonte->find('list');
+            $usuarios = $this->Sugestao->Usuario->find('list');
             $this->set(compact('fontes', 'usuarios'));
         
         }
@@ -93,14 +93,14 @@
         function delete($id = null) {
         
                 if (!$id) {
-                    $this->Session->setFlash(__('Invalid id for Sugesto', true));
+                    $this->Session->setFlash(__('Invalid id for Sugestao', true));
                     $this->redirect(array('action'=>'index'));
                 }
-                if ($this->Sugesto->del($id)) {
-                    $this->Session->setFlash(__('Sugesto deleted', true));
+                if ($this->Sugestao->del($id)) {
+                    $this->Session->setFlash(__('Sugestao deleted', true));
                     $this->redirect(array('action'=>'index'));
                 }
-                $this->Session->setFlash(__('Sugesto was not deleted', true));
+                $this->Session->setFlash(__('Sugestao was not deleted', true));
                 $this->redirect(array('action' => 'index'));
         
         }

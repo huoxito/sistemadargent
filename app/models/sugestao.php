@@ -1,15 +1,21 @@
 <?php
 
-    class Sugesto extends AppModel {
-        var $name = 'Sugesto';
-        //var $useTable = 'sugestoes';
+    class Sugestao extends AppModel {
+        
+        var $useTable = 'sugestos';
         var $displayField = 'titulo';
         
         var $validate = array(
             'titulo' => array(
-                'notempty' => array('rule' => array('notempty'), 'message' => 'Campo obrigatório', 'last' => true),
-                'between' => array('rule' => array('between', 3, 150), 'message' => 'O título deve ter entre 3 e 150 caracteres')
-                
+                'rule1' =>array(
+                        'rule' => array('notempty'),
+                        'message' => 'Campo obrigatório',
+                        'last' => true
+                ),
+                'rulel2' => array(
+                        'rule' => array('between', 3, 150),
+                        'message' => 'O título deve ter entre 3 e 150 caracteres'
+                )
             ),
             'texto' => array(
                 'notempty' => array('rule' => array('notempty'), 'message' => 'campo obrigatório'),

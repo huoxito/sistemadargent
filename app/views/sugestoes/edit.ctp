@@ -1,7 +1,7 @@
 <div class="sugestos form">
-<?php echo $form->create('Sugesto');?>
+<?php echo $form->create('Sugestao');?>
 	<fieldset>
- 		<legend><?php __('Edit Sugesto');?></legend>
+ 		<legend><?php __('Edit Sugestao');?></legend>
 	<?php
 		echo $form->input('id');
 		echo $form->input('usuario_id');
@@ -14,7 +14,7 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action' => 'delete', $form->value('Sugesto.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Sugesto.id'))); ?></li>
+		<li><?php echo $html->link(__('Delete', true), array('action' => 'delete', $form->value('Sugestao.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Sugestao.id'))); ?></li>
 		<li><?php echo $html->link(__('List Sugestos', true), array('action' => 'index'));?></li>
 		<li><?php echo $html->link(__('List Fontes', true), array('controller' => 'fontes', 'action' => 'index')); ?> </li>
 		<li><?php echo $html->link(__('New Fonte', true), array('controller' => 'fontes', 'action' => 'add')); ?> </li>

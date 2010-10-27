@@ -26,27 +26,27 @@ foreach ($sugestos as $sugesto):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $sugesto['Sugesto']['id']; ?>
+			<?php echo $sugesto['Sugestao']['id']; ?>
 		</td>
 		<td>
 			<?php echo $html->link($sugesto['Usuario']['id'], array('controller' => 'usuarios', 'action' => 'view', $sugesto['Usuario']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $sugesto['Sugesto']['titulo']; ?>
+			<?php echo $sugesto['Sugestao']['titulo']; ?>
 		</td>
 		<td>
-			<?php echo $sugesto['Sugesto']['texto']; ?>
+			<?php echo $sugesto['Sugestao']['texto']; ?>
 		</td>
 		<td>
-			<?php echo $sugesto['Sugesto']['created']; ?>
+			<?php echo $sugesto['Sugestao']['created']; ?>
 		</td>
 		<td>
-			<?php echo $sugesto['Sugesto']['status']; ?>
+			<?php echo $sugesto['Sugestao']['status']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action' => 'view', $sugesto['Sugesto']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action' => 'edit', $sugesto['Sugesto']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action' => 'delete', $sugesto['Sugesto']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $sugesto['Sugesto']['id'])); ?>
+			<?php echo $html->link(__('View', true), array('action' => 'view', $sugesto['Sugestao']['id'])); ?>
+			<?php echo $html->link(__('Edit', true), array('action' => 'edit', $sugesto['Sugestao']['id'])); ?>
+			<?php echo $html->link(__('Delete', true), array('action' => 'delete', $sugesto['Sugestao']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $sugesto['Sugestao']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -59,7 +59,7 @@ foreach ($sugestos as $sugesto):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Sugesto', true), array('action' => 'add')); ?></li>
+		<li><?php echo $html->link(__('New Sugestao', true), array('action' => 'add')); ?></li>
 		<li><?php echo $html->link(__('List Fontes', true), array('controller' => 'fontes', 'action' => 'index')); ?> </li>
 		<li><?php echo $html->link(__('New Fonte', true), array('controller' => 'fontes', 'action' => 'add')); ?> </li>
 		<li><?php echo $html->link(__('List Usuarios', true), array('controller' => 'usuarios', 'action' => 'index')); ?> </li>

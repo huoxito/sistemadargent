@@ -26,9 +26,11 @@
         ?>
         
         <?php if( !empty($userFoto) ){   ?>
+        
         <div style="margin: 5px; float: right;" id="perfil-t">
             <img src="<?php echo $this->Html->url('/'); ?>uploads/usuario/foto/thumb/topo/<?php echo $session->read('Auth.Usuario.foto'); ?>" alt="<?php echo $session->read('Auth.Usuario.nome'); ?>" />
         </div>
+        
         <?php   }   ?>
         
     </div>

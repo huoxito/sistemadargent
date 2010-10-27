@@ -2,7 +2,7 @@
     
     <?php  echo $this->Html->script('tiny_mce/tiny_mce.js');  ?>
     <div class="sugestos form">
-    <?php echo $form->create('Sugesto', array('action'));?>
+    <?php echo $form->create('Sugestoes', array('action' => 'add'));?>
         <fieldset>
             <legend><?php __('Enviar sugestão');?></legend>
         <?php
