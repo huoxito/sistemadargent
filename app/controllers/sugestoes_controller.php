@@ -49,7 +49,7 @@
             
             if (!empty($this->data)) {
                 
-                //$this->Sugestao->create();
+                $this->Sugestao->create();
                 $this->Sugestao->set('usuario_id', $this->Auth->user('id'));
                 if ($this->Sugestao->save($this->data)) {
                     
@@ -58,7 +58,7 @@
                     //$this->redirect(array('controller' => 'sugestoes', 'action' => 'index'));
                     
                 } else {
-                    
+                    $this->Session->setFlash(__('Preencha os campos abaixo corretamente', true));
                 }
             }
         }
