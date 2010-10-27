@@ -19,7 +19,7 @@
     
         <?php
         
-            echo $html->link('Sugestões', array('controller' => 'sugestos', 'action' => 'add'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('Sugestões', true), 'title'=> __('Sugestões', true)));
+            echo $html->link('Sugestões', array('controller' => 'sugestoes', 'action' => 'add'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('Sugestões', true), 'title'=> __('Sugestões', true)));
         
             echo $html->link('Logout', array('controller' => 'usuarios', 'action' => 'logout'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('sair', true), 'title'=> __('sair', true)));
         
