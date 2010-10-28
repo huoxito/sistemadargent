@@ -244,7 +244,7 @@
                 $this->data['Usuario']['id'] = $this->Auth->user('id');
                 if ($this->Usuario->save($this->data)) {   
                     $this->Session->setFlash(__('Senha atualizada !!', true));
-                    $this->redirect(array('action'=>'index'));    
+                    $this->redirect(array('action'=>'perfil'));    
                 } else {
                     $errors = $this->validateErrors($this->Usuario);  
                 }
