@@ -315,17 +315,16 @@ class MeioUploadBehavior extends ModelBehavior {
  */
 	function beforeSave(&$model) {
         
-        if (isset($model->data)) {
-            foreach ($this->__fields[$model->alias] as $field => $options) {
-                if(!empty($model->id)){
-                    $fieldname = $model->field($field);
-                    if(!empty($fieldname)){
-                        $this->_setFileToRemove($model, $field, $options['thumbnailDir']);
-                    }
+        foreach ($this->__fields[$model->alias] as $field => $options) {
+            if(!empty($model->id) && isset($model->data[$field])){
+                # only run it if $field is set on the form
+                $fieldname = $model->field($field);
+                if(!empty($fieldname)){
+                    $this->_setFileToRemove($model, $field, $options['thumbnailDir']);
                 }
             }
-		}
-        
+        }
+
 		return $this->upload($model, null);
 	}
 

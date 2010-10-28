@@ -174,7 +174,7 @@
                 
                 $this->Usuario->id = $this->Auth->user('id');
                 $this->data['Usuario'][$campo] = $this->params['url']['value'];
-                if ( $this->Usuario->save($this->data) ){
+                if ( $this->Usuario->save($this->data, true, array($campo)) ){
                     
                     $this->Usuario->id = $this->Auth->user('id');
                     $value = $this->Usuario->field($campo);

@@ -216,7 +216,7 @@ class Usuario extends AppModel {
         {  
             $this->data['Usuario']['login'] = Sanitize::clean(&$this->data['Usuario']['login'],
                                                                 array('remove_html' => true,
-                                                                      'encode' => false));  
+                                                                      'enode' => false));  
         }
         
         /*
