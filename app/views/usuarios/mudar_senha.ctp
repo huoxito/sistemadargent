@@ -1,7 +1,11 @@
 
     <div class="usuarios form">
         
-        <h2 class="headers"><?php __('Perfil');?></h2>
+        <h2 class="headers">
+            <?php echo $this->Html->link('Perfil',
+                            array('action' => 'perfil'),
+                            array('class' => '')); ?>
+        </h2>
         
         <?php   echo $this->Session->flash(); ?>
         

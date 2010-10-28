@@ -4,13 +4,17 @@
     
     <div class="sugestos form">
     
+    <h2><?php echo $this->Html->link('Sugestões',
+                                             array('controller' => 'sugestoes', 'action' => 'index'),
+                                             array('class' => '')); ?></h2>
+    
     <cake:nocache>
     <?php   echo $this->Session->flash(); ?>
     </cake:nocache>
     
     <?php echo $form->create(null);?>
         <fieldset>
-            <legend><?php __('Enviar sugestão');?></legend>
+            <legend><?php __('Escreva seu texto');?></legend>
         <?php
             echo $form->input('titulo',
                               array('error' => false)); 

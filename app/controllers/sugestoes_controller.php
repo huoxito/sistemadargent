@@ -7,8 +7,16 @@
         
         
         function index() {
+            
+            $this->paginate = array(
+                    'conditions' => array('Sugestao.usuario_id' => $this->Auth->user('id')),
+                    'limit' => 15,
+                    'order' => array('Sugestao.created' => 'desc')
+            );
+            
             $this->Sugestao->recursive = 0;
-            $this->set('sugestos', $this->paginate());
+            $sugestoes = $this->paginate('Sugestao');
+            $this->set('sugestos', $sugestoes);
         }
     
         function view($id = null) {
