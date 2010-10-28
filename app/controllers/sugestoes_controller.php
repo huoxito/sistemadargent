@@ -27,21 +27,16 @@
             #### ENVIO DO EMAIL
             $this->Email->to = 'huoxito@gmail.com';
             $this->Email->bcc = array('huoxito@hotmail.com');  
-            $this->Email->subject = 'Welcome to our really cool thing';
+            $this->Email->subject = $sugestao['Sugestao']['titulo'];
             $this->Email->replyTo = $sugestao['Usuario']['email'];
-            $this->Email->from = 'Cool Web App <admin@testsoh.com.br>';
-            $this->Email->template = 'sugestao'; // note no '.ctp'
-            //Send as 'html', 'text' or 'both' (default is 'text')
-            $this->Email->sendAs = 'both'; // because we like to send pretty mail
+            $this->Email->from = 'Sistema Dargent <admin@sistemadargent.com.br>';
+            $this->Email->template = 'sugestao'; 
+            $this->Email->sendAs = 'html'; 
             //$this->Email->delivery = 'debug';
-            //Set view variables as normal
             $this->set('usuario', $sugestao['Usuario']['nome']);
             $this->set('titulo', $sugestao['Sugestao']['titulo']);
             $this->set('texto', $sugestao['Sugestao']['texto']);
-            //Do not pass any args to send()
             $this->Email->send();
-            
-        
         }
         
         
@@ -53,10 +48,9 @@
                 $this->Sugestao->set('usuario_id', $this->Auth->user('id'));
                 if ($this->Sugestao->save($this->data)) {
                     
-                    $this->Session->setFlash(__('Sugestão salva com sucesso', true));
+                    $this->Session->setFlash(__('Sugestão enviada com sucesso', true));
                     $this->_sendEmail( $this->Sugestao->id );
                     //$this->redirect(array('controller' => 'sugestoes', 'action' => 'index'));
-                    
                 } else {
                     $this->Session->setFlash(__('Preencha os campos abaixo corretamente', true));
                 }

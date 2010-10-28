@@ -16,6 +16,7 @@ ALTER TABLE `drg_agendamentos` CHANGE `tipo` `tipo` VARCHAR( 10 ) CHARACTER SET 
 */
 
 
-
+/*
 ALTER TABLE `drg_usuarios` ADD `ultimologin` DATETIME NULL AFTER `foto` ,
-ADD `numdeacessos` INT NULL AFTER `ultimologin` 
+ADD `numdeacessos` INT NULL AFTER `ultimologin`
+*/
