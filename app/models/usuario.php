@@ -207,12 +207,16 @@ class Usuario extends AppModel {
         App::import('Sanitize');
         if (isset($this->data['Usuario']['nome']))  
         {  
-            $this->data['Usuario']['nome'] = Sanitize::html(&$this->data['Usuario']['nome'], array('remove' => true));  
+            $this->data['Usuario']['nome'] = Sanitize::clean(&$this->data['Usuario']['nome'],
+                                                                array('remove_html' => true,
+                                                                      'encode' => false));  
         }
         
         if (isset($this->data['Usuario']['login']))  
         {  
-            $this->data['Usuario']['login'] = Sanitize::html(&$this->data['Usuario']['login'], array('remove' => true));  
+            $this->data['Usuario']['login'] = Sanitize::clean(&$this->data['Usuario']['login'],
+                                                                array('remove_html' => true,
+                                                                      'encode' => false));  
         }
         
         /*
