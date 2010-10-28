@@ -278,7 +278,110 @@
         function logout(){
             $this->redirect($this->Auth->logout());
         }
+        
+        
+        function setUpControls(){
+            
+            $aro =& $this->Acl->Aro;
+            $groups = array(
+                0 => array(
+                    'alias' => 'users'
+                ),
+                1 => array(
+                    'alias' => 'godfather'
+                )
+            );
+            
 
+            foreach($groups as $data)
+            {
+                
+                $aro->create();
+                $aro->save($data);
+            }
+
+            $this->autoRender = false;
+            
+        }
+        
+        
+        function setUpUsers(){
+            
+            $aro = new Aro();
+            
+            $users = array(
+                0 => array(
+                    'alias' => 'godfather',
+                    'parent_id' => 2,
+                    'model' => 'Usuario',
+                    'foreign_key' => 25,
+                ),
+                3 => array(
+                    'alias' => 'luis123',
+                    'parent_id' => 1,
+                    'model' => 'Usuario',
+                    'foreign_key' => 72,
+                )
+            );
+        
+            foreach($users as $data)
+            {
+                $aro->create();
+                $aro->save($data);
+            }
+            
+            $this->autoRender = false;
+            
+        }
+        
+        
+        function setUpModelsTree(){
+            
+            $aco =& $this->Acl->Aco;
+            $groups = array(
+                0 => array(
+                    'alias' => 'Usuario'
+                ),
+                1 => array(
+                    'alias' => 'Ganho'
+                ),
+                2 => array(
+                    'alias' => 'Gasto'
+                ),
+                3 => array(
+                    'alias' => 'Destino'
+                ),
+                4 => array(
+                    'alias' => 'Fonte'
+                ),
+                5 => array(
+                    'alias' => 'Agendamento'
+                ),
+                6 => array(
+                    'alias' => 'Sugestao'
+                ),
+                7 => array(
+                    'alias' => 'Frequencia'
+                ),
+                8 => array(
+                    'alias' => 'ValorMensal'
+                )
+            );
+            
+
+            foreach($groups as $data)
+            {
+                
+                $aco->create();
+                $aco->save($data);
+            }
+
+            $this->autoRender = false;
+        }
+        
+        
+        
+        
     }
     
 
