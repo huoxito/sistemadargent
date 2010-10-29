@@ -6,9 +6,10 @@ class AclConfigController extends AppController {
     
     
     function beforeFilter(){
+        parent::beforeFilter();
         
         if($this->Acl->check($this->Auth->user('login'), 'root')){
-            continue;
+            # you root !
         }else{
             $this->redirect(array('controller' => '/', 'action' => 'perfil'));
         }
@@ -159,5 +160,40 @@ class AclConfigController extends AppController {
         $this->autoRender = false;
     }
     
-
+    
+    
+    function insertUsers(){
+        
+        $this->Usuario->recursive = -1;
+        $usuarios = $this->Usuario->find('all',
+                                array('conditions' => array('Usuario.login !=' => 'godfather'),
+                                      'order' => 'Usuario.id ASC'));
+        
+        foreach($usuarios as $row){
+            
+            $chkUser = $this->Acl->Aro->find('count',
+                                array('conditions' => array('Aro.foreign_key' => $row['Usuario']['id'])));
+            
+            if( $chkUser >= 1 ){
+                // there already
+            }else{
+                
+                $data['Aro'] = array(
+                        'alias' => $row['Usuario']['login'],
+                        'parent_id' => 26,  # users 
+                        'model' => 'Usuario',
+                        'foreign_key' => $row['Usuario']['id']
+                );
+                
+                $this->Acl->Aro->create();
+                if( $this->Acl->Aro->save($data) ){
+                    echo 'Usuário migrado para a tabela aros no nível users';
+                    $this->pa($data);
+                    echo '<hr />';
+                }
+            }
+        }
+        
+        $this->autoRender = false;
+    }
 }

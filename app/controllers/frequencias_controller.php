@@ -6,9 +6,10 @@ class FrequenciasController extends AppController {
     
     
     function beforeFilter(){
-        
+        parent::beforeFilter();
+
         if($this->Acl->check($this->Auth->user('login'), 'admin')){
-            //continue;
+            // yes you can
         }else{
             $this->redirect(array('controller' => '/', 'action' => 'perfil'));
         }
@@ -18,8 +19,6 @@ class FrequenciasController extends AppController {
          
         $this->Frequencia->recursive = 0;
         $this->set('frequencias', $this->paginate());
-
-        $this->set('frequencias', array()); 
     }
 
 	function view($id = null) {
