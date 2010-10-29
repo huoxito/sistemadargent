@@ -145,7 +145,7 @@ class UsuariosController extends AppController {
                     $aro->save(array(
                          'model'        => 'Usuario',
                          'foreign_key'    => $this->Usuario->id,
-                         'parent_id'    => 1, # users
+                         'parent_id'    => 26, # users
                          'alias'        => $registered['Usuario']['login']));
                     
                     $this->Session->setFlash(__('Bem vindo '.$registered['Usuario']['nome'].' !', true));
