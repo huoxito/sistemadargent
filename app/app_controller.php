@@ -111,6 +111,14 @@ class AppController extends Controller{
         }
     }
     
+    
+    function pa($array){
+        echo '<pre>';
+        print_r($array);
+        echo '</pre>';
+    }
+    
+    
 }
 
 ?>
