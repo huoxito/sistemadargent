@@ -138,15 +138,17 @@
                                   'password' => $this->Auth->password($this->data['Usuario']['passwd']));
                     if( $this->Auth->login($data) == 1 ){
                         
+                        $registered = $this->Usuario->read(null,$this->Usuario->id);
+                        
                         $aro = new Aro(); 
                         $aro->create();
                         $aro->save(array(
                              'model'        => 'Usuario',
                              'foreign_key'    => $this->Usuario->id,
                              'parent_id'    => 1, # users
-                             'alias'        => 'User::'.$this->Usuario->id));
+                             'alias'        => $registered['Usuario']['login']));
                         
-                        $this->Session->setFlash(__('Bem vindo '.$this->data['Usuario']['nome'].' !', true));
+                        $this->Session->setFlash(__('Bem vindo '.$registered['Usuario']['nome'].' !', true));
                         $this->redirect(array('controller' => 'homes', 'action'=>'index'));
                         
                     }else{
@@ -411,14 +413,11 @@
         function setPermissions(){
             
             $this->Acl->deny('users','godfather');
-            $this->Acl->deny('users','users','delete');
-            $this->Acl->deny('users','users','delete');
+            $this->Acl->deny('users','users/usuario','delete');
+            $this->Acl->deny('users','users/sugestao','delete');
             
-            //$this->Acl->allow('godfather','godfather');
+            $this->Acl->allow('godfather','godfather');
             
-            //$this->Acl->deny('users', array('model' => 'Ganho', 'foreign_key' => 72));
-            //$this->Acl->deny('users', 'Usuario', 'delete');
-            //$this->Acl->deny('users', 'Frequencia');
             
             $this->autoRender = false;
         }

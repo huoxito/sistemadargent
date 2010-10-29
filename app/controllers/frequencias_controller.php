@@ -5,9 +5,16 @@ class FrequenciasController extends AppController {
 	var $helpers = array('Html', 'Form');
 
 	function index() {
-		$this->Frequencia->recursive = 0;
-		$this->set('frequencias', $this->paginate());
-	}
+        
+        if($this->Acl->check('users/'.$this->Auth->user('login'), 'godfather')){
+            
+            $this->Frequencia->recursive = 0;
+            $this->set('frequencias', $this->paginate());
+        }else{
+            $this->set('frequencias', array());
+        }
+            
+    }
 
 	function view($id = null) {
 		if (!$id) {
