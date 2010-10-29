@@ -190,23 +190,6 @@
             }
         }
         
-        
-        
-        function delete($id = null) {
-        
-            if (!$id) {
-                $this->Session->setFlash(__('Invalid id for Usuario', true));
-                $this->redirect(array('action'=>'index'));
-            }
-            if ($this->Usuario->delete($id)) {
-                $this->Session->setFlash(__('Usuario deleted', true));
-                //$this->redirect(array('action'=>'index'));
-            }
-            
-        }
-        
-        
-        
         function mudarImagem($id = null){
             
             $this->layout = 'colorbox';
@@ -280,10 +263,68 @@
         }
         
         
-        function setUpControls(){
+        
+        function delete($id = null) {
+            
+            if (!$id) {
+                $this->Session->setFlash(__('Invalid id for Usuario', true));
+                $this->redirect(array('action'=>'index'));
+            }
+            if ($this->Usuario->delete($id)) {
+                $this->Session->setFlash(__('Usuario deleted', true));
+                //$this->redirect(array('action'=>'index'));
+            }
+        }
+        
+        
+        function addUsers(){
+            
+            $aro = new Aro();
+            $users = array(
+                0 => array(
+                    'alias' => 'godfather',
+                    'parent_id' => 2,
+                    'model' => 'Usuario',
+                    'foreign_key' => 25,
+                ),
+                1 => array(
+                    'alias' => 'luis123',
+                    'parent_id' => 1,
+                    'model' => 'Usuario',
+                    'foreign_key' => 72,
+                )
+            );
+            
+            foreach($users as $data)
+            {
+                $aro->create();
+                $aro->save($data);
+            }
+            
+            $this->autoRender = false; 
+        }
+        
+        
+        function setUpAcl(){
             
             $aro =& $this->Acl->Aro;
-            $groups = array(
+            $aroGroups = array(
+                0 => array(
+                    'alias' => 'users'
+                ),
+                1 => array(
+                    'alias' => 'godfather'
+                )
+            );
+        
+            foreach($aroGroups as $data)
+            {
+                $aro->create();
+                $aro->save($data);
+            }
+            
+            $aco =& $this->Acl->Aco;
+            $acoGroups = array(
                 0 => array(
                     'alias' => 'users'
                 ),
@@ -292,95 +333,86 @@
                 )
             );
             
-
-            foreach($groups as $data)
-            {
-                
-                $aro->create();
-                $aro->save($data);
-            }
-
-            $this->autoRender = false;
-            
-        }
-        
-        
-        function setUpUsers(){
-            
-            $aro = new Aro();
-            
-            $users = array(
-                0 => array(
-                    'alias' => 'godfather',
-                    'parent_id' => 2,
-                    'model' => 'Usuario',
-                    'foreign_key' => 25,
-                ),
-                3 => array(
-                    'alias' => 'luis123',
-                    'parent_id' => 1,
-                    'model' => 'Usuario',
-                    'foreign_key' => 72,
-                )
-            );
-        
-            foreach($users as $data)
-            {
-                $aro->create();
-                $aro->save($data);
-            }
-            
-            $this->autoRender = false;
-            
-        }
-        
-        
-        function setUpModelsTree(){
-            
-            $aco =& $this->Acl->Aco;
-            $groups = array(
-                0 => array(
-                    'alias' => 'Usuario'
-                ),
-                1 => array(
-                    'alias' => 'Ganho'
-                ),
-                2 => array(
-                    'alias' => 'Gasto'
-                ),
-                3 => array(
-                    'alias' => 'Destino'
-                ),
-                4 => array(
-                    'alias' => 'Fonte'
-                ),
-                5 => array(
-                    'alias' => 'Agendamento'
-                ),
-                6 => array(
-                    'alias' => 'Sugestao'
-                ),
-                7 => array(
-                    'alias' => 'Frequencia'
-                ),
-                8 => array(
-                    'alias' => 'ValorMensal'
-                )
-            );
-            
-
-            foreach($groups as $data)
+            foreach($acoGroups as $data)
             {
                 
                 $aco->create();
                 $aco->save($data);
             }
-
+            
+            $acoSubGroups = array(
+                0 => array(
+                    'alias' => 'usuario',
+                    'parent_id' => 1,
+                    'model' => 'Usuario'
+                ),
+                1 => array(
+                    'alias' => 'ganho',
+                    'parent_id' => 1,
+                    'model' => 'Ganho'
+                ),
+                2 => array(
+                    'alias' => 'gasto',
+                    'parent_id' => 1,
+                    'model' => 'Gasto'
+                ),
+                3 => array(
+                    'alias' => 'destino',
+                    'parent_id' => 1,
+                    'model' => 'Destino'
+                ),
+                4 => array(
+                    'alias' => 'fonte',
+                    'parent_id' => 1,
+                    'model' => 'Fonte'
+                ),
+                5 => array(
+                    'alias' => 'agendamento',
+                    'parent_id' => 1,
+                    'model' => 'Agendamento'
+                ),
+                6 => array(
+                    'alias' => 'sugestao',
+                    'parent_id' => 1,
+                    'model' => 'Sugestao'
+                ),
+                7 => array(
+                    'alias' => 'frequencia',
+                    'parent_id' => 2,
+                    'model' => 'Frequencia'
+                ),
+                8 => array(
+                    'alias' => 'valormensal',
+                    'parent_id' => 1,
+                    'model' => 'Valormensal'
+                )
+            );
+            
+            foreach($acoSubGroups as $data)
+            {
+                $aco->create();
+                $aco->save($data);
+            }
+            
             $this->autoRender = false;
+            
         }
         
         
-        
+        function setPermissions(){
+            
+            $this->Acl->deny('users','godfather');
+            $this->Acl->deny('users','users','delete');
+            $this->Acl->deny('users','users','delete');
+            
+            //$this->Acl->allow('godfather','godfather');
+            
+            //$this->Acl->deny('users', array('model' => 'Ganho', 'foreign_key' => 72));
+            //$this->Acl->deny('users', 'Usuario', 'delete');
+            //$this->Acl->deny('users', 'Frequencia');
+            
+            $this->autoRender = false;
+        }
         
     }
     
