@@ -7,7 +7,7 @@ class FrequenciasController extends AppController {
     
     function beforeFilter(){
         
-        if($this->Acl->check($this->Auth->user('login'), 'godfather')){
+        if($this->Acl->check($this->Auth->user('login'), 'admin')){
             //continue;
         }else{
             $this->redirect(array('controller' => '/', 'action' => 'perfil'));

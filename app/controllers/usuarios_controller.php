@@ -294,7 +294,7 @@
             $users = array(
                 0 => array(
                     'alias' => 'godfather',
-                    'parent_id' => 2,
+                    'parent_id' => 25,
                     'model' => 'Usuario',
                     'foreign_key' => 25,
                 )
@@ -318,10 +318,10 @@
                     'alias' => 'root'
                 ),
                 1 => array(
-                    'alias' => 'admin'
+                    'alias' => 'users'
                 ),
                 2 => array(
-                    'alias' => 'users'
+                    'alias' => 'admin'
                 )
             );
         
@@ -330,7 +330,7 @@
                 $aro->create();
                 $aro->save($data);
             }
-             
+            
             
             $aco =& $this->Acl->Aco;
             
@@ -426,11 +426,9 @@
         function setPermissions(){
             
             $this->Acl->allow('root','root');
+            $this->Acl->allow('admin','admin');
+            $this->Acl->allow('users','users');
             
-            $this->Acl->deny('users','godfather');
-            $this->Acl->deny('users','users/usuario','delete');
-            $this->Acl->deny('users','users/sugestao','delete');
-
             $this->autoRender = false;
         }
         
