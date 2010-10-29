@@ -137,9 +137,18 @@
                     $data = array('login' => $this->data['Usuario']['login'],
                                   'password' => $this->Auth->password($this->data['Usuario']['passwd']));
                     if( $this->Auth->login($data) == 1 ){
-                    
+                        
+                        $aro = new Aro(); 
+                        $aro->create();
+                        $aro->save(array(
+                             'model'        => 'Usuario',
+                             'foreign_key'    => $this->Usuario->id,
+                             'parent_id'    => 1, # users
+                             'alias'        => 'User::'.$this->Usuario->id));
+                        
                         $this->Session->setFlash(__('Bem vindo '.$this->data['Usuario']['nome'].' !', true));
                         $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+                        
                     }else{
                         $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
                     }
