@@ -288,7 +288,7 @@
         }
         
         
-        function addUsers(){
+        function addRoot(){
             
             $aro = new Aro();
             $users = array(
@@ -297,12 +297,6 @@
                     'parent_id' => 2,
                     'model' => 'Usuario',
                     'foreign_key' => 25,
-                ),
-                1 => array(
-                    'alias' => 'luis123',
-                    'parent_id' => 1,
-                    'model' => 'Usuario',
-                    'foreign_key' => 72,
                 )
             );
             
@@ -319,28 +313,47 @@
         function setUpAcl(){
             
             $aro =& $this->Acl->Aro;
-            $aroGroups = array(
+            $aroRoot = array(
                 0 => array(
-                    'alias' => 'users'
+                    'alias' => 'root'
                 ),
                 1 => array(
-                    'alias' => 'godfather'
+                    'alias' => 'admin'
+                ),
+                2 => array(
+                    'alias' => 'users'
                 )
             );
         
-            foreach($aroGroups as $data)
+            foreach($aroRoot as $data)
             {
                 $aro->create();
                 $aro->save($data);
             }
+             
             
             $aco =& $this->Acl->Aco;
+            
+            $acoRoot = array(
+                0 => array(
+                    'alias' => 'root'
+                )
+            );
+        
+            foreach($acoRoot as $data)
+            {
+                $aco->create();
+                $aco->save($data);
+            }
+            
             $acoGroups = array(
                 0 => array(
-                    'alias' => 'users'
+                    'alias' => 'users',
+                    'parent_id' => 25
                 ),
                 1 => array(
-                    'alias' => 'godfather'
+                    'alias' => 'admin',
+                    'parent_id' => 25
                 )
             );
             
@@ -354,47 +367,47 @@
             $acoSubGroups = array(
                 0 => array(
                     'alias' => 'usuario',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Usuario'
                 ),
                 1 => array(
                     'alias' => 'ganho',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Ganho'
                 ),
                 2 => array(
                     'alias' => 'gasto',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Gasto'
                 ),
                 3 => array(
                     'alias' => 'destino',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Destino'
                 ),
                 4 => array(
                     'alias' => 'fonte',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Fonte'
                 ),
                 5 => array(
                     'alias' => 'agendamento',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Agendamento'
                 ),
                 6 => array(
                     'alias' => 'sugestao',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Sugestao'
                 ),
                 7 => array(
                     'alias' => 'frequencia',
-                    'parent_id' => 2,
+                    'parent_id' => 27,
                     'model' => 'Frequencia'
                 ),
                 8 => array(
                     'alias' => 'valormensal',
-                    'parent_id' => 1,
+                    'parent_id' => 26,
                     'model' => 'Valormensal'
                 )
             );
@@ -412,13 +425,12 @@
         
         function setPermissions(){
             
+            $this->Acl->allow('root','root');
+            
             $this->Acl->deny('users','godfather');
             $this->Acl->deny('users','users/usuario','delete');
             $this->Acl->deny('users','users/sugestao','delete');
-            
-            $this->Acl->allow('godfather','godfather');
-            
-            
+
             $this->autoRender = false;
         }
         

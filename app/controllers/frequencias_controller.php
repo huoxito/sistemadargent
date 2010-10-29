@@ -3,17 +3,23 @@ class FrequenciasController extends AppController {
 
 	var $name = 'Frequencias';
 	var $helpers = array('Html', 'Form');
-
-	function index() {
+    
+    
+    function beforeFilter(){
         
-        if($this->Acl->check('users/'.$this->Auth->user('login'), 'godfather')){
-            
-            $this->Frequencia->recursive = 0;
-            $this->set('frequencias', $this->paginate());
+        if($this->Acl->check($this->Auth->user('login'), 'godfather')){
+            //continue;
         }else{
-            $this->set('frequencias', array());
+            $this->redirect(array('controller' => '/', 'action' => 'perfil'));
         }
-            
+    }
+    
+	function index() {
+         
+        $this->Frequencia->recursive = 0;
+        $this->set('frequencias', $this->paginate());
+
+        $this->set('frequencias', array()); 
     }
 
 	function view($id = null) {
