@@ -268,7 +268,7 @@ class UsuariosController extends AppController {
         if( $this->Acl->check($this->Auth->user('login'), 'root') ){
             # you root !
         }else{
-            $this->redirect(array('controller' => '/', 'action' => 'perfil'));
+            $this->cakeError('error404');  
         }
         
         if (!$id) {
