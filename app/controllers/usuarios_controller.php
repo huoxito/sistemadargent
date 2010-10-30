@@ -137,21 +137,10 @@ class UsuariosController extends AppController {
                 $data = array('login' => $this->data['Usuario']['login'],
                               'password' => $this->Auth->password($this->data['Usuario']['passwd']));
                 if( $this->Auth->login($data) == 1 ){
-                    
-                    /*
-                    $registered = $this->Usuario->read(null,$this->Usuario->id);
-                    $aro = new Aro(); 
-                    $aro->create();
-                    $aro->save(array(
-                         'model'        => 'Usuario',
-                         'foreign_key'    => $this->Usuario->id,
-                         'parent_id'    => 26, # users
-                         'alias'        => $registered['Usuario']['login']));
-                    */
+
                     $this->Session->setFlash(__('Bem vindo '.$registered['Usuario']['nome'].' !', true));
                     $this->redirect(array('controller' => 'homes', 'action'=>'index'));
-                   
-                
+                    
                 }else{
                     $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
                 }
@@ -208,7 +197,6 @@ class UsuariosController extends AppController {
         
         if (!empty($this->data)) {
             
-            //print_r($this->data);
             $this->Usuario->id = $this->Auth->user('id');
             if($this->Usuario->save($this->data, true, array('foto'))){
                 
