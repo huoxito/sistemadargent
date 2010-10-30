@@ -103,7 +103,15 @@
  *
  */
 	Configure::write('Cache.check', true);
+    
+    Cache::config('long', array(  
+        'engine' => 'File',  
+        'duration'=> '+1 week',  
+        'probability'=> 100,  
+        'path' => CACHE . 'long' . DS,  
+    ));
 
+    
 /**
  * Defines the default error type when using the log() function. Used for
  * differentiating error logging and debugging. Currently PHP supports LOG_DEBUG.
