@@ -26,8 +26,6 @@ class AppController extends Controller{
             }
         }
         */
-        
-        
     }   
     
     function search(){
@@ -117,7 +115,6 @@ class AppController extends Controller{
         print_r($array);
         echo '</pre>';
     }
-    
     
 }
 

@@ -25,7 +25,8 @@ class Usuario extends AppModel {
                                         'minHeight' => 120,
                                         'maxHeight' => 0),
                         )
-            )
+            ),
+        'Acl' => array('type' => 'requester')
     );
     
     
@@ -121,7 +122,7 @@ class Usuario extends AppModel {
             'login' => array(
                 'rule1' => array(
                     'rule' => 'notEmpty',
-                    'required'    =>  false,
+                    'required'  =>  false,
                     'message' => 'Campo obrigatório',
                     'last' => true,
                     'allowEmpty' => false,
@@ -180,6 +181,11 @@ class Usuario extends AppModel {
             
         );
         
+    }
+    
+    # colocar condição ao criar interface pra cadastrar os admin
+    function parentNode(){
+        return 'users';
     }
     
     function validatePasswdConfirm(){
@@ -269,9 +275,8 @@ class Usuario extends AppModel {
     
     function createStatement($data)
     {
-        //array_push($statement, array("{$this->name}.title" => 'LIKE %' . $data['title'] . '%'));
-        $statement = array();
         
+        $statement = array();
         if(isset($data['email']))
         {
           array_push($statement, array("{$this->name}.email LIKE" => '%' . $data['email'] . '%'));

@@ -138,8 +138,8 @@ class UsuariosController extends AppController {
                               'password' => $this->Auth->password($this->data['Usuario']['passwd']));
                 if( $this->Auth->login($data) == 1 ){
                     
+                    /*
                     $registered = $this->Usuario->read(null,$this->Usuario->id);
-                    
                     $aro = new Aro(); 
                     $aro->create();
                     $aro->save(array(
@@ -147,16 +147,16 @@ class UsuariosController extends AppController {
                          'foreign_key'    => $this->Usuario->id,
                          'parent_id'    => 26, # users
                          'alias'        => $registered['Usuario']['login']));
-                    
+                    */
                     $this->Session->setFlash(__('Bem vindo '.$registered['Usuario']['nome'].' !', true));
                     $this->redirect(array('controller' => 'homes', 'action'=>'index'));
-                    
+                   
+                
                 }else{
                     $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
                 }
                 
             } else {
-                
                 $errors = $this->validateErrors($this->Usuario);
             }    
         }
@@ -277,6 +277,12 @@ class UsuariosController extends AppController {
     
     function delete($id = null) {
         
+        if( $this->Acl->check($this->Auth->user('login'), 'root') ){
+            # you root !
+        }else{
+            $this->redirect(array('controller' => '/', 'action' => 'perfil'));
+        }
+        
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Usuario', true));
             $this->redirect(array('action'=>'index'));
@@ -286,8 +292,7 @@ class UsuariosController extends AppController {
             //$this->redirect(array('action'=>'index'));
         }
     }
-    
-    
+
 }
 
 
