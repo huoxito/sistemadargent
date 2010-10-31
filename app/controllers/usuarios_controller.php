@@ -264,7 +264,7 @@ class UsuariosController extends AppController {
     
     function delete($id = null) {
 
-        if( $this->Acl->check( array('model' => 'Usuario', 'foreign_key' => $this->Auth->user('login') ), 'root') ){
+        if( $this->Acl->check( array('model' => 'Usuario', 'foreign_key' => $this->Auth->user('id') ), 'root') ){
             # you root !
         }else{
             $this->cakeError('error404');  
