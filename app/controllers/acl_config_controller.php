@@ -8,10 +8,10 @@ class AclConfigController extends AppController {
     function beforeFilter(){
         parent::beforeFilter();
         
-        if($this->Acl->check($this->Auth->user('login'), 'root')){
+        if($this->Acl->check(array('model' => 'Usuario', 'foreign_key' => $this->Auth->user('id')), 'root')){
             # you root !
         }else{
-            $this->redirect(array('controller' => '/', 'action' => 'perfil'));
+            $this->cakeError('error404');  
         }
     }
     
@@ -21,7 +21,7 @@ class AclConfigController extends AppController {
         $aro = new Aro();
         $users = array(
             0 => array(
-                'alias' => 'godfather',
+                'alias' => null,
                 'parent_id' => 25,
                 'model' => 'Usuario',
                 'foreign_key' => 25,
@@ -179,7 +179,7 @@ class AclConfigController extends AppController {
             }else{
                 
                 $data['Aro'] = array(
-                        'alias' => $row['Usuario']['login'],
+                        'alias' => null,
                         'parent_id' => 26,  # users 
                         'model' => 'Usuario',
                         'foreign_key' => $row['Usuario']['id']
