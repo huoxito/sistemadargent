@@ -4,14 +4,25 @@ class FrequenciasController extends AppController {
 	var $name = 'Frequencias';
 	var $helpers = array('Html', 'Form');
     
-    
     function beforeFilter(){
         parent::beforeFilter();
         
-        if($this->Acl->check($this->Auth->user('login'), 'root')){
-            # you root !!
-        }else{
+        $this->user_id = $this->Auth->user('id');
+        $value = Cache::read('frq_'.$this->user_id,'long');
+        
+        if( $value === 'in' ){
+            // ok !
+        }else if ( $value === 'out' ) {
             $this->cakeError('error404');  
+        }else{
+            
+            $chk = $this->Acl->check(array('model' => 'Usuario', 'foreign_key' => $this->user_id), 'root');
+            if( $chk ){
+                Cache::write('frq_'.$this->user_id, 'in', 'long');
+            }else{
+                Cache::write('frq_'.$this->user_id, 'out', 'long');
+                $this->cakeError('error404');  
+            }
         }
     }
     

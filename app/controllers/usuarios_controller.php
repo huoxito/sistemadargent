@@ -262,10 +262,9 @@ class UsuariosController extends AppController {
     }
     
     
-    
     function delete($id = null) {
-        
-        if( $this->Acl->check($this->Auth->user('login'), 'root') ){
+
+        if( $this->Acl->check( array('model' => 'Usuario', 'foreign_key' => $this->Auth->user('login') ), 'root') ){
             # you root !
         }else{
             $this->cakeError('error404');  
@@ -273,7 +272,7 @@ class UsuariosController extends AppController {
         
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Usuario', true));
-            $this->redirect(array('action'=>'index'));
+            //$this->redirect(array('action'=>'index'));
         }
         if ($this->Usuario->delete($id)) {
             $this->Session->setFlash(__('Usuario deleted', true));
