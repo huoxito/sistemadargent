@@ -183,9 +183,15 @@ class Usuario extends AppModel {
         
     }
     
-    # colocar condição ao criar interface pra cadastrar os admin
+    # faltando adicionar valor no array ao criar interface pra cadastrar os admin e root
     function parentNode(){
-        return 'users';
+    
+        if($this->id){
+            $node = $this->node();
+            return $node[1]['Aro']['alias'];
+        }else{
+            return 'users';
+        }        
     }
     
     function validatePasswdConfirm(){
