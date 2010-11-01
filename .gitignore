@@ -1,5 +1,11 @@
 /app/config/database.php
-/app/tmp
+/app/tmp/cache/long/*
+/app/tmp/cache/models/*
+/app/tmp/cache/persistent/*
+/app/tmp/cache/views/*
+/app/tmp/logs/*
+/app/tmp/sessions/*
+/app/tmp/tests/*
 /app/webroot/uploads
 /plugins
 /vendors
