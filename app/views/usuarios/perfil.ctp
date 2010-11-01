@@ -46,7 +46,7 @@
                     <?php   echo $session->read('Auth.Usuario.nome'); ?>
                     <?php   echo $html->link(__('Editar', true),
                                                     '#javascript:;',
-                                                    array('onclick' => 'insereInput(\'Name\',\''.$session->read('Auth.Usuario.nome').'\')')
+                                                    array('onclick' => 'insereInput(\'Name\',\''.addslashes($session->read('Auth.Usuario.nome')).'\')')
                                                     ); ?>
                 </div>
                 
