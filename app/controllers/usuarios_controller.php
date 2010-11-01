@@ -20,13 +20,14 @@ class UsuariosController extends AppController {
                                     array('conditions' => array('id' => $this->Auth->user('id'))));
         $this->set('item',$itens);
         
+        $registrosPorTabela = 13;
         # loops pra montar as últimas interaçes do usuário
         # faço a consulta nas três tabelas
         $ganhos = $this->Usuario->Ganho->find('all',
                                     array('conditions' =>
                                             array('Ganho.usuario_id' => $this->Auth->user('id'),
                                                   'Ganho.status' => 1),
-                                        'limit' => '5',
+                                        'limit' => $registrosPorTabela,
                                         'group' => 'Ganho.modified',
                                         'order' => 'Ganho.modified desc'));
         
@@ -34,7 +35,7 @@ class UsuariosController extends AppController {
                                     array('conditions' =>
                                             array('Gasto.usuario_id' => $this->Auth->user('id'),
                                                   'Gasto.status' => 1),
-                                        'limit' => '5',
+                                        'limit' => $registrosPorTabela,
                                         'group' => 'Gasto.modified',
                                         'order' => 'Gasto.modified desc'));
         
@@ -44,7 +45,7 @@ class UsuariosController extends AppController {
         $agendamentos = $this->Usuario->Agendamento->find('all',
                                     array('conditions' =>
                                             array('Agendamento.usuario_id' => $this->Auth->user('id')),
-                                        'limit' => '5',
+                                        'limit' => $registrosPorTabela,
                                         'order' => 'Agendamento.modified desc'));     
         
         # jogo os resultados das constultas dentro do mesmo array
@@ -93,7 +94,12 @@ class UsuariosController extends AppController {
         
         # organizo um novo array com todos os dados da consulta
         $ultimasInteracoes = array();
+        $count  = 1;
         foreach($objdata as $key => $value){
+            
+            if($count === $registrosPorTabela){
+                break;
+            }
             
             if($modelsDatas[$key]['model'] === 'Faturamento' || $modelsDatas[$key]['model'] === 'Despesa'){
 
@@ -112,6 +118,7 @@ class UsuariosController extends AppController {
                                              'modified' => $this->Data->formata($modelsDatas[$key]['data'],'completa')
                                             );
             }
+            $count++;
         }
         
         $this->set('ultimasInteracoes',$ultimasInteracoes);
