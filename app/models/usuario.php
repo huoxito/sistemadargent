@@ -218,12 +218,7 @@ class Usuario extends AppModel {
             $login = Sanitize::paranoid(&$this->data['Usuario']['login'], array('-', '_'));  
         }
         
-        if( (isset($nome) && empty($nome)) || (isset($login) && empty($login)) ){
-            return false;
-        }else{
-            return true;
-        }
-        
+        return true;
     }
     
     function beforeSave()  
