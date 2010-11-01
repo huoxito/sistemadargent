@@ -202,6 +202,28 @@ class Usuario extends AppModel {
         return true;
     }
     
+    
+    function beforeValidate(){
+        
+        App::import('Sanitize');
+        if (isset($this->data['Usuario']['nome']))  
+        {  
+            $nome = Sanitize::html(&$this->data['Usuario']['nome'], array('remove' => true));  
+        }
+        
+        if (isset($this->data['Usuario']['login']))  
+        {  
+            $login = Sanitize::paranoid(&$this->data['Usuario']['login'], array('-', '_'));  
+        }
+        
+        if( (isset($nome) && empty($nome)) || (isset($login) && empty($login)) ){
+            return false;
+        }else{
+            return true;
+        }
+        
+    }
+    
     function beforeSave()  
     {
 
@@ -214,20 +236,6 @@ class Usuario extends AppModel {
         if (isset($this->data['Usuario']['passwd_confirm']))  
         {  
             unset($this->data['Usuario']['passwd_confirm']);  
-        }
-        
-        App::import('Sanitize');
-        if (isset($this->data['Usuario']['nome']))  
-        {  
-            $this->data['Usuario']['nome'] = Sanitize::clean(&$this->data['Usuario']['nome'],
-                                                                array('remove_html' => true,
-                                                                      'encode' => false));  
-        }
-        
-        if (isset($this->data['Usuario']['login']))  
-        {  
-            $this->data['Usuario']['login'] = Sanitize::paranoid(&$this->data['Usuario']['login'],
-                                                                array('-', '_'));  
         }
         
         /*
