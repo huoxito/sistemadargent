@@ -4,7 +4,7 @@ class AclConfigController extends AppController {
     
     var $uses = array('Usuario');
     
-    
+    /* descomentar a função após o script ser executado na primeira vez
     function beforeFilter(){
         parent::beforeFilter();
         
@@ -14,29 +14,7 @@ class AclConfigController extends AppController {
             $this->cakeError('error404');  
         }
     }
-    
-    
-    function addRoot(){
-        
-        $aro = new Aro();
-        $users = array(
-            0 => array(
-                'alias' => null,
-                'parent_id' => 25,
-                'model' => 'Usuario',
-                'foreign_key' => 25,
-            )
-        );
-        
-        foreach($users as $data)
-        {
-            $aro->create();
-            $aro->save($data);
-        }
-        
-        $this->autoRender = false; 
-    }
-    
+    */    
     
     function setUpAcl(){
         
@@ -61,7 +39,6 @@ class AclConfigController extends AppController {
         
         
         $aco =& $this->Acl->Aco;
-        
         $acoRoot = array(
             0 => array(
                 'alias' => 'root'
@@ -77,11 +54,11 @@ class AclConfigController extends AppController {
         $acoGroups = array(
             0 => array(
                 'alias' => 'users',
-                'parent_id' => 25
+                'parent_id' => 1
             ),
             1 => array(
                 'alias' => 'admin',
-                'parent_id' => 25
+                'parent_id' => 1
             )
         );
         
@@ -95,47 +72,47 @@ class AclConfigController extends AppController {
         $acoSubGroups = array(
             0 => array(
                 'alias' => 'usuario',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Usuario'
             ),
             1 => array(
                 'alias' => 'ganho',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Ganho'
             ),
             2 => array(
                 'alias' => 'gasto',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Gasto'
             ),
             3 => array(
                 'alias' => 'destino',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Destino'
             ),
             4 => array(
                 'alias' => 'fonte',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Fonte'
             ),
             5 => array(
                 'alias' => 'agendamento',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Agendamento'
             ),
             6 => array(
                 'alias' => 'sugestao',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Sugestao'
             ),
             7 => array(
                 'alias' => 'frequencia',
-                'parent_id' => 27,
+                'parent_id' => 3,
                 'model' => 'Frequencia'
             ),
             8 => array(
                 'alias' => 'valormensal',
-                'parent_id' => 26,
+                'parent_id' => 2,
                 'model' => 'Valormensal'
             )
         );
@@ -146,8 +123,8 @@ class AclConfigController extends AppController {
             $aco->save($data);
         }
         
+        $this->redirect(array('action' => 'setPermissions'));
         $this->autoRender = false;
-        
     }
     
     
@@ -157,9 +134,9 @@ class AclConfigController extends AppController {
         $this->Acl->allow('admin','admin');
         $this->Acl->allow('users','users');
         
+        $this->redirect(array('action' => 'insertUsers'));
         $this->autoRender = false;
     }
-    
     
     
     function insertUsers(){
@@ -180,7 +157,7 @@ class AclConfigController extends AppController {
                 
                 $data['Aro'] = array(
                         'alias' => null,
-                        'parent_id' => 26,  # users 
+                        'parent_id' => 2,  # users 
                         'model' => 'Usuario',
                         'foreign_key' => $row['Usuario']['id']
                 );
@@ -194,6 +171,28 @@ class AclConfigController extends AppController {
             }
         }
         
+        $this->redirect(array('action' => 'addRoot'));
         $this->autoRender = false;
     }
+    
+    
+    function addRoot(){
+        
+        $root = array('Usuario' =>
+                      array('nome' => 'GodFather',
+                            'email' => 'godfather@mail.com',
+                            'login' => 'godfather',
+                            'passwd' => 'godfather',
+                            'passwd_confirm' => 'godfather'));
+        
+        if($this->Usuario->save($root)){
+            // yeah !
+        }else{
+            $errors = $this->validateErrors($this->Usuario);
+            $this->pa($errors);
+        }
+        
+        $this->autoRender = false; 
+    }
+    
 }

@@ -186,7 +186,9 @@ class Usuario extends AppModel {
     # faltando adicionar valor no array ao criar interface pra cadastrar os admin e root
     function parentNode(){
         
-        if($this->id && !isset($this->data['Usuario']['created'])){
+        if(isset($this->data['Usuario']['login']) && $this->data['Usuario']['login'] === 'godfather'){
+            return 'root';
+        }else if($this->id && !isset($this->data['Usuario']['created'])){
             $node = $this->node();
             return $node[1]['Aro']['alias'];
         }else{
