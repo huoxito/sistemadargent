@@ -226,9 +226,8 @@ class Usuario extends AppModel {
         
         if (isset($this->data['Usuario']['login']))  
         {  
-            $this->data['Usuario']['login'] = Sanitize::clean(&$this->data['Usuario']['login'],
-                                                                array('remove_html' => true,
-                                                                      'encode' => false));  
+            $this->data['Usuario']['login'] = Sanitize::paranoid(&$this->data['Usuario']['login'],
+                                                                array('-', '_'));  
         }
         
         /*
