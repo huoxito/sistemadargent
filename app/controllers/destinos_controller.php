@@ -27,6 +27,9 @@ class DestinosController extends AppController {
                                             )
                                         );
         $total = $total[0][0]['total'];
+        if(empty($total)){
+            $total = 1;
+        }
         
         $objPorcentagem = array();
         $destinos = array();
