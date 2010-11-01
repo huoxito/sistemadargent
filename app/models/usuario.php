@@ -185,8 +185,8 @@ class Usuario extends AppModel {
     
     # faltando adicionar valor no array ao criar interface pra cadastrar os admin e root
     function parentNode(){
-    
-        if($this->id){
+        
+        if($this->id && $this->data['Usuario']['numdeacessos'] > 1){
             $node = $this->node();
             return $node[1]['Aro']['alias'];
         }else{
@@ -239,7 +239,6 @@ class Usuario extends AppModel {
             $nomeArquivo = $fileUpload->criaNome($this->data['Usuario']['foto']['name'], 'usuarios');
             $fileUpload->moveArquivo($this->data['Usuario']['foto']['tmp_name'], $nomeArquivo, 'usuarios/');
             $this->data['Usuario']['foto'] = $nomeArquivo;
-            
         }
         */
         return true;  

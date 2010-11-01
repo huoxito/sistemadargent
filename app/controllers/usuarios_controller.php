@@ -140,7 +140,7 @@ class UsuariosController extends AppController {
 
                     $this->Session->setFlash(__('Bem vindo '.$registered['Usuario']['nome'].' !', true));
                     $this->redirect(array('controller' => 'homes', 'action'=>'index'));
-                    
+
                 }else{
                     $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
                 }
