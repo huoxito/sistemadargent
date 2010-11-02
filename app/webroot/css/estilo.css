@@ -445,70 +445,101 @@ div.form, div.index, div.view {
 	text-decoration: underline;
 }
 
-.dados-freela {
-	float:left;
-	width:872px;
-	height:86px;
-	background-color:#fff;
-	border-top:#f3f3f3 solid 1px;
-	}	
-	
-.data {
-	float:left;
+
+#list, #list-categorias, .list {
+	border-bottom:1px solid #E9E9E9;
+	margin: 0 0 15px;
+	padding-top:0;
+	position:relative;
+	z-index:1000;
+	background-color: #FFF;
+}
+
+.registrosPorData, .list li {
+	border-top:1px solid #E9E9E9;
+	clear:both;
+	color:#787878;
+	margin:0 0 0 8.5em;
+	padding:0;
+	position:relative;
+	z-index:100;
+	list-style:none outside none;
+	min-height:40px;
+}
+
+#list-categorias li {
+	border-top:1px solid #E9E9E9;
+	clear:both;
+	color:#555555;
+	margin:0;
+	padding: 10px 10px 10px 5px;
+	position:relative;
+	z-index:100;
+	list-style:none outside none;
+	min-height: 30px;
+}
+
+.groupdata {
+	border-top:1px solid #E9E9E9;
+	color:#333;
+	font-weight:normal;
+	left:-9.5em;
+	background-color: #FAFAFA ;  
+	padding:12px 7px 0 12px;
+	position:absolute;
+	text-align:left;
+	top:-1px;
+	width:8.2em;
+	font-size: 14px;
+}
+
+.registros {
+	text-align: left;
+	min-height:15px;
+	padding:12px 0 10px 10px;
+	position:relative;
+	color: #555;
+}
+
+.borda-inferior {
+	border-bottom:1px solid #E9E9E9;
+}
+
+.valor {
+	display: block;
+	float: left;
+	min-width: 180px;
+}
+
+.linksRegistros {
+	float: right;
+	margin: -19px 20px 0 0;
 	width:122px;
-	height:86px;
-	background-color:#fafafa;
 	text-align:center;
 	}
-	
-.dados-freela p {
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:16px;
-	color:#4b4b4b;
-	}
-	
-.infos {
-	float:left;
-	width:613px;
-	height:86px;
-	background-color:#fff;
-	padding:0 0 0 15px
-	}
-	
-.infos p {
-	float:left;
-	margin:15px 0 0 0;
-	}
-	
-.editando {
-	float:left;
-	width:122px;
-	height:86px;
-	text-align:center;
-	}
-	
-.editar a {
+
+.editar {
 	float:left;
 	width:52px;
 	height:20px;
-	margin-top:30px;
+	margin-top:0;
 	background-image:url(../img/editar--.jpg);
 	}
 	
-.editar a:hover {
+.editar:hover {
 	background-position:0 -20px;
 	}
 	
-.excluir a {
+.excluir {
 	float:left;
 	width:52px;
 	height:20px;
-	margin-top:30px;
+	margin-top:0;
 	background-image:url(../img/excluir--.jpg);
 	margin-left:5px;
 	}
 	
-.excluir a:hover {
+.excluir:hover {
 	background-position:0 -20px;
 	}
 	

@@ -107,16 +107,6 @@
         </div>
         
         </div>
-        <!--
-        <div class="ganhos info">
-        <?php
-            if(!isset($listar)){
-                echo '« '.$html->link('voltar a listagem inicial', array('action' => 'index'), array('class' => 'link_headers'));
-            }
-        ?>
-        <?php   echo '<span style="font-weight: bold; color: #000;">'.$total.'</span>';    ?>
-        </div>
-        -->
         
         <div class="relatoriosWraper">
             
@@ -164,21 +154,23 @@
                 
                 <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="ganho-<?php echo $registro['Ganho']['id']; ?>">
                 
-                    <div class="">
-                        R$ <?php  echo $registro['Ganho']['valor']; ?>  «
+                    <div class="" style="">
+                        <span class="valor">
+                            R$ <?php  echo $registro['Ganho']['valor']; ?>
+                        </span>
                         <?php echo $registro['Fonte']['nome']; ?>
                     </div>
                     
                     <?php echo $registro['Ganho']['observacoes']; ?>
                     
-                    <div class="links-registros">
-                    <?php   echo $html->link(__('Editar', true),
+                    <div class="linksRegistros">
+                    <?php   echo $html->link('',
                                             array('action' => 'edit', $registro['Ganho']['id'], time()),
-                                            array('class' => 'colorbox-edit')
+                                            array('class' => 'colorbox-edit editar')
                                             ); ?> 
-                    <?php   echo $html->link(__('Deletar', true),
+                    <?php   echo $html->link('',
                                              array('action' => 'delete', $registro['Ganho']['id'], time()),
-                                             array('class' => 'colorbox-delete')
+                                             array('class' => 'colorbox-delete excluir')
                                              ); ?>
                     </div>  
                     
@@ -192,25 +184,20 @@
             <?php   }   ?>
             
         </ul>
-            
-            <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
-            <div class="paging">
-                <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-             | 	<?php echo $paginator->numbers();?>
-             |  <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
-            </div>  
-            <?php   }   ?>  
-        
-        
-        
+ 
     </div>
-    
-    
+        
     <script type="text/javascript">
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"60%", height: '220', opacity: 0.5, iframe: true});
             $('.colorbox-edit').colorbox({width:"60%", height: "530", opacity: 0.5, iframe: true});
+            
+            $(".registros").mouseover(function() {
+                $(this).css("background-color",'#F2FFE3');
+            }).mouseout(function(){
+                $(this).css("background-color",'#FFF');
+            });
         });
         // ]]>
     </script>
