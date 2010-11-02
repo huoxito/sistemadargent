@@ -48,14 +48,31 @@ body {
 	margin:0 auto;
 	margin-top:10px;
 	}
-	
-.left-box {
+
+#content {
+	min-height: 350px;
+	overflow:auto;
+	padding:10px 20px 40px;
+}
+
+div.form, div.index, div.view {
+	border-left:1px solid #666666;
+	height:auto;
+	margin-left:190px;
+	min-width:562px;
+	overflow:hidden;
+	padding:10px 2%;
+}
+
+
+#menuLateral {
 	float:left;
 	width:191px;
 	height:auto;
 	overflow:hidden;
 	margin-right:7px;
 	background-color:#fff;
+	position:absolute;
 	}
 	
 .meio-box {
@@ -83,13 +100,13 @@ body {
 	margin-left:10px;
 	}
 	
-.left-box ul {
+#menuLateral ul {
 	float:left;
 	margin:0;
 	padding:0;
 	}
 	
-.left-box ul li {
+#menuLateral ul li {
 	padding:8px 10px;
 	list-style:none;
 	margin:0;
@@ -97,13 +114,13 @@ body {
 	width:171px;
 	}
 	
-.left-box ul li img {
+#menuLateral ul li img {
 	float:left;
 	margin-top:2px;
 	margin-right:3px;
 	}
 	
-.left-box ul li a {
+#menuLateral ul li a {
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:13px;
 	color:#000;
