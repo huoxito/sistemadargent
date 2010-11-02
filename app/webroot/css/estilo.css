@@ -56,12 +56,13 @@ body {
 }
 
 div.form, div.index, div.view {
-	border-left:1px solid #666666;
+	min-width:562px;
 	height:auto;
 	margin-left:190px;
-	min-width:562px;
-	overflow:hidden;
-	padding:10px 2%;
+	padding: 0 1% 10px;
+	overflow:hidden;	
+	background-position:top;
+	background-repeat:no-repeat;
 }
 
 
@@ -74,17 +75,7 @@ div.form, div.index, div.view {
 	background-color:#fff;
 	position:absolute;
 	}
-	
-.meio-box {
-	float:left;
-	width:872px;
-	height:auto;
-	overflow:hidden;	
-	background-image:url(../img/topo-meio.jpg);
-	background-position:top;
-	background-repeat:no-repeat;
-	}
-	
+
 .right-box {
 	float:left;
 	width:160px;
@@ -230,29 +221,30 @@ div.form, div.index, div.view {
 	text-align:right;
 	}
 	
-.topo-meio {
+#contentHeader {
 	width:100%;
 	height:50px;
 	float:left;
+	background-color: #82B939;
 	}
-.topo-meio h1 {
+#contentHeader h1 {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:23px;
 	color:#fff;
 	font-weight:normal;
-	width:300px;
 	float:left;
 	margin:14px 10px;
 	}
 	
 .buscar {
 	float:right;
-	width:420px;
+	min-width:420px;
 	height:50px;
-
+	padding-right:10px;
 	}	
 	
-.buscar h1 {
+.buscar span {
+	display: block;
 	float:left;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-weight:bold;
@@ -274,7 +266,7 @@ div.form, div.index, div.view {
 	text-align:right;
 	}
 	
-.fonte-renda {
+.formSearchDiv {
 	float:left;
 	width:123px;
 	height:19px;
@@ -283,7 +275,7 @@ div.form, div.index, div.view {
 	background-image:url(../img/fonte-renda.jpg);
 	}
 	
-.renda-fild {
+.formSearchSelect {
 	width:120px;
 	height:17px;
 	margin-top:1px;
@@ -343,15 +335,13 @@ div.form, div.index, div.view {
 	margin:-12px 0 0 5px;
 	}
 	
-.topo-2 {
-	float:left;
-	width:852px;
+.balancoBotoes {
+
 	height:20px;
-	background-color:#e9ffcc;
-	padding:10px;
+	padding-left:10px;
 	}
 	
-.topo-2 p {
+.balancoBotoes p {
 	float:left;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:11px;
@@ -360,7 +350,7 @@ div.form, div.index, div.view {
 	
 	}
 	
-.topo-2 b {
+.balancoBotoes b {
 	float:left;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:11px;
@@ -385,6 +375,7 @@ div.form, div.index, div.view {
 .renda {
 	float:right;
 	margin-top:1px;
+	margin-right:10px;
 }
 
 .topo-3 {
