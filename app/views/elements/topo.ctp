@@ -1,11 +1,46 @@
-    
-    <h1><?php echo __('Dargent :: Sistema Simples de Gerenciamento Financeiro', true); ?></h1>
-    
-    <?php
-        $usuarioLogado = $session->read('Auth.Usuario.nome');
-        $userFoto = $session->read('Auth.Usuario.foto');
-    ?>        
+<?php
 
+    # variaveis de sessão do usuário
+    $usuarioLogado = $session->read('Auth.Usuario.nome');
+    $userFoto = $session->read('Auth.Usuario.foto');
+?>  
+    
+    <img src="img/logo.png" width="191" height="60" alt="Dargent Sistema Financeiro" style="margin-top:15px;" />
+    <div id="topo-right">
+    
+        <div id="UserInfoBox">
+        
+            <img src="uploads/usuario/foto/thumb/topo/<?php echo $session->read('Auth.Usuario.foto'); ?>" width="" height="70" />
+            
+            <div style="float: right; padding: 0 0 0 10px;">
+                
+                <h1 id="userNameTopo"><?php echo $usuarioLogado; ?></h1>
+                <span class="minhaconta">
+                    <p>MINHA CONTA</p>
+                </span>
+                
+                <span class="sair">
+                    
+                        <?php echo $html->link('SAIR',
+                                               array('controller' => 'usuarios',
+                                                     'action' => 'logout'),
+                                               array('alt'=> __('sair', true),
+                                                     'title'=> __('sair', true)));?>
+                    
+                </span> 
+            
+            </div>
+        </div>
+        
+        <div class="box-left">
+            <img src="img/sugestoes.jpg" width="42" height="34" alt="sugestões" />
+            <h1>Sugestões</h1>
+            <p>AJUDE-NOS A <br />DESENVOLVER O DARGENT</p>
+        </div>
+        
+    </div>
+    <!--
+    
     <div id="userinfo">
         
         <?php //echo $html->link('Home', '/'); ?>
@@ -21,7 +56,7 @@
         
             echo $html->link('Sugestões', array('controller' => 'sugestoes', 'action' => 'add'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('Sugestões', true), 'title'=> __('Sugestões', true)));
         
-            echo $html->link('Logout', array('controller' => 'usuarios', 'action' => 'logout'), array('style' => 'display: block; margin: 10px 0 0 15px;', 'alt'=> __('sair', true), 'title'=> __('sair', true)));
+            
         
         ?>
         
@@ -35,5 +70,5 @@
         
     </div>
 
-    
+    -->
     
