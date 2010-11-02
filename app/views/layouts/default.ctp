@@ -6,9 +6,11 @@
 		<?php __('Dargent  :: '); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css">
 	<?php
 		echo $this->Html->meta('icon');
-		echo $this->Html->css('cake.generic');
+		//echo $this->Html->css('cake.generic');
+        echo $this->Html->css('estilo');
         echo $this->Html->css('colorbox');
         echo $this->Html->css('jquery-ui-1.8rc3.custom');
         echo $this->Html->script('jquery-1.4.2.min');
@@ -36,9 +38,34 @@
 </head>
 <body>
 	<div id="container">
+        <!--
 		<div id="header">
             <?php  echo $this->element('topo'); ?> 
 		</div>
+        -->
+        <div id="header">
+
+            <img src="img/logo.png" width="191" height="60" style="margin-top:15px;" />
+            <div class="caixa-login">
+            
+                <div class="box-right">
+                
+                    <img src="img/imagem-topo.jpg" width="64" height="64" />
+                    <h1>Adriane Wald</h1>
+                    <span class="minhaconta"><p>MINHA CONTA</p></span>
+                    <span class="sair"><p>SAIR</p></span>
+                </div>
+                
+                <div class="box-left">
+                        <img src="img/sugestoes.jpg" width="42" height="34" />
+                    <h1>Sugestões</h1>
+                    <p>AJUDE-NOS A <br />DESENVOLVER O DARGENT</p>
+                </div>
+            </div>
+
+        </div>
+        
+        
 		<div id="content">
             
             <?php   echo $this->element('menu_lateral'); ?>
