@@ -52,14 +52,17 @@
 			<?php   echo $content_for_layout; ?>
 
 		</div>
-		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt'=> __('CakePHP: the rapid development php framework', true), 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false)
-				);
-			?>
-		</div>
+
+        <div id="footer">
+        
+            <a href="#">Ajuda</a> / 
+            <a href="#">Quem somos</a> / 
+            <a href="#">Fale conosco</a>
+            
+            <p>Copyright © 2010 <b><a href="#">Dargent controle financeiro</a></b>. Todos os direitos reservados</p>
+            
+        </div>
+
 	</div>
 	<?php echo $this->element('sql_dump'); ?>
     <script type="text/javascript">
