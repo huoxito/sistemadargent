@@ -5,14 +5,14 @@
     $userFoto = $session->read('Auth.Usuario.foto');
 ?>  
     <a href="<?php echo $html->url('/'); ?>" title="home">
-        <img src="img/logo.png" width="191" height="60" alt="Dargent Sistema Financeiro" style="margin-top:15px;" />
+        <img src="<?php echo $html->url('/'); ?>img/logo.png" width="191" height="60" alt="Dargent Sistema Financeiro" style="margin-top:15px;" />
     </a>
     <div id="topo-right">
     
         <div id="UserInfoBox">
             
             <?php if( !empty($userFoto) ){   ?>
-            <img src="uploads/usuario/foto/thumb/topo/<?php echo $session->read('Auth.Usuario.foto'); ?>" width="" height="70" />
+            <img src="<?php echo $html->url('/'); ?>uploads/usuario/foto/thumb/topo/<?php echo $session->read('Auth.Usuario.foto'); ?>" height="70" />
             <?php   }   ?>
             
             <div style="float: right; padding: 0 0 0 10px;">
@@ -38,7 +38,7 @@
         
         <div class="box-left">
             <a href="<?php echo $this->Html->url(array('controller' => 'sugestoes', 'action' => 'add')); ?>" title="home">
-                <img src="img/sugestoes.jpg" width="42" height="34" alt="sugestões" />
+                <img src="<?php echo $html->url('/'); ?>img/sugestoes.jpg" width="42" height="34" alt="sugestões" />
             </a>
             <h1 id="sugestoesTopo">
                 <?php   echo $this->Html->link('Sugestões',
