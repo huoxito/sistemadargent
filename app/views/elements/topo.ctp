@@ -4,8 +4,9 @@
     $usuarioLogado = $session->read('Auth.Usuario.nome');
     $userFoto = $session->read('Auth.Usuario.foto');
 ?>  
-    
-    <img src="img/logo.png" width="191" height="60" alt="Dargent Sistema Financeiro" style="margin-top:15px;" />
+    <a href="<?php echo $html->url('/'); ?>" title="home">
+        <img src="img/logo.png" width="191" height="60" alt="Dargent Sistema Financeiro" style="margin-top:15px;" />
+    </a>
     <div id="topo-right">
     
         <div id="UserInfoBox">
