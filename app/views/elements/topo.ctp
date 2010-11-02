@@ -10,18 +10,21 @@
     <div id="topo-right">
     
         <div id="UserInfoBox">
-        
+            
+            <?php if( !empty($userFoto) ){   ?>
             <img src="uploads/usuario/foto/thumb/topo/<?php echo $session->read('Auth.Usuario.foto'); ?>" width="" height="70" />
+            <?php   }   ?>
             
             <div style="float: right; padding: 0 0 0 10px;">
                 
                 <h1 id="userNameTopo"><?php echo $usuarioLogado; ?></h1>
                 <span class="minhaconta">
-                    <p>MINHA CONTA</p>
+                    <?php echo $this->Html->link('MINHA CONTA',
+                                                array('controller' => '/',
+                                                      'action' => 'perfil'));  ?>
                 </span>
                 
                 <span class="sair">
-                    
                         <?php echo $html->link('SAIR',
                                                array('controller' => 'usuarios',
                                                      'action' => 'logout'),
@@ -34,8 +37,17 @@
         </div>
         
         <div class="box-left">
-            <img src="img/sugestoes.jpg" width="42" height="34" alt="sugestões" />
-            <h1>Sugestões</h1>
+            <a href="<?php echo $this->Html->url(array('controller' => 'sugestoes', 'action' => 'add')); ?>" title="home">
+                <img src="img/sugestoes.jpg" width="42" height="34" alt="sugestões" />
+            </a>
+            <h1 id="sugestoesTopo">
+                <?php   echo $this->Html->link('Sugestões',
+                                    array('controller' => 'sugestoes',
+                                          'action' => 'add'),
+                                    array('alt'=> __('Sugestões', true),
+                                          'title'=> __('Sugestões', true)));
+                ?>
+            </h1>
             <p>AJUDE-NOS A <br />DESENVOLVER O DARGENT</p>
         </div>
         
