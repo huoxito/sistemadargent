@@ -70,24 +70,35 @@
                 }
             ?>
             
-            <?php   echo ''.$total.'';    ?>
-            </p>
-            <!--
-            <p>Faturamento:</p><b>R$ 00,00</b>
-            <p>Gastos:</p> <b>R$ 00,00</b>
-            <p>Saldo:</p> <b>R$ 00,00</b>
-            -->
-            <p>|</p>
-            <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
+            
+            
+            <?php
+                if(isset($faturamentos)){
+            ?> 
+                <p>Faturamento: <b><?php echo $faturamentos; ?></b></p>
+                <p>Gastos: <b><?php echo $despesas; ?></b></p> 
+                <p>Saldo: <b><?php echo $saldo; ?></b></p> 
+            <?php
+                }else{
+                
+                echo $total;
+            ?>
+                <p>|</p>
+                <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
                 
                 <span class="pagina">Página</span>
                 <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
                 <span class="pagina">de</span>
                 <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
                 <p>|</p>
-                <p><?php echo $paginator->counter(array('format' => __('%end%',true))); ?></p>
+                <p><?php echo $paginator->counter(array('format' => __('%count%',true))); ?></p>
                 <span class="pagina">Registros</span>
-            <?php   }   ?>
+                <?php   }   ?>
+                
+                <?php   }      ?>
+            </p>
+            
+            
             
             <div class="renda">
                 <?php echo $this->Html->image('renda.jpg',

@@ -128,7 +128,7 @@ class GanhosController extends AppController {
         $total = $this->Valor->soma($ganhos, 'Ganho');
         if($total > 0){
             if( isset($chkParams) ){
-                $this->set('total', 'R$ '.$total['formatado'].' reais listados nessa página');
+                $this->set('total', '<b>R$ '.$total['formatado'].'</b> reais listados nessa página');
             }else{
                 # relatórios rápidos
                 $saldo = $total['limpo'] - $totalG[0][0]['total'];
@@ -136,10 +136,13 @@ class GanhosController extends AppController {
                     $saldo = $this->Valor->formata($saldo,'humano');
                     $totalG = $this->Valor->formata($totalG[0][0]['total'],'humano');
                     
-                    $relatoriosRapidos = 'Faturamentos do mês: '.$total['formatado'].' &nbsp;&nbsp;&nbsp;
-                                        Gastos: '.$totalG.' &nbsp;&nbsp;&nbsp; Saldo: R$ '.$saldo;
+                    $faturamentos = $total['formatado'];
+                    $despesas = $totalG;
+                    $this->set(array('faturamentos' => $faturamentos,
+                                     'despesas' => $despesas,
+                                     'saldo' => $saldo));
                 }else{
-                    $relatoriosRapidos = "Nenhum registro encontrado";
+                    $saldo = "Nenhum registro encontrado";
                 }
                 
                 $this->set('total', $relatoriosRapidos);

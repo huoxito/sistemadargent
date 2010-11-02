@@ -333,33 +333,32 @@ div.form, div.index, div.view {
 	}
 	
 .balancoBotoes {
-
+	font-size: 12px;
 	height:20px;
 	padding-left:10px;
 	}
-	
+.balancoBotoes a {
+	color:#4b8300;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.balancoBotoes a:hover {
+	text-decoration: underline;
+}
 .balancoBotoes p {
 	float:left;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:11px;
 	color:#4b8300;
 	margin:2px;
-	
 	}
-	
+
 .balancoBotoes b {
-	float:left;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:11px;
-	color:#000;
-	margin:2px;
-	}
-	
-	
+	color:#000000;
+}
+
 .pagina {
 	float:left;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:11px;
 	color:#000;
 	margin:2px;
 	}
@@ -428,7 +427,7 @@ div.form, div.index, div.view {
 	padding:0 0 0 10px;
 	height:24px;
 	margin-top:5px;
-	font-size:11px;
+	font-size:12px;
 }
 
 .relatoriosLinks {
@@ -496,6 +495,7 @@ div.form, div.index, div.view {
 	padding:12px 0 10px 10px;
 	position:relative;
 	color: #555;
+	font-size: 14px;
 }
 
 .borda-inferior {
