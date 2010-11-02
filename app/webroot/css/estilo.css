@@ -378,13 +378,20 @@ div.form, div.index, div.view {
 	margin-right:10px;
 }
 
-.topo-3 {
-	float:left;
-	width:852px;
-	height:20px;
+.relatoriosWraper {
+	padding: 10px 10px 5px;
+	height: auto;
+	overflow: hidden;
 	background-color:#fff;
-	padding:10px;
-	}
+}
+
+#relatorioRapido {
+	float:left;
+	height:20px;
+	width:100%;
+	height: auto;
+	overflow: hidden;
+}
 	
 .titulos {
 	float:left;
@@ -392,15 +399,25 @@ div.form, div.index, div.view {
 	height:24px;
 	text-align:center;
 	border-right:1px solid #d7f4b1;
-	}
-	
-.titulos h1 {
+}
+
+.titulos h2 {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:13px;
 	color:#3c6800;
 	margin:0;
-	}
-	
+	font-weight: bold;
+}
+
+.titulos span {
+	display: block;
+	font-weight: normal;
+	font-family:Myriad Pro;
+	font-size:9px;
+	margin:0 20px 0 0;
+	text-align:right;
+}
+
 .topo-3 p {
 	font-family:Myriad Pro;
 	color:#3c6800;
@@ -408,22 +425,26 @@ div.form, div.index, div.view {
 	margin:0 20px 0 0;
 	text-align:right;
 	}
-	
-.titulos-2 {
+
+#mesesRelatorio li{
 	float:left;
 	padding:0 0 0 10px;
 	height:24px;
-	text-align:center;
-	}
-	
-.titulos-2 p {
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:11px;
-	color:#4b8300;
-	font-weight:bold;
 	margin-top:5px;
-	}
-	
+	font-size:11px;
+}
+
+.relatoriosLinks {
+	color:#4b8300;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-decoration: none;
+}
+
+.relatoriosLinks:hover {
+	text-decoration: underline;
+}
+
 .dados-freela {
 	float:left;
 	width:872px;

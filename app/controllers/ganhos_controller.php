@@ -37,7 +37,7 @@ class GanhosController extends AppController {
                 $this->set('mesRelatorio', $this->Data->retornaNomeDoMes($mesRelatorio));
             }
             
-            $objMeses = $this->Data->listaULtimosMeses(5, $this->params['pass'][0], $this->params['pass'][1]);
+            $objMeses = $this->Data->listaULtimosMeses(7, $this->params['pass'][0], $this->params['pass'][1]);
             $this->Ganho->Behaviors->disable('Modifiable');
             $ganhos = $this->Ganho->find('all',$params);
             
@@ -62,7 +62,7 @@ class GanhosController extends AppController {
                     'order' => array('Ganho.datadabaixa' => 'desc', 'Ganho.modified' => 'desc')
             );
             
-            $objMeses = $this->Data->listaULtimosMeses(5);
+            $objMeses = $this->Data->listaULtimosMeses(7);
             // Nettoyage de la saisie
             App::import('Sanitize');
             Sanitize::clean(&$this->params['named'],array('encode' => false));

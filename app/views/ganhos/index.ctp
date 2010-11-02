@@ -1,6 +1,4 @@
     
-    <?php  //$js->get('.headers')->event('click', '$(this).toggle()');    ?>
-    
     <div class="ganhos index">
         
         <div id="contentHeader">
@@ -17,7 +15,6 @@
                 ?>
                 <span>Buscar</span>
                 <p>FATURAMENTOS</p>
-                
                 
                 <?php
                     /*
@@ -58,8 +55,6 @@
             
         </div>
         
-        
-            
         <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
         </cake:nocache>
@@ -74,6 +69,7 @@
                     echo '« '.$html->link('voltar a listagem inicial', array('action' => 'index'), array('class' => 'link_headers'));
                 }
             ?>
+            
             <?php   echo ''.$total.'';    ?>
             </p>
             <!--
@@ -82,20 +78,36 @@
             <p>Saldo:</p> <b>R$ 00,00</b>
             -->
             <p>|</p>
-            <span class="pagina">Página</span>
-            <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
-            <span class="pagina">de</span>
-            <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
-            <p>|</p>
-            <p><?php echo $paginator->counter(array('format' => __('%end%',true))); ?></p>
-            <span class="pagina">Registros</span>
+            <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
+                
+                <span class="pagina">Página</span>
+                <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
+                <span class="pagina">de</span>
+                <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
+                <p>|</p>
+                <p><?php echo $paginator->counter(array('format' => __('%end%',true))); ?></p>
+                <span class="pagina">Registros</span>
+            <?php   }   ?>
             
-            <div class="renda"><a href="#"><img src="<?php echo $html->url('/'); ?>img/renda.jpg" width="143" height="19" /></a></div>
-            <div class="faturamento"><a href="#"><img src="<?php echo $html->url('/'); ?>img/faturamento.jpg" width="143" height="20" /></a></div>
+            <div class="renda">
+                <?php echo $this->Html->image('renda.jpg',
+                                        array('alt' => 'inserir categoria',
+                                              'width' => '143',
+                                              'height' => '19',
+                                              'url' => array('action' => 'add'))); ?>
+            </div>
+            <div class="faturamento">
+                <?php echo $this->Html->image('faturamento.jpg',
+                                        array('alt' => 'inserir faturamento',
+                                              'width' => '143',
+                                              'height' => '20',
+                                              'url' => array('controller' => 'fontes',
+                                                             'action' => 'add'))); ?>
+            </div>
         </div>
         
         </div>
-        
+        <!--
         <div class="ganhos info">
         <?php
             if(!isset($listar)){
@@ -104,30 +116,36 @@
         ?>
         <?php   echo '<span style="font-weight: bold; color: #000;">'.$total.'</span>';    ?>
         </div>
+        -->
         
-        <ul id="relatorio_rapido">
-                <li>Relátorios rápidos</li>
-            <?php foreach($objMeses as $meses): ?>
-                <li>
-                    <?php
-                        if(isset($this->params['pass'][0]) && $this->params['pass'][0] == $meses['numMes'])
-                            echo $meses['mes'];
-                        else
-                            echo $html->link($meses['mes'], array('action' => 'index', $meses['numMes'],  $meses['ano']));
-                    ?>
-                </li>
-            <?php endforeach; ?>    
-        </ul>
+        <div class="relatoriosWraper">
+            
+            <div id="relatorioRapido">
+                
+                <div class="titulos">
+                    <h2>Relatórios <span>RÁPIDOS</span> </h2>
+                </div>
+                
+                <ul id="mesesRelatorio">
+                    <?php foreach($objMeses as $meses): ?>
+                        <li>
+                            <?php
+                                if(isset($this->params['pass'][0]) && $this->params['pass'][0] == $meses['numMes'])
+                                    echo $meses['mes'];
+                                else
+                                    echo $this->Html->link($meses['mes'],
+                                                    array('action' => 'index',
+                                                          $meses['numMes'],
+                                                          $meses['ano']),
+                                                    array('class' => 'relatoriosLinks'));
+                            ?>
+                        </li>
+                    <?php endforeach; ?>    
+                </ul>
+            
+            </div>
         
-        <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
-        <p id="paginator-info">
-            <?php
-            $paginator->counter(array(
-            'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-            ));
-            ?>
-        </p>
-        <?php   }   ?>
+        </div>
         
         <ul id="list">
             
@@ -174,14 +192,15 @@
             <?php   }   ?>
             
         </ul>
+            
+            <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
+            <div class="paging">
+                <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+             | 	<?php echo $paginator->numbers();?>
+             |  <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+            </div>  
+            <?php   }   ?>  
         
-        <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
-        <div class="paging">
-            <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-         | 	<?php echo $paginator->numbers();?>
-         |  <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
-        </div>  
-        <?php   }   ?>
         
         
     </div>
