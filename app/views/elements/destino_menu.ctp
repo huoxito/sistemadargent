@@ -1,7 +1,8 @@
-        <h2 class="headers">
+        <h1>
             <?php __('Destinos');?>
-        </h2>
+        </h1>
         
+        <!--
         <div class="session-links">
             <ul>
                 
@@ -10,3 +11,4 @@
                 
             </ul>
         </div>
+        -->
