@@ -460,7 +460,7 @@ div.form, div.index, div.view {
 	clear:both;
 	color:#555555;
 	margin:0;
-	padding:10px 10px 10px 15px;
+	padding:10px 30px;
 	position:relative;
 	z-index:100;
 	list-style:none outside none;
@@ -543,6 +543,30 @@ div.form, div.index, div.view {
 	margin:-16px 0 5px 0;
 	float: right;
 	text-align: right;
+}
+
+
+#graficosWraper {
+	height: auto;
+	overflow: hidden;
+	clear:both;
+	width:100%;
+	background-color: #FFF;
+	
+}
+
+.graficosPizza {
+	height: auto;
+	overflow: hidden;
+	float:left;
+	width: 45%;
+	text-align: center;
+	padding: 10px;
+}
+
+.graficosPizza h2 {
+	text-align: left;
+	padding: 0 0 0 20px;
 }
 	
 #footer {

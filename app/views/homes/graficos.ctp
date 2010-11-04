@@ -1,26 +1,42 @@
 
-    <div class="gastos index">
+    <div class="graficos index">
         
-        <h2><?php __('Relatórios gráficos');?></h2>
-        <!--<p>Iaaaewww <?php echo $session->read('Auth.Usuario.nome'); ?> !</p>-->
-        
-        <?php   echo $this->Session->flash(); ?>
-        
-        <div id='graficoComparativo' style="height: auto: overflow: hidden;clear:both;">
-            <?php echo $graficoComparativo; ?>
+        <div id="contentHeader">    
+            <h1>
+                <?php __('Relatórios gráficos');?>
+            </h1>
         </div>
         
+        <div style="height: auto; overflow: hidden;padding:10px 0;width:100%;background-color:#e9ffcc;">
+
+            <div class="balancoBotoes">
+                <p>Gráfico Comparativo das entradas e saídas e das respectivas categorias</p>
+            </div>
         
-        <div style="height: auto: overflow: hidden;float:left;margin: 20px 0 0 20px;">
-        <h3>Faturamentos</h3>
-        
-        <img src="<?php   echo $pieGanho; ?>" title="Gastos" alt="Gastos" />
         </div>
         
-        <div style="height: auto: overflow: hidden;float:left; margin: 20px 0 0 20px;">
-        <h3>Despesas</h3>
-        <img src="<?php   echo $pieGasto; ?>" title="Ganhos" alt="Ganhos" />
+        <div id="graficosWraper">
+
+            <div id='graficoComparativo' style="height: auto: overflow: hidden; text-align: center; ">
+                <h2 style="padding: 10px 0;">Comparativo nos últimos 7 meses</h2>
+                <?php echo $graficoComparativo; ?>
+            </div>
+            
+            <div class="graficosPizza">
+                
+                <h2>Faturamentos</h3>
+                
+                <img src="<?php   echo $pieGanho; ?>" title="Gastos" alt="Gastos" />
+            </div>
+                
+            <div class="graficosPizza">
+                <h2>Despesas</h3>
+                <img src="<?php   echo $pieGasto; ?>" title="Ganhos" alt="Ganhos" />
+                
+            </div>  
+        
         </div>
+        
         
     </div>
     
