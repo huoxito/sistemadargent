@@ -2,17 +2,41 @@
     
     <div class="fontes index">
         
-        <?php   echo $this->element('fonte_menu'); ?>
+        <div id="contentHeader">    
+            <?php   echo $this->element('fonte_menu'); ?>
+            <?php   echo $this->Session->flash(); ?>
+        </div>
         
-        <?php   echo $this->Session->flash(); ?>
         
-        <p id="paginator-info">
-        <?php
-            if(isset($numRegistros)){
-                echo ''.$numRegistros.' categorias de faturamentos. Listadas com a porcentagem em relação a todo o seu faturamento registrado.';
-            }            
-            //echo $paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)));
-        ?></p>
+        <div style="height: auto; overflow: hidden;padding:10px 0;width:100%;background-color:#e9ffcc;">
+
+            <div class="balancoBotoes">
+                <?php if(isset($numRegistros)){ ?>
+                    <?php echo $numRegistros; ?> Categorias listadas
+                <?php }   ?>
+                
+                
+                <div class="faturamento">
+                    <?php echo $this->Html->image('faturamento.jpg',
+                                            array('alt' => 'inserir faturamento',
+                                                  'width' => '143',
+                                                  'height' => '20',
+                                                  'url' => array('controller' => 'ganhos',
+                                                                 'action' => 'add'))); ?>
+                </div>
+                
+                <div class="renda">
+                    <?php echo $this->Html->image('renda.jpg',
+                                            array('alt' => 'inserir categoria',
+                                                  'width' => '143',
+                                                  'height' => '19',
+                                                  'url' => array('controller' => 'fontes',
+                                                                 'action' => 'add'))); ?>
+                </div>
+                
+            </div>
+            
+        </div>
         
         <ul id="list-categorias">
         <?php
@@ -21,12 +45,21 @@
         ?>
             <li id="fonte-<?php echo $fontes[$key]['Fonte']['id']; ?>" class="registros">
                 <div style="height: auto; overflow: hidden;">
-                    <div style="float: left;"><?php echo $fontes[$key]['Fonte']['porcentagem']; ?> % « </div>
-                    <span class="categoria_nome" id="nome-<?php echo $fontes[$key]['Fonte']['id']; ?>">
-                        <?php echo $fontes[$key]['Fonte']['nome']; ?>
-                    </span>
+                    
+                    <div class="" style="height:auto; overflow:hidden;	padding: 5px 0;">
+                        
+                        <span class="categoria_nome" id="nome-<?php echo $fontes[$key]['Fonte']['id']; ?>">
+                            <?php echo $fontes[$key]['Fonte']['nome']; ?>
+                        </span>
+                        
+                        <span class="valor">
+                            <?php echo $fontes[$key]['Fonte']['porcentagem']; ?> %
+                        </span>
+                    </div>
 
-                    <div style="float: right;"><?php echo $fontes[$key]['Fonte']['modified']; ?></div>
+                    <div style="float: right;margin-top:-23px;">
+                        <?php echo $fontes[$key]['Fonte']['modified']; ?>
+                    </div>
                     
                     <div style="clear: both;">
                         <?php if( isset($fontes[$key]['Ganho']) ){   ?>
@@ -39,13 +72,13 @@
                 </div>
                 <div class="categ-actions">
                     <?php
-                        echo $html->link(__('Editar', true),
+                        echo $html->link('',
                                             array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
-                                            array('class' => 'colorbox-edit')
+                                            array('class' => 'colorbox-edit editar')
                                             ); 
-                        echo $html->link(__('Deletar', true),
+                        echo $html->link('',
                                             array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
-                                            array('class' => 'colorbox-delete')
+                                            array('class' => 'colorbox-delete excluir')
                                             );
                     ?>
                 </div>
@@ -70,7 +103,7 @@
             $('.colorbox-edit').colorbox({width:"60%", height: "300", opacity: 0.5, iframe: true});
             
             $("li.registros").mouseover(function() {
-                $(this).css("background-color",'#FFF9EF');
+                $(this).css("background-color",'#F2FFE3');
             }).mouseout(function(){
                 $(this).css("background-color",'#FFF');
             });

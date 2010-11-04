@@ -97,24 +97,24 @@
                 
                 <?php   }      ?>
             </p>
-            
-            
-            
+
             <div class="renda">
                 <?php echo $this->Html->image('renda.jpg',
                                         array('alt' => 'inserir categoria',
                                               'width' => '143',
                                               'height' => '19',
-                                              'url' => array('action' => 'add'))); ?>
+                                              'url' => array('controller' => 'fontes',
+                                                             'action' => 'add'))); ?>
             </div>
             <div class="faturamento">
                 <?php echo $this->Html->image('faturamento.jpg',
                                         array('alt' => 'inserir faturamento',
                                               'width' => '143',
                                               'height' => '20',
-                                              'url' => array('controller' => 'fontes',
+                                              'url' => array('controller' => 'ganhos',
                                                              'action' => 'add'))); ?>
             </div>
+            
         </div>
         
         </div>

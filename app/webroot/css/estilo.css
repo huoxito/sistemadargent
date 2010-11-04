@@ -414,14 +414,6 @@ div.form, div.index, div.view {
 	text-align:right;
 }
 
-.topo-3 p {
-	font-family:Myriad Pro;
-	color:#3c6800;
-	font-size:9px;
-	margin:0 20px 0 0;
-	text-align:right;
-	}
-
 #mesesRelatorio li{
 	float:left;
 	padding:0 0 0 10px;
@@ -468,11 +460,11 @@ div.form, div.index, div.view {
 	clear:both;
 	color:#555555;
 	margin:0;
-	padding: 10px 10px 10px 5px;
+	padding:10px 10px 10px 15px;
 	position:relative;
 	z-index:100;
 	list-style:none outside none;
-	min-height: 30px;
+	min-height: 50px;
 }
 
 .groupdata {
@@ -539,6 +531,19 @@ div.form, div.index, div.view {
 .excluir:hover {
 	background-position:0 -20px;
 	}
+
+.categoria_nome {
+	width: 400px;
+	display: block;
+	float: left;
+	color: #000;
+}
+
+.categ-actions {
+	margin:-16px 0 5px 0;
+	float: right;
+	text-align: right;
+}
 	
 #footer {
 	width:100%;
