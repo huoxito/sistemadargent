@@ -2,8 +2,44 @@
 
     <div class="agendamentos index">
         
-        <?php   echo $this->element('agendamento_menu');    ?>
-    
+        <div id="contentHeader">    
+            <?php   echo $this->element('agendamento_menu');    ?>
+        </div>
+        
+        <div style="height: auto; overflow: hidden;padding:10px 0;width:100%;background-color:#e9ffcc;">
+
+            <div class="balancoBotoes">
+                
+                <span class="pagina">Página</span>
+                <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
+                <span class="pagina">de</span>
+                <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
+                <p>|</p>
+                <p><?php echo $paginator->counter(array('format' => __('%count%',true))); ?></p>
+                <span class="pagina">Registros</span>
+
+
+                <div class="renda">
+                    <?php echo $this->Html->image('renda.jpg',
+                                            array('alt' => 'inserir categoria',
+                                                  'width' => '143',
+                                                  'height' => '19',
+                                                  'url' => array('controller' => 'fontes',
+                                                                 'action' => 'add'))); ?>
+                </div>
+                <div class="faturamento">
+                    <?php echo $this->Html->image('faturamento.jpg',
+                                            array('alt' => 'inserir faturamento',
+                                                  'width' => '143',
+                                                  'height' => '20',
+                                                  'url' => array('controller' => 'ganhos',
+                                                                 'action' => 'add'))); ?>
+                </div>
+            </div>
+            
+        </div>
+        
+        
         <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
         </cake:nocache>
