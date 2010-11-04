@@ -53,7 +53,7 @@
             
             <li class="registros" id="agend-<?php echo $agendamento['Agendamento']['id']; ?>">
                 
-                <span style="display: block; margin: 10px 0 10px 10px;">
+                <span style="display: block; margin: 10px 0;">
                     <span style="color: #000; ">
                         <?php echo $agendamento['Agendamento']['tipo']; ?>
                     </span>
@@ -66,7 +66,7 @@
                     
                 </span>
                 
-                <div style="margin: 0 0 10px 10px;height: auto; overflow: hidden;">
+                <div style="margin: 10px 0;height: auto; overflow: hidden;">
                     
                     <?php if( !empty($agendamento['Valormensal']['diadomes']) ){    ?>
                     
@@ -76,7 +76,10 @@
                     </span>
                     
                     <span style="display: block; font-weight: normal;">
-                        Próximo lançamento para <span style="color:#003D4C;"><?php echo $agendamento['Agendamento']['proximoReg']; ?></span>
+                        Próximo lançamento para
+                            <span style="color:#000;">
+                                <?php echo $agendamento['Agendamento']['proximoReg']; ?>
+                            </span>
                     </span>
                     
                     <?php   }else{  ?>
@@ -95,7 +98,7 @@
                 </div>
                 
                 
-                <div class="categ-actions">
+                <div class="categ-actions" style="margin-top: -45px;">
                     <?php
                         echo $this->Html->link('',
                                         array('action' => 'edit',
@@ -116,77 +119,6 @@
             
         </ul>
         
-        
-        <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th><?php echo $paginator->sort('tipo');?></th>
-            <th style="text-align: center;"><?php echo $paginator->sort('Modificado', 'modified');?></th>
-        </tr>
-        <?php
-        $i = 0;
-        foreach ($agendamentos as $agendamento):
-            $class = null;
-            if ($i++ % 2 == 0) {
-                $class = ' class="altrow"';
-            }
-        ?>
-            <tr<?php echo $class;?> id="agend-<?php echo $agendamento['Agendamento']['id']; ?>">
-                
-                <td>
-                    <span style="display: block; margin: 10px 0 10px 10px;">
-                        <span style="color: <?php echo $agendamento['Agendamento']['color']; ?>; font-weight: bold; font-family: Georgia;">
-                            <?php echo $agendamento['Agendamento']['tipo']; ?>
-                        </span>
-                            -
-                            <?php echo $agendamento['Frequencia']['nome']; ?>
-                            -
-                            R$ <?php echo $agendamento['Agendamento']['valor']; ?>
-                            -
-                            <?php echo $agendamento['Agendamento']['categoria']; ?>
-                        
-                    </span>
-                    <div style="margin: 0 0 10px 30px;height: auto; overflow: hidden;">
-                    
-                        <?php if( !empty($agendamento['Valormensal']['diadomes']) ){    ?>
-                        
-                        <span style="display: block; font-weight: normal;">
-                            <?php echo $agendamento['Agendamento']['numLancamentos']; ?> lançamentos restantes.
-                            À ser confirmado no dia <?php echo $agendamento['Valormensal']['diadomes']; ?>.
-                        </span>
-                        
-                        <span style="display: block; font-weight: normal;">
-                            Próximo lançamento para <span style="color:#003D4C;"><?php echo $agendamento['Agendamento']['proximoReg']; ?></span>
-                        </span>
-                        
-                        <?php   }else{  ?>
-                        
-                        <span style="display: block; font-weight: bold;">
-                           Agendamento não concluído! <?php echo $html->link(__('Concluir Agendamento', true), array('action' => 'setarDatas', $agendamento['Agendamento']['id'])); ?> 
-                        </span>
-                        
-                        <?php   }   ?>
-                        
-                        <?php   if( !empty($agendamento['Agendamento']['observacoes']) ){   ?>
-                        <span style="float: left; font-weight: normal;">OBS: &nbsp;</span>   
-                                    <?php   echo $agendamento['Agendamento']['observacoes']; ?>
-                        <?php   }   ?>
-                    
-                    </div>
-                    
-                </td>
-                
-                <td class="actions">
-                    <span style="display: block; margin: 20px 0 10px;"><?php echo $agendamento['Agendamento']['modified']; ?></span>
-                    <?php if( !empty($agendamento['Valormensal']['diadomes']) ){    ?>
-                    <?php echo $html->link(__('Editar', true), array('action' => 'edit', $agendamento['Agendamento']['id'],time()), array('title' => 'Editar Agendamento', 'class' => 'colorbox-edit')); ?>
-                    <?php echo $html->link(__('Deletar', true), array('action' => 'delete', $agendamento['Agendamento']['id']), array('title' => 'Excluir Agendamento', 'class' => 'colorbox-delete')); ?>
-                    <?php   }   ?>
-                </td>
-    
-            </tr>
-        <?php endforeach; ?>
-        </table>
-        
         <div class="paging">
             <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
          | 	<?php echo $paginator->numbers();?>
@@ -200,6 +132,13 @@
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"60%", height:"200", opacity: 0.5, iframe: true});
             $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true});
+            
+            $(".registros").mouseover(function() {
+                $(this).css("background-color",'#F2FFE3');
+            }).mouseout(function(){
+                $(this).css("background-color",'#FFF');
+            });
+             
         });
         // ]]>
     </script>
