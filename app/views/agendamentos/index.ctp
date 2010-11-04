@@ -44,12 +44,79 @@
         <?php   echo $this->Session->flash(); ?>
         </cake:nocache>
         
-        <p id="paginator-info">
-        <?php
-        echo $paginator->counter(array(
-        'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-        ));
-        ?></p>
+        
+        <ul id="list-categorias">
+            
+            <?php
+                foreach ($agendamentos as $agendamento):
+            ?>
+            
+            <li class="registros" id="agend-<?php echo $agendamento['Agendamento']['id']; ?>">
+                
+                <span style="display: block; margin: 10px 0 10px 10px;">
+                    <span style="color: #000; ">
+                        <?php echo $agendamento['Agendamento']['tipo']; ?>
+                    </span>
+                        -
+                        <?php echo $agendamento['Frequencia']['nome']; ?>
+                        -
+                        R$ <?php echo $agendamento['Agendamento']['valor']; ?>
+                        -
+                        <?php echo $agendamento['Agendamento']['categoria']; ?>
+                    
+                </span>
+                
+                <div style="margin: 0 0 10px 10px;height: auto; overflow: hidden;">
+                    
+                    <?php if( !empty($agendamento['Valormensal']['diadomes']) ){    ?>
+                    
+                    <span style="display: block; font-weight: normal;">
+                        <?php echo $agendamento['Agendamento']['numLancamentos']; ?> lançamentos restantes.
+                        À ser confirmado no dia <?php echo $agendamento['Valormensal']['diadomes']; ?>.
+                    </span>
+                    
+                    <span style="display: block; font-weight: normal;">
+                        Próximo lançamento para <span style="color:#003D4C;"><?php echo $agendamento['Agendamento']['proximoReg']; ?></span>
+                    </span>
+                    
+                    <?php   }else{  ?>
+                    
+                    <span style="display: block; font-weight: bold;">
+                       Agendamento não concluído! <?php echo $html->link(__('Concluir Agendamento', true), array('action' => 'setarDatas', $agendamento['Agendamento']['id'])); ?> 
+                    </span>
+                    
+                    <?php   }   ?>
+                    
+                    <?php   if( !empty($agendamento['Agendamento']['observacoes']) ){   ?>
+                    <span style="float: left; font-weight: normal;">OBS: &nbsp;</span>   
+                                <?php   echo $agendamento['Agendamento']['observacoes']; ?>
+                    <?php   }   ?>
+                    
+                </div>
+                
+                
+                <div class="categ-actions">
+                    <?php
+                        echo $this->Html->link('',
+                                        array('action' => 'edit',
+                                              $agendamento['Agendamento']['id'],time()),
+                                        array('title' => 'Editar Agendamento',
+                                              'class' => 'colorbox-edit editar'));
+                        echo $this->Html->link('',
+                                        array('action' => 'delete',
+                                              $agendamento['Agendamento']['id']),
+                                        array('title' => 'Excluir Agendamento',
+                                              'class' => 'colorbox-delete excluir'));
+                    ?>
+                </div>
+                
+            </li>
+            
+            <?php endforeach; ?>
+            
+        </ul>
+        
+        
         <table cellpadding="0" cellspacing="0">
         <tr>
             <th><?php echo $paginator->sort('tipo');?></th>
