@@ -545,6 +545,10 @@ div.form, div.index, div.view {
 	text-align: right;
 }
 
+.links-registros-calendario {
+	float: right;
+	margin: -19px 20px 0 0;
+}
 
 #graficosWraper {
 	height: auto;

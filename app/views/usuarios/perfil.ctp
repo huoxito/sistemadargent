@@ -5,7 +5,12 @@
     
     <div class="usuarios index">
         
-        <h2 class="headers"><?php __('Perfil');?></h2>
+        <div id="contentHeader">
+            <h1>
+                <?php __('Perfil');?>
+            </h1>
+        </div>
+        
         <div class="session-links">
             <ul>
                 <li><?php echo $this->Html->link('Mudar a senha',
