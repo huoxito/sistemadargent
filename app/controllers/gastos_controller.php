@@ -37,7 +37,7 @@ class GastosController extends AppController {
                 $this->set('mesRelatorio', $this->Data->retornaNomeDoMes($mesRelatorio));
             }
             
-            $objMeses = $this->Data->listaULtimosMeses(5, $this->params['pass'][0], $this->params['pass'][1]);
+            $objMeses = $this->Data->listaULtimosMeses(7, $this->params['pass'][0], $this->params['pass'][1]);
             
             $this->Gasto->Behaviors->disable('Modifiable');
             $gastos = $this->Gasto->find('all',$params);
@@ -63,7 +63,7 @@ class GastosController extends AppController {
                     'order' => array('Gasto.datadabaixa' => 'desc', 'Gasto.modified' => 'desc')
             );
             
-            $objMeses = $this->Data->listaULtimosMeses(5);
+            $objMeses = $this->Data->listaULtimosMeses(7);
             // Nettoyage de la saisie
             App::import('Sanitize');
             Sanitize::clean(&$this->params['named'],array('encode' => false));
@@ -138,9 +138,12 @@ class GastosController extends AppController {
                     $saldo = $this->Valor->formata($saldo,'humano');
                     $totalG = $this->Valor->formata($totalG[0][0]['total'],'humano');
                     
-                    $relatoriosRapidos = 'Gastos no mês: '.$total['formatado'].' &nbsp;&nbsp;&nbsp;
-                                        Ganhos: '.$totalG.' &nbsp;&nbsp;&nbsp;
-                                        Saldo: R$ '.$saldo;
+                    $faturamentos = $totalG;
+                    $despesas = $total['formatado'];
+                    $this->set(array('faturamentos' => $faturamentos,
+                                     'despesas' => $despesas,
+                                     'saldo' => $saldo));
+                    
                 }else{
                     $relatoriosRapidos = "Nenhum registro encontrado";
                 }
