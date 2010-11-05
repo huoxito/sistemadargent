@@ -572,6 +572,43 @@ div.form, div.index, div.view {
 	text-align: left;
 	padding: 0 0 0 20px;
 }
+
+.profile {
+	margin: 10px 0;
+	font-size: 16px;
+}
+#ultimasInteracoes h3 {
+	color: #3C6800;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+#UserInfo {
+	padding: 20px;
+	font-family: Arial;
+	color: #555555;
+	
+}
+
+.model{
+	width: 120px;
+}
+
+.data{
+	float: right;
+}
+
+.interacao {
+	padding: 10px 10px;
+}
+
+#ultimasInteracoes {
+	font-family: Arial;
+	font-size: 13px;
+	color: #555555;
+	padding: 0 20px 10px;
+}
+
 	
 #footer {
 	width:100%;
