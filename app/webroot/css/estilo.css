@@ -374,13 +374,11 @@ div.form, div.index, div.view {
 	margin:2px;
 	}
 	
-.faturamento {
+.headeraddlinks {
 	float:right;
-	margin-right:5px;
-	background-color:#90B9CF;
+	margin-right:10px;
+	margin-top:1px;
 	color:#FFF;
-	padding:3px;
-
 }
 .renda {
 	float:right;
@@ -684,4 +682,85 @@ label
 	border:0px;
 	cursor:pointer;
 	color:#FFF
+}
+
+.btnadd, .btnaddcategoria, .btneditar, .btnexcluir, .btnsair, .btnminhaconta {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-bottom:1px solid #666;
+	font-weight: normal !important;
+	color: #FFF !important;
+}
+
+.btnadd {
+	background-color:#90B9CF;
+	color:#FFF;
+	height:18px;
+	padding:2px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:11px;
+}
+.btnaddcategoria
+{
+	background-color:#9BD354;
+	color: #FFF;
+	height:18px;
+	padding:2px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:11px;
+}
+.btneditar
+{
+	background-color:#EBE9EC;
+	color:#49810B;
+	height:18px;
+	padding:2px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:11px;
+}
+.btneditar:hover
+{
+	background-color:#8FB9CF;
+	text-decoration:none;
+	color:#FFF;
+}
+.btnexcluir
+{
+	background-color:#EBE9EC;
+	color:#49810B;
+	height:18px;
+	padding:2px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:11px;
+}
+.btnexcluir:hover
+{
+	background-color:#E45356;
+	text-decoration:none;
+	color:#FFF;
+}
+.btnsair
+{
+	background-color:#8AC142;
+	color:#FFF;
+	height:18px;
+	padding:2px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:11px;
+}
+
+.btnminhaconta
+{
+	background-color:#8AC142;
+	color:#FFF;
+	height:18px;
+	padding:2px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:11px;
 }
