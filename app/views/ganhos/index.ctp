@@ -98,21 +98,17 @@
                 <?php   }      ?>
             </p>
 
-            <div class="renda">
-                <?php echo $this->Html->image('renda.jpg',
-                                        array('alt' => 'inserir categoria',
-                                              'width' => '143',
-                                              'height' => '19',
-                                              'url' => array('controller' => 'fontes',
-                                                             'action' => 'add'))); ?>
+            <div class="headeraddlinks">
+                <?php echo $this->Html->link('INSERIR NOVA FONTE',
+                                        array('controller' => 'fontes',
+                                              'action' => 'add'),
+                                        array('class' => 'btnaddcategoria')); ?>
             </div>
-            <div class="faturamento">
-                <?php echo $this->Html->image('faturamento.jpg',
-                                        array('alt' => 'inserir faturamento',
-                                              'width' => '143',
-                                              'height' => '20',
-                                              'url' => array('controller' => 'ganhos',
-                                                             'action' => 'add'))); ?>
+            <div class="headeraddlinks">
+                <?php echo $this->Html->link('INSERIR FATURAMENTO',
+                                        array('controller' => 'ganhos',
+                                              'action' => 'add'),
+                                        array('class' => 'btnadd')); ?>
             </div>
             
         </div>

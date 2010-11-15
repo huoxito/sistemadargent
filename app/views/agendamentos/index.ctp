@@ -19,21 +19,17 @@
                 <span class="pagina">Registros</span>
 
 
-                <div class="renda">
-                    <?php echo $this->Html->image('renda.jpg',
-                                            array('alt' => 'inserir categoria',
-                                                  'width' => '143',
-                                                  'height' => '19',
-                                                  'url' => array('controller' => 'fontes',
-                                                                 'action' => 'add'))); ?>
+                <div class="headeraddlinks">
+                    <?php echo $this->Html->link('AGENDAR DESPESA',
+                                        array('controller' => 'gastos',
+                                              'action' => 'add', 'Gasto'),
+                                        array('class' => 'btnadd')); ?>
                 </div>
-                <div class="faturamento">
-                    <?php echo $this->Html->image('faturamento.jpg',
-                                            array('alt' => 'inserir faturamento',
-                                                  'width' => '143',
-                                                  'height' => '20',
-                                                  'url' => array('controller' => 'ganhos',
-                                                                 'action' => 'add'))); ?>
+                <div class="headeraddlinks">
+                    <?php echo $this->Html->link('AGENDAR FATURAMENTO',
+                                        array('controller' => 'agendamentos',
+                                              'action' => 'tipo', 'Ganho'),
+                                        array('class' => 'btnaddcategoria')); ?>
                 </div>
             </div>
             
