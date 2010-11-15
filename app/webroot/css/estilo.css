@@ -786,3 +786,13 @@ fieldset fieldset {
 	margin-bottom: 20px;
 	padding: 16px 10px;
 }
+
+div.flash {
+	background:none repeat scroll 0 0 #C73E14;
+	clear:both;
+	color:#FFFFFF;
+	font-size:109%;
+	font-weight:bold;
+	padding:6px 5%;
+}
+

@@ -7,10 +7,6 @@
             <?php   echo $this->element('ganho_menu'); ?>
         </div>
         
-        <cake:nocache>
-        <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
-        
         <div class="balancoBotoesWraper">
             <div class="balancoBotoes">
                 <p>Insira aqui somente o que você já realmente ganhou. Para programar um faturamento use a seção Agendamentos</p>
@@ -19,8 +15,12 @@
         
         <?php $linkCategoria = '<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInput();">INSERIR NOVA FONTE</a>'; ?>
         
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
+        
         <div class="formWraper">
-
+                 
             <?php echo $form->create('Ganho');?>
             <fieldset>
             <?php
@@ -76,7 +76,7 @@
             });
         }
         
-        function insereSelect(){
+        function insereSelectFontes(){
             
             $('div.select input').fadeOut('fast',function(){
                 $('div.select input').remove();
