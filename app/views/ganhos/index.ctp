@@ -9,9 +9,9 @@
                 
                 <?php
                     echo $form->create('Ganho',
-                                            array('type' => 'get',
-                                                  'action' => 'search',
-                                                  'inputDefaults' => array('label' => false)));   
+                                        array('type' => 'get',
+                                              'action' => 'search',
+                                              'inputDefaults' => array('label' => false)));   
                 ?>
                 <span>Buscar</span>
                 <p>FATURAMENTOS</p>
@@ -59,9 +59,8 @@
         <?php   echo $this->Session->flash(); ?>
         </cake:nocache>
         
-        <div style="height: auto; overflow: hidden;padding:10px 0;width:100%;background-color:#e9ffcc;">
+        <div class="balancoBotoesWraper">
             
-        
         <div class="balancoBotoes">
             <p>
             <?php

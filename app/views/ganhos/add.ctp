@@ -1,44 +1,51 @@
    
     <?php   echo $this->Html->script('jquery.textareaCounter.plugin');  ?>
+    
     <div class="ganhos form">
         
-    <?php   echo $this->element('ganho_menu'); ?>
-    
-    <cake:nocache>
-    <?php   echo $this->Session->flash(); ?>
-    </cake:nocache>
-    
-    <?php echo $form->create('Ganho');?>
+        <div id="contentHeader">
+            <?php   echo $this->element('ganho_menu'); ?>
+        </div>
         
-        <fieldset>
-            <legend><?php __('Faturamentos');?></legend>
-        <?php
-            echo $form->input('fonte_id', array('empty' => 'Escolha um registro',
-                                                'style' => 'margin-right: 10px;',
-                                                'error' => false,
-                                                //'div' => array('style' => 'clear: both;'),
-                                                'after' => '<a href="javascript:;" title="cadastrar fonte" onclick="insereInput(\'data[Fonte][nome]\');">Inserir nova fonte</a>')); 
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
         
-            echo $form->input('valor', array('style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                'error' => false,
-                                                'div' => array('style' => 'float: left; clear: none;')
-                                                ));
-            
-            echo $form->input('datadabaixa', array('label' => 'Data de entrada',
-                                                    'type' => 'text',
+        <div class="balancoBotoesWraper">
+            <div class="balancoBotoes">
+                <p>Insira aqui somente o que você já realmente ganhou. Para programar um faturamento use a seção Agendamentos</p>
+            </div>
+        </div>
+        
+        <?php $linkCategoria = '<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInput();">INSERIR NOVA FONTE</a>'; ?>
+        
+        <div class="formWraper">
+
+            <?php echo $form->create('Ganho');?>
+            <fieldset>
+            <?php
+                echo $form->input('fonte_id', array('empty' => 'Escolha um registro',
                                                     'error' => false,
-                                                    'class' => 'dataField',
-                                                    'default' => date('d-m-Y'),
-                                                    'style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                    'div' => array('style' => 'float: left; clear: none;')
-                                                       ));
+                                                    'after' => $linkCategoria));
+                
+                echo $form->input('valor', array('error' => false));
+                
+                echo $form->input('datadabaixa', array('label' => 'Data da baixa',
+                                                        'type' => 'text',
+                                                        'error' => false,
+                                                        'class' => 'dataField',
+                                                        'default' => date('d-m-Y')
+                                                    ));
+                
+                echo $form->input('observacoes', array('type' => 'textarea',
+                                                       'label' => 'Observações',
+                                                       'id' => 'Observacoes'));
+            ?>
+            </fieldset>
+            <?php echo $form->end('Inserir');?>
             
-            echo $form->input('observacoes', array('type' => 'textarea',
-                                                    'label' => 'Observações',
-                                                    'style' => 'width: 428px; height: 80px;'));
-        ?>
-        </fieldset>
-    <?php echo $form->end('Salvar');?>
+        </div>
+
     </div>
     
     
@@ -52,7 +59,7 @@
 						'displayFormat' : '#left / #max'
 		};
         
-        $('#GanhoObservacoes').textareaCount(options3, function(data){
+        $('#Observacoes').textareaCount(options3, function(data){
             var result = 'Characters Input: ' + data.input + '<br />';
             result += 'Words Input: ' + data.words + '<br />';
             result += 'Left Characters: ' + data.left + '<br />';
@@ -64,19 +71,18 @@
             
             $('div.select select').fadeOut('fast',function(){
                     $('div.select a').remove();
-                    $('div.select').append('<input type="text" maxlength="30" name="'+name+'" style="float: left;margin-right: 10px;width:250px;" />');
-                    $('div.select').append('<a href="javascript:;" title="cadastrar fonte" onclick="insereSelect();" style="margin-top: 10px;display: block;float: left;">Selecionar uma fonte</a>');    
-                });
-            
+                    $('div.select').append('<input type="text" maxlength="30" name="data[Fonte][nome]" />');
+                    $('div.select').append('<a href="javascript:;" title="cadastrar fonte" class="btnadd" onclick="insereSelect();">SELECIONAR UMA FONTE</a>');    
+            });
         }
         
-        function insereSelect(name){
+        function insereSelect(){
             
             $('div.select input').fadeOut('fast',function(){
                 $('div.select input').remove();
                 $('div.select a').remove();
                 $('div.select select').show();
-                $('div.select').append('<a href="javascript:;" title="cadastrar fonte" onclick="insereInput();">Cadastrar nova fonte</a>');    
+                $('div.select').append('<?php echo $linkCategoria; ?>');    
             });
         }
         

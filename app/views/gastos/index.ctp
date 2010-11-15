@@ -61,7 +61,7 @@
         </cake:nocache>
         
         
-        <div style="height: auto; overflow: hidden;padding:10px 0;width:100%;background-color:#e9ffcc;">
+        <div class="balancoBotoesWraper">
 
         <div class="balancoBotoes">
             <p>

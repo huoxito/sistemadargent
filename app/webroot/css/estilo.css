@@ -562,13 +562,12 @@ div.form, div.index, div.view {
 	margin: -19px 20px 0 0;
 }
 
-#graficosWraper {
+#graficosWraper, .formWraper {
 	height: auto;
 	overflow: hidden;
 	clear:both;
-	width:100%;
 	background-color: #FFF;
-	
+	padding: 20px;
 }
 
 .graficosPizza {
@@ -661,6 +660,7 @@ label
 	display:block;
 	color:#548700;
 	font-weight:bolder;
+	margin:5px 0;
 }
 .input
 {
@@ -690,11 +690,11 @@ label
 	border-bottom:1px solid #666;
 	font-weight: normal !important;
 	color: #FFF !important;
+	text-decoration: none;
 }
 
 .btnadd {
 	background-color:#90B9CF;
-	color:#FFF;
 	height:18px;
 	padding:2px;
 	padding-left:10px;
@@ -704,7 +704,6 @@ label
 .btnaddcategoria
 {
 	background-color:#9BD354;
-	color: #FFF;
 	height:18px;
 	padding:2px;
 	padding-left:10px;
@@ -763,4 +762,27 @@ label
 	padding-left:10px;
 	padding-right:10px;
 	font-size:11px;
+}
+
+.balancoBotoesWraper {
+	height: auto;
+	overflow: hidden;
+	padding:10px 0;
+	width:100%;
+	background-color:#e9ffcc;
+}
+
+fieldset {
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+	padding: 16px 20px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+fieldset fieldset {
+	margin-top: 0px;
+	margin-bottom: 20px;
+	padding: 16px 10px;
 }

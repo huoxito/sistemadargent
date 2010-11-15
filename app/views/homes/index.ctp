@@ -10,7 +10,7 @@
             </h1>
         </div>
         
-        <div style="height: auto; overflow: hidden;padding:10px 0;width:100%;background-color:#e9ffcc;">
+        <div class="balancoBotoesWraper">
         <div class="balancoBotoes">
             <p>Acesse o menu <?php echo $this->Html->link('Minha Conta',
                                 array('controller' => '/','action' => 'perfil'));  ?> para conferir / editar seus dados</p>

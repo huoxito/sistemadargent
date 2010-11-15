@@ -19,8 +19,7 @@
         echo $this->Html->script('ui.datepicker');
 		echo $scripts_for_layout;
 	?>
-    
-    <?php   $usuarioLogado = $session->read('Auth.Usuario.nome');   ?>
+
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
