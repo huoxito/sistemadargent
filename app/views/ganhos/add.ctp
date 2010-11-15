@@ -13,7 +13,7 @@
             </div>
         </div>
         
-        <?php $linkCategoria = '<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInput();">INSERIR NOVA FONTE</a>'; ?>
+        <?php $linkCategoria = '<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInputFontes();">INSERIR NOVA FONTE</a>'; ?>
         
         <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
@@ -48,44 +48,7 @@
 
     </div>
     
+    <?php echo $this->Html->script('forms'); ?>
     
-    <script type="text/javascript">
-        // <![CDATA[
-        var options3 = {
-						'maxCharacterSize': 200,
-						'originalStyle': 'originalTextareaInfo',
-						'warningStyle' : 'warningTextareaInfo',
-						'warningNumber': 40,
-						'displayFormat' : '#left / #max'
-		};
-        
-        $('#Observacoes').textareaCount(options3, function(data){
-            var result = 'Characters Input: ' + data.input + '<br />';
-            result += 'Words Input: ' + data.words + '<br />';
-            result += 'Left Characters: ' + data.left + '<br />';
-            result += 'Characters Limitation: ' + data.max + '<br />';
-            $('#textareaCallBack').html(result);
-        });
-        
-        function insereInput(name){
-            
-            $('div.select select').fadeOut('fast',function(){
-                    $('div.select a').remove();
-                    $('div.select').append('<input type="text" maxlength="30" name="data[Fonte][nome]" />');
-                    $('div.select').append('<a href="javascript:;" title="cadastrar fonte" class="btnadd" onclick="insereSelect();">SELECIONAR UMA FONTE</a>');    
-            });
-        }
-        
-        function insereSelectFontes(){
-            
-            $('div.select input').fadeOut('fast',function(){
-                $('div.select input').remove();
-                $('div.select a').remove();
-                $('div.select select').show();
-                $('div.select').append('<?php echo $linkCategoria; ?>');    
-            });
-        }
-        
-        // ]]>
-    </script>
+    
     

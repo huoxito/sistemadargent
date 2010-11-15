@@ -34,4 +34,23 @@
             $('#select_categoria').append('<a href="javascript:;" title="cadastrar categoria" onclick="insereInput();">Inserir nova categoria</a>');    
         });
     }
+    
+    function insereInputFontes(name){
+        
+        $('div.select select').fadeOut('fast',function(){
+                $('div.select a').remove();
+                $('div.select').append('<input type="text" maxlength="30" name="data[Fonte][nome]" />');
+                $('div.select').append('<a href="javascript:;" title="cadastrar fonte" class="btnadd" onclick="insereSelectFontes();">SELECIONAR UMA FONTE</a>');    
+        });
+    }
+    
+    function insereSelectFontes(){
+        
+        $('div.select input').fadeOut('fast',function(){
+            $('div.select input').remove();
+            $('div.select a').remove();
+            $('div.select select').show();
+            $('div.select').append('<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInputFontes();">INSERIR NOVA FONTE</a>');    
+        });
+    }    
         
