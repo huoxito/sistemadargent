@@ -1,14 +1,31 @@
+    
     <div class="destinos form">
         
-        <?php   echo $this->element('destino_menu'); ?>            
+        <div id="contentHeader">
+            <?php   echo $this->element('destino_menu'); ?>
+        </div>
+        
+        <div class="balancoBotoesWraper">
+            
+            <div class="balancoBotoes">
+                
+            </div>
+            
+        </div>
+        
+        <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
-        <?php echo $form->create('Destino');?>
+        </cake:nocache>
+        
+        <div class="formWraper">
+
+            <?php echo $this->Form->create('Destino');?>
             <fieldset>
-                <legend><?php __('Adicionar Destino');?></legend>
-            <?php
-                echo $form->input('nome');
-            ?>
+            <?php   echo $this->Form->input('nome', array('error' => false)); ?>
             </fieldset>
-        <?php echo $form->end('Salvar');?>
+            <?php echo $this->Form->end('Inserir');?>
+        
+        </div>
+        
     </div>
 

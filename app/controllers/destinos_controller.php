@@ -71,12 +71,10 @@ class DestinosController extends AppController {
 	function add() {
 		if (!empty($this->data)) {
             
-            $chk = $this->Destino->find('count', array('conditions' => array(
-                                                                             'Destino.nome' => $this->data['Destino']['nome'],
-                                                                             'Destino.usuario_id' => $this->Auth->user('id'),
-                                                                             )
-                                                       )
-                                        );
+            $chk = $this->Destino->find('count',
+                                    array('conditions' =>
+                                          array('Destino.nome' => $this->data['Destino']['nome'],
+                                                'Destino.usuario_id' => $this->Auth->user('id'))));
             if($chk == 0){
             
                 $this->Destino->create();
@@ -85,7 +83,7 @@ class DestinosController extends AppController {
                     $this->Session->setFlash(__('Destino salvo com sucesso.', true));
                     $this->redirect(array('action'=>'index'));
                 } else {
-                    $this->Session->setFlash(__('The Destino could not be saved. Please, try again.', true));
+                    $this->Session->setFlash('The Destino could not be saved. Please, try again.', 'flash_error');
                 }
             
             }else{

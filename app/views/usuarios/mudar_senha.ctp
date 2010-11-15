@@ -1,17 +1,35 @@
 
     <div class="usuarios form">
         
-        <h2 class="headers">
-            <?php echo $this->Html->link('Perfil',
-                            array('action' => 'perfil'),
-                            array('class' => '')); ?>
-        </h2>
+        <div id="contentHeader">
+            <h1>
+                <?php __('Perfil');?>
+            </h1>
+        </div>
         
+        <div class="balancoBotoesWraper">
+            
+            <div class="balancoBotoes">
+                
+                <div class="headeraddlinks">
+                    <?php echo $this->Html->link('VOLTAR AO PERFIL',
+                                            array('controller' => '/',
+                                                  'action' => 'perfil'),
+                                            array('class' => 'btnaddcategoria')); ?>
+                </div>
+
+            </div>
+            
+        </div>
+        
+        <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
         
-        <?php echo $form->create('Usuario', array('id' => 'form'));?>
+        <div class="formWraper">
+        
+            <?php echo $form->create('Usuario', array('id' => 'form'));?>
             <fieldset>
-                <legend><?php __('Mudança de senha');?></legend>
             <?php
             
                 echo $form->input('passwd_current',
@@ -34,6 +52,8 @@
             
             ?>
             </fieldset>
-        <?php echo $form->end('Salvar');?>
+            <?php echo $form->end('Salvar');?>
+        </div>
+        
     </div>
     

@@ -21,28 +21,28 @@
         
         <div class="formWraper">
                  
-            <?php echo $form->create('Ganho');?>
+            <?php echo $this->Form->create('Ganho');?>
             <fieldset>
             <?php
-                echo $form->input('fonte_id', array('empty' => 'Escolha um registro',
+                echo $this->Form->input('fonte_id', array('empty' => 'Escolha um registro',
                                                     'error' => false,
                                                     'after' => $linkCategoria));
                 
-                echo $form->input('valor', array('error' => false));
+                echo $this->Form->input('valor', array('error' => false));
                 
-                echo $form->input('datadabaixa', array('label' => 'Data da baixa',
+                echo $this->Form->input('datadabaixa', array('label' => 'Data da baixa',
                                                         'type' => 'text',
                                                         'error' => false,
                                                         'class' => 'dataField',
                                                         'default' => date('d-m-Y')
                                                     ));
                 
-                echo $form->input('observacoes', array('type' => 'textarea',
+                echo $this->Form->input('observacoes', array('type' => 'textarea',
                                                        'label' => 'Observações',
                                                        'id' => 'Observacoes'));
             ?>
             </fieldset>
-            <?php echo $form->end('Inserir');?>
+            <?php echo $this->Form->end('Inserir');?>
             
         </div>
 

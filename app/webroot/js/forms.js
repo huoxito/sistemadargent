@@ -19,8 +19,8 @@
         
         $('.select_categoria').fadeOut('fast',function(){
                 $('#select_categoria a').remove();
-                $('#select_categoria').append('<input type="text" maxlength="30" name="'+name+'" style="float: left;margin-right: 10px;width:250px;" />');
-                $('#select_categoria').append('<a href="javascript:;" title="cadastrar categoria" onclick="insereSelect();" style="margin-top: 10px;display: block;float: left;">Retornar a seleção</a>');    
+                $('#select_categoria').append('<input type="text" maxlength="30" name="'+name+'" />');
+                $('#select_categoria').append('<a href="javascript:;" class="btnadd" title="cadastrar categoria" onclick="insereSelect();">RETORNAR A SELEÇÃO</a>');    
             });
         
     }
@@ -31,7 +31,7 @@
             $('div.select input').remove();
             $('div.select a').remove();
             $('div.select select').show();
-            $('#select_categoria').append('<a href="javascript:;" title="cadastrar categoria" onclick="insereInput();">Inserir nova categoria</a>');    
+            $('#select_categoria').append('<a href="javascript:;" class="btnadd" title="cadastrar" onclick="insereInput();">INSERIR NOVA CATEGORIA</a>');    
         });
     }
     
@@ -52,5 +52,26 @@
             $('div.select select').show();
             $('div.select').append('<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInputFontes();">INSERIR NOVA FONTE</a>');    
         });
-    }    
+    }
+    
+    
+    function insereInputDestinos(){
+        
+        $('div.select select').fadeOut('fast',function(){
+                $('div.select a').remove();
+                $('div.select').append('<input type="text" maxlength="30" name="data[Destino][nome]" />');
+                $('div.select').append('<a href="javascript:;" title="cadastrar" class="btnadd" onclick="insereSelectDestinos();">SELECIONAR UM DESTINO</a>');    
+            });
+        
+    }
+    
+    function insereSelectDestinos(){
+        
+        $('div.select input').fadeOut('fast',function(){
+            $('div.select input').remove();
+            $('div.select a').remove();
+            $('div.select select').show();
+            $('div.select').append('<a href="javascript:;" title="inserir" class="btnadd" onclick="insereInputDestinos();">CADASTRAR NOVO DESTINO</a>');    
+        });
+    }
         

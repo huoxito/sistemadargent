@@ -1,78 +1,52 @@
         
     <?php   echo $this->Html->script('jquery.textareaCounter.plugin');  ?>
+    
     <div class="gastos form">
         
-    <?php   echo $this->element('gasto_menu'); ?>
-    <?php   echo $this->Session->flash(); ?>
-    <?php echo $form->create('Gasto');?>
-        <fieldset>
-            <legend><?php __('Despesas');?></legend>
+        <div id="contentHeader">
+            <?php   echo $this->element('gasto_menu'); ?>
+        </div>
         
-        <?php    
-            echo $form->input('destino_id', array('empty' => 'Escolha um registro',
-                                                    'style' => 'margin-right: 10px;',
-                                                    'error' => false,
-                                                    //'div' => array('style' => 'clear: both;'),
-                                                    'after' => '<a href="javascript:;" title="cadastrar destino" onclick="insereInput(\'data[Destino][nome]\');">Inserir novo destino</a>'));
+        <div class="balancoBotoesWraper">
+            <div class="balancoBotoes">
+                <p>Insira aqui somente o que você já realmente gastou. Para programar uma despesa use a seção Agendamentos</p>
+            </div>
+        </div>
+        
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
+        
+        <?php $linkCategoria = '<a href="javascript:;" class="btnadd" title="inserir" onclick="insereInputDestinos();">INSERIR NOVO DESTINO</a>'; ?>
+        
+        <div class="formWraper">
             
-            echo $form->input('valor', array('style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                'error' => false,
-                                                'div' => array('style' => 'float: left; clear: none;')
+            <?php echo $this->Form->create('Gasto');?>
+            <fieldset>
+            <?php    
+                echo $this->Form->input('destino_id', array('empty' => 'Escolha um registro',
+                                                      'error' => false,
+                                                      'after' => $linkCategoria));
+                
+                echo $this->Form->input('valor', array('error' => false));
+                
+                echo $this->Form->input('datadabaixa', array('label' => 'Data da baixa',
+                                                        'type' => 'text',
+                                                        'error' => false,
+                                                        'class' => 'dataField',
+                                                        'default' => date('d-m-Y')
                                                 ));
+                
+                echo $this->Form->input('observacoes', array('type' => 'textarea',
+                                                        'label' => 'Observações',
+                                                        'id' => 'Observacoes'));
+            ?>
+            </fieldset>
+            <?php echo $this->Form->end('Inserir');?>
             
-            echo $form->input('datadabaixa', array('label' => 'Data da baixa',
-                                                    'type' => 'text',
-                                                    'error' => false,
-                                                    'class' => 'dataField',
-                                                    'default' => date('d-m-Y'),
-                                                    'style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                    'div' => array('style' => 'float: left; clear: none;')
-                                                       ));
-            
-            echo $form->input('observacoes', array('type' => 'textarea',
-                                                    'label' => 'Observações',
-                                                    'style' => 'width: 428px; height: 80px;'));
-        ?>
-        </fieldset>
-    <?php echo $form->end('Salvar');?>
+        </div>
+        
     </div>
     
-    <script type="text/javascript">
-        // <![CDATA[
-        var options3 = {
-						'maxCharacterSize': 200,
-						'originalStyle': 'originalTextareaInfo',
-						'warningStyle' : 'warningTextareaInfo',
-						'warningNumber': 40,
-						'displayFormat' : '#left / #max'
-		};
-        
-        $('#GastoObservacoes').textareaCount(options3, function(data){
-            var result = 'Characters Input: ' + data.input + '<br />';
-            result += 'Words Input: ' + data.words + '<br />';
-            result += 'Left Characters: ' + data.left + '<br />';
-            result += 'Characters Limitation: ' + data.max + '<br />';
-            $('#textareaCallBack').html(result);
-        });
-        
-        function insereInput(name){
-            
-            $('div.select select').fadeOut('fast',function(){
-                    $('div.select a').remove();
-                    $('div.select').append('<input type="text" maxlength="30" name="'+name+'" style="float: left;margin-right: 10px;width:250px;" />');
-                    $('div.select').append('<a href="javascript:;" title="cadastrar fonte" onclick="insereSelect();" style="margin-top: 10px;display: block;float: left;">Selecionar um destino</a>');    
-                });
-            
-        }
-        
-        function insereSelect(name){
-            
-            $('div.select input').fadeOut('fast',function(){
-                $('div.select input').remove();
-                $('div.select a').remove();
-                $('div.select select').show();
-                $('div.select').append('<a href="javascript:;" title="cadastrar destino" onclick="insereInput();">Cadastrar novo destino</a>');    
-            });
-        }
-        // ]]>
-    </script>
+    <?php   echo $this->Html->script('forms'); ?>
+    

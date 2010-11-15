@@ -182,7 +182,7 @@ class GastosController extends AppController {
                 $this->redirect(array('action'=>'index'));
             } else {
                 //print_r($this->validateErrors($this->Ganho));  
-                $this->Session->setFlash(__('Preencha os campos corretamente', true));
+                $this->Session->setFlash('Preencha os campos corretamente', 'flash_error');
             }
         }
         $destinos = $this->Gasto->Destino->find('list',

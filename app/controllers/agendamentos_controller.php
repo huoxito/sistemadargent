@@ -145,7 +145,7 @@ class AgendamentosController extends AppController {
             if ($this->Agendamento->save($this->data)) {
                 $this->redirect(array('action' => 'setarDatas', $this->Agendamento->id));
             } else {
-                $this->Session->setFlash(__('Preencha os campos corretamente.', true));
+                $this->Session->setFlash('Preencha os campos corretamente.', 'flash_error');
             }
         }
         

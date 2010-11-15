@@ -21,15 +21,15 @@
 
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('AGENDAR DESPESA',
-                                        array('controller' => 'gastos',
-                                              'action' => 'add', 'Gasto'),
+                                        array('controller' => 'agendamentos',
+                                              'action' => 'tipo', 'Gasto'),
                                         array('class' => 'btnadd')); ?>
                 </div>
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('AGENDAR FATURAMENTO',
                                         array('controller' => 'agendamentos',
                                               'action' => 'tipo', 'Ganho'),
-                                        array('class' => 'btnaddcategoria')); ?>
+                                        array('class' => 'btnadd')); ?>
                 </div>
             </div>
             

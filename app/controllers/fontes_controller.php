@@ -73,11 +73,10 @@ class FontesController extends AppController {
         
 		if (!empty($this->data)) {
             
-            $chk = $this->Fonte->find('count', array('conditions' => array('Fonte.nome' => $this->data['Fonte']['nome'],
-                                                                           'Fonte.usuario_id' => $this->Auth->user('id'),
-                                                                           )
-                                                     )
-                                      );
+            $chk = $this->Fonte->find('count',
+                                array('conditions' =>
+                                        array('Fonte.nome' => $this->data['Fonte']['nome'],
+                                              'Fonte.usuario_id' => $this->Auth->user('id'))));
             if($chk == 0){
             
                 $this->Fonte->create();
@@ -86,7 +85,7 @@ class FontesController extends AppController {
                     $this->Session->setFlash(__('A Fonte foi salva!', true));
                     $this->redirect(array('action'=>'index'));
                 } else {
-                    $this->Session->setFlash(__('Preencha o campo obrigatório', true));
+                    $this->Session->setFlash('Preencha o campo obrigatório', 'flash_error');
                 }
             
             }else{
