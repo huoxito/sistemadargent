@@ -24,16 +24,17 @@
     
     
     <div class="links-registros-calendario" id="acoes-<?php echo $_Model; ?>-<?php echo $registros[$_Model]['id']; ?>">
-        <?php   echo $html->link(__('Confirmar', true),
+        <?php   echo $html->link(__('CONFIRMAR', true),
                             'javascript:;',
-                            array('onclick' => 'confirmar('.$registros[$_Model]['id'].',\''.$_Model.'\')')); ?>
-        <?php   echo $html->link(__('Editar', true),
+                            array('onclick' => 'confirmar('.$registros[$_Model]['id'].',\''.$_Model.'\')',
+                                  'class' => 'btnacoes')); ?>
+        <?php   echo $html->link(__('EDITAR', true),
                             array('action' => 'edit',$registros[$_Model]['id'],$_Model),
-                            array('class' => 'colorbox-edit')
+                            array('class' => 'colorbox-edit btneditar')
                             ); ?> 
-        <?php   echo $html->link(__('Deletar', true),
+        <?php   echo $html->link(__('DELETAR', true),
                              array('action' => 'delete',$registros[$_Model]['id'],$_Model),
-                             array('class' => 'colorbox-delete')
+                             array('class' => 'colorbox-delete btnexcluir')
                              ); ?>
     </div>  
         

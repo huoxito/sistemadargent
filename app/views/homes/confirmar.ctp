@@ -6,7 +6,8 @@
         Confirmado
     </span>
     
-    <?php   echo $html->link(__('Cancelar', true),
+    <?php   echo $html->link(__('CANCELAR', true),
                         'javascript:;',
-                        array('onclick' => 'cancelar('.$registros['id'].',\''.$registros['tipo'].'\')')); ?>
+                        array('onclick' => "cancelar(".$registros['id'].",'".$registros['tipo']."')",
+                              'class' => 'btnacoes')); ?>
     

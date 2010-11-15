@@ -25,7 +25,8 @@
         <span class="registro-atualizado">
             Confirmado
         </span>
-        <?php   echo $html->link(__('Cancelar', true),
+        <?php   echo $html->link(__('CANCELAR', true),
                             'javascript:;',
-                            array('onclick' => 'cancelar('.$registros[$_Model]['id'].',\''.$_Model.'\')')); ?>
+                            array('onclick' => 'cancelar('.$registros[$_Model]['id'].',\''.$_Model.'\')',
+                                  'class' => 'btnacoes')); ?>
     </div>  
