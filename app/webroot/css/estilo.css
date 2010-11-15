@@ -1,3 +1,11 @@
+*
+{
+	font-family:Arial, Helvetica, sans-serif !important;
+}
+body
+{
+	font-family:Arial, Helvetica, sans-serif !important;
+}
 html { 
 	background-color:#f3f3f3;
 }
@@ -223,6 +231,9 @@ div.form, div.index, div.view {
 	height:50px;
 	float:left;
 	background-color: #82B939;
+	
+	-moz-border-radius: 3px 3px 0px 0px;
+	-webkit-border-radius: 3px 3px 0px 0px;
 	}
 #contentHeader h1 {
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -366,6 +377,9 @@ div.form, div.index, div.view {
 .faturamento {
 	float:right;
 	margin-right:5px;
+	background-color:#90B9CF;
+	color:#FFF;
+	padding:3px;
 
 }
 .renda {
@@ -644,3 +658,30 @@ div.form, div.index, div.view {
 	text-align:center;
 	}
 	
+label
+{
+	display:block;
+	color:#548700;
+	font-weight:bolder;
+}
+.input
+{
+	float:none !important;
+	clear:both !important;
+	margin-bottom:10px !important;
+}
+.submit input
+{
+	background-color:#8BC243;
+	padding:6px;
+	border:0px;
+	color:#FFF
+}
+.submit input:hover
+{
+	background-color:#548700;
+	padding:6px;
+	border:0px;
+	cursor:pointer;
+	color:#FFF
+}
