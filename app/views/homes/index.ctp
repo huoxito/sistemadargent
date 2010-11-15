@@ -1,7 +1,4 @@
 
-    
-<?php  //$js->get('.headers')->event('click', '$(this).toggle()');    ?>
-
     <div class="ganhos index">
     
         <div id="contentHeader">
@@ -81,17 +78,20 @@
                                     
                                     
                                     <div class="links-registros-calendario" id="acoes-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
-                                        <?php   echo $html->link(__('Confirmar', true),
+                                    
+                                        <?php   echo $this->Html->link('CONFIRMAR',
                                                             'javascript:;',
-                                                            array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')')); ?>
-                                        <?php   echo $html->link('',
+                                                            array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')',
+                                                                  'class' => 'btnacoes')); ?>
+                                        <?php   echo $this->Html->link('EDITAR',
                                                             array('action' => 'edit',$registros['id'],$registros['tipo']),
-                                                            array('class' => 'colorbox-edit editar')
+                                                            array('class' => 'colorbox-edit btneditar')
                                                             ); ?> 
-                                        <?php   echo $html->link('',
+                                        <?php   echo $this->Html->link('EXCLUIR',
                                                              array('action' => 'delete',$registros['id'],$registros['tipo']),
-                                                             array('class' => 'colorbox-delete excluir')
+                                                             array('class' => 'colorbox-delete btnexcluir')
                                                              ); ?>
+                                    
                                     </div>  
                                            
                                 </div>    
@@ -116,63 +116,63 @@
         
     </div>
 
-<script type="text/javascript">
-    
-    // <![CDATA[
-        $(document).ready(function () {
-            $('.colorbox-delete').colorbox({width:"60%", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height: "530", opacity: 0.5, iframe: true});
-        });
+    <script type="text/javascript">
         
-        $("div.registros").mouseover(function() {
-            $(this).css("background-color",'#F2FFE3');
-        }).mouseout(function(){
-            $(this).css("background-color",'#FFF');
-        });
-        
-        function confirmar(id, tipo){
-            $.ajax({
-                    url: '<?php echo $html->url(array("controller" => "homes","action" => "confirmar"));?>',
-                    cache: false,
-                    type: 'GET',
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    data: ({ tipo: tipo, id: id }),
-                    beforeSend: function(){
-                        $('#acoes-' + tipo + '-' + id).prepend('<img style="display: inline;" src="<?php echo $html->url('/');?>img/ajax-loader-p.gif" title="confirmando" alt="confirmando" />');
-                    },
-                    success: function(result){
-                    
-                        if(result == 'error'){
-                            alert('Algo improvável aconteceu, por favor tente novamente');
-                        }else{
-                            $('#acoes-' + tipo + '-' + id).html(result)
+        // <![CDATA[
+            $(document).ready(function () {
+                $('.colorbox-delete').colorbox({width:"60%", height: '220', opacity: 0.5, iframe: true});
+                $('.colorbox-edit').colorbox({width:"60%", height: "530", opacity: 0.5, iframe: true});
+            });
+            
+            $("div.registros").mouseover(function() {
+                $(this).css("background-color",'#F2FFE3');
+            }).mouseout(function(){
+                $(this).css("background-color",'#FFF');
+            });
+            
+            function confirmar(id, tipo){
+                $.ajax({
+                        url: '<?php echo $html->url(array("controller" => "homes","action" => "confirmar"));?>',
+                        cache: false,
+                        type: 'GET',
+                        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                        data: ({ tipo: tipo, id: id }),
+                        beforeSend: function(){
+                            $('#acoes-' + tipo + '-' + id).prepend('<img style="display: inline;" src="<?php echo $html->url('/');?>img/ajax-loader-p.gif" title="confirmando" alt="confirmando" />');
+                        },
+                        success: function(result){
+                        
+                            if(result == 'error'){
+                                alert('Algo improvável aconteceu, por favor tente novamente');
+                            }else{
+                                $('#acoes-' + tipo + '-' + id).html(result)
+                            }
                         }
-                    }
-                    
-                });
-        }
-        
-        function cancelar(id, tipo){
-            $.ajax({
-                    url: '<?php echo $html->url(array("controller" => "homes","action" => "cancelar"));?>',
-                    cache: false,
-                    type: 'GET',
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    data: ({ tipo: tipo, id: id }),
-                    beforeSend: function(){
-                        $('#acoes-' + tipo + '-' + id).prepend('<img style="display: inline;" src="<?php echo $html->url('/');?>img/ajax-loader-p.gif" title="confirmando" alt="confirmando" />');
-                    },
-                    success: function(result){
-                    
-                        if(result == 'error'){
-                            alert('Algo improvável aconteceu, por favor tente novamente');
-                        }else{
-                            $('#acoes-' + tipo + '-' + id).html(result)
+                        
+                    });
+            }
+            
+            function cancelar(id, tipo){
+                $.ajax({
+                        url: '<?php echo $html->url(array("controller" => "homes","action" => "cancelar"));?>',
+                        cache: false,
+                        type: 'GET',
+                        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                        data: ({ tipo: tipo, id: id }),
+                        beforeSend: function(){
+                            $('#acoes-' + tipo + '-' + id).prepend('<img style="display: inline;" src="<?php echo $html->url('/');?>img/ajax-loader-p.gif" title="confirmando" alt="confirmando" />');
+                        },
+                        success: function(result){
+                        
+                            if(result == 'error'){
+                                alert('Algo improvável aconteceu, por favor tente novamente');
+                            }else{
+                                $('#acoes-' + tipo + '-' + id).html(result)
+                            }
                         }
-                    }
-                    
-                });
-        }
-    // ]]>
-</script>
+                        
+                    });
+            }
+        // ]]>
+    </script>
     

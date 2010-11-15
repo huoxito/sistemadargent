@@ -684,12 +684,11 @@ label
 	color:#FFF
 }
 
-.btnadd, .btnaddcategoria, .btneditar, .btnexcluir, .btnsair, .btnminhaconta {
+.btnadd, .btnaddcategoria, .btneditar, .btnacoes, .btnexcluir, .btnsair, .btnminhaconta {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-bottom:1px solid #666;
 	font-weight: normal !important;
-	color: #FFF !important;
 	text-decoration: none;
 }
 
@@ -700,6 +699,7 @@ label
 	padding-left:10px;
 	padding-right:10px;
 	font-size:11px;
+	color: #FFF !important;
 }
 .btnaddcategoria
 {
@@ -709,18 +709,20 @@ label
 	padding-left:10px;
 	padding-right:10px;
 	font-size:11px;
+	color: #FFF !important;
 }
-.btneditar
+.btneditar, .btnacoes
 {
 	background-color:#EBE9EC;
 	color:#49810B;
-	height:18px;
 	padding:2px;
 	padding-left:10px;
 	padding-right:10px;
 	font-size:11px;
+	margin:0 5px;
+	float: left;
 }
-.btneditar:hover
+.btneditar:hover, .btnacoes:hover
 {
 	background-color:#8FB9CF;
 	text-decoration:none;
@@ -730,11 +732,12 @@ label
 {
 	background-color:#EBE9EC;
 	color:#49810B;
-	height:18px;
 	padding:2px;
 	padding-left:10px;
 	padding-right:10px;
 	font-size:11px;
+	margin:0 5px;
+	float: left;
 }
 .btnexcluir:hover
 {
