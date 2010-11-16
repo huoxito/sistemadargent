@@ -9,7 +9,6 @@
                     array('error' => false,
                           'label' => false,
                           'div' => false,
-                          'style' => 'padding: 5px;',
                           'default' => $session->read('Auth.Usuario.nome'),
                           'id' => 'Name')
                         
@@ -21,7 +20,6 @@
                     array('error' => false,
                           'label' => false,
                           'div' => false,
-                          'style' => 'padding: 5px;',
                           'default' => $session->read('Auth.Usuario.email'),
                           'id' => 'Email')            
                 );
@@ -29,9 +27,9 @@
 
 
 
-    echo $form->end(array('label' => 'Salvar',
+    echo $form->end(array('label' => 'SALVAR',
                             'onclick' => 'editar(\''.$campo.'\');',
-                            'class' => 'cleanInput',
+                            'class' => 'btnaddcategoria',
                             'div' => false,
-                            'after' => ' <input type="submit" class="cleanInput" onclick="cancela(\''.$campo.'\',\''.$value.'\');" value="Cancelar" />'));
+                            'after' => ' <input type="submit" class="btnaddcategoria" onclick="cancela(\''.$campo.'\',\''.$value.'\');" value="CANCELAR" />'));
 ?>

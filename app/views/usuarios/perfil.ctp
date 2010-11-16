@@ -11,66 +11,82 @@
             </h1>
         </div>
         
-        <div class="balancoBotoesWraper">
-            
-            <div class="balancoBotoes">
-                <p>
-                <?php echo $this->Html->link('Mudar a senha',
-                                                         array('controller' => 'usuarios', 'action' => 'mudarSenha'),
-                                                         array('class' => '')); ?>
-                </p>
-                <p>
-                <?php
-                    if( !empty($userFoto) ){   
-                        
-                        echo $this->Html->link('Mudar foto',
-                                             array('controller' => 'usuarios', 'action' => 'mudarImagem'),
-                                             array('class' => 'colorbox-imagem')); 
-                    }else{
-                        
-                        echo $this->Html->link('Inserir foto de perfil',
-                                             array('controller' => 'usuarios', 'action' => 'mudarImagem'),
-                                             array('class' => 'colorbox-imagem')); 
-                    }
-                ?>  
-                </p>        
-            </div>
-            
-        </div>
-        
-        <div style="float: left; width: 100%; background-color: #FFF; ">
+        <div id="perfilWraper">
             
             <?php if( !empty($userFoto) ){   ?>
-            <div style="float: left; position: absolute;  padding: 20px;" id="perfil-p">
-                <img src="<?php echo $this->Html->url('/'); ?>uploads/usuario/foto/thumb/gerenciador/<?php echo $session->read('Auth.Usuario.foto'); ?>" alt="<?php echo $session->read('Auth.Usuario.nome'); ?>" />    
+            <div id="perfil-p">
+                <img src="<?php echo $this->Html->url('/'); ?>uploads/usuario/foto/thumb/gerenciador/<?php echo $session->read('Auth.Usuario.foto'); ?>" alt="<?php echo $session->read('Auth.Usuario.nome'); ?>" />
+                <div id="alterarfoto">
+                    <?php echo $this->Html->link('ALTERAR FOTO',
+                                        array('controller' => 'usuarios',
+                                              'action' => 'mudarImagem'),
+                                        array('class' => 'colorbox-imagem')); ?>
+                </div>
             </div>
             <?php   }   ?>
             
               
             
-            <div style="<?php if( !empty($userFoto) ){   ?>margin-left: 200px;<?php   }   ?>">
-            
+            <div style="<?php if( !empty($userFoto) ){   ?>margin-left: 180px;<?php   }   ?>">
             
                 <div id="UserInfo">
                     
+                    <?php   if( empty($userFoto) ){   ?>
+                    <div class="">
+                        <?php   echo $this->Html->link('INSERIR IMAGEM DE PERFIL',
+                                                array('controller' => 'usuarios',
+                                                      'action' => 'mudarImagem'),
+                                                array('class' => 'colorbox-imagem btneditar')); ?>
+                    </div>   
+                    <?php    }  ?>      
+                    
+                    <span class="userInfoLabel">
+                        Nome
+                        <?php   echo $html->link('EDITAR',
+                                            '#javascript:;',
+                                            array('onclick' => 'insereInput(\'Name\',\''.addslashes($session->read('Auth.Usuario.nome')).'\')',
+                                                  'class' => 'btneditar right')); ?>
+                    </span>
+                    
                     <div class="profile" id="userName">
                         <?php   echo $session->read('Auth.Usuario.nome'); ?>
-                        <?php   echo $html->link(__('Editar', true),
-                                                        '#javascript:;',
-                                                        array('onclick' => 'insereInput(\'Name\',\''.addslashes($session->read('Auth.Usuario.nome')).'\')')
-                                                        ); ?>
                     </div>
+                    
+                    <span class="userInfoLabel">
+                        Email
+                        <?php   echo $html->link('EDITAR',
+                                            '#javascript:;',
+                                            array('onclick' => 'insereInput(\'Email\',\''.$session->read('Auth.Usuario.email').'\')',
+                                                  'class' => 'btneditar right')); ?>
+                    </span>
                     
                     <div class="profile" id="userEmail">
                         <?php   echo $session->read('Auth.Usuario.email'); ?>
-                        <?php   echo $html->link(__('Editar', true),
-                                                    '#javascript:;',
-                                                    array('onclick' => 'insereInput(\'Email\',\''.$session->read('Auth.Usuario.email').'\')')
-                                                        ); ?>
                     </div>
+                                         
+                    <span class="userInfoLabel">                     
+                        Login
+                    </span>
                     
-                    <p class="profile">Login: <?php   echo $session->read('Auth.Usuario.login'); ?></p>
+                    <p class="profile">
+                        <?php   echo $session->read('Auth.Usuario.login'); ?>
+                    </p>
                     
+                    <span class="userInfoLabel">                     
+                        Senha
+                        <?php echo $this->Html->link('MUDAR A SENHA',
+                                                array('controller' => 'usuarios',
+                                                      'action' => 'mudarSenha'),
+                                                array('class' => 'btneditar right')); ?>
+                    </span>
+                    
+                    <p class="profile">
+                        ********
+                    </p>
+                    
+                    <span class="userInfoLabel">
+                        Logs
+                    </span>
                     <p class="profile">
                         Número de acessos: <?php echo $item['Usuario']['numdeacessos']; ?>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -79,12 +95,23 @@
             
                 </div>
                 
-                <div id="ultimasInteracoes">
-                    
-                    <h3>Últimas interações</h3>
-                    
-                    <?php foreach($ultimasInteracoes as $item){ ?>     
-                        <?php   if($item['Model'] === 'Faturamento' || $item['Model'] === 'Despesa'){   ?>
+            </div>
+            
+        </div>
+        
+        <div class="subheader">
+            <h2>
+                Últimas interações
+            </h2>
+        </div>
+        
+        <div id="ultimasInteracoesWraper">
+            
+            <div id="ultimasInteracoes">
+                
+                <?php foreach($ultimasInteracoes as $item){ ?>
+                
+                    <?php   if($item['Model'] === 'Faturamento' || $item['Model'] === 'Despesa'){   ?>
                     <p class="interacao">
                         <span class="model"><?php echo $item['Model']; ?></span>
                         R$ <?php echo $item['valor']; ?> « <?php echo $item['categoria']; ?> 
@@ -100,18 +127,14 @@
                         <?php echo $item['frequencia']; ?>
                         <span class="data"><?php echo $item['modified']; ?></span>
                     </p>
-                        <?php   }   ?>
-                    <?php   }   ?>  
-                
-                </div>
-                
-                
+                    <?php   }   ?>
+                    
+                <?php   }   ?>  
+            
             </div>
             
         </div>
-            
-            
-
+        
     </div>
         
     <script type="text/javascript">
@@ -119,12 +142,6 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-imagem').colorbox({width:"700", height:"300", opacity: 0.5, iframe: true});
-            
-            $("p.interacao").mouseover(function() {
-                $(this).css("background-color",'#F2FFE3');
-            }).mouseout(function(){
-                $(this).css("background-color",'#FFF');
-            });
         });
 
         function insereInput(campo,value){
@@ -145,8 +162,7 @@
         }
         
         function cancela(campo,value){
-            var editar = ' <a href="#javascript:;" onclick="insereInput(\''+campo+'\',\''+value+'\')"  title="editar">Editar</a> ';
-            $('#user'+campo).html(value+editar);
+            $('#user'+campo).html(value);
         }
         
         function editar(campo){

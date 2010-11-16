@@ -226,7 +226,7 @@ div.form, div.index, div.view {
 	text-align:right;
 	}
 	
-#contentHeader {
+#contentHeader, .subheader {
 	width:100%;
 	height:50px;
 	float:left;
@@ -235,7 +235,7 @@ div.form, div.index, div.view {
 	-moz-border-radius: 3px 3px 0px 0px;
 	-webkit-border-radius: 3px 3px 0px 0px;
 	}
-#contentHeader h1 {
+#contentHeader h1, div.subheader h2 {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:23px;
 	color:#fff;
@@ -570,6 +570,12 @@ div.form, div.index, div.view {
 	padding: 20px;
 }
 
+#perfilWraper, #ultimasInteracoesWraper {
+	float: left;
+	width: 100%;
+	background-color: #FFF; 
+}
+
 .graficosPizza {
 	height: auto;
 	overflow: hidden;
@@ -585,24 +591,34 @@ div.form, div.index, div.view {
 }
 
 .profile {
-	margin: 10px 0;
+	margin: 10px 5px;
 	font-size: 16px;
+	color: #000;
 }
-#ultimasInteracoes h3 {
-	color: #3C6800;
-	font-size: 18px;
-	margin-bottom: 10px;
+
+#ultimasInteracoes {
+	padding: 20px;
 }
 
 #UserInfo {
-	padding: 20px;
+	padding: 20px 0;
 	font-family: Arial;
 	color: #555555;
-	
+	border-top: 1px solid #EBEBEB;
+	margin:20px 20px 0;
+}
+
+div.inserirphoto {
+	height: auto;
+	overflow: hidden;
+	margin: 0 0 10px 0;
 }
 
 .model{
-	width: 120px;
+	display:block;
+	float:left;
+	width:120px;
+	color: #6C952F;
 }
 
 .data{
@@ -611,15 +627,10 @@ div.form, div.index, div.view {
 
 .interacao {
 	padding: 10px 10px;
+	color: #646B59;
+	background-color: #F2FFE3;
+	margin: 5px;
 }
-
-#ultimasInteracoes {
-	font-family: Arial;
-	font-size: 13px;
-	color: #555555;
-	padding: 0 20px 10px;
-}
-
 	
 #footer {
 	width:100%;
@@ -722,6 +733,11 @@ label
 	margin:0 5px;
 	float: left;
 }
+
+span .right {
+	float: right !important;
+}
+
 .btneditar:hover, .btnacoes:hover
 {
 	background-color:#8FB9CF;
@@ -799,3 +815,49 @@ div.flash {
 	padding:6px 5%;
 }
 
+span.userInfoLabel {
+	display: block;
+	background-color: #F2FFE3;
+	color: #508501;
+	padding: 5px;
+}
+
+
+#perfil-p {
+	text-align: left;
+	float: left;
+	position: absolute;
+	padding: 20px;
+}
+
+#alterarfoto {
+	position: relative;
+	background: url('../img/bg_photo.png');
+	text-align: center;
+	margin-top: -23px;
+	padding: 5px 0;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#alterarfoto a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+#alterarfoto a:hover {
+	text-decoration: underline;
+}
+
+div.subheader {
+	margin-top: 10px;
+}
+
+input.btnaddcategoria {
+	height:25px;
+}
+
+input[type=text], input[type=password] {
+	padding: 5px;
+	width: 300px;
+}

@@ -4,21 +4,9 @@
         
         
         if( $campo == 'nome' ){
-        
             echo $session->read('Auth.Usuario.nome').' '; 
-            
-            echo $html->link(__('Editar', true),
-                                    '#javascript:;',
-                                    array('onclick' => 'insereInput(\'Name\',\''.addslashes($session->read('Auth.Usuario.nome')).'\')')
-                                    );
         }else{
-            
             echo $session->read('Auth.Usuario.email').' '; 
-            
-            echo $html->link(__('Editar', true),
-                                    '#javascript:;',
-                                    array('onclick' => 'insereInput(\'Email\',\''.$session->read('Auth.Usuario.email').'\')')
-                                    );
         }
         
         
