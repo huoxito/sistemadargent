@@ -6,7 +6,7 @@
 		<?php __('Dargent  :: '); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css">
+	
 	<?php
 		echo $this->Html->meta('icon');
 		//echo $this->Html->css('cake.generic');
