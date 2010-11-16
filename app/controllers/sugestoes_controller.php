@@ -60,7 +60,7 @@
                     $this->_sendEmail( $this->Sugestao->id );
                     //$this->redirect(array('controller' => 'sugestoes', 'action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('Preencha os campos abaixo corretamente', true));
+                    $this->Session->setFlash('Preencha os campos abaixo corretamente','flash_error');
                 }
             }
         }
