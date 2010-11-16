@@ -123,11 +123,12 @@ class HomesController extends AppController{
             //$objDestinosCores[] = $cor;
         }
         
-        # seto o tipo de chart e monto pie de ganhos
+        # seto o tipo de chart e monto pie de gastos
         $this->PieChart->Chart->setProperty('cht', 'p');
         $this->PieChart->Chart->setDimensions(350,200);
         $this->PieChart->Chart->addDataSet($objDestinosValores);
         $this->PieChart->Chart->setLegend(array($objDestinos));
+        $this->PieChart->Chart->setColors(array("FF1515"));
         $pieGasto = $this->PieChart->Chart->getUrl();
         $this->set('pieGasto', $pieGasto);
         
@@ -151,6 +152,7 @@ class HomesController extends AppController{
         $this->PieChart->Chart->clearDataSets();
         $this->PieChart->Chart->addDataSet($objFontesValores);
         $this->PieChart->Chart->setLegend(array($objFontes));
+        $this->PieChart->Chart->setColors(array("00D500"));
         $pieGanho = $this->PieChart->Chart->getUrl();
         $this->set('pieGanho', $pieGanho);
         
@@ -234,7 +236,7 @@ class HomesController extends AppController{
         $this->LineChart->Chart->addDataSet($gastoValores);
         $this->LineChart->Chart->addDataSet($ganhoValores);
         $this->LineChart->Chart->setLegend(array('Despesas', 'Faturamentos'));
-        $this->LineChart->Chart->setColors(array('ED237A', 'FFF000'));
+        $this->LineChart->Chart->setColors(array('D50000', '00D500'));
         $this->LineChart->Chart->setVisibleAxes(array('x','y'));
         $this->LineChart->Chart->setDataRange(0,$valorMaisAlto);
         //$this->LineChart->Chart->setAxisRange(1,436,1610);
