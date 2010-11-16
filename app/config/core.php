@@ -175,10 +175,10 @@
 	Configure::write('Session.cookie', 'dargent1010');
 
 /**
- * Session time out time (in minutes). # minutes my ass !!!! seconds
+ * Session time out time (in seconds). 
  * Actual value depends on 'Security.level' setting.
  */
-	Configure::write('Session.timeout', '864');
+	Configure::write('Session.timeout', '9');
 
 /**
  * If set to false, sessions are not automatically started.
