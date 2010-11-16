@@ -167,6 +167,14 @@ input.botao-cadastro  {
 
 .a-ler a:hover{ color:#690; text-decoration:underline;}
 
+#authMessage {
+    color:#FF0000;
+    float:right;
+    font-size:15px;
+    margin:3px 78px 0 0;
+}
+
+
 /*.footer-redes{ padding:0; margin:0 auto; text-align:center; width:800px; clear:both; float:none; border:1px solid #000; overflow:hidden;}
 
 .footer-redes li{ width:55px; height:20px; display:block; text-align:center;} 

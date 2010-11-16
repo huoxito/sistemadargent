@@ -12,10 +12,10 @@ class AppController extends Controller{
         $this->Auth->userModel = 'Usuario';
         $this->Auth->fields = array('username' => 'login', 'password' => 'password');
         $this->Auth->userScope = array('Usuario.status' => 1);  # CONDIÇÃO PARA USUÁRIO ESTAR LOGADO
-        $this->Auth->loginError = "No, you fool!  That's not the right password!";
+        $this->Auth->loginError = "Login ou senha incorretos";
         $this->Auth->loginAction = array('admin' => false, 'controller' => 'usuarios', 'action' => 'login');
         $this->Auth->loginRedirect = array('controller' => 'usuarios', 'action' => 'afterLogin');
-        $this->Auth->authError = "Você precisa estar logado para entrar no sistema.";
+        $this->Auth->authError = "Log in para entrar no sistema";
         
         /*
         # debuggar erro na seção    # problema chato do carai!

@@ -9,7 +9,6 @@
 	
 	<?php
 		echo $this->Html->meta('icon');
-		//echo $this->Html->css('cake.generic');
         echo $this->Html->css('estilo');
         echo $this->Html->css('colorbox');
         echo $this->Html->css('jquery-ui-1.8rc3.custom');

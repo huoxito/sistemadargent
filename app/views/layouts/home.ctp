@@ -44,33 +44,31 @@
             
                 <div id="user">
                 
-                    <h1>Minha Conta</h1>
+                    <h1>
+                        Minha Conta
+                        <?php   echo $this->Session->flash('auth'); ?>
+                    </h1>
+                    
                     <?php    echo $form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
-                    <!--<p class="log"></p>-->
-                    
-                    <?php //echo $form->input('login'); ?>
-                    <?php //echo $form->input('password'); ?>
-                    
                     <div class="login" style="margin: 0 20px 0 10px;">
                         <?php echo $form->input('login',
-                                                    array('class' => 'l-nome',
-                                                          'div' => false,
-                                                          'maxlength' => '20',
-                                                          'label' => 'Usuário: ')); ?>
-                        
+                                            array('class' => 'l-nome',
+                                                  'div' => false,
+                                                  'maxlength' => '20',
+                                                  'label' => 'Usuário: ')); ?>
                     </div>
                     
                     <div class="login">
                         <?php echo $form->input('password',
-                                                    array('class' => 'l-senha',
-                                                          'div' => false,
-                                                          'maxlength' => '15',
-                                                          'label' => 'Senha: ')); ?>
+                                            array('class' => 'l-senha',
+                                                  'div' => false,
+                                                  'maxlength' => '15',
+                                                  'label' => 'Senha: ')); ?>
                         
                     </div>
-                    
-                    <!--<input name="" type="button" value="entrar" class="botao-login" />-->
-                    <?php echo $form->end(array('label' => 'Entrar', 'class' => 'botao-login','div' => false));  ?>
+                    <?php echo $form->end(array('label' => 'Entrar',
+                                                'class' => 'botao-login',
+                                                'div' => false));  ?>
                     
                     <p class="senha"><a href="#">Esqueceu sua senha?</a></p>
                 

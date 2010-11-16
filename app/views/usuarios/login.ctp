@@ -5,7 +5,7 @@
             <div id="c-cadastro">
                 
                 <h1>O que é o Dargent?</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                <p>Sistema de controle financeiro pessoal simples e seguro. Saiba exatamente quais suas principais fontes de renda e onde você gasta mais. Através de gráficos e relatórios mensais.</p>
                 <p class="a-ler"><a href="#">Leia mais</a></p>
                 
             </div>
@@ -30,7 +30,7 @@
             
                 <h1>Faça seu cadastro</h1>
                 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Leva menos de um minuto. Basta inserir nome, email, login e senha. É gratuito.</p>
                 
                 <?php echo $html->link('Cadastrar', array('controller' => '/','action' => 'cadastro'),
                                                     array('class' => 'botao')); ?>
