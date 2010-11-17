@@ -29,6 +29,7 @@
 	Router::connect('/', array('controller' => 'usuarios', 'action' => 'login', 'login'));
     Router::connect('/cadastro', array('controller' => 'usuarios', 'action' => 'cadastro', 'cadastro'));
     Router::connect('/perfil', array('controller' => 'usuarios', 'action' => 'perfil'));
+    Router::connect('/enviarSenha', array('controller' => 'usuarios', 'action' => 'enviarSenha'));
     
     //Router::connect('/faturamentos/:action/*', array('controller' => 'ganhos'));
     //Router::connect('/despesas/:action/*', array('controller' => 'gastos'));

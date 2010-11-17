@@ -4,7 +4,7 @@ class UsuariosController extends AppController {
 
     var $name = 'Usuarios';
     var $helpers = array('Html', 'Form');
-    var $components = array('Data');
+    var $components = array('Data','Email');
     
     var $paginate = array(
                 'limit' => 10,
@@ -158,6 +158,50 @@ class UsuariosController extends AppController {
         }
         
         $this->layout = 'signup';
+    }
+    
+    function enviarSenha(){
+        
+        if($this->Auth->user()){
+            $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+        }
+        
+        if (!empty($this->data)) {
+            
+            $this->Usuario->set( $this->data );
+            if ($this->Usuario->validates(array('fieldList' => array('email')))) {
+                    
+                $this->Usuario->recursive = -1;
+                $info = $this->Usuario->findByEmail($this->data['Usuario']['email']);
+                
+                $hash = sha1(time().$info['Usuario']['created'].'.,>');
+                $senhaProvisoria = substr($hash,4,8);
+                $senhaProvisoriaHash = Security::hash($senhaProvisoria, null, true);
+                
+                $this->Usuario->id = $info['Usuario']['id'];
+                $this->Usuario->saveField('senhaprovisoria', $senhaProvisoriaHash, false);
+                
+                $this->Email->to = $this->data['Usuario']['email'];
+                $this->Email->bcc = array('huoxito@hotmail.com');  
+                $this->Email->subject = 'Envio de senha';
+                $this->Email->replyTo = null;
+                $this->Email->from = 'Sistema Dargent <admin@sistemadargent.com.br>';
+                $this->Email->template = 'senha';
+                $this->Email->sendAs = 'html';
+                $this->Email->delivery = 'debug';
+                $this->set('senha', $senhaProvisoria);
+                $this->set('info', $info);
+                $this->set('hash', $hash);
+                $this->Email->send();
+            }
+        }
+        
+        $this->layout = 'signup';
+    }
+    
+    function confirmarNovaSenha($hash){
+        
+        
     }
     
     function insereInput(){

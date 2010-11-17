@@ -70,7 +70,12 @@
                                                 'class' => 'botao-login',
                                                 'div' => false));  ?>
                     
-                    <p class="senha"><a href="#">Esqueceu sua senha?</a></p>
+                    <p class="senha">
+                        <?php   echo  $this->Html->link('Esqueceu sua senha?',
+                                            array('controller' => '/',
+                                                  'action' => 'enviarSenha'));  ?>
+                        <a href="#"></a>
+                    </p>
                 
                 </div>
         
