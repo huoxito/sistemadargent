@@ -145,10 +145,10 @@ class GastosController extends AppController {
                                      'saldo' => $saldo));
                     
                 }else{
-                    $relatoriosRapidos = "Nenhum registro encontrado";
+                    $saldo = "Nenhum registro encontrado";
                 }
                 
-                $this->set('total', $relatoriosRapidos);
+                $this->set('total', $saldo);
             }
         }else{
             $this->set('total', 'Nenhum registro encontrado');
@@ -179,7 +179,12 @@ class GastosController extends AppController {
             $this->Gasto->set('usuario_id', $this->Auth->user('id')); 
             if ($this->Gasto->save($this->data)) {
                 $this->Session->setFlash(__('Registro salvo com sucesso!', true));
-                $this->redirect(array('action'=>'index'));
+                
+                if(!$this->data['Gasto']['keepon']){
+                    $this->redirect(array('action'=>'index'));  
+                }else{
+                    $this->data = null;
+                }
             } else {
                 //print_r($this->validateErrors($this->Ganho));  
                 $this->Session->setFlash('Preencha os campos corretamente', 'flash_error');

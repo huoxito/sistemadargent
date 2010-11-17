@@ -101,7 +101,7 @@
                 <?php echo $this->Html->link('INSERIR NOVO DESTINO',
                                         array('controller' => 'destinos',
                                               'action' => 'add'),
-                                        array('class' => 'btnaddcategoria')); ?>
+                                        array('class' => 'btnadd')); ?>
             </div>
             <div class="headeraddlinks">
                 <?php echo $this->Html->link('INSERIR DESPESA',

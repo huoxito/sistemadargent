@@ -4,12 +4,6 @@ class GanhosController extends AppController {
 
     var $components = array('Data', 'Valor');
 
-    /*
-    var $cacheAction = array(
-        'index' => '1 day'
-    );
-    */
-
     function index($mes=null,$ano=null) {
         
         $fields = array('Ganho.id',
@@ -145,7 +139,7 @@ class GanhosController extends AppController {
                     $saldo = "Nenhum registro encontrado";
                 }
                 
-                $this->set('total', $relatoriosRapidos);
+                $this->set('total', $saldo);
             }
         }else{
             $this->set('total', 'Nenhum registro encontrado');
@@ -175,7 +169,12 @@ class GanhosController extends AppController {
             $this->Ganho->set('usuario_id', $this->Auth->user('id'));
             if ($this->Ganho->save($this->data)) {
                 $this->Session->setFlash(__('Registro salvo com sucesso!', true));
-                $this->redirect(array('action'=>'index'));  
+                
+                if(!$this->data['Ganho']['keepon']){
+                    $this->redirect(array('action'=>'index'));  
+                }else{
+                    $this->data = null;
+                }
             } else {
                 //print_r($this->validateErrors($this->Ganho));  
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');

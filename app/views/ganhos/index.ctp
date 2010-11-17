@@ -101,7 +101,7 @@
                 <?php echo $this->Html->link('INSERIR NOVA FONTE',
                                         array('controller' => 'fontes',
                                               'action' => 'add'),
-                                        array('class' => 'btnaddcategoria')); ?>
+                                        array('class' => 'btnadd')); ?>
             </div>
             <div class="headeraddlinks">
                 <?php echo $this->Html->link('INSERIR FATURAMENTO',

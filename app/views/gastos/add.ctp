@@ -41,6 +41,8 @@
                                                         'label' => 'Observações',
                                                         'id' => 'Observacoes'));
             ?>
+                <?php echo $this->Form->checkbox('keepon'); ?>
+                <span>Marque se você desejar continuar inserindo registros nessa página</span>  
             </fieldset>
             <?php echo $this->Form->end('Inserir');?>
             
