@@ -117,6 +117,10 @@ class Usuario extends AppModel {
                              'last' => true,
                              'allowEmpty' => false,
                              ),
+                'existe' => array(       
+                    'rule' => 'isUnique',
+                    'message' => 'Email já cadastrado'
+                ),
             ),
             
             'login' => array(
