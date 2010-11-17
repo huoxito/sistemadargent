@@ -26,7 +26,7 @@ img{  border:none;}
 
 #user{ font-family:Arial, Helvetica, sans-serif; color:#666666; font-size:14px; /*background:url(../img/img_div.gif) top no-repeat;*/ padding-top:17px; /*border:1px solid #006;*/ float:right; width:480px;}
 
-h1{font-style:normal; font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; font-weight:normal; font-size:25px; color:#666666;}
+h1{font-style:normal; font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; font-weight:normal; font-size:25px; color:#666666; }
 
 #sobre p{ padding:0 80px 0 80px; text-align:center;}
 
@@ -101,7 +101,7 @@ a.botao:hover, input.botao-cadastro:hover{
 
 #cadastro{  font-family:Arial, Helvetica, sans-serif; background:#fff; padding:15px 50px 50px 50px; margin-top:20px; border-right:1px solid #7cae3e; border-bottom:2px solid #7cae3e; overflow:hidden; color:#666; font-size:14px;}
 
-#cadastro h1 { border-bottom:1px solid #efefef; padding-bottom:15px;}
+#cadastro h1 { border-bottom:1px solid #efefef; }
 
 .l-input{   -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
             height:25px;
@@ -167,11 +167,21 @@ input.botao-cadastro  {
 
 .a-ler a:hover{ color:#690; text-decoration:underline;}
 
-#authMessage {
+#authMessage,  {
     color:#FF0000;
     float:right;
     font-size:15px;
     margin:3px 78px 0 0;
+}
+
+.flash_error {
+    color:#FF0000;
+    font-weight: bold;
+}
+
+.flash_success {
+    color:#690;
+    font-weight: bold;
 }
 
 

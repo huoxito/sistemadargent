@@ -174,25 +174,35 @@ class UsuariosController extends AppController {
                 $this->Usuario->recursive = -1;
                 $info = $this->Usuario->findByEmail($this->data['Usuario']['email']);
                 
-                $hash = sha1(time().$info['Usuario']['created'].'.,>');
-                $senhaProvisoria = substr($hash,4,8);
-                $senhaProvisoriaHash = Security::hash($senhaProvisoria, null, true);
+                if($info){
+                    
+                    $hash = sha1(time().$info['Usuario']['created'].'.,>');
+                    $senhaProvisoria = substr($hash,4,8);
+                    $senhaProvisoriaHash = Security::hash($senhaProvisoria, null, true);
+                    
+                    $this->Usuario->id = $info['Usuario']['id'];
+                    $this->Usuario->saveField('senhaprovisoria', $senhaProvisoriaHash, false);
+                    
+                    $this->Email->to = $this->data['Usuario']['email'];
+                    $this->Email->bcc = array('huoxito@hotmail.com');  
+                    $this->Email->subject = 'Envio de senha';
+                    $this->Email->replyTo = null;
+                    $this->Email->from = 'Sistema Dargent <admin@sistemadargent.com.br>';
+                    $this->Email->template = 'senha';
+                    $this->Email->sendAs = 'html';
+                    //$this->Email->delivery = 'debug';
+                    $this->set('senha', $senhaProvisoria);
+                    $this->set('info', $info);
+                    $this->set('hash', $hash);
+                    $this->Email->send();
+                    
+                    $this->Session->setFlash('Enviamos um email para o endereço indicado com as instruções para gerar sua senha. <br /> Caso o email não apareça na caixa de entrada, confira a pasta de spams ou lixo do seu email.','flash_success');
+                    
+                }else{
+                    
+                    $this->Session->setFlash('Seu email não foi encontrado em nosso banco','flash_error');
+                }
                 
-                $this->Usuario->id = $info['Usuario']['id'];
-                $this->Usuario->saveField('senhaprovisoria', $senhaProvisoriaHash, false);
-                
-                $this->Email->to = $this->data['Usuario']['email'];
-                $this->Email->bcc = array('huoxito@hotmail.com');  
-                $this->Email->subject = 'Envio de senha';
-                $this->Email->replyTo = null;
-                $this->Email->from = 'Sistema Dargent <admin@sistemadargent.com.br>';
-                $this->Email->template = 'senha';
-                $this->Email->sendAs = 'html';
-                $this->Email->delivery = 'debug';
-                $this->set('senha', $senhaProvisoria);
-                $this->set('info', $info);
-                $this->set('hash', $hash);
-                $this->Email->send();
             }
         }
         
