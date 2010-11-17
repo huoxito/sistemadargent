@@ -8,7 +8,7 @@ class AppController extends Controller{
     function beforeFilter(){
         parent::beforeFilter();
     
-        $this->Auth->allow('cadastro', 'login','enviarSenha');
+        $this->Auth->allow('cadastro', 'login','enviarSenha','confirmarNovaSenha');
         $this->Auth->userModel = 'Usuario';
         $this->Auth->fields = array('username' => 'login', 'password' => 'password');
         $this->Auth->userScope = array('Usuario.status' => 1);  # CONDIÇÃO PARA USUÁRIO ESTAR LOGADO

@@ -177,11 +177,9 @@ class UsuariosController extends AppController {
                 if($info){
                     
                     $hash = sha1(time().$info['Usuario']['created'].'.,>');
-                    $senhaProvisoria = substr($hash,4,8);
-                    $senhaProvisoriaHash = Security::hash($senhaProvisoria, null, true);
                     
                     $this->Usuario->id = $info['Usuario']['id'];
-                    $this->Usuario->saveField('senhaprovisoria', $senhaProvisoriaHash, false);
+                    $this->Usuario->saveField('hash', $hash, false);
                     
                     $this->Email->to = $this->data['Usuario']['email'];
                     $this->Email->bcc = array('huoxito@hotmail.com');  
@@ -191,18 +189,14 @@ class UsuariosController extends AppController {
                     $this->Email->template = 'senha';
                     $this->Email->sendAs = 'html';
                     //$this->Email->delivery = 'debug';
-                    $this->set('senha', $senhaProvisoria);
                     $this->set('info', $info);
                     $this->set('hash', $hash);
                     $this->Email->send();
                     
-                    $this->Session->setFlash('Enviamos um email para o endereço indicado com as instruções para gerar sua senha. <br /> Caso o email não apareça na caixa de entrada, confira a pasta de spams ou lixo do seu email.','flash_success');
-                    
+                    $this->Session->setFlash('Enviamos um email para o endereço indicado com as instruções para gerar sua senha. <br /> Caso o email não apareça na caixa de entrada, confira a pasta de spams ou lixo do seu email.','flash_success');                   
                 }else{
-                    
                     $this->Session->setFlash('Seu email não foi encontrado em nosso banco','flash_error');
                 }
-                
             }
         }
         
@@ -211,7 +205,27 @@ class UsuariosController extends AppController {
     
     function confirmarNovaSenha($hash){
         
+        if($this->Auth->user()){
+            $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+        }
         
+        $info = $this->Usuario->findByHash($hash);
+        if($info){
+            
+            $hash = sha1(time().$info['Usuario']['nome'].'.,>');
+            $senhaProvisoria = substr($hash,2,8);
+            $senhaProvisoriaHash = Security::hash($senhaProvisoria, null, true);
+            
+            $this->Usuario->id = $info['Usuario']['id'];
+            $this->Usuario->saveField('password', $senhaProvisoriaHash, false);
+            
+            $this->set('senha',$senhaProvisoria);
+            $this->set('info',$info);
+        }else{
+            $this->cakeError('error404');
+        }
+        
+        $this->layout = 'signup';
     }
     
     function insereInput(){
