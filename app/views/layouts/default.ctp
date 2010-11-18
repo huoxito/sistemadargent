@@ -63,20 +63,6 @@
 
 	</div>
 	<?php echo $this->element('sql_dump'); ?>
-    <script type="text/javascript">
-        
-        // <![CDATA[
-        $(document).ready(function () {
-            $('.dataField').datepicker({
-                        dateFormat: 'dd-mm-yy',
-                        dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        maxDate: 'd-m-y'
-                    });
-        });  
-        // ]]>
-        
-    </script>
     <?php echo $js->writeBuffer(); // Write cached scripts ?>
 </body>
 </html>
