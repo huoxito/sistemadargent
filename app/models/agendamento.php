@@ -4,7 +4,7 @@ class Agendamento extends AppModel {
     
     var $actsAs = array(
         'Modifiable' => array(
-            'fields' => array('valor','observacoes')
+            'fields' => array('valor','observacoes','datadevencimento')
     ));
     
     var $validate = array(
@@ -17,7 +17,8 @@ class Agendamento extends AppModel {
         'frequencia_id' => array(
             'rule1' => array(
                 'rule' => 'Numeric',
-                'message' => 'Campo obrigatório'
+                'message' => 'Campo obrigatório',
+                'required' => false
             )  
         ),
         'fonte_id' => array(
@@ -55,10 +56,14 @@ class Agendamento extends AppModel {
         ),
         'numdeparcelas' => array(
             'rule1' => array(
-                'rule' => 'Numeric',
+                'rule' => 'notEmpty',
                 'required' => false,
                 'message' => 'Selecione uma fonte'
-            )
+            ),
+            'rule2' => array(
+                'rule' => 'numeroDeParcelas',
+                'message' => 'número de parcelas deve estar entre 1 e 60'
+            ),
         ),
     );
 
@@ -85,6 +90,16 @@ class Agendamento extends AppModel {
             'order' => ''
         )
     );
+    
+    function numeroDeParcelas(){
+            
+        $numero = (int) $this->data['Agendamento']['numdeparcelas'];
+        if( $numero < 1 || $numero > 99 ){
+            return false;
+        }else{
+            return true;
+        }
+    }
     
 }
 

@@ -5,7 +5,7 @@ class Gasto extends AppModel {
 
     var $actsAs = array(
         'Modifiable' => array(
-			'fields' => array('datadabaixa', 'valor','observacoes')
+			'fields' => array('datadabaixa', 'valor','observacoes', 'datadevencimento')
         )
     );
 

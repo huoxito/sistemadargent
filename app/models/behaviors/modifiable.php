@@ -33,8 +33,13 @@ class ModifiableBehavior extends ModelBehavior {
             if ( $fieldName === 'nome' || $fieldName === 'observacoes' ){
                 Sanitize::html(&$model->data[$model->alias][$fieldName],array('remove'=>true));
             }
+            
             if( isset($model->data[$model->alias]['datadabaixa']) ){
                 $model->data[$model->alias]['datadabaixa'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadabaixa']);
+            }
+            
+            if( isset($model->data[$model->alias]['datadevencimento']) && $fieldName === 'datadevencimento' ){
+                $model->data[$model->alias]['datadevencimento'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadevencimento']);
             }
             
             if( isset($model->data[$model->alias]['valor']) ){

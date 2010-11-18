@@ -70,17 +70,37 @@ class AgendamentosController extends AppController {
         }
         
         if (!empty($this->data)) {
-
-            # caso o usuário tenha inserido uma nova fonte
+            
+            # caso o usuário tenha inserido uma nova categoria
             if ( isset($this->data[$_Categoria]['nome']) ){
                 $this->data['Agendamento'][$_parentKey] = $this->addCategoria($this->data[$_Categoria]['nome'],$_Categoria,'Agendamento');
             }
-            
+   
             $this->Agendamento->create();
-            $this->Agendamento->set(array('usuario_id' => $this->Auth->user('id'), 'tipo' => $_Model));
+            $this->Agendamento->set(array('usuario_id' => $this->Auth->user('id'), 'model' => $_Model));
             if ($this->Agendamento->save($this->data)) {
-                $this->redirect(array('action' => 'setarDatas', $this->Agendamento->id));
+                
+                if($this->data['Agendamento']['config']){
+                    
+                    
+                }else{
+                    
+                    # apenas um registro
+                    $this->loadModel($_Model);  
+                    $registro[$_Model] = array('usuario_id' => $this->Auth->user('id'),
+                                               'agendamento_id' => $this->Agendamento->id,
+                                               $_parentKey => $this->data['Agendamento'][$_parentKey],
+                                               'valor' => $this->data['Agendamento']['valor'],
+                                               'datadevencimento' => $this->data['Agendamento']['datadevencimento'],
+                                               'observacoes' => $this->data['Agendamento']['observacoes'],
+                                               'status' => 0);
+                    $this->$_Model->save($registro);
+                }
+                
+                //$this->redirect(array('action' => 'index'));
+                $this->Session->setFlash('Registro agendado com sucesso', 'flash_success');
             } else {
+                $this->pa($this->validateErrors($this->Agendamento));
                 $this->Session->setFlash('Preencha os campos corretamente.', 'flash_error');
             }
         }
@@ -88,13 +108,13 @@ class AgendamentosController extends AppController {
         $categorias = $this->Agendamento->$_Categoria->find('list',
                                                     array('conditions' =>
                                                             array('status' => 1,
-                                                                'usuario_id' => $this->Auth->user('id')))
-                                                    );
+                                                                  'usuario_id' => $this->Auth->user('id'))));
+        
         $this->set(array('fontes' => $categorias, 'destinos'=> $categorias));
         
         $frequencias = $this->Agendamento->Frequencia->find('list',
-                                                            array('conditions' =>
-                                                                    array('Frequencia.status' => 1)));
+                                                        array('conditions' =>
+                                                              array('Frequencia.status' => 1)));
         $this->set(compact('frequencias'));
         
         $this->render($_Model);

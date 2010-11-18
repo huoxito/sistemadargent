@@ -45,7 +45,7 @@
                                           'div' => array('id' => 'select_categoria'),
                                           'after' => '<a href="javascript:;" title="cadastrar" class="btnadd" onclick="insereInput(\'data[Fonte][nome]\');">INSERIR NOVA CATEGORIA</a>'));
                 
-                echo $this->Form->input('datadabaixa',
+                echo $this->Form->input('datadevencimento',
                                     array('label' => 'Data de vencimento',
                                           'type' => 'text',
                                           'error' => false,
@@ -66,16 +66,16 @@
             ?>
         
                 <div id="camposParcela">
-                <?php
-                    echo $this->Form->input('frequencia_id',
-                                        array('label' => 'Frequência',
-                                              'empty' => 'Frequência',
-                                              'error' => false));
-                    
-                    echo $this->Form->input('numdeparcelas',
-                                        array('label' => 'Número de parcelas'));
-                    
-                ?>
+                    <?php
+                        echo $this->Form->input('frequencia_id',
+                                            array('label' => 'Frequência',
+                                                  'empty' => 'Frequência',
+                                                  'error' => false));
+                        
+                        echo $this->Form->input('numdeparcelas',
+                                            array('label' => 'Número de parcelas'));
+                        
+                    ?>
                 </div>  
             
             </fieldset>
@@ -87,3 +87,18 @@
     </div>
     
     <?php   echo $this->Html->script('forms');  ?>
+    
+    <script type="text/javascript">
+        
+        var config = $(':radio').val();
+        if(config){
+            $('#AgendamentoFrequenciaId').attr('disabled','disabled');
+            $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
+        }else{
+            
+        }
+        
+    
+    </script>
+    
+    
