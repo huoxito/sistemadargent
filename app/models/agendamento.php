@@ -8,25 +8,31 @@ class Agendamento extends AppModel {
     ));
     
     var $validate = array(
+        'model' => array(
+            'rule1' => array(
+                'rule' => 'notEmpty',
+                'message' => 'model não definido'
+            )  
+        ),
         'frequencia_id' => array(
-            'between' => array(
-                               'rule' => array('between',1, 10),
-                               'message' => 'Campo obrigatório'
-                               )  
+            'rule1' => array(
+                'rule' => 'Numeric',
+                'message' => 'Campo obrigatório'
+            )  
         ),
         'fonte_id' => array(
             'numeric' => array(
                 'rule' => 'Numeric',
                 'required' => false,
                 'message' => 'Selecione uma fonte'
-                )
+            )
         ),
         'destino_id' => array(
-            'numeric' => array(
+            'rule1' => array(
                 'rule' => 'Numeric',
+                'message' => 'Campo obrigatório',
                 'required' => false,
-                'message' => 'Selecione um destino'
-                )
+            )  
         ),
         'valor' => array(
             'rule2' => array(
@@ -35,14 +41,26 @@ class Agendamento extends AppModel {
                 'last' => true,
                 'allowEmpty' => false,
                 'required' => true
-                ),
+            ),
             'rule1' => array(
                 'rule' => array('money','left'),
                 'message' => 'Digite um valor válido (Ex: 220,00)'
-                ),
+            ),
+        ),
+        'datadevencimento' => array(
+                'rule' => array('date', 'dmy'),
+                'required' => false,
+                'message' => 'insira uma data válida',
+                'allowEmpty' => false,
+        ),
+        'numdeparcelas' => array(
+            'rule1' => array(
+                'rule' => 'Numeric',
+                'required' => false,
+                'message' => 'Selecione uma fonte'
+            )
         ),
     );
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
 
     var $belongsTo = array(
         'Frequencia' => array(
@@ -52,15 +70,6 @@ class Agendamento extends AppModel {
             'fields' => 'id, nome',
             'order' => ''
         ),
-        /*
-        'Usuario' => array(
-            'className' => 'Usuario',
-            'foreignKey' => 'usuario_id',
-            'conditions' => '',
-            'fields' => 'id, login',
-            'order' => ''
-        ),
-        */
         'Fonte' => array(
             'className' => 'Fonte',
             'foreignKey' => 'fonte_id',
@@ -76,17 +85,6 @@ class Agendamento extends AppModel {
             'order' => ''
         )
     );
-    
-    var $hasOne = array(
-        'Valormensal' => array(
-            'className'    => 'Valormensal',
-            'foreignKey' => 'agendamento_id',
-            'conditions'   => '',
-            'dependent'    => true,
-            'fields' => 'id, diadomes, numerodemeses'
-        )
-    );    
-
     
 }
 

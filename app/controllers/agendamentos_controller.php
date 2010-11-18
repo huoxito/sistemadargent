@@ -21,7 +21,7 @@ class AgendamentosController extends AppController {
         //for($i=0;$i<count($agendamentos);$i++){
         foreach($agendamentos as $key => $item){
             
-            $_Model = $item['Agendamento']['tipo'];
+            $_Model = $item['Agendamento']['model'];
             
             $this->loadModel($_Model);   
             $dataLancamento = $this->$_Model->field('datadevencimento',
@@ -58,7 +58,7 @@ class AgendamentosController extends AppController {
     }
     
     
-    # função isada para migrar dados nas tabelas de ganhos e gastos
+    # função usada para migrar dados nas tabelas de ganhos e gastos
     function migraBaixaParaVencimento(){
         
         $params = array(
@@ -130,7 +130,7 @@ class AgendamentosController extends AppController {
             $_Categoria = 'Fonte';
             $_parentKey = 'fonte_id';   
         }else{
-            $this->redirect('index');
+            $this->cakeError('error404');
         }
         
         if (!empty($this->data)) {
