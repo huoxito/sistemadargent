@@ -81,8 +81,7 @@ class AgendamentosController extends AppController {
             if ($this->Agendamento->save($this->data)) {
                 
                 if($this->data['Agendamento']['config']){
-                    
-                    
+                    $this->_agendarParcelas($_Model,$this->Agendamento->id,$this->data);
                 }else{
                     
                     # apenas um registro
@@ -105,6 +104,10 @@ class AgendamentosController extends AppController {
             }
         }
         
+        if(!$this->data['Agendamento']['config']){
+            $this->data['Agendamento']['config'] = 0;
+        }
+        
         $categorias = $this->Agendamento->$_Categoria->find('list',
                                                     array('conditions' =>
                                                             array('status' => 1,
@@ -120,115 +123,82 @@ class AgendamentosController extends AppController {
         $this->render($_Model);
     }
     
-    function setarDatas( $id = null ){
+    function _agendarParcelas($_Model,$id,$registro){
         
-        if ( !isset($id) && !empty($this->data) ){
-                $id = $this->data['Valormensal']['agendamento_id'];
+        if ( !isset($id) || !isset($registro) || !isset($_Model) ){
+                $this->cakeError('error404');
         }
-        
-        $item = $this->Agendamento->read(array('usuario_id',
-                                                'frequencia_id',
-                                                'valor',
-                                                'Frequencia.nome',
-                                                'Fonte.nome',
-                                                'Destino.nome',
-                                                'tipo',
-                                                'fonte_id',
-                                                'destino_id',
-                                                'observacoes',
-                                                'valor'), $id);
-        
-        # permissão do usuário
-        $this->checkPermissao($item['Agendamento']['usuario_id']);
-        
-        $_Model = $item['Agendamento']['tipo'];
         
         if( $_Model === 'Ganho' ){
-            $item['color'] = "#376F44";
-            $item['Agendamento']['categoria'] = $item['Fonte']['nome'];
             $_parentKey = 'fonte_id';
         }elseif ( $_Model === 'Gasto' ) {
-            $item['color'] = "#EF0E2C";
-            $item['Agendamento']['categoria'] = $item['Destino']['nome'];
             $_parentKey = 'destino_id';
         }
+                
+        $diaDoMes = $this->data['Valormensal']['diadomes'];
+        $primeiroMes = $this->data['month'];
+        if( $diaDoMes < date('d') && $primeiroMes == date('m') ){
+            $primeiroMes = date('m') + 1;
+        }else{
+            $primeiroMes = $primeiroMes;
+        }
+        $mes = $primeiroMes;
+        $ano = date('Y');
+        if( $mes < date('m') ){
+            $ano++;
+        }
+
+        $this->loadModel($_Model);
+        $item['Agendamento']['valor'] = $this->Valor->formata($item['Agendamento']['valor']);
         
-        if (!empty($this->data)) {
+        for($i=0; $i < $this->data['Valormensal']['numerodemeses']; $i++){
+            
+            if( $diaDoMes > $this->Data->retornaUltimoDiaDoMes($mes,$ano) ){
+            //if ( 1 == 1 ){
+                $dia = $this->Data->retornaUltimoDiaDoMes($mes,$ano);  
+            }else{
+                $dia = $diaDoMes;
+            }
+            
+            $dataDeEntrada = date('Y-m-d', mktime(0,0,0,$mes,$dia,$ano));
+            //list($anoO, $mesO, $diaO) = explode('-',$dataDeEntrada);
+            
+            if ( $item['Agendamento']['frequencia_id'] == 3 ){
+                $mes = $mes + 1;
+            }elseif ( $item['Agendamento']['frequencia_id'] == 4 ){
+                $mes = $mes + 2;       
+            }elseif ( $item['Agendamento']['frequencia_id'] == 5 ){
+                $mes = $mes + 3;        
+            }elseif ( $item['Agendamento']['frequencia_id'] == 6 ){
+                $mes = $mes + 6;     
+            }elseif ( $item['Agendamento']['frequencia_id'] == 7 ){
+                $mes = $mes + 12;   
+            }
 
-            $this->Agendamento->Valormensal->create();
-            if ( $this->Agendamento->Valormensal->save($this->data) ) {
-            //if( 1 == 1 ){
-                
-                $diaDoMes = $this->data['Valormensal']['diadomes'];
-                $primeiroMes = $this->data['month'];
-                if( $diaDoMes < date('d') && $primeiroMes == date('m') ){
-                    $primeiroMes = date('m') + 1;
-                }else{
-                    $primeiroMes = $primeiroMes;
-                }
-                $mes = $primeiroMes;
-                $ano = date('Y');
-                if( $mes < date('m') ){
-                    $ano++;
-                }
-    
-                $this->loadModel($_Model);
-                
-                $item['Agendamento']['valor'] = $this->Valor->formata($item['Agendamento']['valor']);
-                
-                for($i=0; $i < $this->data['Valormensal']['numerodemeses']; $i++){
-                    
-                    if( $diaDoMes > $this->Data->retornaUltimoDiaDoMes($mes,$ano) ){
-                    //if ( 1 == 1 ){
-                        $dia = $this->Data->retornaUltimoDiaDoMes($mes,$ano);  
-                    }else{
-                        $dia = $diaDoMes;
-                    }
-                    
-                    $dataDeEntrada = date('Y-m-d', mktime(0,0,0,$mes,$dia,$ano));
-                    //list($anoO, $mesO, $diaO) = explode('-',$dataDeEntrada);
-                    
-                    if ( $item['Agendamento']['frequencia_id'] == 3 ){
-                        $mes = $mes + 1;
-                    }elseif ( $item['Agendamento']['frequencia_id'] == 4 ){
-                        $mes = $mes + 2;       
-                    }elseif ( $item['Agendamento']['frequencia_id'] == 5 ){
-                        $mes = $mes + 3;        
-                    }elseif ( $item['Agendamento']['frequencia_id'] == 6 ){
-                        $mes = $mes + 6;     
-                    }elseif ( $item['Agendamento']['frequencia_id'] == 7 ){
-                        $mes = $mes + 12;   
-                    }
-
-                    //echo '<hr />';  
-                    $registro[$_Model] = array(
-                                            'usuario_id' => $this->Auth->user('id'),
-                                            'agendamento_id' => $id,
-                                            $_parentKey => $item['Agendamento'][$_parentKey],
-                                            'valor' => $item['Agendamento']['valor'],
-                                            //'datadabaixa' => $dataDeEntrada,
-                                            'datadevencimento' => $dataDeEntrada,
-                                            'observacoes' => $item['Agendamento']['observacoes'],
-                                            'status' => 0
-                                            );
-                    
-                    $this->$_Model->create();  
-                    if($this->$_Model->save($registro, true)){
-                        // salvou !!!
-                    }else{
-                        $this->Session->setFlash(__('Ocorreu um erro, por favor tente novamente', true));
-                        //$this->redirect(array('action' => 'index'));
-                    }
-                }
-                
-                $this->Session->setFlash(__('Agendamento concluído', true));
-                $this->redirect(array('action' => 'index'));
-                
-            } else {
-                $this->Session->setFlash(__('Preencha corretamente os campos obrigatórios*', true));
+            //echo '<hr />';  
+            $registro[$_Model] = array(
+                                    'usuario_id' => $this->Auth->user('id'),
+                                    'agendamento_id' => $id,
+                                    $_parentKey => $item['Agendamento'][$_parentKey],
+                                    'valor' => $item['Agendamento']['valor'],
+                                    //'datadabaixa' => $dataDeEntrada,
+                                    'datadevencimento' => $dataDeEntrada,
+                                    'observacoes' => $item['Agendamento']['observacoes'],
+                                    'status' => 0
+                                    );
+            
+            $this->$_Model->create();  
+            if($this->$_Model->save($registro, true)){
+                // salvou !!!
+            }else{
+                $this->Session->setFlash(__('Ocorreu um erro, por favor tente novamente', true));
+                //$this->redirect(array('action' => 'index'));
             }
         }
         
+        $this->Session->setFlash(__('Agendamento concluído', true));
+        $this->redirect(array('action' => 'index'));
+
         $this->set('id', $id);
         $this->set('itens', $item);
     }

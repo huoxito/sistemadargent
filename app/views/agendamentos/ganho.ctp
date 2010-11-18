@@ -61,7 +61,10 @@
                                           'id' => 'Observacoes'));
                 
                 $options = array('0'=>'Apenas um resgistro', '1'=>'Parcelar',);
-                $attributes = array('legend'=> false, 'value' => '0', 'class' => 'config','label' => false);
+                $attributes = array('legend'=> false,
+                                    'class' => 'config',
+                                    'label' => false,
+                                    'onchange' => 'disableOrNotInputs(this.value);');
                 echo $this->Form->radio('config',$options,$attributes);   
             ?>
         
@@ -90,14 +93,17 @@
     
     <script type="text/javascript">
         
-        var config = $(':radio').val();
-        if(config){
-            $('#AgendamentoFrequenciaId').attr('disabled','disabled');
-            $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
-        }else{
-            
+        function disableOrNotInputs(value){
+            if(value == 0){
+                $('#AgendamentoFrequenciaId').attr('disabled','disabled');
+                $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
+            }else{
+                $('#AgendamentoFrequenciaId').attr('disabled','');
+                $('#AgendamentoNumdeparcelas').attr('disabled','');
+            }
         }
         
+        disableOrNotInputs($(':radio:checked').val());
     
     </script>
     
