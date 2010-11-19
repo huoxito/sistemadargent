@@ -65,20 +65,30 @@
                     <?php if(!empty($agendamento['Frequencia']['nome'])){  ?>
                     <p class="agendamentoInfoLinha">
                         Frequência das parcelas:
-                        <span class="agendamentoFrequência"><?= $agendamento['Frequencia']['nome']; ?></span>.
+                        <span class="agendamentoFrequencia"><?= $agendamento['Frequencia']['nome']; ?></span>.
                         Restando <span class="agendamentoFrequência"><?= $agendamento['Agendamento']['numLancamentos'] ?></span> lançamentos.
                     </p>
                     <?php } ?>
                     
                     <p class="agendamentoInfoLinha">
                         Próximo lançamento para
-                        <span style="color:#000;">
+                        <span class="agendamentoProxLancamento">
                             <?= $agendamento['Agendamento']['proximoReg']; ?>
                         </span>
+                        
+                        <?= $this->Html->link('CONFIRMAR',
+                                    array('action' => 'confirmaLancamento',
+                                          $agendamento['Agendamento']['proxvencimento'],
+                                          $agendamento['Agendamento']['model'],
+                                          $agendamento['Agendamento']['id'],time()),
+                                    array('onclick' => 'confirmar('.$agendamento['Agendamento']['id'].',\''.$agendamento['Agendamento']['model'].'\')',
+                                          'class' => 'btnacoes confirmaAgendamento',
+                                          'title' => 'Confirmar lançamento')); ?>
+                        
                     </p>
                     
                     <?php   if( !empty($agendamento['Agendamento']['observacoes']) ){   ?>
-                    <p class="agendamentoInfoLinha">
+                    <p class="agendamentoInfoLinha Observacoes">
                         Observações: <?= $agendamento['Agendamento']['observacoes']; ?>
                     </p> 
                     <?php   }   ?>
@@ -120,7 +130,8 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"60%", height:"200", opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true}); 
+            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true});
+            $('.confirmaAgendamento').colorbox({width:"600", height:"300", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>

@@ -44,6 +44,7 @@ class AgendamentosController extends AppController {
             
             if(!empty($dataLancamento)){
                 $item['Agendamento']['proximoReg'] = $this->Data->formata($dataLancamento,'porextenso');
+                $item['Agendamento']['proxvencimento'] = $this->Data->formata($dataLancamento,'diamesano');
             }
             
             $item['Agendamento']['numLancamentos'] = $numLancamentos;
@@ -183,6 +184,33 @@ class AgendamentosController extends AppController {
                 $this->redirect(array('action' => 'index'));
             }
         }
+    }
+    
+    function confirmaLancamento($dataDeVencimento = null, $_Model = null, $id = null){
+        
+        if ( !$id || !$_Model || ($_Model !== 'Ganho' && $_Model !== 'Gasto') ) {
+            $this->cakeError('error404');
+        }
+        
+        $userChk = $this->Agendamento->read(null, $id);
+        # permissão do usuário
+        $this->checkPermissao($userChk['Agendamento']['usuario_id']);
+        
+        
+        
+        $this->loadModel($_Model);
+        $this->$_Model->field('datadevencimento',
+                            array('agendamento_id' => $id,
+                                  'datadevencimento' => $dataDeVencimento));
+        
+        $this->set('vencimento',$dataDeVencimento);
+        $this->set('id',$id);
+        
+        if($this->params['isAjax']){
+            
+        }
+        
+        $this->layout = 'colorbox';
     }
 
     function edit ($id = null){

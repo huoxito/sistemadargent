@@ -1,17 +1,16 @@
                 
     // <![CDATA[
     $(document).ready(function () {
+        
+        $.datepicker.setDefaults({dateFormat: 'dd-mm-yy',
+                                 dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                                 monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']});
+        
         $('.dataField').datepicker({
-                    dateFormat: 'dd-mm-yy',
-                    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                     maxDate: 'd-m-y'
                 });
         
         $('.dateFieldAhead').datepicker({
-                    dateFormat: 'dd-mm-yy',
-                    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                     minDate: 'd-m-y'
                 });
     });  

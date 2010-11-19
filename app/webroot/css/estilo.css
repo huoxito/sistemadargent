@@ -931,6 +931,26 @@ table .altrow td {
 .agendamentoInfoLinha {
 	margin: 5px 0;
 }
-.agendamentoFrequência {
+.agendamentoFrequencia, .agendamentoProxLancamento {
 	color: #000;
 }
+.Observacoes {
+	width: 70%;
+}
+.confirmaAgendamento {
+	float: none;
+}
+
+.dataField {
+	width: 120px !important;
+}
+
+#colorboxContent {
+	height:auto;
+	overflow:hidden;
+	padding:25px 25px 0;
+}
+
+
+
+
