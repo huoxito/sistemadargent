@@ -7,9 +7,27 @@
                     monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                     maxDate: 'd-m-y'
                 });
+        
+        $('.dateFieldAhead').datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    minDate: 'd-m-y'
+                });
     });  
     // ]]>
     
+    function disableOrNotInputs(value){
+        if(value == 0){
+            $('#AgendamentoFrequenciaId').attr('disabled','disabled');
+            $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
+            
+        }else{
+            $('#AgendamentoFrequenciaId').attr('disabled','');
+            $('#AgendamentoNumdeparcelas').attr('disabled','');
+        }
+    }
+        
     var options3 = {
                     'maxCharacterSize': 200,
                     'originalStyle': 'originalTextareaInfo',

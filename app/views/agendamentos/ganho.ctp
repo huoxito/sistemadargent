@@ -45,13 +45,6 @@
                                           'div' => array('id' => 'select_categoria'),
                                           'after' => '<a href="javascript:;" title="cadastrar" class="btnadd" onclick="insereInput(\'data[Fonte][nome]\');">INSERIR NOVA CATEGORIA</a>'));
                 
-                echo $this->Form->input('datadevencimento',
-                                    array('label' => 'Data de vencimento',
-                                          'type' => 'text',
-                                          'error' => false,
-                                          'class' => 'dataField',
-                                          'default' => date('d-m-Y')));
-
                 echo $this->Form->input('valor',
                                     array('error' => false));
                 
@@ -59,6 +52,13 @@
                                     array('type' => 'textarea',
                                           'label' => 'Observações',
                                           'id' => 'Observacoes'));
+                
+                echo $this->Form->input('datadevencimento',
+                                    array('label' => 'Data de vencimento',
+                                          'type' => 'text',
+                                          'error' => false,
+                                          'class' => 'dateFieldAhead',
+                                          'default' => date('d-m-Y')));
                 
                 $options = array('0'=>'Apenas um resgistro', '1'=>'Parcelar',);
                 $attributes = array('legend'=> false,
@@ -91,20 +91,8 @@
     
     <?php   echo $this->Html->script('forms');  ?>
     
-    <script type="text/javascript">
-        
-        function disableOrNotInputs(value){
-            if(value == 0){
-                $('#AgendamentoFrequenciaId').attr('disabled','disabled');
-                $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
-            }else{
-                $('#AgendamentoFrequenciaId').attr('disabled','');
-                $('#AgendamentoNumdeparcelas').attr('disabled','');
-            }
-        }
-        
+    <script type="text/javascript">  
         disableOrNotInputs($(':radio:checked').val());
-    
     </script>
     
     

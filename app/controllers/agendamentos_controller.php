@@ -96,7 +96,7 @@ class AgendamentosController extends AppController {
                     $this->$_Model->save($registro);
                 }
                 
-                //$this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index'));
                 $this->Session->setFlash('Registro agendado com sucesso', 'flash_success');
             } else {
                 $this->pa($this->validateErrors($this->Agendamento));
@@ -117,7 +117,8 @@ class AgendamentosController extends AppController {
         
         $frequencias = $this->Agendamento->Frequencia->find('list',
                                                         array('conditions' =>
-                                                              array('Frequencia.status' => 1)));
+                                                              array('Frequencia.status' => 1),
+                                                              'order' => 'nome ASC'));
         $this->set(compact('frequencias'));
         
         $this->render($_Model);
@@ -134,73 +135,55 @@ class AgendamentosController extends AppController {
         }elseif ( $_Model === 'Gasto' ) {
             $_parentKey = 'destino_id';
         }
-                
-        $diaDoMes = $this->data['Valormensal']['diadomes'];
-        $primeiroMes = $this->data['month'];
-        if( $diaDoMes < date('d') && $primeiroMes == date('m') ){
-            $primeiroMes = date('m') + 1;
-        }else{
-            $primeiroMes = $primeiroMes;
-        }
-        $mes = $primeiroMes;
-        $ano = date('Y');
-        if( $mes < date('m') ){
-            $ano++;
-        }
-
-        $this->loadModel($_Model);
-        $item['Agendamento']['valor'] = $this->Valor->formata($item['Agendamento']['valor']);
         
-        for($i=0; $i < $this->data['Valormensal']['numerodemeses']; $i++){
+        list($dia,$mes,$ano) = explode('-',$registro['Agendamento']['datadevencimento']);              
+        $this->loadModel($_Model);
+        
+        for($i=0; $i < $registro['Agendamento']['numdeparcelas']; $i++){
             
-            if( $diaDoMes > $this->Data->retornaUltimoDiaDoMes($mes,$ano) ){
-            //if ( 1 == 1 ){
+            if( $dia > $this->Data->retornaUltimoDiaDoMes($mes,$ano) ){
                 $dia = $this->Data->retornaUltimoDiaDoMes($mes,$ano);  
             }else{
-                $dia = $diaDoMes;
+                $dia = $dia;
             }
             
-            $dataDeEntrada = date('Y-m-d', mktime(0,0,0,$mes,$dia,$ano));
-            //list($anoO, $mesO, $diaO) = explode('-',$dataDeEntrada);
+            $dataDeEntrada = date('d-m-Y', mktime(0,0,0,$mes,$dia,$ano));
             
-            if ( $item['Agendamento']['frequencia_id'] == 3 ){
+            if ( $registro['Agendamento']['frequencia_id'] == 3 ){
                 $mes = $mes + 1;
-            }elseif ( $item['Agendamento']['frequencia_id'] == 4 ){
+            }elseif ( $registro['Agendamento']['frequencia_id'] == 4 ){
                 $mes = $mes + 2;       
-            }elseif ( $item['Agendamento']['frequencia_id'] == 5 ){
-                $mes = $mes + 3;        
-            }elseif ( $item['Agendamento']['frequencia_id'] == 6 ){
-                $mes = $mes + 6;     
-            }elseif ( $item['Agendamento']['frequencia_id'] == 7 ){
+            }elseif ( $registro['Agendamento']['frequencia_id'] == 5 ){
+                $mes = $mes + 3;
+            }elseif ( $registro['Agendamento']['frequencia_id'] == 8 ){
+                $mes = $mes + 4;
+            }elseif ( $registro['Agendamento']['frequencia_id'] == 9 ){
+                $mes = $mes + 5;     
+            }elseif ( $registro['Agendamento']['frequencia_id'] == 6 ){
+                $mes = $mes + 6;
+            }elseif ( $registro['Agendamento']['frequencia_id'] == 7 ){
                 $mes = $mes + 12;   
+            }else{
+                $this->Session->setFlash(__('Frequência desconhecida', true));
+                $this->redirect(array('action' => 'index'));
             }
 
-            //echo '<hr />';  
-            $registro[$_Model] = array(
-                                    'usuario_id' => $this->Auth->user('id'),
-                                    'agendamento_id' => $id,
-                                    $_parentKey => $item['Agendamento'][$_parentKey],
-                                    'valor' => $item['Agendamento']['valor'],
-                                    //'datadabaixa' => $dataDeEntrada,
-                                    'datadevencimento' => $dataDeEntrada,
-                                    'observacoes' => $item['Agendamento']['observacoes'],
-                                    'status' => 0
-                                    );
+            $registro[$_Model] = array('usuario_id' => $this->Auth->user('id'),
+                                       'agendamento_id' => $id,
+                                       $_parentKey => $registro['Agendamento'][$_parentKey],
+                                       'valor' => $this->Valor->formata($registro['Agendamento']['valor']),
+                                       'datadevencimento' => $dataDeEntrada,
+                                       'observacoes' => $registro['Agendamento']['observacoes'],
+                                       'status' => 0);
             
             $this->$_Model->create();  
             if($this->$_Model->save($registro, true)){
-                // salvou !!!
+                // yeeah !
             }else{
                 $this->Session->setFlash(__('Ocorreu um erro, por favor tente novamente', true));
-                //$this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index'));
             }
         }
-        
-        $this->Session->setFlash(__('Agendamento concluído', true));
-        $this->redirect(array('action' => 'index'));
-
-        $this->set('id', $id);
-        $this->set('itens', $item);
     }
 
     function edit ($id = null){
@@ -241,7 +224,6 @@ class AgendamentosController extends AppController {
         
         $this->layout = 'colorbox';
     }
-    
     
     
     function editResponse ($id = null) {

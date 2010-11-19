@@ -45,7 +45,7 @@
                                     array('label' => 'Data de vencimento',
                                           'type' => 'text',
                                           'error' => false,
-                                          'class' => 'dataField',
+                                          'class' => 'dateFieldAhead',
                                           'default' => date('d-m-Y')));
                 
                 echo $form->input('valor',
@@ -57,7 +57,10 @@
                                           'id' => 'Observacoes'));
                 
                 $options = array('0'=>'Apenas um resgistro', '1'=>'Parcelar',);
-                $attributes = array('legend'=> false, 'value' => '0', 'class' => 'config','label' => false);
+                $attributes = array('legend'=> false,
+                                    'class' => 'config',
+                                    'label' => false,
+                                    'onchange' => 'disableOrNotInputs(this.value);');
                 echo $this->Form->radio('config',$options,$attributes);   
                 
             ?>
@@ -84,15 +87,6 @@
     
     <?php   echo $this->Html->script('forms');  ?>
     
-    <script type="text/javascript">
-        
-        var config = $(':radio').val();
-        if(config){
-            $('#AgendamentoFrequenciaId').attr('disabled','disabled');
-            $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
-        }else{
-            
-        }
-        
-    
+    <script type="text/javascript">  
+        disableOrNotInputs($(':radio:checked').val());
     </script>
