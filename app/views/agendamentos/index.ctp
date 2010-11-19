@@ -17,8 +17,7 @@
                 <p>|</p>
                 <p><?php echo $paginator->counter(array('format' => __('%count%',true))); ?></p>
                 <span class="pagina">Registros</span>
-
-
+                
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('AGENDAR DESPESA',
                                         array('controller' => 'agendamentos',
@@ -49,50 +48,44 @@
             
             <li class="registros" id="agend-<?php echo $agendamento['Agendamento']['id']; ?>">
                 
-                <span style="display: block; margin: 10px 0;">
-                    <span style="color: #000; ">
-                        <?php echo $agendamento['Agendamento']['tipo']; ?>
-                    </span>
-                        -
-                        <?php echo $agendamento['Frequencia']['nome']; ?>
-                        -
-                        R$ <?php echo $agendamento['Agendamento']['valor']; ?>
-                        -
-                        <?php echo $agendamento['Agendamento']['categoria']; ?>
-                    
+                <span class="tipoAgendamentoLabel">
+                    <?php echo $agendamento['Agendamento']['label']; ?>
                 </span>
                 
-                <div style="margin: 10px 0;height: auto; overflow: hidden;">
+                <div class="agendamentoInfo">
                     
-                    <?php if( !empty($agendamento['Valormensal']['diadomes']) ){    ?>
+                    <p class="agendamentoInfoLinha">
+                        R$ <?= $agendamento['Agendamento']['valor']; ?> reais 
+                        com
+                        <span class="agendamentoCategoria">
+                            <?= $agendamento['Agendamento']['categoria']; ?>
+                        </span> 
+                    </p>
                     
-                    <span style="display: block; font-weight: normal;">
-                        <?php echo $agendamento['Agendamento']['numLancamentos']; ?> lançamentos restantes.
-                        À ser confirmado no dia <?php echo $agendamento['Valormensal']['diadomes']; ?>.
-                    </span>
+                    <?php if(!empty($agendamento['Frequencia']['nome'])){  ?>
+                    <p class="agendamentoInfoLinha">
+                        Frequência das parcelas:
+                        <span class="agendamentoFrequência"><?= $agendamento['Frequencia']['nome']; ?></span>.
+                        Restando <span class="agendamentoFrequência"><?= $agendamento['Agendamento']['numLancamentos'] ?></span> lançamentos.
+                    </p>
+                    <?php } ?>
                     
-                    <span style="display: block; font-weight: normal;">
+                    <p class="agendamentoInfoLinha">
                         Próximo lançamento para
-                            <span style="color:#000;">
-                                <?php echo $agendamento['Agendamento']['proximoReg']; ?>
-                            </span>
-                    </span>
-                    
-                    <?php   }else{  ?>
-                    
-                    <span style="display: block; font-weight: bold;">
-                       Agendamento não concluído! <?php echo $html->link(__('Concluir Agendamento', true), array('action' => 'setarDatas', $agendamento['Agendamento']['id'])); ?> 
-                    </span>
-                    
-                    <?php   }   ?>
+                        <span style="color:#000;">
+                            <?= $agendamento['Agendamento']['proximoReg']; ?>
+                        </span>
+                    </p>
                     
                     <?php   if( !empty($agendamento['Agendamento']['observacoes']) ){   ?>
-                    <span style="float: left; font-weight: normal;">OBS: &nbsp;</span>   
-                                <?php   echo $agendamento['Agendamento']['observacoes']; ?>
+                    <p class="agendamentoInfoLinha">
+                        Observações: <?= $agendamento['Agendamento']['observacoes']; ?>
+                    </p> 
                     <?php   }   ?>
                     
-                </div>
+
                 
+                </div>
                 
                 <div class="categ-actions" style="margin-top: -45px;">
                     <?php
@@ -127,14 +120,7 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"60%", height:"200", opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true});
-            
-            $(".registros").mouseover(function() {
-                $(this).css("background-color",'#F2FFE3');
-            }).mouseout(function(){
-                $(this).css("background-color",'#FFF');
-            });
-             
+            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true}); 
         });
         // ]]>
     </script>

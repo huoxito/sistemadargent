@@ -824,11 +824,16 @@ div.flash {
 	padding:6px 5%;
 }
 
-span.userInfoLabel {
+span.userInfoLabel, span.tipoAgendamentoLabel {
 	display: block;
 	background-color: #F2FFE3;
 	color: #508501;
 	padding: 5px;
+}
+
+span.tipoAgendamentoLabel {
+	text-transform: uppercase;
+	margin: 5px 0 10px;
 }
 
 
@@ -912,7 +917,20 @@ table .altrow td {
 	background: #f5f5f5;
 }
 
-
-
 #user h1 {
+
+}
+
+.agendamentoInfo {
+	padding: 0 5px;
+}
+.agendamentoCategoria{
+	color: #000;
+	text-transform: uppercase;
+}
+.agendamentoInfoLinha {
+	margin: 5px 0;
+}
+.agendamentoFrequência {
+	color: #000;
 }

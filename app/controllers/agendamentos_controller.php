@@ -11,42 +11,41 @@ class AgendamentosController extends AppController {
         $this->paginate = array(
                 'conditions' => array('Agendamento.status' => '1',
                                       'Agendamento.usuario_id' => $this->Auth->user('id')),
-                'limit' => 10,
+                'limit' => 15,
                 'order' => array('Agendamento.modified' => 'desc')
         );
         
         $this->Agendamento->recursive = 0;
         $agendamentos = $this->paginate();
         
-        //for($i=0;$i<count($agendamentos);$i++){
         foreach($agendamentos as $key => $item){
             
             $_Model = $item['Agendamento']['model'];
-            
-            $this->loadModel($_Model);   
+            $this->loadModel($_Model);
+            $this->$_Model->recursive = -1;
             $dataLancamento = $this->$_Model->field('datadevencimento',
-                                                    array($_Model.'.agendamento_id' => $item['Agendamento']['id'],
-                                                          $_Model.'.status' => 0,
-                                                          $_Model.'.datadevencimento >=' => date('Y-m-d')),
-                                                    'datadevencimento ASC');
+                                            array($_Model.'.agendamento_id' => $item['Agendamento']['id'],
+                                                  $_Model.'.status' => 0),
+                                            'datadevencimento ASC');
             $this->$_Model->recursive = -1;
             $numLancamentos = $this->$_Model->find('count',
-                                                    array('conditions' =>
-                                                            array($_Model.'.status' => 0,
-                                                                $_Model.'.datadevencimento >' => date('Y-m-d'),
-                                                                $_Model.'.agendamento_id' => $item['Agendamento']['id'])
-                                                            ));
+                                            array('conditions' =>
+                                                    array($_Model.'.status' => 0,
+                                                          $_Model.'.datadevencimento >' => date('Y-m-d'),
+                                                          $_Model.'.agendamento_id' => $item['Agendamento']['id'])));
             if( $_Model === 'Ganho' ){      
-                $item['Agendamento']['color'] = "#376F44";
                 $item['Agendamento']['categoria'] = $item['Fonte']['nome'];
+                $item['Agendamento']['label'] = 'FATURAMENTO';
             }
             if( $_Model === 'Gasto' ){      
-                $item['Agendamento']['color'] = "#EF0E2C";
                 $item['Agendamento']['categoria'] = $item['Destino']['nome'];
+                $item['Agendamento']['label'] = 'DESPESA';
             }
+            
             if(!empty($dataLancamento)){
                 $item['Agendamento']['proximoReg'] = $this->Data->formata($dataLancamento,'porextenso');
             }
+            
             $item['Agendamento']['numLancamentos'] = $numLancamentos;
             $item['Agendamento']['modified'] = $this->Data->formata($item['Agendamento']['modified'],'completa');
             
