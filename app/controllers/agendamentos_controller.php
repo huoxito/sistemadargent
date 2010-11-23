@@ -389,61 +389,37 @@ class AgendamentosController extends AppController {
             $id = (int)$this->params['url']['id'];
         }
         
-        $this->Agendamento->unbindModel(
-            array('hasOne' => array('Valormensal'))
-        );
-        $item = $this->Agendamento->read(array('id',
-                                               'usuario_id',
-                                               'frequencia_id',
-                                               'valor',
-                                               'Frequencia.nome',
-                                               'Fonte.nome',
-                                               'Destino.nome',
-                                               'tipo',
-                                               'fonte_id',
-                                               'destino_id',
-                                               'observacoes'), $id);
-        
+        $item = $this->Agendamento->read(null, $id);
         # permissão do usuário
         $this->checkPermissao($item['Agendamento']['usuario_id']);
         
         if($this->params['isAjax']){
             
-            if( $item['Agendamento']['tipo'] ==  'Ganho' ){
-                $this->loadModel('Ganho');
-                $this->Ganho->deleteAll(array(
-                                                'agendamento_id' => $id,
-                                                'Ganho.status' => 0 )
-                                                 );
-            }else if( $item['Agendamento']['tipo'] ==  'Gasto' ){
-                $this->loadModel('Gasto');
-                $this->Gasto->deleteAll(array(
-                                                'agendamento_id' => $id,
-                                                'Gasto.status' => 0 )
-                                                 );
+            if( $item['Agendamento']['model'] ==  'Ganho' ){
+                $_Model = 'Ganho';
+            }else{
+                $_Model = 'Gasto';
             }
+            $this->loadModel($_Model);
+            $this->$_Model->deleteAll(array('agendamento_id' => $id,$_Model.'.status' => 0 ));
             
-            $ok = $this->Agendamento->delete($id);
-            if($ok){
+            if($this->Agendamento->delete($id)){
                 echo 'deleted'; exit;
             }else{
                 echo 'error'; exit;
             }
-            
             $this->autoRender = false; 
+        
         }else{
             
-            if( $item['Agendamento']['tipo'] == 'Ganho' ){
-                $item['color'] = "#376F44";
+            if( $item['Agendamento']['model'] == 'Ganho' ){
                 $item['Agendamento']['categoria'] = $item['Fonte']['nome'];
             }else{
-                $item['color'] = "#EF0E2C";
                 $item['Agendamento']['categoria'] = $item['Destino']['nome'];
             }
             
             $this->set('itens',$item);
             $this->set('id',$id);
-            
             $this->layout = 'colorbox'; 
         }
     }
