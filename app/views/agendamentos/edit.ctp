@@ -45,33 +45,37 @@
     
             $.ajax({
                 
-                url: '<?php echo $html->url(array("controller" => "agendamentos","action" => "editResponse"));?>?RandomNumber=' + Math.random(), 
+                url: '<?php echo $html->url(array("controller" => "agendamentos","action" => "editResponse"));?>', 
                 cache: false,
                 type: 'GET',
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                data: ( {id : id, categoria: categoria, valor: valor, vencimento: vencimento, observacoes: obs} ),
+                data: ( {id : id, categoria: categoria, valor: valor, observacoes: obs} ),
                 beforeSend: function(){
                     $('.submit img').remove();
                     $('.submit span').remove();
-                    $('.submit').append('<img style="float: left; margin-left: 15px;" src="../../../<?php echo IMAGES_URL;?>ajax-loader.gif" title="excluindo ... " alt="excluindo ... " />');
+                    $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                 },
                 success: function(result){
                     
                     if(result == 'error'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Ocorreu um erro. Recarregue a página e tente novamente.</span>')
+                                $('.submit').append('<span class="ajax_error_response">Registro inválido</span>')
                             });
                     }else if(result == 'validacao'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Preencha todos os campos corretamente.</span>');
+                                $('.submit').append('<span class="ajax_error_response">Preencha os campos corretamente.</span>');
                             });
                     }else{
                         
-                        parent.$('#agend-' + id).html(result);
-                        //var te=setTimeout("parent.$('#agend-'" + id +").html("+ result +");",5000);
-                        var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
-                    }
+                        var json = $.parseJSON(result);
+                        $.each(json, function(i,item) {
+                            parent.$('.valorAgenda'+id).html(item.valor);
+                            parent.$('.categoria'+id).html(item.categoria);
+                            parent.$('.Observacoes'+id).html(item.observacoes);
+                        });
                         
+                        var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
+                    }   
                 }
                 
             });

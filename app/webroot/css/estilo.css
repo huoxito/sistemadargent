@@ -515,7 +515,7 @@ div.form, div.index, div.view {
 	border-bottom:1px solid #E9E9E9;
 }
 
-.valor {
+span.valor {
 	display: block;
 	float: left;
 	min-width: 180px;

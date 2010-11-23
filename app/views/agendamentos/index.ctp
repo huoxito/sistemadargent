@@ -55,14 +55,16 @@
                 <div class="agendamentoInfo">
                     
                     <p class="agendamentoInfoLinha">
-                        R$ <?= $agendamento['Agendamento']['valor']; ?> reais 
+                        <span class="valorAgenda<?php echo $agendamento['Agendamento']['id']; ?>">
+                            R$ <?= $agendamento['Agendamento']['valor']; ?>
+                        </span> reais 
                         com
-                        <span class="agendamentoCategoria">
+                        <span class="agendamentoCategoria categoria<?php echo $agendamento['Agendamento']['id']; ?>">
                             <?= $agendamento['Agendamento']['categoria']; ?>
                         </span> 
                     </p>
                     
-                    <?php if( $agendamento['Agendamento']['proxLancamento'] ){  ?>
+                    <?php if( !empty($agendamento['Frequencia']['nome']) ){  ?>
                     <p class="agendamentoInfoLinha">
                         Frequência das parcelas:
                         <span class="agendamentoFrequencia"><?= $agendamento['Frequencia']['nome']; ?></span>.
@@ -93,7 +95,7 @@
                     <?php } ?>
                     
                     <?php   if( !empty($agendamento['Agendamento']['observacoes']) ){   ?>
-                    <p class="agendamentoInfoLinha Observacoes">
+                    <p class="agendamentoInfoLinha Observacoes<?php echo $agendamento['Agendamento']['id']; ?>">
                         Observações: <?= $agendamento['Agendamento']['observacoes']; ?>
                     </p> 
                     <?php   }   ?>

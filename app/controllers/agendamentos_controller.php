@@ -310,7 +310,7 @@ class AgendamentosController extends AppController {
         if($this->params['isAjax']){
             
             $id = $this->params['url']['id'];
-            $item = $this->Agendamento->read(null, $id);
+            $item = $this->Agendamento->find('first', array('conditions' => array('Agendamento.id' => $id)));
             # confere permissão pro agendamento
             if( $item['Agendamento']['usuario_id'] != $this->Auth->user('id') ){
                 echo 'error'; exit;
@@ -325,6 +325,7 @@ class AgendamentosController extends AppController {
                     $_Categoria = "Destino";
                 }
                 
+                $this->Agendamento->id = $id;
                 $agendamento['Agendamento'] = array('valor' => $this->params['url']['valor'],
                                                     'observacoes' => $this->params['url']['observacoes'],
                                                     $_parentKey => $this->params['url']['categoria']);
@@ -364,15 +365,13 @@ class AgendamentosController extends AppController {
                         'Agendamento' =>
                             array('id' => $id,
                                   'categoria' => $categoriaAtualizada,
-                                  'valor' => $dadosAtualizados[$_Model]['valor'],
-                                  'observacoes' => $dadosAtualizados[$_Model]['observacoes']));
+                                  'valor' => 'R$ '.$dadosAtualizados[$_Model]['valor'].' reais com',
+                                  'observacoes' => 'Observações: '.$dadosAtualizados[$_Model]['observacoes']));
                     
-                    
-                    //$this->set('resposta',$reposta);
-                    //$this->autoRender = false;
-                    $this->layout = 'ajax';
+                    echo json_encode($reposta);
+                    $this->autoRender = false;
                 }else{ 
-                    //print_r($this->Agendamento->invalidFields());
+                    print_r($this->Agendamento->invalidFields());
                     echo 'validacao';   exit;
                 }
             }
