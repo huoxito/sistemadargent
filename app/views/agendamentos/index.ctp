@@ -46,7 +46,7 @@
                 foreach ($agendamentos as $agendamento):
             ?>
             
-            <li class="registros" id="agend-<?php echo $agendamento['Agendamento']['id']; ?>">
+            <li class="registros" id="agend<?php echo $agendamento['Agendamento']['id']; ?>">
                 
                 <span class="tipoAgendamentoLabel">
                     <?php echo $agendamento['Agendamento']['label']; ?>
@@ -62,7 +62,7 @@
                         </span> 
                     </p>
                     
-                    <?php if(!empty($agendamento['Frequencia']['nome'])){  ?>
+                    <?php if( $agendamento['Agendamento']['proxLancamento'] ){  ?>
                     <p class="agendamentoInfoLinha">
                         Frequência das parcelas:
                         <span class="agendamentoFrequencia"><?= $agendamento['Frequencia']['nome']; ?></span>.
@@ -70,22 +70,27 @@
                     </p>
                     <?php } ?>
                     
-                    <p class="agendamentoInfoLinha">
-                        Próximo lançamento para
+                    <?php if( $agendamento['Agendamento']['proxLancamento'] ){  ?>
+                    <p class="agendamentoInfoLinha" id="regId<?= $agendamento['Agendamento']['proximoRegId'] ?>">
+                        Próximo lançamento: 
                         <span class="agendamentoProxLancamento">
                             <?= $agendamento['Agendamento']['proximoReg']; ?>
                         </span>
                         
                         <?= $this->Html->link('CONFIRMAR',
                                     array('action' => 'confirmaLancamento',
-                                          $agendamento['Agendamento']['proxvencimento'],
+                                          $agendamento['Agendamento']['proximoRegId'],
                                           $agendamento['Agendamento']['model'],
-                                          $agendamento['Agendamento']['id'],time()),
-                                    array('onclick' => 'confirmar('.$agendamento['Agendamento']['id'].',\''.$agendamento['Agendamento']['model'].'\')',
-                                          'class' => 'btnacoes confirmaAgendamento',
+                                          time()),
+                                    array('class' => 'btnacoes confirmaAgendamento',
                                           'title' => 'Confirmar lançamento')); ?>
                         
                     </p>
+                    <?php }else{ ?>
+                    <p class="agendamentoInfoLinha agendamentoProxLancamento">
+                        Agendamento concluído
+                    </p>
+                    <?php } ?>
                     
                     <?php   if( !empty($agendamento['Agendamento']['observacoes']) ){   ?>
                     <p class="agendamentoInfoLinha Observacoes">
@@ -97,6 +102,7 @@
                 
                 </div>
                 
+                <?php if( $agendamento['Agendamento']['proxLancamento'] ){  ?>
                 <div class="categ-actions" style="margin-top: -45px;">
                     <?php
                         echo $this->Html->link('',
@@ -111,6 +117,7 @@
                                               'class' => 'colorbox-delete excluir'));
                     ?>
                 </div>
+                <?php   }   ?>
                 
             </li>
             

@@ -940,6 +940,23 @@ table .altrow td {
 .confirmaAgendamento {
 	float: none;
 }
+#datepicker {
+	float: left;
+}
+.confirmarBox {
+	float:left;
+	margin:0 0 5px 10px;
+	width:275px;
+}
+.confirmarBox p  {
+	font-size: 14px;
+	color:#555555;
+	margin:10px;
+}
+.dataVencimentoDestaque{
+	
+}
+
 
 .dataField {
 	width: 120px !important;
@@ -948,7 +965,8 @@ table .altrow td {
 #colorboxContent {
 	height:auto;
 	overflow:hidden;
-	padding:25px 25px 0;
+	padding:25px 20px 0;
+	background-color: #FFF;
 }
 
 

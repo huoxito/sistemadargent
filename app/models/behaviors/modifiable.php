@@ -35,7 +35,7 @@ class ModifiableBehavior extends ModelBehavior {
             }
             
             if( isset($model->data[$model->alias]['datadabaixa']) && $fieldName === 'datadabaixa' ){
-                echo $model->data[$model->alias]['datadabaixa'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadabaixa']);
+                $model->data[$model->alias]['datadabaixa'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadabaixa']);
             }
             
             if( isset($model->data[$model->alias]['datadevencimento']) && $fieldName === 'datadevencimento' ){

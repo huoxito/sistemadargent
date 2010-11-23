@@ -79,8 +79,7 @@ class DataComponent extends Object {
         
         $data = substr($data,0,10);
         list ($ano,$mes,$dia) = explode ('-', $data);
-            
-            
+                
         $diaSemana = array();
         $diaSemana["Sun"] = "Dom";
         $diaSemana["Mon"] = "Seg";
@@ -104,6 +103,23 @@ class DataComponent extends Object {
         $mesAno['11'] = "Nov";
         $mesAno['12'] = "Dez";
         
+        $mesLongo = array();
+        $mesLongo['01'] = "Janeiro";
+        $mesLongo['02'] = "Fevereiro";
+        $mesLongo['03'] = "Março";
+        $mesLongo['04'] = "Abril";
+        $mesLongo['05'] = "Maio";
+        $mesLongo['06'] = "Junho";
+        $mesLongo['07'] = "Julho";
+        $mesLongo['08'] = "Agosto";
+        $mesLongo['09'] = "Setembro";
+        $mesLongo['10'] = "Outubro";
+        $mesLongo['11'] = "Novembro";
+        $mesLongo['12'] = "Dezembro";
+        
+        $diaDaSemanaTimeStamp = mktime(0,0,0,$mes,$dia,$ano);
+        $diaDaSemana = date('D',$diaDaSemanaTimeStamp);
+        
         if($formato === 'completa')
         {
             $dataFormatada = $dia.'-'.$mes.'-'.$ano.', '.$hora;
@@ -122,10 +138,9 @@ class DataComponent extends Object {
             $mesExtenso = $mesAno[$mes];
             $dataFormatada = $dia.'-'.$mesExtenso.'-'.$ano;
         }else if ( $formato === 'diadasemana' ){
-            
-            $diaDaSemanaTimeStamp = mktime(0,0,0,$mes,$dia,$ano);
-            $diaDaSemana = date('D',$diaDaSemanaTimeStamp);
             $dataFormatada = $diaSemana[$diaDaSemana];
+        }else if ( $formato === 'longadescricao' ){
+            $dataFormatada = $diaSemana[$diaDaSemana].', '.$dia.' '.$mesLongo[$mes].', '.$ano;
         }
         
         return $dataFormatada;

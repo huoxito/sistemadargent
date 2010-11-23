@@ -20,19 +20,10 @@ class AgendamentosController extends AppController {
         
         foreach($agendamentos as $key => $item){
             
+            $id = $item['Agendamento']['id'];
             $_Model = $item['Agendamento']['model'];
             $this->loadModel($_Model);
-            $this->$_Model->recursive = -1;
-            $dataLancamento = $this->$_Model->field('datadevencimento',
-                                            array($_Model.'.agendamento_id' => $item['Agendamento']['id'],
-                                                  $_Model.'.status' => 0),
-                                            'datadevencimento ASC');
-            $this->$_Model->recursive = -1;
-            $numLancamentos = $this->$_Model->find('count',
-                                            array('conditions' =>
-                                                    array($_Model.'.status' => 0,
-                                                          $_Model.'.datadevencimento >' => date('Y-m-d'),
-                                                          $_Model.'.agendamento_id' => $item['Agendamento']['id'])));
+
             if( $_Model === 'Ganho' ){      
                 $item['Agendamento']['categoria'] = $item['Fonte']['nome'];
                 $item['Agendamento']['label'] = 'FATURAMENTO';
@@ -42,12 +33,14 @@ class AgendamentosController extends AppController {
                 $item['Agendamento']['label'] = 'DESPESA';
             }
             
-            if(!empty($dataLancamento)){
-                $item['Agendamento']['proximoReg'] = $this->Data->formata($dataLancamento,'porextenso');
-                $item['Agendamento']['proxvencimento'] = $this->Data->formata($dataLancamento,'diamesano');
+            $proxLancamento = $this->_proximoLancamento($id,$_Model);
+            if( $proxLancamento ){
+                $item['Agendamento']['proximoReg'] = $proxLancamento['proximoReg'];
+                $item['Agendamento']['proximoRegId'] = $proxLancamento['proximoRegId'];
             }
             
-            $item['Agendamento']['numLancamentos'] = $numLancamentos;
+            $item['Agendamento']['proxLancamento'] = $proxLancamento;
+            $item['Agendamento']['numLancamentos'] = $this->_numeroDeLancamentos($id,$_Model);
             $item['Agendamento']['modified'] = $this->Data->formata($item['Agendamento']['modified'],'completa');
             
             # adiciono os itens criados no loop ao array
@@ -58,7 +51,7 @@ class AgendamentosController extends AppController {
     }
     
     function tipo($_Model=true){
-        
+      
         if( $_Model === 'Gasto' ){
             $_Categoria = 'Destino';
             $_parentKey = 'destino_id';   
@@ -99,7 +92,6 @@ class AgendamentosController extends AppController {
                 $this->redirect(array('action' => 'index'));
                 $this->Session->setFlash('Registro agendado com sucesso', 'flash_success');
             } else {
-                $this->pa($this->validateErrors($this->Agendamento));
                 $this->Session->setFlash('Preencha os campos corretamente.', 'flash_error');
             }
         }
@@ -120,7 +112,6 @@ class AgendamentosController extends AppController {
                                                               array('Frequencia.status' => 1),
                                                               'order' => 'nome ASC'));
         $this->set(compact('frequencias'));
-        
         $this->render($_Model);
     }
     
@@ -186,31 +177,102 @@ class AgendamentosController extends AppController {
         }
     }
     
-    function confirmaLancamento($dataDeVencimento = null, $_Model = null, $id = null){
+    function confirmaLancamento( $id = null, $_Model = null ){
         
-        if ( !$id || !$_Model || ($_Model !== 'Ganho' && $_Model !== 'Gasto') ) {
+        if ( !$id || ($_Model !== 'Ganho' && $_Model !== 'Gasto' )) {
             $this->cakeError('error404');
         }
         
-        $userChk = $this->Agendamento->read(null, $id);
-        # permissão do usuário
-        $this->checkPermissao($userChk['Agendamento']['usuario_id']);
-        
-        
-        
         $this->loadModel($_Model);
-        $this->$_Model->field('datadevencimento',
-                            array('agendamento_id' => $id,
-                                  'datadevencimento' => $dataDeVencimento));
+        $userChk = $this->$_Model->read(null, $id);
+        # permissão do usuário
+        $this->checkPermissao($userChk[$_Model]['usuario_id']);
         
-        $this->set('vencimento',$dataDeVencimento);
-        $this->set('id',$id);
+        if($_Model === 'Ganho'){
+            $label = 'Faturamento';
+        }else{
+            $label = 'Despesa';
+        }
+        
+        $vencimentoAmigavel = $this->Data->formata($userChk[$_Model]['datadevencimento'],'longadescricao');
+        $dataDeVencimento = $this->Data->formata($userChk[$_Model]['datadevencimento'],'diamesano');
+        
+        if(!$this->Data->comparaDatas(date('d-m-Y'), $dataDeVencimento)){
+            $dataDeVencimento = date('d-m-Y');
+            $dataBaixaAmigavel = $this->Data->formata(date('Y-m-d'),'longadescricao');
+        }else{
+            $dataBaixaAmigavel = $vencimentoAmigavel;
+        }
+        
+        $view = array('config' => $_Model,
+                      'label' => $label,
+                      'vencimentoAmigavel' => $vencimentoAmigavel,
+                      'dataBaixaAmigavel' => $dataBaixaAmigavel,
+                      'vencimento' => $dataDeVencimento,
+                      'id' => $id,
+                      'idAgenda' => $userChk[$_Model]['agendamento_id']);
+        $this->set($view);
+        $this->layout = 'colorbox';
+    }
+    
+    
+    function confirmaResponse(){
         
         if($this->params['isAjax']){
             
-        }
+            $id = $this->params['url']['id'];
+            $_Model = $this->params['url']['config'];
+            $baixa = $this->params['url']['baixa'];
         
-        $this->layout = 'colorbox';
+            if ( !$id || ($_Model !== 'Ganho' && $_Model !== 'Gasto' )) {
+                echo 'error';   exit;
+            }
+            
+            $this->loadModel($_Model);
+            $this->$_Model->recursive = -1;
+            $userChk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $id)));
+            # permissão do usuário
+            if( $this->checkPermissao($userChk[$_Model]['usuario_id'],true) ){
+                
+                $info[ $_Model ] = array('datadabaixa' => $baixa,
+                                         'status' => 1);
+                $this->$_Model->id = $id;
+                if($this->$_Model->save($info,true,array('datadabaixa','status'))){
+                    
+                    $item = $this->Agendamento->read(null,$userChk[$_Model]['agendamento_id']);
+                    
+                    # executo as funções abaixo apenas se houver parcelas
+                    if(!empty($item['Frequencia']['nome'])){
+                        $item['Agendamento']['numLancamentos'] = $this->_numeroDeLancamentos($item['Agendamento']['id'],$_Model);
+                    
+                        $proxLancamento = $this->_proximoLancamento($item['Agendamento']['id'],$_Model);
+                        if( $proxLancamento ){
+                            $item['Agendamento']['proximoReg'] = $proxLancamento['proximoReg'];
+                            $item['Agendamento']['proximoRegId'] = $proxLancamento['proximoRegId'];
+                        }
+                        
+                        $item['Agendamento']['proxLancamento'] = $proxLancamento;
+                    }
+                    
+                    if($_Model === 'Ganho'){
+                        $label = 'Faturamento';
+                        $item['Agendamento']['categoria'] = $item['Fonte']['nome'];
+                    }else{
+                        $label = 'Despesa';
+                        $item['Agendamento']['categoria'] = $item['Destino']['nome'];
+                    }
+                    
+                    $this->set('label',$label);
+                    $this->set('item',$item);
+                    $this->layout = 'ajax';
+                }else{
+                    echo 'validacao';   exit;
+                }
+                
+            }else{
+                echo 'error';   exit;
+            }
+        }
     }
 
     function edit ($id = null){
@@ -438,6 +500,33 @@ class AgendamentosController extends AppController {
             $this->layout = 'colorbox'; 
         }
     }
-}
+    
+    function _numeroDeLancamentos($id,$_Model){
+        $this->$_Model->recursive = -1;
+        return $this->$_Model->find('count',
+                        array('conditions' =>
+                                array($_Model.'.status' => 0,
+                                      $_Model.'.agendamento_id' => $id)));
+    }
+    
+    function _proximoLancamento($id,$_Model){
         
+        $this->$_Model->recursive = -1;
+        $proxLancamento = $this->$_Model->find('first',
+                                    array('conditions' =>
+                                            array($_Model.'.agendamento_id' => $id,
+                                                  $_Model.'.status' => 0)),
+                                    'datadevencimento ASC');
+        
+        $array['dataLancamento'] = $proxLancamento[$_Model]['datadevencimento'];
+        if(!empty($array['dataLancamento'])){
+            $array['proximoReg'] = $this->Data->formata($array['dataLancamento'],'porextenso');
+            $array['proximoRegId'] = $proxLancamento[$_Model]['id'];
+            return $array;
+        }else{
+            return false;
+        }
+    }
+}
+
 ?>
