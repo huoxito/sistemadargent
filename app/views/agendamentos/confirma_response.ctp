@@ -4,7 +4,7 @@
     <?= $label; ?>
 </span>
 
-<div class="agendamentoInfo">
+<div class="agendamentoInfo agendamentoInfo<?= $item['Agendamento']['id']; ?>">
     
     <p class="agendamentoInfoLinha">
         <span class="valorAgenda<?php echo $item['Agendamento']['id']; ?>">
@@ -20,7 +20,10 @@
     <p class="agendamentoInfoLinha">
         Frequência das parcelas:
         <span class="agendamentoFrequencia"><?= $item['Frequencia']['nome']; ?></span>.
+        
+        <?php   if ( $item['Agendamento']['numLancamentos'] > 0 ){ ?>
         Restando <span class="agendamentoFrequência"><?= $item['Agendamento']['numLancamentos'] ?></span> lançamentos.
+        <?php   } ?>
     </p>
     <?php } ?>
     
@@ -30,7 +33,7 @@
         </span>
     </p>    
     
-    <?php if( $item['Agendamento']['proxLancamento'] ){  ?>
+    <?php if( isset($item['Agendamento']['proxLancamento']) && $item['Agendamento']['proxLancamento'] ){  ?>
     <p class="agendamentoInfoLinha">
         
         Próximo lançamento para:
@@ -62,7 +65,7 @@
 
 </div>
 
-<?php if( $item['Agendamento']['proxLancamento'] ){  ?>
+<?php if( isset($item['Agendamento']['proxLancamento']) && $item['Agendamento']['proxLancamento'] ){  ?>
 <div class="categ-actions" style="margin-top: -45px;">
     <?php
         echo $this->Html->link('',

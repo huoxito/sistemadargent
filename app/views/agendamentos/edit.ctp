@@ -72,6 +72,7 @@
                             parent.$('.valorAgenda'+id).html(item.valor);
                             parent.$('.categoria'+id).html(item.categoria);
                             parent.$('.Observacoes'+id).html(item.observacoes);
+                            parent.$('.agendamentoInfo'+id).append('<p class="agendamentoInfoLinha agendamentoProxLancamento">Registro alterado</p>');
                         });
                         
                         var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);

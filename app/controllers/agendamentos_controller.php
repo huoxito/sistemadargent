@@ -365,8 +365,12 @@ class AgendamentosController extends AppController {
                         'Agendamento' =>
                             array('id' => $id,
                                   'categoria' => $categoriaAtualizada,
-                                  'valor' => 'R$ '.$dadosAtualizados[$_Model]['valor'].' reais com',
-                                  'observacoes' => 'Observações: '.$dadosAtualizados[$_Model]['observacoes']));
+                                  'valor' => 'R$ '.$dadosAtualizados[$_Model]['valor'],
+                                  'observacoes' => null));
+                    
+                    if(!empty($dadosAtualizados[$_Model]['observacoes'])){
+                        $reposta['Agendamento']['observacoes'] = 'Observações: '.$dadosAtualizados[$_Model]['observacoes'];
+                    }
                     
                     echo json_encode($reposta);
                     $this->autoRender = false;
