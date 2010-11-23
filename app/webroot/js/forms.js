@@ -17,18 +17,30 @@
                 });
     });  
     // ]]>
+
+    $('#AgendamentoConfig0').click(function() {           
+        if($(this).is(':checked'))  {
+            $('#AgendamentoFrequenciaId').attr('disabled','disabled');
+            $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
+        }else{
+            
+        } 
+    });
+    
+    $('#AgendamentoConfig1').click(function() {           
+        if($(this).is(':checked'))  {
+            $('#AgendamentoFrequenciaId').removeAttr('disabled');
+            $('#AgendamentoNumdeparcelas').removeAttr('disabled');
+        } 
+    });
     
     function disableOrNotInputs(value){
         if(value == 0){
             $('#AgendamentoFrequenciaId').attr('disabled','disabled');
             $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
-            
-        }else{
-            $('#AgendamentoFrequenciaId').attr('disabled','');
-            $('#AgendamentoNumdeparcelas').attr('disabled','');
         }
     }
-        
+
     var options3 = {
                     'maxCharacterSize': 200,
                     'originalStyle': 'originalTextareaInfo',
