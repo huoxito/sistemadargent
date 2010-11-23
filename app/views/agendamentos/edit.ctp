@@ -1,54 +1,46 @@
     
-    
-    
     <?php   echo $this->Html->script('jquery.textareaCounter.plugin');  ?>
-    <div class="agendamentos box" id="box">
+    
+    <div class="agendamentos formBox">
         
-        <p class="classname">As alterações feitas nesse agendamento serão válidas para os próximos <?php echo $itens['Agendamento']['numLancamentos']; ?> lançamentos.</p>
-        <?php echo $form->create('Agendamento',array('default' => false));?>
-            <fieldset>
-                <legend>Editar Agendamento <?php echo $itens['Frequencia']['nome']; ?></legend>
-            <?php
-
-                if($itens['Agendamento']['tipo'] == 'Gasto')
-                    echo $form->input('destino_id', array('empty' => 'Destino',
-                                                          'id' => 'categoria',
-                                                          'div' => array('style' => 'float: left;')));
-                    
-                if($itens['Agendamento']['tipo'] == 'Ganho')
-                    echo $form->input('fonte_id', array('empty' => 'Fonte',
-                                                        'id' => 'categoria',
-                                                        'div' => array('style' => 'float: left; clear: none;')));
-                    
-                echo $form->input('valor', array(
-                                                 'style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                 'div' => array('style' => 'float: left; clear: none;')));
-                
-                echo $form->input('Valormensal.diadomes', array('label' => 'Dia do vencimento',
-                                                                'style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                                'div' => array('style' => 'float: left; clear: none;')));
+        <span class="labelBoxForm">
+            AGENDAMENTO DE <?= $label ?>s
+        </span>
+        <?php
             
-                echo $form->input('observacoes', array('type' => 'textarea',
-                                                    'label' => 'Observações',
-                                                    'id' => 'Observacoes',
-                                                    'style' => 'width: 428px; height: 80px;'));
-           
-                echo $form->end(array('label' => 'Salvar',
-                                       'onclick' => 'editAgendamento('.$itens['Agendamento']['id'].');',
-                                        'style' => 'float: left;',
-                                        'after' => ' <input type="submit" style="float: left;margin-left: 5px;" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />'));
-            ?>
+            echo $this->Form->create('Agendamento',array('default' => false));
+            
+            if($this->data['Agendamento']['model'] == 'Gasto')
+                echo $this->Form->input('destino_id',
+                                    array('empty' => 'Destino',
+                                          'id' => 'categoria'));
+                
+            if($this->data['Agendamento']['model'] == 'Ganho')
+                echo $this->Form->input('fonte_id',
+                                    array('empty' => 'Fonte',
+                                          'id' => 'categoria'));
+                
+            echo $this->Form->input('valor');
+            echo $this->Form->input('observacoes', array('type' => 'textarea',
+                                                'label' => 'Observações',
+                                                'id' => 'Observacoes'));
+       
+            echo $this->Form->end(array('label' => 'Salvar',
+                                        'onclick' => 'editAgendamento('.$this->data['Agendamento']['id'].');',
+                                        'after' => ' <input type="submit" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />'));
+        
+        ?>
             
     </div>
     
     <?php   echo $this->Html->script('forms');  ?>
+    
     <script type="text/javascript">
         // <![CDATA[
         function editAgendamento(id){
             
-            var categoria    = $('#categoria').val();
+            var categoria   = $('#categoria').val();
             var valor       = $('#AgendamentoValor').val();
-            var vencimento  = $('#ValormensalDiadomes').val();
             var obs         = $('#Observacoes').val();
     
             $.ajax({

@@ -873,7 +873,7 @@ input.btnaddcategoria {
 
 input[type=text], input[type=password] {
 	padding: 5px;
-	width: 300px;
+	width: 120px;
 }
 
 /** Tables **/
@@ -958,7 +958,7 @@ table .altrow td {
 }
 
 
-.dataField {
+.dataField, .dateFieldAhead {
 	width: 120px !important;
 }
 
@@ -968,7 +968,32 @@ table .altrow td {
 	padding:25px 20px 0;
 	background-color: #FFF;
 }
+.formBox {
+	padding: 20px;
+}
 
+.labelBoxForm {
+	text-transform:uppercase;
+	background-color:#F2FFE3;
+	color:#508501;
+	display:block;
+	padding:5px 30px;
+	margin: 0 20px -20px 0;
+	float: right;
+}
 
+textarea {
+	height:90px;
+	padding:5px;
+	width:400px;
+}
 
+.charleft {
+	padding: 5px 0 0 10px;
+}
+
+.select_categoria{
+
+	margin-right: 20px;
+}
 

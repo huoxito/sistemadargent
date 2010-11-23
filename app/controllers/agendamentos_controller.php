@@ -277,159 +277,103 @@ class AgendamentosController extends AppController {
 
     function edit ($id = null){
         
-        if (!$id && empty($this->data)) {
-            $this->redirect(array('action' => 'index'));
+        if ( !$id ) {
+            $this->cakeError('error404');
         }
 
-        $this->data = $this->Agendamento->read(null, $id);
-        
+        $this->data = $this->Agendamento->read(null, $id);        
         # permissão do usuário
         $this->checkPermissao($this->data['Agendamento']['usuario_id']);
     
-        $_Model = $this->data['Agendamento']['tipo'];
+        $_Model = $this->data['Agendamento']['model'];
         if ( $_Model == 'Ganho' ) {
             $_Categoria = 'Fonte';
+            $label = 'Faturamento';
         }else if( $_Model == 'Gasto' ){
             $_Categoria = 'Destino';
+            $label = 'Despesa';
         }
         
         $categorias = $this->Agendamento->$_Categoria->find('list',
-                                                    array('conditions' =>
-                                                            array('status' => 1,
-                                                                'usuario_id' => $this->Auth->user('id')))
-                                                    );
+                                        array('conditions' =>
+                                                array('status' => 1,
+                                                      'usuario_id' => $this->Auth->user('id')))
+                                        );
         
-        $this->loadModel($_Model);   
-        $this->$_Model->recursive = -1;
-        $this->data['Agendamento']['numLancamentos'] = $this->$_Model->find('count',
-                                                array('conditions' =>
-                                                        array($_Model.'.status' => 0,
-                                                            $_Model.'.datadevencimento >' => date('Y-m-d'),
-                                                            $_Model.'.agendamento_id' => $this->data['Agendamento']['id'])
-                                                        ));
-            
         $this->set(array('fontes' => $categorias, 'destinos'=> $categorias));
-        $this->set('itens',$this->data);
-        
+        $this->set('label',$label);
         $this->layout = 'colorbox';
     }
-    
     
     function editResponse ($id = null) {
         
         if($this->params['isAjax']){
             
-            $this->Agendamento->unbindModel(
-                array('belongsTo' => array('Fonte','Destino'))
-            );
             $id = $this->params['url']['id'];
-            $item = $this->Agendamento->read(array('usuario_id',
-                                                    'tipo',
-                                                    'Valormensal.id',
-                                                    'Frequencia.nome'), $id);
+            $item = $this->Agendamento->read(null, $id);
             # confere permissão pro agendamento
             if( $item['Agendamento']['usuario_id'] != $this->Auth->user('id') ){
                 echo 'error'; exit;
             }else{
                 
-                $_Model = $item['Agendamento']['tipo'];
+                $_Model = $item['Agendamento']['model'];
                 if( $_Model === 'Ganho' ){
                     $_parentKey = 'fonte_id';
-                    $color = "#376F44";
                     $_Categoria = "Fonte";
                 }elseif ( $_Model === 'Gasto' ) {
                     $_parentKey = 'destino_id';
-                    $color = "#EF0E2C";
                     $_Categoria = "Destino";
                 }
                 
                 $agendamento['Agendamento'] = array('valor' => $this->params['url']['valor'],
                                                     'observacoes' => $this->params['url']['observacoes'],
                                                     $_parentKey => $this->params['url']['categoria']);
-                $vencimento['Valormensal'] = array('diadomes' => $this->params['url']['vencimento']);
                 
-                $this->Agendamento->Valormensal->id = $item['Valormensal']['id'];
-                if( $this->Agendamento->save($agendamento) && $this->Agendamento->Valormensal->save($vencimento) ){
+                if( $this->Agendamento->save($agendamento) ){
                     
                     $this->loadModel($_Model);
                     $this->$_Model->recursive = -1;
                     $infos = $this->$_Model->find('all',
-                                                    array('conditions' => array('agendamento_id' => $id,
-                                                                                'datadevencimento >=' => date('Y-m-d'),
-                                                                                $_Model.'.status' => 0),
-                                                          'fields' => array('id',
-                                                                            'datadevencimento'),
-                                                          )
-                                                     );
+                                        array('conditions' => array('agendamento_id' => $id,
+                                                                    $_Model.'.status' => 0),
+                                              'fields' => array('id','datadevencimento')));
                     
-                    $atualizados[ $_Model ] = array('valor' => $this->params['url']['valor'],
-                                                    'observacoes' => $this->params['url']['observacoes'],
-                                                    $_parentKey => $this->params['url']['categoria']);
-                    
+                    $atualizados[ $_Model ] = $agendamento['Agendamento'];
                     foreach($infos as $info){
-                        
-                        # check se mes realmente possui o dia de vencimento indicado pelo usuário
-                        $dataAntiga = $info[ $_Model ][ 'datadevencimento' ];
-                        list($ano,$mes,$dia) = explode('-',$dataAntiga);
-                        if( $this->params['url']['vencimento'] > $this->Data->retornaUltimoDiaDoMes($mes,$ano) ){
-                            $novoDiaVencimento = $this->Data->retornaUltimoDiaDoMes($mes,$ano);  
-                        }else{
-                            $novoDiaVencimento = $this->params['url']['vencimento'];
-                        }
-                        
-                        # atualizo a data de vencimentos de todos os registros relacionados ao agendamento
-                        $atualizados[ $_Model ]['datadevencimento'] = $ano.'-'.$mes.'-'.$novoDiaVencimento;
                         
                         $this->$_Model->id = $info[$_Model]['id'];
                         if ( $this->$_Model->save( $atualizados ) ){
                             // salvo !!!
                         }else{
-                            //print_r($this->$itens['Agendamento']['tipo']->invalidFields());
+                            //print_r($this->$_Model->invalidFields());
                         }
                     }
                     
                     # termino de montar array para exibir os dados atualizados no layout
-                    
                     $this->$_Model->$_Categoria->id = $this->params['url']['categoria'];
                     $categoriaAtualizada = $this->$_Model->$_Categoria->field('nome');
-                    
                     $dadosAtualizados = $this->$_Model->find('first',
-                                                              array('fields' => array('datadevencimento','valor','observacoes'),
-                                                                    'recursive' => -1,
-                                                                    'conditions' =>
-                                                                          array($_Model.'.agendamento_id' => $id,
-                                                                                  $_Model.'.status' => 0,
-                                                                                  $_Model.'.datadevencimento >=' => date('Y-m-d')),
-                                                                    'order' => 'datadevencimento ASC')
-                                                             );
+                                                array('fields' => array('datadevencimento','valor','observacoes'),
+                                                      'recursive' => -1,
+                                                      'conditions' =>
+                                                            array($_Model.'.agendamento_id' => $id,
+                                                                  $_Model.'.status' => 0),
+                                                      'order' => 'datadevencimento ASC'));
                     
                     $reposta = array(
                         'Agendamento' =>
-                            array(
-                                'id' => $id,
-                                'categoria' => $categoriaAtualizada,
-                                'tipo' => $_Model,
-                                'vencimento' => $this->params['url']['vencimento'],
-                                'numLancamentos' => count($infos),
-                                'modified'  => $this->Data->formata(date('Y-m-d H:i:s'),'completa'),
-                                'color' => $color,
-                                'valor' => $dadosAtualizados[$_Model]['valor'],
-                                'proximoReg' => $this->Data->formata($dadosAtualizados[$_Model]['datadevencimento'],'porextenso'),
-                                'observacoes' => $dadosAtualizados[$_Model]['observacoes']
-                                        ),
-                        'Frequencia' => array(
-                                            'nome' => $item['Frequencia']['nome']
-                                            )
-                    );
+                            array('id' => $id,
+                                  'categoria' => $categoriaAtualizada,
+                                  'valor' => $dadosAtualizados[$_Model]['valor'],
+                                  'observacoes' => $dadosAtualizados[$_Model]['observacoes']));
                     
-                    $this->set('agendamento',$reposta);
+                    
+                    //$this->set('resposta',$reposta);
+                    //$this->autoRender = false;
                     $this->layout = 'ajax';
-                
                 }else{ 
                     //print_r($this->Agendamento->invalidFields());
-                    //print_r($this->Agendamento->Valormensal->invalidFields());
-                    echo 'validacao';
-                    $this->autoRender = false;
+                    echo 'validacao';   exit;
                 }
             }
         }
