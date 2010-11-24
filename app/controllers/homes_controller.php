@@ -5,24 +5,17 @@ class HomesController extends AppController{
     var $uses = array('Ganho', 'Gasto');  
     var $components = array('Valor', 'Data', 'PieChart','LineChart');
 
-    /*
-    var $cacheAction = array(
-        'index' => '1 hour'
-    );
-    */
-    
     function index(){
         
-
-        $inicial    = date('Y-m-d 00:00:00');
-        $final      = $this->Data->somaDias(date('Y-m-d H:i:s'), 30, 2, '-');
+        $inicial = date('Y-m-d', mktime(0,0,0,date('m'),date('d')-30,date('Y')));
+        $final = date('Y-m-d', mktime(0,0,0,date('m'),date('d')+30,date('Y')));
         
         $this->Ganho->recursive = 0;
         $ganhos = $this->Ganho->find('all',
                             array('conditions' =>
                                        array('Ganho.status' => 0,
-                                           'Ganho.usuario_id' => $this->Auth->user('id'),
-                                           'Ganho.datadevencimento BETWEEN ? AND ?' => array($inicial, $final)),
+                                             'Ganho.usuario_id' => $this->Auth->user('id'),
+                                             'Ganho.datadevencimento BETWEEN ? AND ?' => array($inicial, $final)),
                                   'limit' => '30',
                                   'order' => array('Ganho.datadevencimento' => 'asc', 'Ganho.modified' => 'asc')
                                   ));
