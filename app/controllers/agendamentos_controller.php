@@ -162,7 +162,7 @@ class AgendamentosController extends AppController {
             $registro[$_Model] = array('usuario_id' => $this->Auth->user('id'),
                                        'agendamento_id' => $id,
                                        $_parentKey => $registro['Agendamento'][$_parentKey],
-                                       'valor' => $this->Valor->formata($registro['Agendamento']['valor']),
+                                       'valor' => $registro['Agendamento']['valor'],
                                        'datadevencimento' => $dataDeEntrada,
                                        'observacoes' => $registro['Agendamento']['observacoes'],
                                        'status' => 0);
@@ -171,7 +171,8 @@ class AgendamentosController extends AppController {
             if($this->$_Model->save($registro, true)){
                 // yeeah !
             }else{
-                $this->Session->setFlash(__('Ocorreu um erro, por favor tente novamente', true));
+                //print_r($this->$_Model->invalidFields());
+                $this->Session->setFlash('Ocorreu um erro inesperado, se o erro persistir informe o administrador', 'flash_error');
                 $this->redirect(array('action' => 'index'));
             }
         }
@@ -409,7 +410,6 @@ class AgendamentosController extends AppController {
                 echo 'error'; exit;
             }
             $this->autoRender = false; 
-        
         }else{
             
             if( $item['Agendamento']['model'] == 'Ganho' ){
@@ -438,8 +438,8 @@ class AgendamentosController extends AppController {
         $proxLancamento = $this->$_Model->find('first',
                                     array('conditions' =>
                                             array($_Model.'.agendamento_id' => $id,
-                                                  $_Model.'.status' => 0)),
-                                    'datadevencimento ASC');
+                                                  $_Model.'.status' => 0),
+                                          'order' => $_Model.'.datadevencimento ASC'));
         
         $array['dataLancamento'] = $proxLancamento[$_Model]['datadevencimento'];
         if(!empty($array['dataLancamento'])){
