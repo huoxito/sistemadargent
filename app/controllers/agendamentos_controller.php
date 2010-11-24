@@ -171,7 +171,8 @@ class AgendamentosController extends AppController {
             if($this->$_Model->save($registro, true)){
                 // yeeah !
             }else{
-                //print_r($this->$_Model->invalidFields());
+                $error = $this->validateErrors($this->$_Model);
+                $this->log($error,'erro no parcelamento');
                 $this->Session->setFlash('Ocorreu um erro inesperado, se o erro persistir informe o administrador', 'flash_error');
                 $this->redirect(array('action' => 'index'));
             }
