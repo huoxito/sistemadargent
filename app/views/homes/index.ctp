@@ -138,14 +138,14 @@
                         contentType: "application/x-www-form-urlencoded; charset=utf-8",
                         data: ({ tipo: tipo, id: id }),
                         beforeSend: function(){
-                            $('#acoes-' + tipo + '-' + id).prepend('<img style="display: inline;" src="<?php echo $html->url('/');?>img/ajax-loader-p.gif" title="confirmando" alt="confirmando" />');
+                            $('#acoes-' + tipo + '-' + id).prepend('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                         },
                         success: function(result){
-                        
+                            
                             if(result == 'error'){
                                 alert('Algo improvável aconteceu, por favor tente novamente');
                             }else{
-                                $('#acoes-' + tipo + '-' + id).html(result)
+                                $('#acoes-' + tipo + '-' + id).html(result);
                             }
                         }
                         
@@ -160,14 +160,14 @@
                         contentType: "application/x-www-form-urlencoded; charset=utf-8",
                         data: ({ tipo: tipo, id: id }),
                         beforeSend: function(){
-                            $('#acoes-' + tipo + '-' + id).prepend('<img style="display: inline;" src="<?php echo $html->url('/');?>img/ajax-loader-p.gif" title="confirmando" alt="confirmando" />');
+                            $('#acoes-' + tipo + '-' + id).prepend('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                         },
                         success: function(result){
                         
                             if(result == 'error'){
                                 alert('Algo improvável aconteceu, por favor tente novamente');
                             }else{
-                                $('#acoes-' + tipo + '-' + id).html(result)
+                                $('#acoes-' + tipo + '-' + id).html(result);
                             }
                         }
                         

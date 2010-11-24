@@ -17,7 +17,7 @@ class HomesController extends AppController{
                                              'Ganho.usuario_id' => $this->Auth->user('id'),
                                              'Ganho.datadevencimento BETWEEN ? AND ?' => array($inicial, $final)),
                                   'limit' => '30',
-                                  'order' => array('Ganho.datadevencimento' => 'asc', 'Ganho.modified' => 'asc')
+                                  'order' => array('Ganho.datadevencimento' => 'asc')
                                   ));
         
         $this->Gasto->recursive = 0;
@@ -281,16 +281,15 @@ class HomesController extends AppController{
                 echo 'error';
             }else{
               
-                $chk = $this->$_Model->read(null, $this->params['url']['id']);
+                $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
                 # permissao
                 if($chk[$_Model]['usuario_id'] != $this->Auth->user('id')){
                     echo 'error'; exit;
                 }else{
                     
                     $this->$_Model->id = $this->params['url']['id'];
-                    $dados[$_Model] = array('datadabaixa' => date('d-m-Y'),
-                                            'status' => 1);
-                    if($this->$_Model->save($dados)){
+                    $dados[$_Model] = array('datadabaixa' => date('d-m-Y'),'status' => 1);
+                    if($this->$_Model->save($dados, true,array('datadabaixa','status'))){
                         
                         if($_Model == 'Ganho'){
                             $_Categoria = 'Fonte';
@@ -298,13 +297,7 @@ class HomesController extends AppController{
                             $_Categoria = 'Destino';
                         }
                         
-                        $registros = array('id' => $chk[$_Model]['id'],
-                                           'categoria' => $chk[$_Categoria]['nome'],
-                                           'valor' => $chk[$_Model]['valor'],
-                                           'tipo' => $_Model,
-                                           'obs' => $chk[$_Model]['observacoes']
-                                           );
-                        
+                        $registros = array('id' => $chk[$_Model]['id'],'tipo' => $_Model);
                         $this->set(compact('registros'));
                         $this->layout = 'ajax';
                     }else{
@@ -494,16 +487,15 @@ class HomesController extends AppController{
                 echo 'error'; exit;
             }else{
               
-                $chk = $this->$_Model->read(null, $this->params['url']['id']);
+                $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
                 # permissao
                 if($chk[$_Model]['usuario_id'] != $this->Auth->user('id')){
                     echo 'error';   exit;
                 }else{
                     
                     $this->$_Model->id = $this->params['url']['id'];
-                    $dados[$_Model] = array('datadabaixa' => null,
-                                            'status' => 0);
-                    if($this->$_Model->save($dados, false)){
+                    $dados[$_Model] = array('datadabaixa' => null,'status' => 0);
+                    if($this->$_Model->save($dados, false,array('datadabaixa','status'))){
                         
                         if($_Model == 'Ganho'){
                             $_Categoria = 'Fonte';
@@ -511,17 +503,9 @@ class HomesController extends AppController{
                             $_Categoria = 'Destino';
                         }
                         
-                        $registros = array('id' => $chk[$_Model]['id'],
-                                           'categoria' => $chk[$_Categoria]['nome'],
-                                           'valor' => $chk[$_Model]['valor'],
-                                           'tipo' => $_Model,
-                                           'vencimento' => $chk[$_Model]['datadevencimento'],
-                                           'obs' => $chk[$_Model]['observacoes']
-                                           );
-                        
+                        $registros = array('id' => $chk[$_Model]['id'],'tipo' => $_Model,);
                         $this->set(compact('registros'));
                         $this->layout = 'ajax';
-                        //exit;
                     }else{
                         echo 'error';   exit;
                     }
