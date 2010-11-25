@@ -40,10 +40,10 @@ class HomesController extends AppController{
             list($Ano,$mesNumerico,$Dia) = explode('-',$dataNoLoop);
             $dataCalendario = $Ano.'-'.$mesNumerico.'-'.$Dia;
             $Mes = $this->Data->retornaNomeDoMes($mesNumerico);
+            $dataMaxima = $this->Data->comparaDatas(date('d-m-Y'),$Dia.'-'.$mesNumerico.'-'.$Ano);
             
             $calendario[$Ano][$Mes][$Dia] = array(//'dia' => $Dia,
                                                 'diadasemana' => $this->Data->formata($dataCalendario,'diadasemana'));
-            
             
             foreach($ganhos as $item){
                 
@@ -55,7 +55,8 @@ class HomesController extends AppController{
                                           'valor' => $item['Ganho']['valor'],
                                           'categoria' => $item['Fonte']['nome'],
                                           'id' => $item['Ganho']['id'],
-                                          'obs' => $item['Ganho']['observacoes']);         
+                                          'obs' => $item['Ganho']['observacoes'],
+                                          'dataFutura' => $dataMaxima);         
                     $count++;
                 }
             }
@@ -70,7 +71,8 @@ class HomesController extends AppController{
                                           'valor' => $item['Gasto']['valor'],
                                           'categoria' => $item['Destino']['nome'],
                                           'id' => $item['Gasto']['id'],
-                                          'obs' => $item['Gasto']['observacoes']);
+                                          'obs' => $item['Gasto']['observacoes'],
+                                          'dataFutura' => $dataMaxima);
                     $count++;
                 }
             }
@@ -476,12 +478,6 @@ class HomesController extends AppController{
                     $this->$_Model->id = $this->params['url']['id'];
                     $dados[$_Model] = array('datadabaixa' => null,'status' => 0);
                     if($this->$_Model->save($dados, false,array('datadabaixa','status'))){
-                        
-                        if($_Model == 'Ganho'){
-                            $_Categoria = 'Fonte';
-                        }else{
-                            $_Categoria = 'Destino';
-                        }
                         
                         $registros = array('id' => $chk[$_Model]['id'],'tipo' => $_Model,);
                         $this->set(compact('registros'));

@@ -90,10 +90,13 @@
                                         
                                         <div class="links-registros-calendario" id="acoes-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
                                         
+                                            <?php   if($registros['dataFutura']){  ?>
                                             <?php   echo $this->Html->link('CONFIRMAR',
                                                                 'javascript:;',
                                                                 array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')',
                                                                       'class' => 'btnacoes')); ?>
+                                            <?php   }  ?>
+                                                                      
                                             <?php   echo $this->Html->link('EDITAR',
                                                                 array('action' => 'edit',$registros['id'],$registros['tipo']),
                                                                 array('class' => 'colorbox-edit btneditar')
@@ -149,7 +152,7 @@
                         contentType: "application/x-www-form-urlencoded; charset=utf-8",
                         data: ({ tipo: tipo, id: id }),
                         beforeSend: function(){
-                            $('#acoes-' + tipo + '-' + id).prepend('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
+                            $('#acoes-' + tipo + '-' + id).prepend('<div style="float: left;"><?= $this->Html->image('ajax-loader-p.gif'); ?></div>');
                         },
                         success: function(result){
                             
