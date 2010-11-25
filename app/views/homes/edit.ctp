@@ -1,79 +1,77 @@
     
-    <?php   echo $this->Html->script('jquery.textareaCounter.plugin');  ?>
-    <?php   echo $this->Html->css('jquery-ui-1.8rc3.custom');
-            echo $this->Html->script('jquery.ui.core');
-            echo $this->Html->script('ui.datepicker');  ?>
-
-    <div class="ganhos box" id="box">  
+    
+    <div class="ganhos formBox">  
         
-    <?php echo $form->create($_Model,array('default' => false));?>
-        <fieldset>
-            <legend><?php __('Editar Resgistro');?></legend>
+        <?php echo $this->Form->create($_Model,array('default' => false));?>
+        <span class="tipoAgendamentoLabel">
+            <?= $this->data[$_Model]['label'] ?>
+        </span>
+        
+        <input type="hidden" id="datadabaixa" value="<?= $this->data[$_Model]['datainicial'] ?>" />
+        <div id="datepicker">
+            <span class="labelCalendario">Selecione a data da baixa</span>    
+        </div>
+        <span id="altDate"></span>
         
         <?php
             if( $_Model == 'Ganho' ){
-                
-                
-                echo $form->input('fonte_id', array('empty' => 'Escolha um registro',
-                                                    'style' => 'margin-right: 10px;',
-                                                    'id' => 'categoria',
-                                                    'error' => false,
-                                                    )); 
+                echo $this->Form->input('fonte_id',
+                                    array('empty' => 'Escolha um registro',
+                                          'id' => 'categoria',
+                                          'div' => array('class' => 'inputBoxWraper'))); 
             }else{
-                
-                echo $form->input('destino_id', array('empty' => 'Escolha um registro',
-                                                    'style' => 'margin-right: 10px;',
-                                                    'id' => 'categoria',
-                                                    'error' => false,
-                                                    )); 
+                echo $this->Form->input('destino_id',
+                                    array('empty' => 'Escolha um registro',
+                                          'id' => 'categoria',
+                                          'div' => array('class' => 'inputBoxWraper'))); 
             }
-            
-            echo $form->input('valor', array('style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                'error' => false,
-                                                'id' => 'valor',
-                                                'div' => array('style' => 'float: left; clear: none;')
-                                                ));
         
-            echo $form->input('datadevencimento', array('label' => 'Data',
-                                                    'type' => 'text',
-                                                    'id' => 'datadevencimento',
-                                                    'error' => false,
-                                                    'class' => 'dataField',
-                                                    'default' => date('d-m-Y'),
-                                                    'style' => 'width: 100px; height: 16px; padding: 7px;',
-                                                    'div' => array('style' => 'float: left; clear: none;')
-                                                    ));  
-        
-            echo $form->input('observacoes', array('type' => 'textarea',
-                                                    'label' => 'Observações',
-                                                    'id' => 'Observacoes',
-                                                    'style' => 'width: 428px; height: 80px;'));
+            echo $this->Form->input('valor',
+                                    array('error' => false,
+                                          'id' => 'valor',
+                                          'div' => array('class' => 'inputBoxWraper'))); 
         ?>
-        </fieldset>
-        <?php echo $form->end(array('label' => 'Salvar',
-                                    'onclick' => 'editar('.$id.',\'editar\');',
-                                    'style' => 'float: left;',
-                                    'after' => ' <input type="submit" style="float: left;margin-left: 5px;" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />',
-                                    'before' => ' <input type="submit" style="float: left;margin-right: 5px;" onclick="editar('.$id.',\'confirmar\');" value="Confirmar" />'));
+        
+        <?php
+            echo $this->Form->input('observacoes',
+                                    array('type' => 'textarea',
+                                          'label' => 'Observações',
+                                          'id' => 'Observacoes',
+                                          'div' => array('class' => 'inputBoxWraper'))); 
+        ?>
+        <?php echo $this->Form->end(array('label' => 'Salvar',
+                                          'onclick' => 'editar('.$id.',\'editar\');',
+                                          'style' => 'float: left;'));
         ?>
     </div>
     
     
     <?php   echo $this->Html->script('forms');  ?>
+    
+    <? list($dia,$mes,$ano) = explode('-',$this->data[$_Model]['datainicial']); ?>
     <script type="text/javascript">
         // <![CDATA[
-        
-        $('.dataField').datepicker({
-                        dateFormat: 'dd-mm-yy',
-                        dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
-                    });
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                        dateFormat: 'D, d MM, yy',
+                        defaultDate: new Date(<?=$ano?>,<?=$mes-1?>,<?=$dia?>),
+                        maxDate: 'dd-mm-yy',
+                        altField: '#datadabaixa',
+                        altFormat: 'dd-mm-yy',
+                        beforeShow: function(input, inst) {
+                            $('#altDate').html(maxDate);
+                        },
+                        onSelect: function(dateText, inst){
+                            $('.change').html(dateText);
+                        }
+            });
+        });
         
         function editar(id,action){
             
             var categoria       = $('#categoria').val();
             var valor           = $('#valor').val();
-            var data            = $('#datadevencimento').val();
+            var data            = $('#datadabaixa').val();
             var obs             = $('#Observacoes').val();
             var tipo            = '<?php echo $_Model;  ?>';      
             

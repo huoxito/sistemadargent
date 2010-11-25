@@ -678,7 +678,6 @@ label
 {
 	display:block;
 	color:#548700;
-	font-weight:bolder;
 	margin:5px 0;
 }
 .input
@@ -941,6 +940,8 @@ table .altrow td {
 }
 #datepicker {
 	float: left;
+	width:212px;
+	margin:20px 15px 30px;
 }
 .confirmarBox {
 	float:left;
@@ -980,6 +981,20 @@ table .altrow td {
 	margin: 0 20px -20px 0;
 	float: right;
 }
+
+.inputBoxWraper {
+	float: none;
+	clear: none;
+	margin: 0 0 0 10px;
+}
+
+.labelCalendario {
+	color:#548700;
+	display:block;
+	font-weight:normal;
+	margin:5px 0;
+}
+
 
 textarea {
 	height:90px;

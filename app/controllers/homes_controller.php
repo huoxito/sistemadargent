@@ -339,47 +339,44 @@ class HomesController extends AppController{
     
     
     function edit($id = null, $_Model = null){
-        
-        
-        if (!$id && empty($this->data)) {
-            $this->redirect(array('action'=>'index'));
+
+        if ( !$id || ($_Model !== 'Ganho' && $_Model !== 'Gasto' )) {
+            $this->cakeError('error404');
         }
+
+        $this->data = $this->$_Model->read(null, $id);
+        $this->checkPermissao($this->data[$_Model]['usuario_id']);
         
-        if( !$_Model && isset($this->params['url']['tipo']) ){
-            $_Model = $this->params['url']['tipo'];
-        }
-        
-        if($_Model == 'Ganho'){
+        if($_Model === 'Ganho'){
             $_Categoria = 'Fonte';
             $categorias = 'fontes';
             $categoriaId = 'fonte_id';
-        }else if ($_Model == 'Gasto'){
+            $this->data[$_Model]['label'] = 'Faturamento';
+        }else{
             $_Categoria = 'Destino';
             $categorias = 'destinos';
             $categoriaId = 'destino_id';
-        }else{
-            $this->redirect('error404');
+            $this->data[$_Model]['label'] = 'Despesa';
         }
         
-        $this->data = $this->$_Model->read(null, $id);
-        
-        # permissão do usuário
-        $this->checkPermissao($this->data[$_Model]['usuario_id']);
-        
         $this->data[$_Model]['datadevencimento'] = $this->Data->formata($this->data[$_Model]['datadevencimento'], 'diamesano');
+        if( $this->Data->comparaDatas(date('d-m-Y'),$this->data[$_Model]['datadevencimento']) ){
+            $this->data[$_Model]['datainicial'] = $this->data[$_Model]['datadevencimento'];
+        }else{
+            $this->data[$_Model]['datainicial'] = date('d-m-Y');
+        }
+        
         $categorias = $this->$_Model->$_Categoria->find('list',
                                             array('conditions' =>
                                                   array('status' => 1,
-                                                        'usuario_id' => $this->Auth->user('id')))
-                                            );
+                                                        'usuario_id' => $this->Auth->user('id'))));
         $this->set(array('fontes' => $categorias, 'destinos'=> $categorias));
         $this->set('_Model',$_Model);
         $this->set('id',$id);
         $this->layout = 'colorbox';
-        
     }
     
-    # acao pode editar ou confirmar o registro
+    
     function editResponse(){
         
         if( $this->params['isAjax'] ){

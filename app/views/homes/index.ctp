@@ -21,8 +21,8 @@
                     <?php echo 'Lançamentos em um intervalo de 60 dias';?>
                 </h2>
                 <p style="font-size: 12px; margin: 10px 0; ">
-                    - Esta interface permite que você confirme os lançamentos com apenas um click.<br />
-                    - Você também editar os registros para fazer qualquer alteração e só então confirmá-los.
+                    - Esta interface permite que você confirme os lançamentos, com vencimento até a data atual, com apenas um click.<br />
+                    - Você também pode editar os registros para fazer qualquer alteração e só então confirmá-los.
                 </p>
             </div>
         </div>
