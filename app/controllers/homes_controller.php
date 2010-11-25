@@ -266,7 +266,8 @@ class HomesController extends AppController{
             if( $_Model != 'Ganho' && $_Model != 'Gasto' ){
                 echo 'error';
             }else{
-              
+                
+                $this->$_Model->Behaviors->detach('Modifiable');
                 $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
                 # permissao
                 if($chk[$_Model]['usuario_id'] != $this->Auth->user('id')){
@@ -274,15 +275,9 @@ class HomesController extends AppController{
                 }else{
                     
                     $this->$_Model->id = $this->params['url']['id'];
-                    $dados[$_Model] = array('datadabaixa' => date('d-m-Y'),'status' => 1);
-                    if($this->$_Model->save($dados, true,array('datadabaixa','status'))){
-                        
-                        if($_Model == 'Ganho'){
-                            $_Categoria = 'Fonte';
-                        }else{
-                            $_Categoria = 'Destino';
-                        }
-                        
+                    $dados[$_Model] = array('datadabaixa' => $chk[$_Model]['datadevencimento'],'status' => 1);
+                    if($this->$_Model->save($dados, false,array('datadabaixa','status'))){
+
                         $registros = array('id' => $chk[$_Model]['id'],'tipo' => $_Model);
                         $this->set(compact('registros'));
                         $this->layout = 'ajax';
@@ -292,7 +287,6 @@ class HomesController extends AppController{
                 }
             }
         }
-        //$this->autoRender = false;
     }
     
     

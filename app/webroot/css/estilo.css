@@ -568,6 +568,7 @@ span.valor {
 .links-registros-calendario {
 	float: right;
 	margin: -19px 20px 0 0;
+	min-width:265px;
 }
 
 #graficosWraper, .formWraper {
