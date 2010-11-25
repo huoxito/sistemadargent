@@ -139,7 +139,7 @@ class Usuario extends AppModel {
             
             'passwd' => array(
                 'numero' => array(
-                            'rule' => array('between', 5, 10),
+                            'rule' => array('between', 5, 15),
                             'message' => 'Deve conter entre 5 e 15 caracteres'
                 ),
                 'rule2' => array(

@@ -1,10 +1,22 @@
 <?php
-
+/*
+ *  Script deve ser rodado na instalação do sistema, antes que qualquer usuário seja cadastrado.
+ *  As tabelas de Acl devem estar limpas, truncadas, vazias.
+ *  Senha do usuário godfather (root) deve ser alterada logo após execução do script
+ *  Descomentar método beforeFilter abaixo
+ * 
+ *  Ações
+ *  Seta a tree de usuário (Aro) [root] => ([admin] => [administradores],
+ *                                          [users] => [usuarios do sistema])
+ *  Seta a tree de dados (Aco) [root] => ([admin] => [acoes dos admins],
+ *                                        [users] => [acoes dos usuarios])
+ *  Cadastra usuário root ( godfather )
+ */
 class AclConfigController extends AppController {
     
     var $uses = array('Usuario');
     
-    /* descomentar a função após o script ser executado na primeira vez
+    /*
     function beforeFilter(){
         parent::beforeFilter();
         
@@ -16,7 +28,7 @@ class AclConfigController extends AppController {
     }
     */    
     
-    function setUpAcl(){
+    function index(){
         
         $aro =& $this->Acl->Aro;
         $aroRoot = array(
@@ -34,9 +46,14 @@ class AclConfigController extends AppController {
         foreach($aroRoot as $data)
         {
             $aro->create();
-            $aro->save($data);
+            if($aro->save($data)){
+                
+            }else{
+                $error = $this->validateErrors($aro);
+                $this->pa($error);
+                exit;
+            }
         }
-        
         
         $aco =& $this->Acl->Aco;
         $acoRoot = array(
@@ -109,11 +126,6 @@ class AclConfigController extends AppController {
                 'alias' => 'frequencia',
                 'parent_id' => 3,
                 'model' => 'Frequencia'
-            ),
-            8 => array(
-                'alias' => 'valormensal',
-                'parent_id' => 2,
-                'model' => 'Valormensal'
             )
         );
         
@@ -141,6 +153,7 @@ class AclConfigController extends AppController {
     
     function insertUsers(){
         
+        
         $this->Usuario->recursive = -1;
         $usuarios = $this->Usuario->find('all',
                                 array('conditions' => array('Usuario.login !=' => 'godfather'),
@@ -164,9 +177,10 @@ class AclConfigController extends AppController {
                 
                 $this->Acl->Aro->create();
                 if( $this->Acl->Aro->save($data) ){
-                    echo 'Usuário migrado para a tabela aros no nível users';
-                    $this->pa($data);
-                    echo '<hr />';
+                    # Usuário migrado para a tabela aros no nível users
+                }else{
+                    $error = $this->validateErrors($this->Acl->Aro);
+                    $this->log($error,'erro migracao de usuarios pra aros');
                 }
             }
         }
@@ -184,13 +198,18 @@ class AclConfigController extends AppController {
                             'login' => 'godfather',
                             'passwd' => 'godfather',
                             'passwd_confirm' => 'godfather'));
-        
         if($this->Usuario->save($root)){
             // yeah !
         }else{
             $errors = $this->validateErrors($this->Usuario);
-            $this->pa($errors);
+            $this->log($errors,'erro inserir usuario root');
         }
+        
+        $aro = $this->Acl->Aro->find('all');
+        $aco = $this->Acl->Aco->find('all');
+        
+        $this->pa($aro);
+        $this->pa($aco);
         
         $this->autoRender = false; 
     }
