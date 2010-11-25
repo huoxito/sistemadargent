@@ -145,7 +145,7 @@ class UsuariosController extends AppController {
                               'password' => $this->Auth->password($this->data['Usuario']['passwd']));
                 if( $this->Auth->login($data) == 1 ){
 
-                    $this->Session->setFlash(__('Bem vindo '.$registered['Usuario']['nome'].' !', true));
+                    $this->Session->setFlash(__('Bem vindo !', true));
                     $this->redirect(array('controller' => 'homes', 'action'=>'index'));
 
                 }else{
