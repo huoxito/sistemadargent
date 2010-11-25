@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-11-18 00:11:34 : 1290049174*/
+/* App schema generated on: 2010-11-25 02:11:55 : 1290657895*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -25,13 +25,14 @@ class AppSchema extends CakeSchema {
 	var $agendamentos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'usuario_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'tipo' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 10, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 10, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'frequencia_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'fonte_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'destino_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'valor' => array('type' => 'float', 'null' => true, 'default' => NULL),
-		'periodo' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'observacoes' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'datadevencimento' => array('type' => 'date', 'null' => true, 'default' => NULL),
+		'numdeparcelas' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 2),
+		'observacoes' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 250, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
@@ -133,7 +134,7 @@ class AppSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'nome' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 120, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 80, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'login' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'login' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 120, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'password' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'foto' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 120, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'ultimologin' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
@@ -144,17 +145,6 @@ class AppSchema extends CakeSchema {
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'login' => array('column' => 'login', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
-	);
-	var $valormensais = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'agendamento_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'numerodemeses' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
-		'diadomes' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 2),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
-		'indexes' => array('PRIMARY' => array('column' => array('id', 'agendamento_id'), 'unique' => 1)),
-		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
 }
 ?>
