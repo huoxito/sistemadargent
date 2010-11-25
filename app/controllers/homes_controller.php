@@ -36,7 +36,8 @@ class HomesController extends AppController{
         $Dia = date('d');
         $Ano = date('Y');
         $ultimoDiaDoMes = $this->Data->retornaUltimoDiaDoMes($mesNumerico,$Ano);
-        for($i=0;$i<30;$i++){
+        $count = 0;
+        for($i=0;$i<60;$i++){
             
             $Dia = str_pad($Dia, 2, 0, STR_PAD_LEFT);
             $dataCalendario = $Ano.'-'.$mesNumerico.'-'.$Dia;
@@ -55,6 +56,7 @@ class HomesController extends AppController{
                                           'categoria' => $item['Fonte']['nome'],
                                           'id' => $item['Ganho']['id'],
                                           'obs' => $item['Ganho']['observacoes']);         
+                    $count++;
                 }
             }
             
@@ -69,6 +71,7 @@ class HomesController extends AppController{
                                           'categoria' => $item['Destino']['nome'],
                                           'id' => $item['Gasto']['id'],
                                           'obs' => $item['Gasto']['observacoes']);
+                    $count++;
                 }
             }
             
@@ -86,14 +89,10 @@ class HomesController extends AppController{
             }else{
                 $Dia++;
             }
-            
         }
         
+        $this->set(compact('count'));
         $this->set(compact('calendario'));
-        
-        //echo '<pre>';
-        //print_r($calendario);
-        //echo '</pre>';
     }
     
     function graficos(){

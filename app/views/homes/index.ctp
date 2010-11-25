@@ -3,7 +3,7 @@
     
         <div id="contentHeader">
             <h1>
-                <?php __('Painel');?>
+                <?php echo 'Painel de lançamentos';?>
             </h1>
         </div>
         
@@ -18,100 +18,111 @@
            
             <div id="relatorioRapido">
                 <h2>
-                    <?php echo 'Lançamentos nos próximos 30 dias';?>
+                    <?php echo 'Lançamentos em um intervalo de 60 dias';?>
                 </h2>
-                <p style="font-size: 12px; margin: 10px 0; ">Ao clicar em confirmar o sistema irá inserir automaticamente hoje, <?php echo date('d-m-Y'); ?>, como data da baixa do seu registro. Para alterar essa data  ou qualquer outro dado clique em editar. Você pode usar o campo de observações caso queira inserir os motivos das alterações na data de vencimento.</p>
+                <p style="font-size: 12px; margin: 10px 0; ">
+                    - Esta interface permite que você confirme os lançamentos com apenas um click.<br />
+                    - Você também editar os registros para fazer qualquer alteração e só então confirmá-los.
+                </p>
             </div>
         </div>
             
         <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
         </cake:nocache>
-
         
         
-        <?php   foreach($calendario as $keyAno => $ano){  ?>
-                       
-            <?php   foreach($ano as $key => $mes){  ?>
+        <div class="painelWraper">
+        
+            <?php   if($count === 0){  ?>
+                <p class="semResgistrosMsg">
+                    Nenhum lançamento agendado nos próximos dias
+                </p>
+            <?php   } ?>
+            
+            
+            <?php   foreach($calendario as $keyAno => $ano){  ?>
+                           
+                <?php   foreach($ano as $key => $mes){  ?>
+                            
+                    <div style="height: auto; overflow: hidden; padding-bottom: 15px; background-color: #FFF;">
                         
-                <div style="height: auto; overflow: hidden; padding-bottom: 15px; background-color: #FFF;">
-                    
-                    <?php if ( isset($ano[$key]['lista']) ){  ?>
-                    <p style="font-size: 18px; font-family: Georgia; margin: 10px;">
-                        <?php echo $key; ?> - <?php echo $keyAno; ?>
-                    </p>
-                    <?php   }   ?>
-                    
-                    <?php   foreach($mes as $keyDia => $dia){  ?>
+                        <?php if ( isset($ano[$key]['lista']) ){  ?>
+                        <p style="font-size: 18px; font-family: Georgia; margin: 10px;">
+                            <?php echo $key; ?> - <?php echo $keyAno; ?>
+                        </p>
+                        <?php   }   ?>
                         
-                        <?php if ( isset($dia['registros']) ){  ?>
-                        
-                        <ul class="list">
-                        
-                        <li class="registrosPorData">
-                        
-                            <div class="groupdata agenda">
-                                <?php echo $keyDia; ?> - <?php echo $dia['diadasemana']; ?>
-                            </div>
-                              
-                            <?php
-                                foreach( $dia['registros'] as $key => $registros ){
-                                    $num = count($dia['registros']);
-                                    $count = 1;
-                            ?>
+                        <?php   foreach($mes as $keyDia => $dia){  ?>
+                            
+                            <?php if ( isset($dia['registros']) ){  ?>
+                            
+                            <ul class="list">
+                            
+                            <li class="registrosPorData">
+                            
+                                <div class="groupdata agenda">
+                                    <?php echo $keyDia; ?> - <?php echo $dia['diadasemana']; ?>
+                                </div>
+                                  
+                                <?php
+                                    foreach( $dia['registros'] as $key => $registros ){
+                                        $num = count($dia['registros']);
+                                        $count = 1;
+                                ?>
+                                    
+                                    <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="registro-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
+                                        <div>
+                                            
+                                            <span style="width: 100px;display: block;float: left;"><?php   echo $registros['tipo'];  ?></span>
+                                            <span style="width: 180px;display: block;float: left">
+                                                R$ <?php   echo $registros['valor'];  ?>
+                                            </span>
+                                            <span style="">
+                                            <?php   echo $registros['categoria'];  ?> 
+                                            </span>
+                                            
+                                        </div>
+                                        <?php   if( !empty($registros['obs']) ){  ?> 
+                                        <p style="margin-left: 100px; width: 30%;"><?php   echo $registros['obs'];  ?></p>
+                                        <?php   }   ?>
+                                        
+                                        
+                                        <div class="links-registros-calendario" id="acoes-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
+                                        
+                                            <?php   echo $this->Html->link('CONFIRMAR',
+                                                                'javascript:;',
+                                                                array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')',
+                                                                      'class' => 'btnacoes')); ?>
+                                            <?php   echo $this->Html->link('EDITAR',
+                                                                array('action' => 'edit',$registros['id'],$registros['tipo']),
+                                                                array('class' => 'colorbox-edit btneditar')
+                                                                ); ?> 
+                                            <?php   echo $this->Html->link('EXCLUIR',
+                                                                 array('action' => 'delete',$registros['id'],$registros['tipo']),
+                                                                 array('class' => 'colorbox-delete btnexcluir')
+                                                                 ); ?>
+                                        
+                                        </div>  
+                                               
+                                    </div>    
                                 
-                                <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="registro-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
-                                    <div>
-                                        
-                                        <span style="width: 100px;display: block;float: left;"><?php   echo $registros['tipo'];  ?></span>
-                                        <span style="width: 180px;display: block;float: left">
-                                            R$ <?php   echo $registros['valor'];  ?>
-                                        </span>
-                                        <span style="">
-                                        <?php   echo $registros['categoria'];  ?> 
-                                        </span>
-                                        
-                                    </div>
-                                    <?php   if( !empty($registros['obs']) ){  ?> 
-                                    <p style="margin-left: 100px; width: 30%;"><?php   echo $registros['obs'];  ?></p>
-                                    <?php   }   ?>
-                                    
-                                    
-                                    <div class="links-registros-calendario" id="acoes-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
-                                    
-                                        <?php   echo $this->Html->link('CONFIRMAR',
-                                                            'javascript:;',
-                                                            array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')',
-                                                                  'class' => 'btnacoes')); ?>
-                                        <?php   echo $this->Html->link('EDITAR',
-                                                            array('action' => 'edit',$registros['id'],$registros['tipo']),
-                                                            array('class' => 'colorbox-edit btneditar')
-                                                            ); ?> 
-                                        <?php   echo $this->Html->link('EXCLUIR',
-                                                             array('action' => 'delete',$registros['id'],$registros['tipo']),
-                                                             array('class' => 'colorbox-delete btnexcluir')
-                                                             ); ?>
-                                    
-                                    </div>  
-                                           
-                                </div>    
+                                <?php    $count++;}  ?>
+                                
+                            </li>
+                            </ul>
                             
-                            <?php    $count++;}  ?>
+                            <?php    }  ?>
                             
-                        </li>
-                        </ul>
-                        
                         <?php    }  ?>
                         
-                    <?php    }  ?>
-                    
-                </div>
-                            
-            <?php    }  ?>
-            
-        <?php    }  ?>
+                    </div>
+                                
+                <?php    }  ?>
+                
+            <?php    }  ?>  
        
-        
+        </div>
         
         
     </div>

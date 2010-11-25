@@ -395,7 +395,7 @@ div.form, div.index, div.view {
 	margin-right:10px;
 }
 
-.relatoriosWraper {
+.relatoriosWraper, .painelWraper {
 	padding: 10px 10px 5px;
 	height: auto;
 	overflow: hidden;
@@ -493,7 +493,6 @@ div.form, div.index, div.view {
 	color:#333;
 	font-weight:normal;
 	left:-9.5em;
-	background-color: #FAFAFA ;  
 	padding:12px 7px 0 12px;
 	position:absolute;
 	text-align:left;
@@ -997,3 +996,11 @@ textarea {
 	margin-right: 20px;
 }
 
+
+.semResgistrosMsg {
+	color:#D92C1B;
+	font-size:15px;
+	font-weight:bold;
+	padding:50px 0 70px;
+	text-align:center;
+}
