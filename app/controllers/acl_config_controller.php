@@ -1,22 +1,12 @@
 <?php
 /*
- *  Script deve ser rodado na instalação do sistema, antes que qualquer usuário seja cadastrado.
- *  As tabelas de Acl devem estar limpas, truncadas, vazias.
- *  Senha do usuário godfather (root) deve ser alterada logo após execução do script
- *  Descomentar método beforeFilter abaixo
- * 
- *  Ações
- *  Seta a tree de usuário (Aro) [root] => ([admin] => [administradores],
- *                                          [users] => [usuarios do sistema])
- *  Seta a tree de dados (Aco) [root] => ([admin] => [acoes dos admins],
- *                                        [users] => [acoes dos usuarios])
- *  Cadastra usuário root ( godfather )
+ *  useless class so far
  */
 class AclConfigController extends AppController {
     
     var $uses = array('Usuario');
     
-    /*
+    
     function beforeFilter(){
         parent::beforeFilter();
         
@@ -26,9 +16,8 @@ class AclConfigController extends AppController {
             $this->cakeError('error404');  
         }
     }
-    */    
     
-    function index(){
+    function config(){
         
         $aro =& $this->Acl->Aro;
         $aroRoot = array(
@@ -146,13 +135,12 @@ class AclConfigController extends AppController {
         $this->Acl->allow('admin','admin');
         $this->Acl->allow('users','users');
         
-        $this->redirect(array('action' => 'insertUsers'));
+        $this->redirect(array('action' => 'addRoot'));
         $this->autoRender = false;
     }
     
-    
+    # função para inserir usuários nas Acl quando o sistema ainda não usava as Acl
     function insertUsers(){
-        
         
         $this->Usuario->recursive = -1;
         $usuarios = $this->Usuario->find('all',
@@ -192,12 +180,41 @@ class AclConfigController extends AppController {
     
     function addRoot(){
         
+        $fakes = array('Usuario' =>
+                      array('nome' => 'dfgdfsgd',
+                            'email' => 'mail@mail.com',
+                            'login' => 'fake',
+                            'passwd' => 'fakes',
+                            'passwd_confirm' => 'fakes'));
+        $this->Usuario->create();  
+        if($this->Usuario->save($fakes)){
+            // yeah !
+        }else{
+            $errors = $this->validateErrors($this->Usuario);
+            $this->log($errors,'erro inserir usuario root');
+        }
+        
+        $fakes = array('Usuario' =>
+                      array('nome' => 'dfgdfsgd',
+                            'email' => 'fake@fake.com',
+                            'login' => 'fakes',
+                            'passwd' => 'fakes',
+                            'passwd_confirm' => 'fakes'));
+        $this->Usuario->create();  
+        if($this->Usuario->save($fakes)){
+            // yeah !
+        }else{
+            $errors = $this->validateErrors($this->Usuario);
+            $this->log($errors,'erro inserir usuario root');
+        }
+        
         $root = array('Usuario' =>
                       array('nome' => 'GodFather',
                             'email' => 'godfather@mail.com',
                             'login' => 'godfather',
                             'passwd' => 'godfather',
                             'passwd_confirm' => 'godfather'));
+        $this->Usuario->create();  
         if($this->Usuario->save($root)){
             // yeah !
         }else{
