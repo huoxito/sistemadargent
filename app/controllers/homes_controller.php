@@ -30,17 +30,17 @@ class HomesController extends AppController{
                                   'order' => array('Gasto.datadevencimento' => 'asc', 'Gasto.modified' => 'asc')
                                   ));
         
-        
-        $Mes = $this->Data->retornaNomeDoMes(date('m'));
-        $mesNumerico = date('m');
-        $Dia = date('d');
-        $Ano = date('Y');
-        $ultimoDiaDoMes = $this->Data->retornaUltimoDiaDoMes($mesNumerico,$Ano);
+        $dataInicial = date('Y-m-d', mktime(0,0,0,date('m')-1,date('d'),date('Y')));
+        list($Ano,$mesNumerico,$Dia) = explode('-',$dataInicial);
         $count = 0;
         for($i=0;$i<60;$i++){
             
             $Dia = str_pad($Dia, 2, 0, STR_PAD_LEFT);
+            $dataNoLoop = date('Y-m-d', mktime(0,0,0,$mesNumerico,$Dia,$Ano));
+            list($Ano,$mesNumerico,$Dia) = explode('-',$dataNoLoop);
             $dataCalendario = $Ano.'-'.$mesNumerico.'-'.$Dia;
+            $Mes = $this->Data->retornaNomeDoMes($mesNumerico);
+            
             $calendario[$Ano][$Mes][$Dia] = array(//'dia' => $Dia,
                                                 'diadasemana' => $this->Data->formata($dataCalendario,'diadasemana'));
             
@@ -74,21 +74,8 @@ class HomesController extends AppController{
                     $count++;
                 }
             }
-            
-            if($Dia == $ultimoDiaDoMes){
-                
-                $Dia = 1;
-                if($mesNumerico === 12){
-                    $mesNumerico = 1;
-                    $Ano = $Ano + 1;
-                }else{
-                    $mesNumerico = $mesNumerico + 1;
-                }
-                $Mes = $this->Data->retornaNomeDoMes($mesNumerico);
-                $ultimoDiaDoMes = $this->Data->retornaUltimoDiaDoMes($mesNumerico,$Ano);
-            }else{
-                $Dia++;
-            }
+
+            $Dia++;
         }
         
         $this->set(compact('count'));
