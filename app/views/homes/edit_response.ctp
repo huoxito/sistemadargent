@@ -22,7 +22,7 @@
     <?php   }   ?>
     
     <p class="agendamentoInfoLinha agendamentoProxLancamento">
-        Registro atualizado ! 
+        Registro Confirmado ! 
         
         <?php   if( isset($dataAlterada) ){  ?> 
         Vencimento alterado para <?php   echo $dataAlterada;  ?></p>

@@ -18,7 +18,12 @@ body
 html { 
 	background-color:#f3f3f3;
 }
-	
+
+div {
+	height: auto;
+	overflow: hidden;
+}
+
 #header {
 	height:auto;
 	overflow: hidden;
@@ -399,6 +404,13 @@ div.form, div.index, div.view {
 	padding: 10px 10px 5px;
 	height: auto;
 	overflow: hidden;
+	background-color:#fff;
+}
+
+.categorias {
+	margin: 0 5px;
+}
+.categoriasWraper {
 	background-color:#fff;
 }
 

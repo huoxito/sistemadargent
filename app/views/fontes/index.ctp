@@ -32,54 +32,69 @@
             
         </div>
         
-        <ul id="list-categorias">
-        <?php
-        foreach ($porcentagens as $key => $porcentagem):
-
-        ?>
-            <li id="fonte-<?php echo $fontes[$key]['Fonte']['id']; ?>" class="registros">
-                <div style="height: auto; overflow: hidden;">
-                    
-                    <div class="" style="height:auto; overflow:hidden;	padding: 5px 0;">
-                        
-                        <span class="categoria_nome" id="nome-<?php echo $fontes[$key]['Fonte']['id']; ?>">
-                            <?php echo $fontes[$key]['Fonte']['nome']; ?>
-                        </span>
-                        
-                        <span class="valor">
-                            <?php echo $fontes[$key]['Fonte']['porcentagem']; ?> %
-                        </span>
-                    </div>
-
-                    <div style="float: right;margin-top:-23px;">
-                        <?php echo $fontes[$key]['Fonte']['modified']; ?>
-                    </div>
-                    
-                    <div style="clear: both;">
-                        <?php if( isset($fontes[$key]['Ganho']) ){   ?>
-                        Última interação: R$ <?php echo $fontes[$key]['Ganho']['valor']; ?> em <?php echo $fontes[$key]['Ganho']['datadabaixa']; ?>
-                        <?php }else{   ?>
-                        Não há registros relacionados a essa categoria
-                        <?php } ?>
-                    </div>                            
-                    
-                </div>
-                <div class="categ-actions">
-                    <?php
-                        echo $html->link('',
-                                            array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
-                                            array('class' => 'colorbox-edit editar')
-                                            ); 
-                        echo $html->link('',
-                                            array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
-                                            array('class' => 'colorbox-delete excluir')
-                                            );
-                    ?>
-                </div>
-            </li>
-
-        <?php endforeach; ?>
-        </ul>
+        <div class="relatoriosWraper">
+            <div id="relatorioRapido">
+                <p class="painelHelp">
+                    - Lista de categorias habilitadas dos faturamentos com a porcentagem de participação da categoria e o último faturamento associado a mesma.
+                </p>
+            </div>
+        
+        </div>
+        
+        <div class="categoriasWraper">
+            <div class="categorias">
+            
+                <ul id="list-categorias">
+                <?php
+                foreach ($porcentagens as $key => $porcentagem):
+        
+                ?>
+                    <li id="fonte-<?php echo $fontes[$key]['Fonte']['id']; ?>" class="registros">
+                        <div style="height: auto; overflow: hidden;">
+                            
+                            <div class="" style="height:auto; overflow:hidden;	padding: 5px 0;">
+                                
+                                <span class="categoria_nome" id="nome-<?php echo $fontes[$key]['Fonte']['id']; ?>">
+                                    <?php echo $fontes[$key]['Fonte']['nome']; ?>
+                                </span>
+                                
+                                <span class="valor">
+                                    <?php echo $fontes[$key]['Fonte']['porcentagem']; ?> %
+                                </span>
+                            </div>
+        
+                            <div style="float: right;margin-top:-23px;">
+                                <?php echo $fontes[$key]['Fonte']['modified']; ?>
+                            </div>
+                            
+                            <div style="clear: both;">
+                                <?php if( isset($fontes[$key]['Ganho']) ){   ?>
+                                Última interação: R$ <?php echo $fontes[$key]['Ganho']['valor']; ?> em <?php echo $fontes[$key]['Ganho']['datadabaixa']; ?>
+                                <?php }else{   ?>
+                                Não há registros relacionados a essa categoria
+                                <?php } ?>
+                            </div>                            
+                            
+                        </div>
+                        <div class="categ-actions">
+                            <?php
+                                echo $html->link('',
+                                                    array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
+                                                    array('class' => 'colorbox-edit editar')
+                                                    ); 
+                                echo $html->link('',
+                                                    array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
+                                                    array('class' => 'colorbox-delete excluir')
+                                                    );
+                            ?>
+                        </div>
+                    </li>
+        
+                <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        
         <!--
         <div class="paging">
             <?php //echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
