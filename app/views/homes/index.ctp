@@ -74,7 +74,9 @@
                                     <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="registro-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
                                         <div>
                                             
-                                            <span style="width: 100px;display: block;float: left;"><?php   echo $registros['tipo'];  ?></span>
+                                            <span style="width: 100px;display: block;float: left;">
+                                                <?php   echo $registros['label'];  ?>
+                                            </span>
                                             <span style="width: 180px;display: block;float: left">
                                                 R$ <?php   echo $registros['valor'];  ?>
                                             </span>

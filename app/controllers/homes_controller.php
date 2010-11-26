@@ -52,6 +52,7 @@ class HomesController extends AppController{
                     $calendario[$Ano][$Mes][$Dia]['registros'][] =
                                     array('data' => $this->Data->formata($item['Ganho']['datadevencimento'],'porextenso'),
                                           'tipo' => 'Ganho',
+                                          'label' => 'Faturamento',
                                           'valor' => $item['Ganho']['valor'],
                                           'categoria' => $item['Fonte']['nome'],
                                           'id' => $item['Ganho']['id'],
@@ -68,6 +69,7 @@ class HomesController extends AppController{
                     $calendario[$Ano][$Mes][$Dia]['registros'][] =
                                     array('data' => $this->Data->formata($item['Gasto']['datadevencimento'],'porextenso'),
                                           'tipo' => 'Gasto',
+                                          'label' => 'Despesa',
                                           'valor' => $item['Gasto']['valor'],
                                           'categoria' => $item['Destino']['nome'],
                                           'id' => $item['Gasto']['id'],
