@@ -359,11 +359,13 @@ class HomesController extends AppController{
             $this->data[$_Model]['label'] = 'Despesa';
         }
         
-        $this->data[$_Model]['datadevencimento'] = $this->Data->formata($this->data[$_Model]['datadevencimento'], 'diamesano');
-        if( $this->Data->comparaDatas(date('d-m-Y'),$this->data[$_Model]['datadevencimento']) ){
-            $this->data[$_Model]['datainicial'] = $this->data[$_Model]['datadevencimento'];
+        $this->data[$_Model]['vencimento'] = $this->Data->formata($this->data[$_Model]['datadevencimento'], 'diamesano');
+        if( $this->Data->comparaDatas(date('d-m-Y'),$this->data[$_Model]['vencimento']) ){
+            $this->data[$_Model]['datainicial'] = $this->data[$_Model]['vencimento'];
+            $this->data[$_Model]['dataAmigavel'] = $this->Data->formata($this->data[$_Model]['datadevencimento'],'longadescricao');
         }else{
             $this->data[$_Model]['datainicial'] = date('d-m-Y');
+            $this->data[$_Model]['dataAmigavel'] = $this->Data->formata(date('Y-m-d'),'longadescricao');
         }
         
         $categorias = $this->$_Model->$_Categoria->find('list',
@@ -383,66 +385,48 @@ class HomesController extends AppController{
             
             $_Model = $this->params['url']['tipo'];
             if($_Model == 'Ganho'){
+                $label = 'Faturamento';
                 $_Categoria = 'Fonte';
-                $categorias = 'fontes';
                 $categoriaId = 'fonte_id';
             }else if ($_Model == 'Gasto'){
+                $label = 'Despesa';
                 $_Categoria = 'Destino';
-                $categorias = 'destinos';
                 $categoriaId = 'destino_id';
             }else{
-                $this->redirect('error404');
+                echo 'error'; exit;
             }
             
-            $chk = $this->$_Model->read(array($_Model.'.usuario_id',
-                                            $_Model.'.datadevencimento as data'),$this->params['url']['id']);
+            $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
             # permissão do usuário
             if( $this->checkPermissao($chk[$_Model]['usuario_id'],true) ){ 
                 
                 $item[$_Model] = array('valor' => $this->params['url']['valor'],
-                                        'observacoes' => $this->params['url']['obs'],
-                                        $categoriaId => $this->params['url']['categoria']);
+                                       'observacoes' => $this->params['url']['obs'],
+                                       $categoriaId => $this->params['url']['categoria'],
+                                       'datadabaixa' => $this->params['url']['data'],
+                                       'status' => 1);
                 
-                
-                if( $this->params['url']['action'] == 'editar' ){
-                    $item[$_Model]['datadevencimento'] = $this->Data->formata($this->params['url']['data'],'diamesano');
-                }else{
-                    $item[$_Model]['status'] = 1;
-                    $item[$_Model]['datadabaixa'] = $this->params['url']['data'];
-                    if($this->Data->comparaDatas(date('d-m-Y'),$item[$_Model]['datadabaixa'])){
-                        // ok
-                    }else{
-                        echo 'data';    exit;
-                    }
+                if(!$this->Data->comparaDatas(date('d-m-Y'),$this->params['url']['data'])){
+                    echo 'validacao';    exit;
                 }
                 
                 $this->$_Model->id = $this->params['url']['id'];
                 if ($this->$_Model->save($item)) {
                     $resposta = $this->$_Model->find('first',
-                                array (
-                                    'fields' => array($_Model.'.valor',
-                                                      $_Model.'.observacoes',
-                                                      $_Model.'.id',
-                                                      $_Categoria.'.nome'),
-                                    'conditions' => array($_Model.'.id' => $this->params['url']['id'])
-                                    ));
+                                array ('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
                     
                     $this->set('_Categoria',$_Categoria);
                     $this->set('_Model',$_Model);
                     $this->set('registros',$resposta);
-                    
+                    $this->set('label',$label);
                     # se usuário alterar a data exibo data alterada
-                    $dataAntiga = $this->Data->formata($chk[$_Model]['data'],'diamesano');
+                    $dataAntiga = $this->Data->formata($chk[$_Model]['datadevencimento'],'diamesano');
                     if( $this->params['url']['data'] != $dataAntiga ){
                         $dataAlterada = $this->Data->formata($this->params['url']['data'],'mesextenso');
                         $this->set('dataAlterada',$dataAlterada);
                     }
                     
-                    if( $this->params['url']['action'] === 'confirmar' ){
-                        $this->render('confirm_response');
-                    }
                     $this->layout = 'ajax';
-                    
                 }else{
                     
                     echo 'validacao';
@@ -454,6 +438,8 @@ class HomesController extends AppController{
                 echo 'error';   
                 $this->autoRender = false;
             }
+        }else{
+            $this->cakeError('error404');
         }
     }
     

@@ -1,11 +1,16 @@
+    
+    <?php //echo $this->element('sql_dump'); ?>
+    
     <div>
         
-        <span style="width: 100px;display: block;float: left;"><?php   echo $_Model;  ?></span>
+        <span style="width: 100px;display: block;float: left;">
+            <?php   echo $label;  ?>
+        </span>
         <span style="width: 180px;display: block;float: left">
-            R$ <?php   echo $registros[$_Model]['valor'];  ?>
+            R$ <?= $registros[$_Model]['valor'];  ?>
         </span>
         <span style="">
-        <?php   echo $registros[$_Categoria]['nome'];  ?> 
+            <?= $registros[$_Categoria]['nome'];  ?> 
         </span>
         
     </div>
@@ -23,19 +28,12 @@
     </p>
     
     
+    
     <div class="links-registros-calendario" id="acoes-<?php echo $_Model; ?>-<?php echo $registros[$_Model]['id']; ?>">
-        <?php   echo $html->link(__('CONFIRMAR', true),
+        <?php   echo $html->link(__('CANCELAR', true),
                             'javascript:;',
-                            array('onclick' => 'confirmar('.$registros[$_Model]['id'].',\''.$_Model.'\')',
+                            array('onclick' => "cancelar(".$registros[$_Model]['id'].",'".$_Model."')",
                                   'class' => 'btnacoes')); ?>
-        <?php   echo $html->link(__('EDITAR', true),
-                            array('action' => 'edit',$registros[$_Model]['id'],$_Model),
-                            array('class' => 'colorbox-edit btneditar')
-                            ); ?> 
-        <?php   echo $html->link(__('DELETAR', true),
-                             array('action' => 'delete',$registros[$_Model]['id'],$_Model),
-                             array('class' => 'colorbox-delete btnexcluir')
-                             ); ?>
     </div>  
         
     <script type="text/javascript">

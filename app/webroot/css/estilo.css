@@ -938,10 +938,15 @@ table .altrow td {
 .confirmaAgendamento {
 	float: none;
 }
-#datepicker {
+.datepickerWraper {
 	float: left;
 	width:212px;
-	margin:20px 15px 30px;
+	margin:0 15px 0;
+}
+#datepicker {
+	float: left;
+	width: 212px;
+	height: 173px;
 }
 .confirmarBox {
 	float:left;
@@ -957,7 +962,6 @@ table .altrow td {
 	
 }
 
-
 .dataField, .dateFieldAhead {
 	width: 120px !important;
 }
@@ -972,6 +976,10 @@ table .altrow td {
 	padding: 20px;
 }
 
+.formBox div.submit {
+	clear: both;
+}
+
 .labelBoxForm {
 	text-transform:uppercase;
 	background-color:#F2FFE3;
@@ -980,6 +988,10 @@ table .altrow td {
 	padding:5px 30px;
 	margin: 0 20px -20px 0;
 	float: right;
+}
+
+.inputsRight {
+	float: left;
 }
 
 .inputBoxWraper {
@@ -995,6 +1007,13 @@ table .altrow td {
 	margin:5px 0;
 }
 
+.dataAmigavel {
+	display:block;
+	font-size: 14px;
+	padding:5px 0;
+	text-align: center;
+	clear: both;
+}
 
 textarea {
 	height:90px;

@@ -8,41 +8,44 @@
         </span>
         
         <input type="hidden" id="datadabaixa" value="<?= $this->data[$_Model]['datainicial'] ?>" />
-        <div id="datepicker">
-            <span class="labelCalendario">Selecione a data da baixa</span>    
+        <div class="datepickerWraper">
+            <span class="labelCalendario">
+                Selecione a data da baixa
+            </span>    
+            <div id="datepicker"></div>
+            <span class="dataAmigavel change">
+                <?= $this->data[$_Model]['dataAmigavel']; ?>
+            </span>
         </div>
-        <span id="altDate"></span>
+        <div class="inputsRight">
+            <?php
+                if( $_Model == 'Ganho' ){
+                    echo $this->Form->input('fonte_id',
+                                        array('empty' => 'Escolha um registro',
+                                              'id' => 'categoria',
+                                              'div' => array('class' => 'inputBoxWraper'))); 
+                }else{
+                    echo $this->Form->input('destino_id',
+                                        array('empty' => 'Escolha um registro',
+                                              'id' => 'categoria',
+                                              'div' => array('class' => 'inputBoxWraper'))); 
+                }
+            ?>
+            <?= $this->Form->input('valor',
+                                array('error' => false,
+                                      'id' => 'valor',
+                                      'div' => array('class' => 'inputBoxWraper'))); 
+            ?>  
         
-        <?php
-            if( $_Model == 'Ganho' ){
-                echo $this->Form->input('fonte_id',
-                                    array('empty' => 'Escolha um registro',
-                                          'id' => 'categoria',
-                                          'div' => array('class' => 'inputBoxWraper'))); 
-            }else{
-                echo $this->Form->input('destino_id',
-                                    array('empty' => 'Escolha um registro',
-                                          'id' => 'categoria',
-                                          'div' => array('class' => 'inputBoxWraper'))); 
-            }
-        
-            echo $this->Form->input('valor',
-                                    array('error' => false,
-                                          'id' => 'valor',
-                                          'div' => array('class' => 'inputBoxWraper'))); 
-        ?>
-        
-        <?php
-            echo $this->Form->input('observacoes',
-                                    array('type' => 'textarea',
-                                          'label' => 'Observações',
-                                          'id' => 'Observacoes',
-                                          'div' => array('class' => 'inputBoxWraper'))); 
-        ?>
-        <?php echo $this->Form->end(array('label' => 'Salvar',
+            <?= $this->Form->input('observacoes',
+                                array('type' => 'textarea',
+                                      'label' => 'Observações',
+                                      'id' => 'Observacoes',
+                                      'div' => array('class' => 'inputBoxWraper')));    ?>
+        </div>
+        <?php echo $this->Form->end(array('label' => 'Confirmar',
                                           'onclick' => 'editar('.$id.',\'editar\');',
-                                          'style' => 'float: left;'));
-        ?>
+                                          'style' => 'float: left;'));  ?>
     </div>
     
     
@@ -58,9 +61,6 @@
                         maxDate: 'dd-mm-yy',
                         altField: '#datadabaixa',
                         altFormat: 'dd-mm-yy',
-                        beforeShow: function(input, inst) {
-                            $('#altDate').html(maxDate);
-                        },
                         onSelect: function(dateText, inst){
                             $('.change').html(dateText);
                         }
@@ -77,7 +77,7 @@
             
             $.ajax({
                 
-                url: '<?php echo $html->url(array("controller" => "homes","action" => "editResponse"));?>', 
+                url: '<?php echo $this->Html->url(array("controller" => "homes","action" => "editResponse"));?>', 
                 cache: false,
                 type: 'GET',
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -85,26 +85,21 @@
                 beforeSend: function(){
                     $('.submit img').remove();
                     $('.submit span').remove();
-                     $('.submit').append('<img style="float: left; margin-left: 15px;" src="<?php echo $html->url('/'); ?>img/ajax-loader.gif" title="enviando ... " alt="enviando ... " />');
+                    $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                 },
                 success: function(result){
                     
                     if(result == 'error'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Ocorreu um erro. Recarregue a página e tente novamente</span>');
+                                $('.submit').append('<span class="ajax_error_response">Operação inválida</span>');
                             });
                     }else if(result == 'validacao'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
-                            });
-                    }else if(result == 'data'){
-                        $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Para confirmar a data deve ser menor ou igual que a de hoje</span>');
+                                $('.submit').append('<span class="ajax_error_response">Preencha os campos corretamente</span>');
                             });
                     }else {
-                        //$('#box').after(result);
                         parent.$('#registro-' + tipo + '-' + id).html(result);
-                        var t=setTimeout("parent.jQuery.fn.colorbox.close()",500);
+                        var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
                     }
                 }
             });
