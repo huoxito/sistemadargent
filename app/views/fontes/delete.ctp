@@ -1,4 +1,4 @@
-    
+    <?php //echo $this->element('sql_dump'); ?>    
 
     <div class="agendamentos box" id="box">
     

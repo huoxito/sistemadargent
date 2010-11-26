@@ -152,8 +152,10 @@ class FontesController extends AppController {
             $id = $this->params['url']['id'];
         }
         
-        $this->Fonte->recursive = -1;
-        $itens = $this->Fonte->read(array('id,usuario_id,nome'), $id);
+        $itens = $this->Fonte->read(null, $id);
+        if(isset($itens['Ganho']['0'])){
+            $this->cakeError('error404');
+        }
         
         # permissão do usuário
         $this->checkPermissao($itens['Fonte']['usuario_id']);

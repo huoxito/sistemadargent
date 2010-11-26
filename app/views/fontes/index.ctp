@@ -35,7 +35,8 @@
         <div class="relatoriosWraper">
             <div id="relatorioRapido">
                 <p class="painelHelp">
-                    - Lista de categorias habilitadas dos faturamentos com a porcentagem de participação da categoria e o último faturamento associado a mesma.
+                    - Lista de categorias habilitadas dos faturamentos com a porcentagem de participação da categoria e o último faturamento associado a mesma.<br />
+                    - Só podem ser excluídas as Fontes que não possuem relação com qualquer registro
                 </p>
             </div>
         
@@ -77,16 +78,20 @@
                             
                         </div>
                         <div class="categ-actions">
-                            <?php
-                                echo $html->link('',
-                                                    array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
-                                                    array('class' => 'colorbox-edit editar')
-                                                    ); 
-                                echo $html->link('',
-                                                    array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
-                                                    array('class' => 'colorbox-delete excluir')
-                                                    );
+                            
+                            <?= $this->Html->link('EDITAR',
+                                            array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
+                                            array('class' => 'colorbox-edit btneditar')
+                                            );
                             ?>
+                            
+                            <?php if( !isset($fontes[$key]['Ganho']) ){   ?>
+                                <?= $this->Html->link('EXCLUIR',
+                                                array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
+                                                array('class' => 'colorbox-delete btnexcluir')
+                                                );
+                                ?>
+                            <?php } ?>
                         </div>
                     </li>
         

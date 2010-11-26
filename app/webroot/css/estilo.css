@@ -19,11 +19,6 @@ html {
 	background-color:#f3f3f3;
 }
 
-div {
-	height: auto;
-	overflow: hidden;
-}
-
 #header {
 	height:auto;
 	overflow: hidden;
