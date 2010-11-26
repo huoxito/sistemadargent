@@ -1038,3 +1038,25 @@ textarea {
 	padding:50px 0 70px;
 	text-align:center;
 }
+
+
+
+.labelPainel {
+	color:#508501;
+	display:block;
+	float: left;
+	width: 130px;
+}
+
+.registrosPainel {
+	padding:5px 0 3px 10px;
+}
+
+.acoesPainel {
+	margin:-25px 20px 0 0;
+}
+
+p.painelHelp {
+	font-size: 12px;
+	margin: 10px 0; 
+}
