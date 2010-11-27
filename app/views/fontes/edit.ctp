@@ -2,17 +2,11 @@
     
     <div class="fontes box" id="box">  
     
-    <?php echo $form->create('Fonte',array('default' => false));?>
-        <fieldset>
-            <legend><?php __('Editar Fonte');?></legend>
-        <?php
-            echo $form->input('nome');
-        ?>
-        </fieldset>
-    <?php echo $form->end(array('label' => 'Salvar',
-                                    'onclick' => 'editar('.$id.');',
-                                    'style' => 'float: left;',
-                                    'after' => ' <input type="submit" style="float: left;margin-left: 5px;" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />')); ?>
+        <?php echo $this->Form->create('Fonte',array('default' => false));?>
+        <?php echo $this->Form->input('nome'); ?>
+        <?php echo $this->Form->end(array('label' => 'Salvar',
+                                          'onclick' => 'editar('.$this->data['Fonte']['id'].');',
+                                          'after' => ' <input type="submit" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />')); ?>
     </div>
 
     <script type="text/javascript">
@@ -24,7 +18,7 @@
             
             $.ajax({
                 
-                url: '<?php echo $html->url(array("controller" => "fontes","action" => "editResponse"));?>', 
+                url: '<?php echo $this->Html->url(array("controller" => "fontes","action" => "editResponse"));?>', 
                 cache: false,
                 type: 'GET',
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -38,11 +32,11 @@
                     
                     if(result == 'error'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Ocorreu um erro. Recarregue a página e tente novamente</span>');
+                                $('.submit').append('<span class="ajax_error_response">Registro inválido</span>');
                             });
                     }else if(result == 'validacao'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
+                                $('.submit').append('<span class="ajax_error_response">Preencha o campo corretamente</span>');
                             });
                     }else if(result == 'existe'){
                         $('.submit img').fadeOut('fast', function(){
