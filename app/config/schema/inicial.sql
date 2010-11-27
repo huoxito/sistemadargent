@@ -82,13 +82,13 @@ CREATE TABLE `drg_fontes` (
 	ENGINE=MyISAM;
 
 CREATE TABLE `drg_frequencias` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`nome` varchar(120) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-	`created` datetime DEFAULT NULL,
-	`modified` datetime DEFAULT NULL,
-	`status` tinyint(1) DEFAULT 1,	PRIMARY KEY  (`id`))	DEFAULT CHARSET=latin1,
-	COLLATE=latin1_swedish_ci,
-	ENGINE=MyISAM;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(120) CHARACTER SET utf8 DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `drg_ganhos` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
