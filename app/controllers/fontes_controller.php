@@ -8,8 +8,7 @@ class FontesController extends AppController {
         
 		$this->Fonte->recursive = -1;
         $itens = $this->Fonte->find('all',
-                            array('fields' => array('Fonte.nome','Fonte.id','Fonte.modified'),
-                                  'conditions' => array('Fonte.usuario_id' => $this->Auth->user('id')),
+                            array('conditions' => array('Fonte.usuario_id' => $this->Auth->user('id')),
                                   'order' => array('created' => 'asc')));
         if(count($itens)>0){
             $this->set('numRegistros',count($itens));
@@ -41,7 +40,6 @@ class FontesController extends AppController {
             # cálculo da porcentagem
             $calculo = 100 * (int)$totalC[0][0]['total_categoria'] / (int)$total;
             $item['Fonte']['porcentagem'] = $this->Valor->formata( $calculo ,'humano');
-            $item['Fonte']['modified'] = $this->Data->formata($item['Fonte']['modified'],'completa');
             $objPorcentagem[] = $calculo;
             
             # pego o último registro
@@ -167,18 +165,25 @@ class FontesController extends AppController {
 	}
     
     
-    function desativar(){
+    function mudarStatus(){
         
-        if( $this->params['isAjax'] ){
-            
+        if( !isset($this->params['url']['id']) ){
+            $this->cakeError('error404');
+        }else{
+        
             $this->Fonte->recursive = -1;
             $item = $this->Fonte->read(null,$this->params['url']['id']);
             if ( $this->checkPermissao($item['Fonte']['usuario_id']) ){
                 
-                $this->Fonte->saveField('status','1');
+                if($this->params['url']['action']){
+                    $status = 1;
+                }else{
+                    $status = 0;
+                }
+                
+                $this->Fonte->saveField('status',$status);
+                $this->set(array('id' => $this->params['url']['id'], 'status' => $status));
                 $this->layout = 'ajax';
-            }else{
-                $this->autoRender = false;
             }
         }
     }

@@ -78,12 +78,24 @@
                             <?= $this->Html->link('EDITAR',
                                             array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
                                             array('class' => 'colorbox-edit btneditar'));   ?>
+                                            
                             <span id='linkStatus<?= $fontes[$key]['Fonte']['id']; ?>'>
-                            <?= $this->Html->link('DESATIVAR',
-                                            array('#javascript:;'),
-                                            array('class' => 'btneditar',
-                                                  'onclick' => 'desativar('.$fontes[$key]['Fonte']['id'].')')); ?>
+                            
+                            <?php   if($fontes[$key]['Fonte']['status']){   ?>
+                                <?= $this->Html->link('DESATIVAR',
+                                                '#javascript:;',
+                                                array('class' => 'btnexcluir',
+                                                      'onclick' => 'mudarStatus('.$fontes[$key]['Fonte']['id'].',0)')); ?>
+                            <?php   }else{   ?>
+                                <?= $this->Html->link('ATIVAR',
+                                                '#javascript:;',
+                                                array('class' => 'btneditar',
+                                                      'onclick' => 'mudarStatus('.$fontes[$key]['Fonte']['id'].',1)')); ?>
+                            
+                            <?php   }   ?>
+                            
                             </span>
+                            
                             <?php if( !isset($fontes[$key]['Ganho']) ){   ?>
                                 <?= $this->Html->link('EXCLUIR',
                                                 array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
@@ -114,10 +126,10 @@
             
         });
         
-        function desativar(id){
+        function mudarStatus(id,action){
             $.ajax({
-                url: '<?php echo $this->Html->url(array("controller" => "fontes","action" => "desativar"));?>',
-                data: ({ id: id}),
+                url: '<?php echo $this->Html->url(array("controller" => "fontes","action" => "mudarStatus"));?>',
+                data: ({ id: id, action: action}),
                 beforeSend: function(){
                     $('#actions'+id).prepend('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                 },
