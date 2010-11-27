@@ -161,10 +161,27 @@ class FontesController extends AppController {
             $this->autoRender = false;
         }else{
             
-            //$itens['Fonte']['nome'] = $this->Data->formata($itens['Gasto']['datadabaixa'],'porextenso');
             $this->set('itens',$itens);    
             $this->layout = 'colorbox';
         }
 	}
+    
+    
+    function desativar(){
+        
+        if( $this->params['isAjax'] ){
+            
+            $this->Fonte->recursive = -1;
+            $item = $this->Fonte->read(null,$this->params['url']['id']);
+            if ( $this->checkPermissao($item['Fonte']['usuario_id']) ){
+                
+                $this->Fonte->saveField('status','1');
+                $this->layout = 'ajax';
+            }else{
+                $this->autoRender = false;
+            }
+        }
+    }
+    
 }
 ?>

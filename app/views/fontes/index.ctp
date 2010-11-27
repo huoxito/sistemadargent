@@ -51,7 +51,7 @@
         
                 ?>
                     <li id="fonte-<?php echo $fontes[$key]['Fonte']['id']; ?>" class="registros">
-                        <div style="height: auto; overflow: hidden;">
+                        <div class="categoriaInfo" id="info<?= $fontes[$key]['Fonte']['id']; ?>">
                             
                             <div class="" style="height:auto; overflow:hidden;	padding: 5px 0;">
                                 
@@ -63,10 +63,6 @@
                                     <?php echo $fontes[$key]['Fonte']['porcentagem']; ?> %
                                 </span>
                             </div>
-        
-                            <div style="float: right;margin-top:-23px;">
-                                <?php echo $fontes[$key]['Fonte']['modified']; ?>
-                            </div>
                             
                             <div style="clear: both;">
                                 <?php if( isset($fontes[$key]['Ganho']) ){   ?>
@@ -77,20 +73,21 @@
                             </div>                            
                             
                         </div>
-                        <div class="categ-actions">
+                        <div class="categ-actions" id="actions<?= $fontes[$key]['Fonte']['id']; ?>">
                             
                             <?= $this->Html->link('EDITAR',
                                             array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
-                                            array('class' => 'colorbox-edit btneditar')
-                                            );
-                            ?>
-                            
+                                            array('class' => 'colorbox-edit btneditar'));   ?>
+                            <span id='linkStatus<?= $fontes[$key]['Fonte']['id']; ?>'>
+                            <?= $this->Html->link('DESATIVAR',
+                                            array('#javascript:;'),
+                                            array('class' => 'btneditar',
+                                                  'onclick' => 'desativar('.$fontes[$key]['Fonte']['id'].')')); ?>
+                            </span>
                             <?php if( !isset($fontes[$key]['Ganho']) ){   ?>
                                 <?= $this->Html->link('EXCLUIR',
                                                 array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
-                                                array('class' => 'colorbox-delete btnexcluir')
-                                                );
-                                ?>
+                                                array('class' => 'colorbox-delete btnexcluir'));    ?>
                             <?php } ?>
                         </div>
                     </li>
@@ -100,17 +97,10 @@
             </div>
         </div>
         
-        <!--
-        <div class="paging">
-            <?php //echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-         | 	<?php //echo $paginator->numbers();?>
-            <?php //echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
-        </div>    
-        -->
-        
     </div>
     
     <script type="text/javascript">
+    
         $(document).ready(function () {
             
             $('.colorbox-delete').colorbox({width:"60%", height: '220', opacity: 0.5, iframe: true});
@@ -123,11 +113,22 @@
             });
             
         });
+        
+        function desativar(id){
+            $.ajax({
+                url: '<?php echo $this->Html->url(array("controller" => "fontes","action" => "desativar"));?>',
+                data: ({ id: id}),
+                beforeSend: function(){
+                    $('#actions'+id).prepend('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
+                },
+                success: function(result){
+                    var json = $.parseJSON(result);
+                    $('#linkStatus'+id).html(json.link);
+                    $('#info'+id).append(json.msg);
+                    $('#fonte-'+id).append(json.sql);
+                    $('#actions'+id+' img').detach();
+                }
+            });
+        }
                 
     </script>
-    
-    
-    
-    
-    
-
