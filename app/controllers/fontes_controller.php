@@ -6,13 +6,11 @@ class FontesController extends AppController {
     
 	function index() {
         
-		$this->Fonte->recursive = -1;
-        $itens = $this->Fonte->find('all',
-                            array('conditions' => array('Fonte.usuario_id' => $this->Auth->user('id')),
-                                  'order' => array('created' => 'asc')));
-        if(count($itens)>0){
-            $this->set('numRegistros',count($itens));
-        }
+		$this->Fonte->recursive = -1;        
+        $this->paginate = array('limit' => 15,
+                                'order' => array('created' => 'asc'),
+                                'conditions' => array('Fonte.usuario_id' => $this->Auth->user('id')));
+        $itens = $this->paginate('Fonte');
         
         # total de faturamento inserido pra gerar porcentagem da categoria
         $total =  $this->Fonte->Ganho->find('all',

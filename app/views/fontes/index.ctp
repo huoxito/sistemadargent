@@ -11,9 +11,17 @@
         <div class="balancoBotoesWraper">
 
             <div class="balancoBotoes">
-                <?php if(isset($numRegistros)){ ?>
-                    <?php echo $numRegistros; ?> 
-                <?php }   ?>
+                
+                <?php   if( isset($paginator) ){    ?>
+                
+                <span class="pagina">Página</span>
+                <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
+                <span class="pagina">de</span>
+                <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
+                <p>|</p>
+                <p><?php echo $paginator->counter(array('format' => __('%count%',true))); ?></p>
+                <span class="pagina">Registros</span>
+                <?php   }   ?>
                 
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('INSERIR FATURAMENTO',
@@ -25,7 +33,7 @@
                     <?php echo $this->Html->link('INSERIR NOVA FONTE',
                                         array('controller' => 'fontes',
                                               'action' => 'add'),
-                                        array('class' => 'btnaddcategoria')); ?>
+                                        array('class' => 'btnadd')); ?>
                 </div>
                 
             </div>
@@ -110,6 +118,15 @@
                 <?php endforeach; ?>
                 </ul>
             </div>
+            
+            <?php   if( isset($paginator) ){    ?>
+            <div class="paging">
+                <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+             | 	<?php echo $paginator->numbers();?>
+             |  <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+            </div>
+            <?php   }   ?>
+            
         </div>
         
     </div>
