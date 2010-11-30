@@ -510,7 +510,7 @@ div.form, div.index, div.view {
 
 .registros {
 	text-align: left;
-	min-height:15px;
+	min-height:20px;
 	padding:12px 0 10px 10px;
 	position:relative;
 	color: #555;
@@ -564,12 +564,17 @@ span.valor {
 	display: block;
 	float: left;
 	color: #000;
+	text-transform: uppercase;
 }
 
 .categ-actions {
-	margin:-16px 0 5px 0;
+	margin:-25px 0 5px 0;
 	float: right;
 	text-align: right;
+}
+
+.categ-actions img {
+	float: left;
 }
 
 .links-registros-calendario {
@@ -698,7 +703,8 @@ label
 	background-color:#8BC243;
 	padding:6px;
 	border:0px;
-	color:#FFF
+	color:#FFF;
+	margin-right: 10px;
 }
 .submit input:hover
 {
@@ -707,6 +713,10 @@ label
 	border:0px;
 	cursor:pointer;
 	color:#FFF
+}
+
+.submit img {
+	margin-left: 20px;
 }
 
 .btnadd, .btnaddcategoria, .btneditar, .btnacoes, .btnexcluir, .btnsair, .btnminhaconta {
@@ -878,7 +888,7 @@ input.btnaddcategoria {
 
 input[type=text], input[type=password] {
 	padding: 5px;
-	width: 120px;
+	width:210px;
 }
 
 /** Tables **/
@@ -1057,6 +1067,7 @@ textarea {
 
 .registrosPainel {
 	padding:5px 0 3px 10px;
+	min-height: 37px;
 }
 
 .acoesPainel {
@@ -1066,4 +1077,21 @@ textarea {
 p.painelHelp {
 	font-size: 12px;
 	margin: 10px 0; 
+}
+
+.ajaxResponseCategorias {
+	color: #3075BA;
+	margin:5px 0;
+	max-width: 200px;
+	text-transform: none;
+}
+
+.ajax_error_response {
+	color: #E3290D;
+}
+
+.confirmacao {
+	font-size: 14px;
+	display: block;
+	margin: 10px 0;
 }

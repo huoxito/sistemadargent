@@ -99,7 +99,6 @@ class FontesController extends AppController {
         
         # permissão do usuário
         $this->checkPermissao($this->data['Fonte']['usuario_id']);
-        
         $this->layout = 'colorbox';
 	}
     
@@ -108,8 +107,7 @@ class FontesController extends AppController {
         if( $this->params['isAjax'] ){
             
             $this->Fonte->recursive = -1;
-            $chk = $this->Fonte->read(null,$this->params['url']['id']);
-            # permissão do usuário
+            $chk = $this->Fonte->find('first',array('conditions' => array('id' => $this->params['url']['id'])));
             if( $this->checkPermissao($chk['Fonte']['usuario_id'],true) ){
                 
                 $chkFonteExiste = $this->Fonte->find('count',
@@ -117,24 +115,23 @@ class FontesController extends AppController {
                                                 array('Fonte.nome' => $this->params['url']['nome'],
                                                       'Fonte.id !=' => $this->params['url']['id'],
                                                       'Fonte.usuario_id' => $this->Auth->user('id'))));
-                if($chkFonteExiste == 0){
+                if($chkFonteExiste === 0){
                     
-                    $this->data['Fonte']['nome'] = $this->params['url']['nome'];
                     $this->Fonte->id = $this->params['url']['id'];
-                    if ( $this->Fonte->save($this->data) ) {
-                        echo $this->params['url']['nome'];
+                    if ( $this->Fonte->saveField('nome',$this->params['url']['nome'],true) ) {
+                        $this->data = $this->Fonte->read(null,$this->params['url']['id']);
+                        $this->layout = 'ajax';
                     } else {
-                        echo 'validacao';
+                        echo 'validacao'; exit;
                     }
                 }else{
-                    echo 'existe';
+                    echo 'existe'; exit;
                 }
                 
             }else{
-                echo 'error';
+                echo 'error'; exit;
             }
         }
-        $this->autoRender = false;
     }
 
 	function delete($id = null) {

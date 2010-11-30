@@ -7,7 +7,7 @@
                         array('class' => 'btnexcluir',
                               'onclick' => 'mudarStatus('.$id.',0)'));
         
-        $message = "<p>Categoria Ativada</p>";
+        $message = "<p class='ajaxResponseCategorias'>Categoria Ativada</p>";
     }else{
     
         $link = $this->Html->link('ATIVAR',
@@ -15,7 +15,7 @@
                         array('class' => 'btneditar',
                               'onclick' => 'mudarStatus('.$id.',1)'));
     
-        $message = "<p>Categoria Desativada</p>";
+        $message = "<p class='ajaxResponseCategorias'>Categoria Desativada</p>";
     }
     
     $value = $this->element('sql_dump');

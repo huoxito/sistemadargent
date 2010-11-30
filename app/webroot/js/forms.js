@@ -2,6 +2,13 @@
     // <![CDATA[
     $(document).ready(function () {
         
+        
+        $.ajaxSetup({
+            type: "GET",
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            cache: false
+        });
+        
         $.datepicker.setDefaults({
             dateFormat: 'dd-mm-yy',
             dayNamesMin: ['Dom', 'Sex', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
@@ -16,6 +23,7 @@
         $('.dateFieldAhead').datepicker({
                     minDate: 'd-m-y'
                 });
+        
     });  
     // ]]>
 

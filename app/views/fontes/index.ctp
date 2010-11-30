@@ -12,7 +12,7 @@
 
             <div class="balancoBotoes">
                 <?php if(isset($numRegistros)){ ?>
-                    <?php echo $numRegistros; ?> Categorias listadas
+                    <?php echo $numRegistros; ?> 
                 <?php }   ?>
                 
                 <div class="headeraddlinks">
@@ -35,8 +35,9 @@
         <div class="relatoriosWraper">
             <div id="relatorioRapido">
                 <p class="painelHelp">
-                    - Lista de categorias habilitadas dos faturamentos com a porcentagem de participação da categoria e o último faturamento associado a mesma.<br />
-                    - Só podem ser excluídas as Fontes que não possuem relação com qualquer registro
+                    - Lista de categorias habilitadas dos faturamentos com a porcentagem de participação de cada categoria e o último faturamento associado a mesma.<br />
+                    - Só podem ser excluídas as Fontes que não possuem relação com qualquer registro.<br />
+                    - Ao desativar as categorias que não são mais relevantes, você impede que elas apareçam como opção ao inserir um Faturamento. 
                 </p>
             </div>
         
@@ -77,7 +78,8 @@
                             
                             <?= $this->Html->link('EDITAR',
                                             array('action' => 'edit', $fontes[$key]['Fonte']['id'], time()),
-                                            array('class' => 'colorbox-edit btneditar'));   ?>
+                                            array('class' => 'colorbox-edit btneditar',
+                                                  'title' => 'Editar Fonte'));   ?>
                                             
                             <span id='linkStatus<?= $fontes[$key]['Fonte']['id']; ?>'>
                             
@@ -99,7 +101,8 @@
                             <?php if( !isset($fontes[$key]['Ganho']) ){   ?>
                                 <?= $this->Html->link('EXCLUIR',
                                                 array('action' => 'delete', $fontes[$key]['Fonte']['id'], time()),
-                                                array('class' => 'colorbox-delete btnexcluir'));    ?>
+                                                array('class' => 'colorbox-delete btnexcluir',
+                                                      'title' => 'Excluir Fonte'));    ?>
                             <?php } ?>
                         </div>
                     </li>
@@ -115,8 +118,8 @@
     
         $(document).ready(function () {
             
-            $('.colorbox-delete').colorbox({width:"60%", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height: "300", opacity: 0.5, iframe: true});
+            $('.colorbox-delete').colorbox({width:"60%", height: '180', opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"60%", height: "240", opacity: 0.5, iframe: true});
             
             $("li.registros").mouseover(function() {
                 $(this).css("background-color",'#F2FFE3');
@@ -135,6 +138,7 @@
                 },
                 success: function(result){
                     var json = $.parseJSON(result);
+                    $('#info'+id+' .ajaxResponseCategorias').detach();
                     $('#linkStatus'+id).html(json.link);
                     $('#info'+id).append(json.msg);
                     $('#fonte-'+id).append(json.sql);
