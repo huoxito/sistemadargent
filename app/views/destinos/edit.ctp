@@ -1,58 +1,40 @@
-    <div class="destinos box" id="box">  
-              
-        <?php   echo $this->Session->flash(); ?>
+    
+    
+    <div class="destinos formBox">  
         
-        <?php echo $form->create('Destino',array('default' => false));?>
-        
-            <fieldset>
-                <legend><?php __('Editar Destino');?></legend>
-            <?php
-                echo $form->input('nome');
-            ?>
-            </fieldset>
-        <?php echo $form->end(array('label' => 'Salvar',
-                                    'onclick' => 'editar('.$id.');',
-                                    'style' => 'float: left;',
-                                    'after' => ' <input type="submit" style="float: left;margin-left: 5px;" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />')); ?>
+        <?php echo $this->Form->create('Destino',array('default' => false));?>
+        <?php echo $this->Form->input('nome'); ?>
+        <?php echo $this->Form->end(array('label' => 'Salvar',
+                                          'onclick' => 'editar('.$id.');')); ?>
         
     </div>
     
+    <?= $this->Html->script('forms'); ?>
     <script type="text/javascript">
         // <![CDATA[
         
         function editar(id){
             
             var nome   = $('#DestinoNome').val();
-            
             $.ajax({
                 
-                url: '<?php echo $html->url(array("controller" => "destinos","action" => "editResponse"));?>', 
-                cache: false,
-                type: 'GET',
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                url: '<?php echo $this->Html->url(array("controller" => "destinos","action" => "editResponse"));?>',
                 data: ( {id : id, nome: nome} ),
                 beforeSend: function(){
-                    $('.submit img').remove();
-                    $('.submit span').remove();
-                     $('.submit').append('<img style="float: left; margin-left: 15px;" src="../../../<?php echo IMAGES_URL; ?>ajax-loader.gif" title="excluindo ... " alt="excluindo ... " />');
+                    $('.submit span').detach();
+                    $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                 },
                 success: function(result){
                     
                     if(result == 'error'){
-                        $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Ocorreu um erro. Recarregue a página e tente novamente</span>');
-                            });
+                        $('.submit').append('<span class="ajax_error_response">Registro inválido</span>');
                     }else if(result == 'validacao'){
-                        $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
-                            });
+                        $('.submit').append('<span class="ajax_error_response">Preencha o campo corretamente</span>');
                     }else if(result == 'existe'){
-                        $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Já há um destino cadastrada com esse nome.</span>');
-                            });
+                        $('.submit').append('<span class="ajax_error_response">Já há uma fonte cadastrada com esse nome</span>');
                     }else {
                         parent.$('#nome-' + id).html(result);
-                        var t=setTimeout("parent.jQuery.fn.colorbox.close()",500);
+                        var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
                     }
                 }
             });

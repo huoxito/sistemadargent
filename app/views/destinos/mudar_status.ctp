@@ -21,5 +21,5 @@
     $value = $this->element('sql_dump');
     echo json_encode(array('link' => $link,
                            'msg' => $message,
-                           'sql' => $value));
+                           'sql' => null));
     

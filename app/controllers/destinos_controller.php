@@ -110,31 +110,27 @@ class DestinosController extends AppController {
             # permissão do usuário
             if( $this->checkPermissao($chk['Destino']['usuario_id'],true) ){
                 
-                $chkFonteExiste = $this->Destino->find('count', array('conditions' =>
-                                                                array('Destino.nome' => $this->params['url']['nome'],
-                                                                      'Destino.id !=' => $this->params['url']['id'],
-                                                                      'Destino.usuario_id' => $this->Auth->user('id'))
-                                                               ));
+                $chkFonteExiste = $this->Destino->find('count',
+                                            array('conditions' =>
+                                                    array('Destino.nome' => $this->params['url']['nome'],
+                                                          'Destino.id !=' => $this->params['url']['id'],
+                                                          'Destino.usuario_id' => $this->Auth->user('id'))));
                 if($chkFonteExiste == 0){
                     
-                    $this->data['Destino']['nome'] = $this->params['url']['nome'];
                     $this->Destino->id = $this->params['url']['id'];
-                    if ( $this->Destino->save($this->data) ) {
-                        echo $this->params['url']['nome'];
+                    if ( $this->Destino->saveField('nome', $this->params['url']['nome'], true) ) {
+                        $this->data = $this->Destino->read(null,$this->params['url']['id']);
                         $this->layout = 'ajax';
                     } else {
-                        echo 'validacao';
+                        echo 'validacao'; exit;
                     }
                 }else{
-                    echo 'existe';
+                    echo 'existe'; exit;
                 }
-                
             }else{
-                # registro não pertence ao usuário
-                echo 'error';
+                echo 'error';   exit;
             }
         }
-        $this->autoRender = false;
     }
 
 	function delete($id = null) {
@@ -143,8 +139,10 @@ class DestinosController extends AppController {
             $id = $this->params['url']['id'];
         }
         
-        $this->Destino->recursive = -1;
-        $itens = $this->Destino->read(array('id,usuario_id,nome'), $id);
+        $itens = $this->Destino->read(null, $id);
+        if(isset($itens['Gasto']['0'])){
+            $this->cakeError('error404');
+        }
         
         # permissão do usuário
         $this->checkPermissao($itens['Destino']['usuario_id']);
@@ -157,7 +155,6 @@ class DestinosController extends AppController {
             $this->autoRender = false;
         }else{
             
-            //$itens['Destino']['nome'] = $this->Data->formata($itens['Gasto']['datadabaixa'],'porextenso');
             $this->set('itens',$itens);    
             $this->layout = 'colorbox';
         }

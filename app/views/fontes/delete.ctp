@@ -4,8 +4,8 @@
     
         <span class="confirmacao">Você realmente deseja excluir essa categoria <b><?php echo $itens['Fonte']['nome']; ?></b>  ?</span>
         <?php
-            echo $form->create('Fonte',array('default' => false));
-            echo $form->end(array('label' => 'Excluir',
+            echo $this->Form->create('Fonte',array('default' => false));
+            echo $this->Form->end(array('label' => 'Excluir',
                                        'onclick' => 'excluir('.$itens['Fonte']['id'].');',
                                         'style' => 'float: left;'));
         ?>
@@ -19,10 +19,10 @@
         
             function excluir(id){
                 $.ajax({
-                        url: '<?php echo $html->url(array("controller" => "fontes","action" => "delete"));?>',
+                        url: '<?php echo $this->Html->url(array("controller" => "fontes","action" => "delete"));?>',
                         data: 'id=' + id,
                         beforeSend: function(){
-                            $('.submit').append('<img style="float: left; margin-left: 15px;" src="../../<?php echo IMAGES_URL;?>ajax-loader.gif" title="excluindo ... " alt="excluindo ... " />');
+                            $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                         },
                         success: function(result){
                         
