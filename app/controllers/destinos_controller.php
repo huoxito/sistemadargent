@@ -14,13 +14,10 @@ class DestinosController extends AppController {
         
         # pego o total de gastos já cadastrados
         $total =  $this->Destino->Gasto->find('all',
-                                        array(
-                                            'fields' => array('SUM(valor) AS total'),
-                                            'conditions' => array('usuario_id' => $this->Auth->user('id'),
-                                                                  'status' => 1),
-                                            'recursive' => -1
-                                            )
-                                        );
+                                    array('fields' => array('SUM(valor) AS total'),
+                                          'conditions' => array('usuario_id' => $this->Auth->user('id'),
+                                                                'status' => 1),
+                                          'recursive' => -1));
         $total = $total[0][0]['total'];
         if(empty($total)){
             $total = 1;
@@ -165,6 +162,31 @@ class DestinosController extends AppController {
             $this->layout = 'colorbox';
         }
 	}
+    
+    
+    function mudarStatus(){
+        
+        if( !isset($this->params['url']['id']) ){
+            $this->cakeError('error404');
+        }else{
+        
+            $this->Destino->recursive = -1;
+            $item = $this->Destino->read(null,$this->params['url']['id']);
+            if ( $this->checkPermissao($item['Destino']['usuario_id']) ){
+                
+                if($this->params['url']['action']){
+                    $status = 1;
+                }else{
+                    $status = 0;
+                }
+                
+                $this->Destino->saveField('status',$status);
+                $this->set(array('id' => $this->params['url']['id'], 'status' => $status));
+                $this->layout = 'ajax';
+            }
+        }
+    }
+    
 
 }
 ?>
