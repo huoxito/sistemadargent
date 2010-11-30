@@ -7,15 +7,10 @@ class DestinosController extends AppController {
 	function index() {
         
 		$this->Destino->recursive = -1;
-        $params = array('fields' => array('Destino.nome','Destino.id','Destino.modified'),
-                        'conditions' => array('Destino.usuario_id' => $this->Auth->user('id')),
-                        'order' => array('created' => 'asc')
-        );
-        
-        $itens = $this->Destino->find('all',$params);
-        if(count($itens)>0){
-            $this->set('numRegistros',count($itens));
-        }
+        $this->paginate = array('limit' => 15,
+                                'order' => array('created' => 'asc'),
+                                'conditions' => array('Destino.usuario_id' => $this->Auth->user('id')));
+        $itens = $this->paginate('Destino');
         
         # pego o total de gastos já cadastrados
         $total =  $this->Destino->Gasto->find('all',
