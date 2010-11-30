@@ -8,7 +8,20 @@
         <div class="balancoBotoesWraper">
             
             <div class="balancoBotoes">
+                <p>Insira um novo destino para suas Despesas</p>
                 
+                <div class="headeraddlinks">
+                    <?php echo $this->Html->link('LISTAR DESPESAS',
+                                            array('controller' => 'gastos',
+                                                  'action' => 'index'),
+                                            array('class' => 'btnaddcategoria')); ?>
+                </div>
+                <div class="headeraddlinks">
+                    <?php echo $this->Html->link('LISTAR DESTINOS',
+                                            array('controller' => 'destinos',
+                                                  'action' => 'index'),
+                                            array('class' => 'btnaddcategoria')); ?>
+                </div>
             </div>
             
         </div>

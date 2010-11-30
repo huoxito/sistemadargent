@@ -26,12 +26,13 @@
                 },
                 success: function(result){
                     
+                    $('.submit img').detach();
                     if(result == 'error'){
                         $('.submit').append('<span class="ajax_error_response">Registro inválido</span>');
                     }else if(result == 'validacao'){
                         $('.submit').append('<span class="ajax_error_response">Preencha o campo corretamente</span>');
                     }else if(result == 'existe'){
-                        $('.submit').append('<span class="ajax_error_response">Já há uma fonte cadastrada com esse nome</span>');
+                        $('.submit').append('<span class="ajax_error_response">Já há um destino cadastrado com esse nome</span>');
                     }else {
                         parent.$('#nome-' + id).html(result);
                         var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
