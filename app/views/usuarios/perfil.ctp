@@ -17,15 +17,6 @@
             
                 <div id="UserInfo">
                     
-                    <?php   if( empty($userFoto) ){   ?>
-                    <div class="">
-                        <?php   echo $this->Html->link('INSERIR IMAGEM DE PERFIL',
-                                                array('controller' => 'usuarios',
-                                                      'action' => 'mudarImagem'),
-                                                array('class' => 'colorbox-imagem btneditar')); ?>
-                    </div>   
-                    <?php    }  ?>      
-                    
                     <span class="userInfoLabel">
                         Nome
                         <?php   echo $html->link('EDITAR',
