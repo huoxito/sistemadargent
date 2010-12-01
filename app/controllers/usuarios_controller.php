@@ -39,9 +39,6 @@ class UsuariosController extends AppController {
                                         'group' => 'Gasto.modified',
                                         'order' => 'Gasto.modified desc'));
         
-        $this->Usuario->Agendamento->unbindModel(
-            array('hasOne' => array('Valormensal'))
-        );
         $agendamentos = $this->Usuario->Agendamento->find('all',
                                     array('conditions' =>
                                             array('Agendamento.usuario_id' => $this->Auth->user('id')),
@@ -122,7 +119,6 @@ class UsuariosController extends AppController {
         }
         
         $this->set('ultimasInteracoes',$ultimasInteracoes);
-        
     }
 
     function cadastro() {
@@ -141,7 +137,7 @@ class UsuariosController extends AppController {
                               'password' => $this->Auth->password($this->data['Usuario']['passwd']));
                 if( $this->Auth->login($data) == 1 ){
 
-                    $this->Session->setFlash(__('Bem vindo !', true));
+                    $this->Session->setFlash('Bem vindo ! Navegue no menu lateral para conhecer o sistema e começar a inserir os dados', 'flash_success');
                     $this->redirect(array('controller' => 'homes', 'action'=>'index'));
                 }else{
                     $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));

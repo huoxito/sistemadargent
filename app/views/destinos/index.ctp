@@ -54,12 +54,17 @@
         
         <div class="categoriasWraper">
             <div class="categorias">
-            
-                <ul id="list-categorias">       
-                <?php
-        
-                foreach ($porcentagens as $key => $porcentagem):
-                ?>
+                
+                <?php   if(count($porcentagens) === 0){  ?>
+                    <p class="semResgistrosMsg">
+                        Nenhuma categoria registrada
+                    </p>
+                <?php   } ?>
+                
+                <ul id="list-categorias">
+                    
+                <?php foreach ($porcentagens as $key => $porcentagem): ?>
+                
                     <li id="destino-<?php echo $destinos[$key]['Destino']['id']; ?>" class="registros">
                         <div class="categoriaInfo" id="info<?= $destinos[$key]['Destino']['id']; ?>">
                             

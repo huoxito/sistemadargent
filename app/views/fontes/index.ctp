@@ -57,6 +57,12 @@
         <div class="categoriasWraper">
             <div class="categorias">
             
+                <?php   if(count($porcentagens) === 0){  ?>
+                    <p class="semResgistrosMsg">
+                        Nenhuma categoria registrada
+                    </p>
+                <?php   } ?>
+            
                 <ul id="list-categorias">
                 <?php
                 foreach ($porcentagens as $key => $porcentagem):

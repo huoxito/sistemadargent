@@ -9,46 +9,39 @@
             <div class="buscar">
                 
                 <?php
-                    echo $form->create('Gasto',
-                                            array('type' => 'get',
-                                                  'action' => 'search',
-                                                  'inputDefaults' => array('label' => false)));   
+                    echo $this->Form->create('Gasto',
+                                    array('type' => 'get',
+                                          'action' => 'search',
+                                          'inputDefaults' => array('label' => false)));   
                 ?>
                 <span>Buscar</span>
                 <p>FATURAMENTOS</p>
                 
-                <?php
-                    /*
-                    echo $form->input('observacoes',
-                                        array('style' => 'float: left;width: 180px; padding: 6px; height: 16px; margin: 1px 5px 0 0;',
-                                              'maxlength' => '50',
-                                              'default' => isset($this->params['named']['observacoes']) ? $this->params['named']['observacoes'] : null
-                                              ));   
-                    */
-                    echo $form->input('destino_id',
-                                        array('empty' => 'Destinos',
-                                              'div' => array('class' => 'formSearchDiv'),
-                                              'class' => 'formSearchSelect',
-                                              'selected' => isset($this->params['named']['destino_id']) ? $this->params['named']['destino_id'] : null));   
-                ?>
+                    <?php
+                        echo $this->Form->input('destino_id',
+                                            array('empty' => 'Destinos',
+                                                  'div' => array('class' => 'formSearchDiv'),
+                                                  'class' => 'formSearchSelect',
+                                                  'selected' => isset($this->params['named']['destino_id']) ? $this->params['named']['destino_id'] : null));   
+                    ?>
                 <div class="formSearchDiv">
-                <?php
-                    echo $form->month(false,
-                                        isset($this->params['named']['month']) ? $this->params['named']['month'] : null,
-                                        array(__('monthNames',true),
-                                              'empty' => 'Mês',
-                                              'class' => 'formSearchSelect'));
-                ?>
+                    <?php
+                        echo $this->Form->month(false,
+                                            isset($this->params['named']['month']) ? $this->params['named']['month'] : null,
+                                            array(__('monthNames',true),
+                                                  'empty' => 'Mês',
+                                                  'class' => 'formSearchSelect'));
+                    ?>
                 </div>
                 <div class="formSearchDiv">
-                <?php
-                    echo $form->year(false,
-                                        $minYear = '2010',
-                                        $maxYear = '2010',
-                                        isset($this->params['named']['year']) ? $this->params['named']['year'] : null,
-                                        array('empty' => 'Ano',
-                                              'class' => 'formSearchSelect'));
-                ?>
+                    <?php
+                        echo $this->Form->year(false,
+                                            $minYear = '2010',
+                                            $maxYear = '2010',
+                                            isset($this->params['named']['year']) ? $this->params['named']['year'] : null,
+                                            array('empty' => 'Ano',
+                                                  'class' => 'formSearchSelect'));
+                    ?>
                 </div>
                 <input type="image" value="" class="botao" />
 
@@ -143,7 +136,13 @@
         </cake:nocache>
         
         <div class="registrosWraper">
-        
+            
+            <?php   if(count($groupPorData) === 0){  ?>
+                <p class="semResgistrosMsg">
+                    Nenhum despesa registrada
+                </p>
+            <?php   } ?>
+            
             <ul id="list">
                 <?php
                         foreach($groupPorData as $data){

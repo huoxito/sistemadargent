@@ -17,13 +17,6 @@
                 <p>FATURAMENTOS</p>
                 
                 <?php
-                    /*
-                    echo $form->input('observacoes',
-                                        array('style' => 'float: left;width: 180px; padding: 6px; height: 16px; margin: 1px 5px 0 0;',
-                                              'maxlength' => '50',
-                                              'default' => isset($this->params['named']['observacoes']) ? $this->params['named']['observacoes'] : null
-                                              ));   
-                    */
                     echo $form->input('fonte_id',
                                         array('empty' => 'Fontes',
                                               'div' => array('class' => 'formSearchDiv'),
@@ -144,7 +137,13 @@
         </cake:nocache>
         
         <div class="registrosWraper">
-        
+            
+            <?php   if(count($groupPorData) === 0){  ?>
+                <p class="semResgistrosMsg">
+                    Nenhum faturamento registrado
+                </p>
+            <?php   } ?>
+            
             <ul id="list">
                 
                 <?php
@@ -172,14 +171,12 @@
                         <?php echo $registro['Ganho']['observacoes']; ?>
                         
                         <div class="linksRegistros">
-                        <?php   echo $html->link('',
+                            <?= $this->Html->link('',
                                                 array('action' => 'edit', $registro['Ganho']['id'], time()),
-                                                array('class' => 'colorbox-edit editar')
-                                                ); ?> 
-                        <?php   echo $html->link('',
-                                                 array('action' => 'delete', $registro['Ganho']['id'], time()),
-                                                 array('class' => 'colorbox-delete excluir')
-                                                 ); ?>
+                                                array('class' => 'colorbox-edit editar')); ?> 
+                            <?= $this->Html->link('',
+                                                array('action' => 'delete', $registro['Ganho']['id'], time()),
+                                                array('class' => 'colorbox-delete excluir')); ?>
                         </div>  
                         
                             
