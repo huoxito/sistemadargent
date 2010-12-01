@@ -3,7 +3,6 @@
 
 class AgendamentosController extends AppController {
 
-    var $helpers = array('Html', 'Form');
     var $components = array('Data', 'Valor');
     
     function index() {
@@ -12,8 +11,7 @@ class AgendamentosController extends AppController {
                 'conditions' => array('Agendamento.status' => '1',
                                       'Agendamento.usuario_id' => $this->Auth->user('id')),
                 'limit' => 15,
-                'order' => array('Agendamento.modified' => 'desc')
-        );
+                'order' => array('Agendamento.modified' => 'desc'));
         
         $this->Agendamento->recursive = 0;
         $agendamentos = $this->paginate();
@@ -86,11 +84,14 @@ class AgendamentosController extends AppController {
                                                'datadevencimento' => $this->data['Agendamento']['datadevencimento'],
                                                'observacoes' => $this->data['Agendamento']['observacoes'],
                                                'status' => 0);
-                    $this->$_Model->save($registro);
+                    $this->$_Model->create();  
+                    if($this->$_Model->save($registro)){
+                        
+                    }
                 }
                 
-                $this->redirect(array('action' => 'index'));
                 $this->Session->setFlash('Registro agendado com sucesso', 'flash_success');
+                $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash('Preencha os campos corretamente.', 'flash_error');
             }
@@ -169,11 +170,11 @@ class AgendamentosController extends AppController {
             
             $this->$_Model->create();  
             if($this->$_Model->save($registro, true)){
-                // yeeah !
+                //yeah !!!
             }else{
                 $error = $this->validateErrors($this->$_Model);
                 $this->log($error,'erro no parcelamento');
-                $this->Session->setFlash('Ocorreu um erro inesperado, se o erro persistir informe o administrador', 'flash_error');
+                $this->Session->setFlash('Ocorreu um erro inesperado, por favor informe o administrador', 'flash_error');
                 $this->redirect(array('action' => 'index'));
             }
         }

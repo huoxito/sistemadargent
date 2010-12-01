@@ -34,11 +34,7 @@
             
         </div>
         
-        
-        <cake:nocache>
-        <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
-        
+        <?php echo $this->Session->flash(); ?>
         
         <ul id="list-categorias">
             

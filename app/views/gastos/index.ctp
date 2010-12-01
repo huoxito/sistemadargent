@@ -56,11 +56,6 @@
         
         </div>
         
-        <cake:nocache>
-        <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
-        
-        
         <div class="balancoBotoesWraper">
 
         <div class="balancoBotoes">
@@ -143,49 +138,57 @@
         
         </div>
         
-        <ul id="list">
-            <?php
-                    foreach($groupPorData as $data){
-                    $num = count($data['registro']);
-                    $count = 1;
-            ?>
-            
-            <li class="registrosPorData">
-                <div class="groupdata">
-                <?php  echo $data['dia']; ?>
-                </div>
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
+        
+        <div class="registrosWraper">
+        
+            <ul id="list">
+                <?php
+                        foreach($groupPorData as $data){
+                        $num = count($data['registro']);
+                        $count = 1;
+                ?>
                 
-                <?php   foreach($data['registro'] as $registro){  ?>
-                
-                <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="gasto-<?php echo $registro['Gasto']['id']; ?>">
-                    
-                    <div class="">
-                        <span class="valor">
-                        R$ <?php  echo $registro['Gasto']['valor']; ?>
-                        </span>
-                        <?php echo $registro['Destino']['nome']; ?>
+                <li class="registrosPorData">
+                    <div class="groupdata">
+                    <?php  echo $data['dia']; ?>
                     </div>
                     
-                    <?php echo $registro['Gasto']['observacoes']; ?>
+                    <?php   foreach($data['registro'] as $registro){  ?>
                     
-                    <div class="linksRegistros">
-                    <?php   echo $html->link('',
-                                        array('action' => 'edit', $registro['Gasto']['id'], time()),
-                                        array('class' => 'colorbox-edit editar')
-                                        ); ?> 
-                    <?php   echo $html->link('',
-                                         array('action' => 'delete', $registro['Gasto']['id'], time()),
-                                         array('class' => 'colorbox-delete excluir')
-                                         ); ?>
-                    </div>  
-                    
+                    <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="gasto-<?php echo $registro['Gasto']['id']; ?>">
                         
-                </div>
-                <?php   $count++;}   ?>
-            </li>
-            
-            <?php   }   ?>
-        </ul>
+                        <div class="">
+                            <span class="valor">
+                            R$ <?php  echo $registro['Gasto']['valor']; ?>
+                            </span>
+                            <?php echo $registro['Destino']['nome']; ?>
+                        </div>
+                        
+                        <?php echo $registro['Gasto']['observacoes']; ?>
+                        
+                        <div class="linksRegistros">
+                        <?php   echo $html->link('',
+                                            array('action' => 'edit', $registro['Gasto']['id'], time()),
+                                            array('class' => 'colorbox-edit editar')
+                                            ); ?> 
+                        <?php   echo $html->link('',
+                                             array('action' => 'delete', $registro['Gasto']['id'], time()),
+                                             array('class' => 'colorbox-delete excluir')
+                                             ); ?>
+                        </div>  
+                        
+                            
+                    </div>
+                    <?php   $count++;}   ?>
+                </li>
+                
+                <?php   }   ?>
+            </ul>
+        
+        </div>
         
         <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
         <div class="paging">

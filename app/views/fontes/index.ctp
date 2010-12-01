@@ -4,7 +4,6 @@
         
         <div id="contentHeader">    
             <?php   echo $this->element('fonte_menu'); ?>
-            <?php   echo $this->Session->flash(); ?>
         </div>
         
         
@@ -50,6 +49,10 @@
             </div>
         
         </div>
+        
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        <cake:nocache>
         
         <div class="categoriasWraper">
             <div class="categorias">

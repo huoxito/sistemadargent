@@ -1,7 +1,6 @@
 <?php
 class DestinosController extends AppController {
 
-	var $helpers = array('Html', 'Form');
     var $components = array('Data','Valor');
     
 	function index() {
@@ -72,10 +71,10 @@ class DestinosController extends AppController {
                 $this->Destino->create();
                 $this->Destino->set('usuario_id', $this->Auth->user('id'));
                 if ($this->Destino->save($this->data)) {
-                    $this->Session->setFlash(__('Destino salvo com sucesso.', true));
+                    $this->Session->setFlash('Destino salvo com sucesso.','flash_success');
                     $this->redirect(array('action'=>'index'));
                 } else {
-                    $this->Session->setFlash('The Destino could not be saved. Please, try again.', 'flash_error');
+                    $this->Session->setFlash('Preencha o campo corretamente', 'flash_error');
                 }
             
             }else{

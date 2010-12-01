@@ -405,7 +405,7 @@ div.form, div.index, div.view {
 .categorias {
 	margin: 0 5px;
 }
-.categoriasWraper {
+.categoriasWraper, .registrosWraper {
 	background-color:#fff;
 }
 
@@ -831,12 +831,21 @@ fieldset fieldset {
 }
 
 div.flash {
-	background:none repeat scroll 0 0 #C73E14;
 	clear:both;
-	color:#FFFFFF;
-	font-size:109%;
+	font-size:14px;
 	font-weight:bold;
 	padding:6px 5%;
+	background-color:#FFFFFF;
+	border-top:1px solid #E9E9E9;
+	border-bottom:1px solid #E9E9E9;
+}
+
+div.flash_success {
+	color: #3075BA;
+}
+
+div.flash_error {
+	color: #E3290D;
 }
 
 span.userInfoLabel, span.tipoAgendamentoLabel {

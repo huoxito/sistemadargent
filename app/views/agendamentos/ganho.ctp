@@ -83,7 +83,7 @@
             
             </fieldset>
             
-            <?php echo $this->Form->end('Continuar');?>
+            <?php echo $this->Form->end('Agendar');?>
         
         </div> 
         

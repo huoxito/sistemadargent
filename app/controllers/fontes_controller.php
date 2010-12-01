@@ -74,7 +74,7 @@ class FontesController extends AppController {
                 $this->Fonte->create();
                 $this->Fonte->set('usuario_id', $this->Auth->user('id'));
                 if ($this->Fonte->save($this->data)) {
-                    $this->Session->setFlash(__('A Fonte foi salva!', 'flash_success'));
+                    $this->Session->setFlash('A Fonte foi salva!', 'flash_success');
                     $this->redirect(array('action'=>'index'));
                 } else {
                     $this->Session->setFlash('Preencha o campo obrigatório', 'flash_error');

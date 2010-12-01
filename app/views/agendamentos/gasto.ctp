@@ -29,6 +29,10 @@
             
         </div>
         
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
+        
         <div class="formWraper">
         
             <?php echo $form->create('Agendamento',array('action' => 'tipo/Gasto'));?>
@@ -80,7 +84,7 @@
             
             </fieldset>
             
-            <?php echo $form->end('Continuar');?>
+            <?php echo $form->end('Agendar');?>
         </div>
         
     </div>
