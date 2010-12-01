@@ -4,33 +4,17 @@ class GastosController extends AppController {
 
     var $components = array('Data', 'Valor');
     
-    /*
-    var $cacheAction = array(
-        'index' => '1'
-    );
-    */
-    
     function index($mes=null,$ano=null) {
-        
-        $fields = array('Gasto.id',
-                        'Gasto.valor',
-                        'Gasto.datadabaixa',
-                        'Gasto.modified',
-                        'Destino.nome',
-                        'Gasto.observacoes');
-        
+
         # filtros por mês e ano do menu de relatório rápidos
         if(!empty($this->params['pass'][0]) && !empty($this->params['pass'][1])){
            
             $params = array(
                 'conditions' => array('MONTH(datadabaixa)' => $this->params['pass'][0],
-                                    'YEAR(datadabaixa)' => $this->params['pass'][1],
-                                    'Gasto.status' => '1',
-                                    'Gasto.usuario_id' => $this->Auth->user('id')
-                                    ),
-                'fields' => $fields,
-                'order' => array('Gasto.datadabaixa' => 'desc', 'Gasto.modified' => 'desc')
-            );
+                                      'YEAR(datadabaixa)' => $this->params['pass'][1],
+                                      'Gasto.status' => '1',
+                                      'Gasto.usuario_id' => $this->Auth->user('id')),
+                'order' => array('Gasto.datadabaixa' => 'desc', 'Gasto.modified' => 'desc'));
             
             $mesRelatorio = (int)$this->params['pass'][0]; 
             if(!empty($mesRelatorio)){
@@ -44,24 +28,19 @@ class GastosController extends AppController {
             
             $this->loadModel('Ganho');
             $totalG =  $this->Ganho->find('all',
-                                            array(
-                                                'fields' => array('SUM(valor) AS total'),
-                                                'conditions' => array('MONTH(datadabaixa)' => $this->params['pass'][0],
-                                                                    'YEAR(datadabaixa)' => $this->params['pass'][1],
-                                                                    'usuario_id' => $this->Auth->user('id'),
-                                                                    'status' => 1),
-                                                'recursive' => -1
-                                                )
-                                            );
+                                    array('fields' => array('SUM(valor) AS total'),
+                                          'conditions' => array('MONTH(datadabaixa)' => $this->params['pass'][0],
+                                                                'YEAR(datadabaixa)' => $this->params['pass'][1],
+                                                                'usuario_id' => $this->Auth->user('id'),
+                                                                'status' => 1),
+                                          'recursive' => -1));
         }else{
             
             $this->paginate = array(
                     'conditions' => array('Gasto.status' => '1',
                                         'Gasto.usuario_id' => $this->Auth->user('id')),
-                    'fields' => $fields,
                     'limit' => 15,
-                    'order' => array('Gasto.datadabaixa' => 'desc', 'Gasto.modified' => 'desc')
-            );
+                    'order' => array('Gasto.datadabaixa' => 'desc', 'Gasto.modified' => 'desc'));
             
             $objMeses = $this->Data->listaULtimosMeses(7);
             // Nettoyage de la saisie
@@ -101,18 +80,12 @@ class GastosController extends AppController {
             if( $item['Gasto']['datadabaixa'] != $dataTemp ){
                 
                 $groupPorData[] = array('dia' => $dataTemp,
-                                'registro' => $registrosDoDia
-                                );
-                
+                                'registro' => $registrosDoDia);
                 unset($registrosDoDia);
-                
-                # começo novamente a inserir registros
-                $registrosDoDia[] = $item;
-                
-            }else{
-                $registrosDoDia[] = $item;    
             }
             
+            # começo novamente a inserir registros
+            $registrosDoDia[] = $item;
             $dataTemp = $item['Gasto']['datadabaixa'];
         }
         
@@ -120,10 +93,8 @@ class GastosController extends AppController {
             # insiro o último registro após o final do loop
             $groupPorData[] = array('dia' => $dataTemp,
                                     'registro' => $registrosDoDia,
-                                    'borda' => 'insere'
-                                );
+                                    'borda' => 'insere');
         }
-        
         $this->set('groupPorData', $groupPorData);
 
         #   pego total listado na página
@@ -155,10 +126,9 @@ class GastosController extends AppController {
         }
         
         $destinos = $this->Gasto->Destino->find('list',
-                                                    array('conditions' =>
-                                                          array('status' => 1,
-                                                                'usuario_id' => $this->Auth->user('id')))
-                                            );
+                                        array('conditions' =>
+                                              array('status' => 1,
+                                                    'usuario_id' => $this->Auth->user('id'))));
         
         $this->set(compact('destinos'));
         $this->set('objMeses', $objMeses);
@@ -178,7 +148,7 @@ class GastosController extends AppController {
             $this->Gasto->create();
             $this->Gasto->set('usuario_id', $this->Auth->user('id')); 
             if ($this->Gasto->save($this->data)) {
-                $this->Session->setFlash(__('Registro salvo com sucesso!', true));
+                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 
                 if(!$this->data['Gasto']['keepon']){
                     $this->redirect(array('action'=>'index'));  
@@ -191,10 +161,9 @@ class GastosController extends AppController {
             }
         }
         $destinos = $this->Gasto->Destino->find('list',
-                                                    array('conditions' =>
-                                                          array('status' => 1,
-                                                                'usuario_id' => $this->Auth->user('id')))
-                                            );
+                                    array('conditions' =>
+                                          array('status' => 1,
+                                                'usuario_id' => $this->Auth->user('id'))));
         $this->set(compact('destinos'));
         $this->set('title_for_layout', 'Inserir Despesa');
     }

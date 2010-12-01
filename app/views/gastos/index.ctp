@@ -9,57 +9,45 @@
             <div class="buscar">
                 
                 <?php
-                    echo $form->create('Gasto',
-                                            array('type' => 'get',
-                                                  'action' => 'search',
-                                                  'inputDefaults' => array('label' => false)));   
+                    echo $this->Form->create('Gasto',
+                                    array('type' => 'get',
+                                          'action' => 'search',
+                                          'inputDefaults' => array('label' => false)));   
                 ?>
                 <span>Buscar</span>
                 <p>FATURAMENTOS</p>
                 
-                <?php
-                    /*
-                    echo $form->input('observacoes',
-                                        array('style' => 'float: left;width: 180px; padding: 6px; height: 16px; margin: 1px 5px 0 0;',
-                                              'maxlength' => '50',
-                                              'default' => isset($this->params['named']['observacoes']) ? $this->params['named']['observacoes'] : null
-                                              ));   
-                    */
-                    echo $form->input('destino_id',
-                                        array('empty' => 'Destinos',
-                                              'div' => array('class' => 'formSearchDiv'),
-                                              'class' => 'formSearchSelect',
-                                              'selected' => isset($this->params['named']['destino_id']) ? $this->params['named']['destino_id'] : null));   
-                ?>
+                    <?php
+                        echo $this->Form->input('destino_id',
+                                            array('empty' => 'Destinos',
+                                                  'div' => array('class' => 'formSearchDiv'),
+                                                  'class' => 'formSearchSelect',
+                                                  'selected' => isset($this->params['named']['destino_id']) ? $this->params['named']['destino_id'] : null));   
+                    ?>
                 <div class="formSearchDiv">
-                <?php
-                    echo $form->month(false,
-                                        isset($this->params['named']['month']) ? $this->params['named']['month'] : null,
-                                        array(__('monthNames',true),
-                                              'empty' => 'Mês',
-                                              'class' => 'formSearchSelect'));
-                ?>
+                    <?php
+                        echo $this->Form->month(false,
+                                            isset($this->params['named']['month']) ? $this->params['named']['month'] : null,
+                                            array(__('monthNames',true),
+                                                  'empty' => 'Mês',
+                                                  'class' => 'formSearchSelect'));
+                    ?>
                 </div>
                 <div class="formSearchDiv">
-                <?php
-                    echo $form->year(false,
-                                        $minYear = '2010',
-                                        $maxYear = '2010',
-                                        isset($this->params['named']['year']) ? $this->params['named']['year'] : null,
-                                        array('empty' => 'Ano',
-                                              'class' => 'formSearchSelect'));
-                ?>
+                    <?php
+                        echo $this->Form->year(false,
+                                            $minYear = '2010',
+                                            $maxYear = '2010',
+                                            isset($this->params['named']['year']) ? $this->params['named']['year'] : null,
+                                            array('empty' => 'Ano',
+                                                  'class' => 'formSearchSelect'));
+                    ?>
                 </div>
                 <input type="image" value="" class="botao" />
 
             </div>
         
         </div>
-        
-        <cake:nocache>
-        <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
-        
         
         <div class="balancoBotoesWraper">
 
@@ -143,49 +131,63 @@
         
         </div>
         
-        <ul id="list">
-            <?php
-                    foreach($groupPorData as $data){
-                    $num = count($data['registro']);
-                    $count = 1;
-            ?>
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
+        
+        <div class="registrosWraper">
             
-            <li class="registrosPorData">
-                <div class="groupdata">
-                <?php  echo $data['dia']; ?>
-                </div>
+            <?php   if(count($groupPorData) === 0){  ?>
+                <p class="semResgistrosMsg">
+                    Nenhum despesa registrada
+                </p>
+            <?php   } ?>
+            
+            <ul id="list">
+                <?php
+                        foreach($groupPorData as $data){
+                        $num = count($data['registro']);
+                        $count = 1;
+                ?>
                 
-                <?php   foreach($data['registro'] as $registro){  ?>
-                
-                <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="gasto-<?php echo $registro['Gasto']['id']; ?>">
-                    
-                    <div class="">
-                        <span class="valor">
-                        R$ <?php  echo $registro['Gasto']['valor']; ?>
-                        </span>
-                        <?php echo $registro['Destino']['nome']; ?>
+                <li class="registrosPorData">
+                    <div class="groupdata">
+                    <?php  echo $data['dia']; ?>
                     </div>
                     
-                    <?php echo $registro['Gasto']['observacoes']; ?>
+                    <?php   foreach($data['registro'] as $registro){  ?>
                     
-                    <div class="linksRegistros">
-                    <?php   echo $html->link('',
-                                        array('action' => 'edit', $registro['Gasto']['id'], time()),
-                                        array('class' => 'colorbox-edit editar')
-                                        ); ?> 
-                    <?php   echo $html->link('',
-                                         array('action' => 'delete', $registro['Gasto']['id'], time()),
-                                         array('class' => 'colorbox-delete excluir')
-                                         ); ?>
-                    </div>  
-                    
+                    <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="gasto-<?php echo $registro['Gasto']['id']; ?>">
                         
-                </div>
-                <?php   $count++;}   ?>
-            </li>
-            
-            <?php   }   ?>
-        </ul>
+                        <div class="">
+                            <span class="valor">
+                            R$ <?php  echo $registro['Gasto']['valor']; ?>
+                            </span>
+                            <?php echo $registro['Destino']['nome']; ?>
+                        </div>
+                        
+                        <?php echo $registro['Gasto']['observacoes']; ?>
+                        
+                        <div class="linksRegistros">
+                        <?php   echo $html->link('',
+                                            array('action' => 'edit', $registro['Gasto']['id'], time()),
+                                            array('class' => 'colorbox-edit editar')
+                                            ); ?> 
+                        <?php   echo $html->link('',
+                                             array('action' => 'delete', $registro['Gasto']['id'], time()),
+                                             array('class' => 'colorbox-delete excluir')
+                                             ); ?>
+                        </div>  
+                        
+                            
+                    </div>
+                    <?php   $count++;}   ?>
+                </li>
+                
+                <?php   }   ?>
+            </ul>
+        
+        </div>
         
         <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
         <div class="paging">

@@ -20,7 +20,7 @@
                 <h2>
                     <?php echo 'Lançamentos em um intervalo de 60 dias';?>
                 </h2>
-                <p style="font-size: 12px; margin: 10px 0; ">
+                <p class="painelHelp">
                     - Esta interface permite que você confirme os lançamentos, com vencimento até a data atual, com apenas um click.<br />
                     - Você também pode editar os registros para fazer qualquer alteração e só então confirmá-los.
                 </p>
@@ -44,8 +44,8 @@
             <?php   foreach($calendario as $keyAno => $ano){  ?>
                            
                 <?php   foreach($ano as $key => $mes){  ?>
-                            
-                    <div style="height: auto; overflow: hidden; padding-bottom: 15px; background-color: #FFF;">
+                        
+                        <div style="height: auto; overflow: hidden; padding-bottom: 15px; background-color: #FFF;">
                         
                         <?php if ( isset($ano[$key]['lista']) ){  ?>
                         <p style="font-size: 18px; font-family: Georgia; margin: 10px;">
@@ -71,40 +71,42 @@
                                         $count = 1;
                                 ?>
                                     
-                                    <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="registro-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
+                                    <div class="registros registrosPainel <?php if($count < $num) echo 'borda-inferior'; ?>" id="registro-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
                                         <div>
                                             
-                                            <span style="width: 100px;display: block;float: left;"><?php   echo $registros['tipo'];  ?></span>
-                                            <span style="width: 180px;display: block;float: left">
-                                                R$ <?php   echo $registros['valor'];  ?>
+                                            <span class="labelPainel">
+                                                <?php   echo $registros['label'];  ?>
                                             </span>
-                                            <span style="">
-                                            <?php   echo $registros['categoria'];  ?> 
-                                            </span>
+                                            <p class="agendamentoInfoLinha">
+                                                R$ <?= $registros['valor'];  ?> reais com
+                                                <span class="agendamentoCategoria">
+                                                    <?= $registros['categoria'];  ?>
+                                                </span>
+                                            </p>
                                             
                                         </div>
-                                        <?php   if( !empty($registros['obs']) ){  ?> 
-                                        <p style="margin-left: 100px; width: 30%;"><?php   echo $registros['obs'];  ?></p>
+                                        <?php   if( !empty($registros['obs']) ){  ?>
+                                        <p class="agendamentoInfoLinha">
+                                            <?php   echo $registros['obs'];  ?>
+                                        </p>
                                         <?php   }   ?>
                                         
                                         
-                                        <div class="links-registros-calendario" id="acoes-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
+                                        <div class="links-registros-calendario acoesPainel" id="acoes-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
                                         
                                             <?php   if($registros['dataFutura']){  ?>
-                                            <?php   echo $this->Html->link('CONFIRMAR',
-                                                                'javascript:;',
-                                                                array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')',
-                                                                      'class' => 'btnacoes')); ?>
+                                                <?php echo $this->Html->link('CONFIRMAR',
+                                                                    'javascript:;',
+                                                                    array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')',
+                                                                          'class' => 'btnacoes')); ?>
                                             <?php   }  ?>
                                                                       
                                             <?php   echo $this->Html->link('EDITAR',
                                                                 array('action' => 'edit',$registros['id'],$registros['tipo']),
-                                                                array('class' => 'colorbox-edit btneditar')
-                                                                ); ?> 
+                                                                array('class' => 'colorbox-edit btneditar')); ?> 
                                             <?php   echo $this->Html->link('EXCLUIR',
                                                                  array('action' => 'delete',$registros['id'],$registros['tipo']),
-                                                                 array('class' => 'colorbox-delete btnexcluir')
-                                                                 ); ?>
+                                                                 array('class' => 'colorbox-delete btnexcluir')); ?>
                                         
                                         </div>  
                                                

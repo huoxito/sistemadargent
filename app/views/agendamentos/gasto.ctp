@@ -10,7 +10,7 @@
         <div class="balancoBotoesWraper">
             <div class="balancoBotoes">
                 
-                <p>Despesa sd fadsfasf sadfasodf dofasdif asdfiaosdf oifasfosdafhsdbafk</p>
+                <p>Aqui você pode programar uma Despesa. Pode ser apenas um registro ou algo com várias parcelas.</p>
                 
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('AGENDAR FATURAMENTO',
@@ -28,6 +28,10 @@
             </div>
             
         </div>
+        
+        <cake:nocache>
+        <?php   echo $this->Session->flash(); ?>
+        </cake:nocache>
         
         <div class="formWraper">
         
@@ -80,7 +84,7 @@
             
             </fieldset>
             
-            <?php echo $form->end('Continuar');?>
+            <?php echo $form->end('Agendar');?>
         </div>
         
     </div>

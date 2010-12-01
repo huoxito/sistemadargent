@@ -1,31 +1,23 @@
 <?php
 class FontesController extends AppController {
     
-	var $helpers = array('Html', 'Form');
+    var $name = "Fontes";
     var $components = array('Data','Valor');
     
 	function index() {
         
-		$this->Fonte->recursive = -1;
-        $params = array('fields' => array('Fonte.nome','Fonte.id','Fonte.modified'),
-                        'conditions' => array('Fonte.usuario_id' => $this->Auth->user('id')),
-                        'order' => array('created' => 'asc')
-        );
+		$this->Fonte->recursive = -1;        
+        $this->paginate = array('limit' => 15,
+                                'order' => array('created' => 'asc'),
+                                'conditions' => array('Fonte.usuario_id' => $this->Auth->user('id')));
+        $itens = $this->paginate('Fonte');
         
-        $itens = $this->Fonte->find('all',$params);
-        if(count($itens)>0){
-            $this->set('numRegistros',count($itens));
-        }
-        
-        # pego o total de ganhos já cadastrados
+        # total de faturamento inserido pra gerar porcentagem da categoria
         $total =  $this->Fonte->Ganho->find('all',
-                                        array(
-                                            'fields' => array('SUM(valor) AS total'),
-                                            'conditions' => array('usuario_id' => $this->Auth->user('id'),
-                                                                  'status' => 1),
-                                            'recursive' => -1
-                                            )
-                                        );
+                                        array('fields' => array('SUM(valor) AS total'),
+                                              'conditions' => array('usuario_id' => $this->Auth->user('id'),
+                                                                    'status' => 1),
+                                              'recursive' => -1));
         $total = $total[0][0]['total'];
         if(empty($total)){
             $total = 1;
@@ -36,25 +28,26 @@ class FontesController extends AppController {
         
         foreach($itens as $key => $item){
             
-            $totalC = $this->Fonte->Ganho->find('all',array(
-                                                'fields' => array('SUM(Ganho.valor) AS total_categoria'),
-                                                'conditions' => array('usuario_id' => $this->Auth->user('id'),
-                                                                      'status' => '1',
-                                                                      'fonte_id' => $item['Fonte']['id']),
-                                                'recursive' => -1));
+            $totalC = $this->Fonte->Ganho->find('all',
+                                        array('fields' => array('SUM(Ganho.valor) AS total_categoria'),
+                                              'conditions' => array('usuario_id' => $this->Auth->user('id'),
+                                                                    'status' => '1',
+                                                                    'fonte_id' => $item['Fonte']['id']),
+                                              'recursive' => -1));
             
             # cálculo da porcentagem
             $calculo = 100 * (int)$totalC[0][0]['total_categoria'] / (int)$total;
             $item['Fonte']['porcentagem'] = $this->Valor->formata( $calculo ,'humano');
-            $item['Fonte']['modified'] = $this->Data->formata($item['Fonte']['modified'],'completa');
             $objPorcentagem[] = $calculo;
             
+            # pego o último registro
             $registro = $this->Fonte->Ganho->find('first',
-                                                  array('fields' => array('valor','datadabaixa','observacoes'),
-                                                        'conditions' => array('fonte_id' => $item['Fonte']['id'],
-                                                                              'status' => 1),
-                                                        'order' => 'datadabaixa desc',
-                                                        'recursive' => -1));
+                                            array('fields' => array('valor','datadabaixa','observacoes'),
+                                                  'conditions' => array('fonte_id' => $item['Fonte']['id'],
+                                                                        'status' => 1),
+                                                  'order' => 'datadabaixa desc',
+                                                  'recursive' => -1));
+            
             if(!empty($registro['Ganho']['datadabaixa'])){
                 $registro['Ganho']['datadabaixa'] = $this->Data->formata($registro['Ganho']['datadabaixa'],'porextenso');
                 $itens[$key] = array_merge($item,$registro);
@@ -63,7 +56,6 @@ class FontesController extends AppController {
             }
         }
         
-
         arsort($objPorcentagem);
         $this->set('porcentagens', $objPorcentagem);
 		$this->set('fontes', $itens);
@@ -82,14 +74,14 @@ class FontesController extends AppController {
                 $this->Fonte->create();
                 $this->Fonte->set('usuario_id', $this->Auth->user('id'));
                 if ($this->Fonte->save($this->data)) {
-                    $this->Session->setFlash(__('A Fonte foi salva!', true));
+                    $this->Session->setFlash('A Fonte foi salva!', 'flash_success');
                     $this->redirect(array('action'=>'index'));
                 } else {
                     $this->Session->setFlash('Preencha o campo obrigatório', 'flash_error');
                 }
             
             }else{
-                $this->Session->setFlash(__('Fonte já cadastrada', true));
+                $this->Session->setFlash(__('Fonte já cadastrada', 'flash_error'));
             }
 		}
 	}  
@@ -105,8 +97,6 @@ class FontesController extends AppController {
         
         # permissão do usuário
         $this->checkPermissao($this->data['Fonte']['usuario_id']);
-        
-        $this->set('id',$id);
         $this->layout = 'colorbox';
 	}
     
@@ -115,35 +105,31 @@ class FontesController extends AppController {
         if( $this->params['isAjax'] ){
             
             $this->Fonte->recursive = -1;
-            $chk = $this->Fonte->read(array('Fonte.usuario_id'),$this->params['url']['id']);
-            # permissão do usuário
+            $chk = $this->Fonte->find('first',array('conditions' => array('id' => $this->params['url']['id'])));
             if( $this->checkPermissao($chk['Fonte']['usuario_id'],true) ){
                 
-                $chkFonteExiste = $this->Fonte->find('count', array('conditions' =>
-                                                                array('Fonte.nome' => $this->params['url']['nome'],
-                                                                      'Fonte.id !=' => $this->params['url']['id'],
-                                                                      'Fonte.usuario_id' => $this->Auth->user('id'))
-                                                               ));
-                if($chkFonteExiste == 0){
+                $chkFonteExiste = $this->Fonte->find('count',
+                                            array('conditions' =>
+                                                array('Fonte.nome' => $this->params['url']['nome'],
+                                                      'Fonte.id !=' => $this->params['url']['id'],
+                                                      'Fonte.usuario_id' => $this->Auth->user('id'))));
+                if($chkFonteExiste === 0){
                     
-                    $this->data['Fonte']['nome'] = $this->params['url']['nome'];
                     $this->Fonte->id = $this->params['url']['id'];
-                    if ( $this->Fonte->save($this->data) ) {
-                        echo $this->params['url']['nome'];
+                    if ( $this->Fonte->saveField('nome',$this->params['url']['nome'],true) ) {
+                        $this->data = $this->Fonte->read(null,$this->params['url']['id']);
                         $this->layout = 'ajax';
                     } else {
-                        echo 'validacao';
+                        echo 'validacao'; exit;
                     }
                 }else{
-                    echo 'existe';
+                    echo 'existe'; exit;
                 }
                 
             }else{
-                # registro não pertence ao usuário
-                echo 'error';
+                echo 'error'; exit;
             }
         }
-        $this->autoRender = false;
     }
 
 	function delete($id = null) {
@@ -152,8 +138,10 @@ class FontesController extends AppController {
             $id = $this->params['url']['id'];
         }
         
-        $this->Fonte->recursive = -1;
-        $itens = $this->Fonte->read(array('id,usuario_id,nome'), $id);
+        $itens = $this->Fonte->read(null, $id);
+        if(isset($itens['Ganho']['0'])){
+            $this->cakeError('error404');
+        }
         
         # permissão do usuário
         $this->checkPermissao($itens['Fonte']['usuario_id']);
@@ -166,10 +154,34 @@ class FontesController extends AppController {
             $this->autoRender = false;
         }else{
             
-            //$itens['Fonte']['nome'] = $this->Data->formata($itens['Gasto']['datadabaixa'],'porextenso');
             $this->set('itens',$itens);    
             $this->layout = 'colorbox';
         }
 	}
+    
+    
+    function mudarStatus(){
+        
+        if( !isset($this->params['url']['id']) ){
+            $this->cakeError('error404');
+        }else{
+        
+            $this->Fonte->recursive = -1;
+            $item = $this->Fonte->read(null,$this->params['url']['id']);
+            if ( $this->checkPermissao($item['Fonte']['usuario_id']) ){
+                
+                if($this->params['url']['action']){
+                    $status = 1;
+                }else{
+                    $status = 0;
+                }
+                
+                $this->Fonte->saveField('status',$status);
+                $this->set(array('id' => $this->params['url']['id'], 'status' => $status));
+                $this->layout = 'ajax';
+            }
+        }
+    }
+    
 }
 ?>

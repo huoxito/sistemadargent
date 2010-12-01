@@ -1,21 +1,28 @@
+    
+    <?php //echo $this->element('sql_dump'); ?>
+    
     <div>
         
-        <span style="width: 100px;display: block;float: left;"><?php   echo $_Model;  ?></span>
-        <span style="width: 180px;display: block;float: left">
-            R$ <?php   echo $registros[$_Model]['valor'];  ?>
+        <span class="labelPainel">
+            <?php   echo $label;  ?>
         </span>
-        <span style="">
-        <?php   echo $registros[$_Categoria]['nome'];  ?> 
-        </span>
+        <p class="agendamentoInfoLinha">
+            R$ <?= $registros[$_Model]['valor'];  ?> reais com
+            <span class="agendamentoCategoria">
+                <?= $registros[$_Categoria]['nome'];  ?>
+            </span>
+        </p>
         
     </div>
     
     <?php   if( !empty($registros[$_Model]['observacoes']) ){  ?> 
-    <p style="margin-left: 100px;"><?php   echo $registros[$_Model]['observacoes'];  ?></p>
+    <p class="agendamentoInfoLinha">
+        <?php   echo $registros[$_Model]['observacoes'];  ?>
+    </p>
     <?php   }   ?>
     
-    <p style="margin-left: 100px;" class="registro-atualizado">
-        Registro atualizado ! 
+    <p class="agendamentoInfoLinha agendamentoProxLancamento">
+        Registro Confirmado ! 
         
         <?php   if( isset($dataAlterada) ){  ?> 
         Vencimento alterado para <?php   echo $dataAlterada;  ?></p>
@@ -23,19 +30,12 @@
     </p>
     
     
-    <div class="links-registros-calendario" id="acoes-<?php echo $_Model; ?>-<?php echo $registros[$_Model]['id']; ?>">
-        <?php   echo $html->link(__('CONFIRMAR', true),
+    
+    <div class="links-registros-calendario acoesPainel" id="acoes-<?php echo $_Model; ?>-<?php echo $registros[$_Model]['id']; ?>">
+        <?php   echo $html->link(__('CANCELAR', true),
                             'javascript:;',
-                            array('onclick' => 'confirmar('.$registros[$_Model]['id'].',\''.$_Model.'\')',
+                            array('onclick' => "cancelar(".$registros[$_Model]['id'].",'".$_Model."')",
                                   'class' => 'btnacoes')); ?>
-        <?php   echo $html->link(__('EDITAR', true),
-                            array('action' => 'edit',$registros[$_Model]['id'],$_Model),
-                            array('class' => 'colorbox-edit btneditar')
-                            ); ?> 
-        <?php   echo $html->link(__('DELETAR', true),
-                             array('action' => 'delete',$registros[$_Model]['id'],$_Model),
-                             array('class' => 'colorbox-delete btnexcluir')
-                             ); ?>
     </div>  
         
     <script type="text/javascript">

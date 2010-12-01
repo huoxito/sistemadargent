@@ -31,31 +31,29 @@
 </head>
 <body>
     
-    
     <div id="container">
-            
             <div id="header">
-                
                 <div id="logo">
-                    <a href="<?php echo $html->url('/'); ?>" title="home">
-                            <img src="<?php echo $html->url('/'); ?>img/logo.gif" alt="dargent logo" width="321" height="99" />
+                    <a href="<?php echo $this->Html->url('/'); ?>" title="home">
+                        <?php echo $this->Html->image('logo.gif',
+                                                array('width' => '321',
+                                                      'height' => '99',
+                                                      'alt' => 'dargent logo')); ?>
                     </a>
                 </div>
-            
                 <div id="user">
-                
                     <h1>
                         Minha Conta
                         <?php   echo $this->Session->flash('auth'); ?>
                     </h1>
                     
-                    <?php    echo $form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
+                    <?php   echo $form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
                     <div class="login" style="margin: 0 20px 0 10px;">
                         <?php echo $form->input('login',
                                             array('class' => 'l-nome',
                                                   'div' => false,
                                                   'maxlength' => '20',
-                                                  'label' => 'Usuário: ')); ?>
+                                                  'label' => 'Login: ')); ?>
                     </div>
                     
                     <div class="login">
@@ -74,49 +72,31 @@
                         <?php   echo  $this->Html->link('Esqueceu sua senha?',
                                             array('controller' => '/',
                                                   'action' => 'enviarSenha'));  ?>
-                        <a href="#"></a>
                     </p>
-                
                 </div>
         
             </div>
     
         <div id="content">
-            
-            <?php   echo $content_for_layout; ?>
-            
+            <?php   echo $content_for_layout; ?> 
         </div>
         
     </div>
     
     <div id="footer">
-    	
         <div id="menu_footer">
-        
-        <!--<div class="footer-redes">
-        
-        	<a href="#" class="icone tweet"></a>
-            <a href="#" class="icone facebook"></a>
-        
-        </div>-->
-        
-		<ul class="m-footer">
-            
+            <ul class="m-footer">
 				<li></li>
                 <li><a href="#">Quem Somos</a></li>
             	<li>|</li>
     			<li><a href="#">Ajuda</a></li>
                 <li>|</li>
                 <li><a href="#">Fale conosco</a></li>
-            
             </ul>
         </div>
   		<p>Copyright © 2010 Dargent controle financeiro. Todos os direitos reservados</p>
-        
     </div>
-
 </div>	
-    
     
 <?php //echo $this->element('sql_dump'); ?>
 <?php echo $js->writeBuffer(); // Write cached scripts ?>

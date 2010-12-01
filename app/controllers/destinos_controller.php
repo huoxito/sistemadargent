@@ -1,31 +1,22 @@
 <?php
 class DestinosController extends AppController {
 
-	var $helpers = array('Html', 'Form');
     var $components = array('Data','Valor');
     
 	function index() {
         
 		$this->Destino->recursive = -1;
-        $params = array('fields' => array('Destino.nome','Destino.id','Destino.modified'),
-                        'conditions' => array('Destino.usuario_id' => $this->Auth->user('id')),
-                        'order' => array('created' => 'asc')
-        );
-        
-        $itens = $this->Destino->find('all',$params);
-        if(count($itens)>0){
-            $this->set('numRegistros',count($itens));
-        }
+        $this->paginate = array('limit' => 15,
+                                'order' => array('created' => 'asc'),
+                                'conditions' => array('Destino.usuario_id' => $this->Auth->user('id')));
+        $itens = $this->paginate('Destino');
         
         # pego o total de gastos já cadastrados
         $total =  $this->Destino->Gasto->find('all',
-                                        array(
-                                            'fields' => array('SUM(valor) AS total'),
-                                            'conditions' => array('usuario_id' => $this->Auth->user('id'),
-                                                                  'status' => 1),
-                                            'recursive' => -1
-                                            )
-                                        );
+                                    array('fields' => array('SUM(valor) AS total'),
+                                          'conditions' => array('usuario_id' => $this->Auth->user('id'),
+                                                                'status' => 1),
+                                          'recursive' => -1));
         $total = $total[0][0]['total'];
         if(empty($total)){
             $total = 1;
@@ -80,10 +71,10 @@ class DestinosController extends AppController {
                 $this->Destino->create();
                 $this->Destino->set('usuario_id', $this->Auth->user('id'));
                 if ($this->Destino->save($this->data)) {
-                    $this->Session->setFlash(__('Destino salvo com sucesso.', true));
+                    $this->Session->setFlash('Destino salvo com sucesso.','flash_success');
                     $this->redirect(array('action'=>'index'));
                 } else {
-                    $this->Session->setFlash('The Destino could not be saved. Please, try again.', 'flash_error');
+                    $this->Session->setFlash('Preencha o campo corretamente', 'flash_error');
                 }
             
             }else{
@@ -118,31 +109,27 @@ class DestinosController extends AppController {
             # permissão do usuário
             if( $this->checkPermissao($chk['Destino']['usuario_id'],true) ){
                 
-                $chkFonteExiste = $this->Destino->find('count', array('conditions' =>
-                                                                array('Destino.nome' => $this->params['url']['nome'],
-                                                                      'Destino.id !=' => $this->params['url']['id'],
-                                                                      'Destino.usuario_id' => $this->Auth->user('id'))
-                                                               ));
+                $chkFonteExiste = $this->Destino->find('count',
+                                            array('conditions' =>
+                                                    array('Destino.nome' => $this->params['url']['nome'],
+                                                          'Destino.id !=' => $this->params['url']['id'],
+                                                          'Destino.usuario_id' => $this->Auth->user('id'))));
                 if($chkFonteExiste == 0){
                     
-                    $this->data['Destino']['nome'] = $this->params['url']['nome'];
                     $this->Destino->id = $this->params['url']['id'];
-                    if ( $this->Destino->save($this->data) ) {
-                        echo $this->params['url']['nome'];
+                    if ( $this->Destino->saveField('nome', $this->params['url']['nome'], true) ) {
+                        $this->data = $this->Destino->read(null,$this->params['url']['id']);
                         $this->layout = 'ajax';
                     } else {
-                        echo 'validacao';
+                        echo 'validacao'; exit;
                     }
                 }else{
-                    echo 'existe';
+                    echo 'existe'; exit;
                 }
-                
             }else{
-                # registro não pertence ao usuário
-                echo 'error';
+                echo 'error';   exit;
             }
         }
-        $this->autoRender = false;
     }
 
 	function delete($id = null) {
@@ -151,8 +138,10 @@ class DestinosController extends AppController {
             $id = $this->params['url']['id'];
         }
         
-        $this->Destino->recursive = -1;
-        $itens = $this->Destino->read(array('id,usuario_id,nome'), $id);
+        $itens = $this->Destino->read(null, $id);
+        if(isset($itens['Gasto']['0'])){
+            $this->cakeError('error404');
+        }
         
         # permissão do usuário
         $this->checkPermissao($itens['Destino']['usuario_id']);
@@ -165,11 +154,35 @@ class DestinosController extends AppController {
             $this->autoRender = false;
         }else{
             
-            //$itens['Destino']['nome'] = $this->Data->formata($itens['Gasto']['datadabaixa'],'porextenso');
             $this->set('itens',$itens);    
             $this->layout = 'colorbox';
         }
 	}
+    
+    
+    function mudarStatus(){
+        
+        if( !isset($this->params['url']['id']) ){
+            $this->cakeError('error404');
+        }else{
+        
+            $this->Destino->recursive = -1;
+            $item = $this->Destino->read(null,$this->params['url']['id']);
+            if ( $this->checkPermissao($item['Destino']['usuario_id']) ){
+                
+                if($this->params['url']['action']){
+                    $status = 1;
+                }else{
+                    $status = 0;
+                }
+                
+                $this->Destino->saveField('status',$status);
+                $this->set(array('id' => $this->params['url']['id'], 'status' => $status));
+                $this->layout = 'ajax';
+            }
+        }
+    }
+    
 
 }
 ?>

@@ -4,28 +4,6 @@ class Usuario extends AppModel {
 
     var $name = 'Usuario';
     var $actsAs = array(
-        'MeioUpload.MeioUpload' =>
-            array('foto' =>
-                    array('allowedMime' => array('image/jpeg'),
-                          'allowedExt' => array('.jpg', '.jpeg'),
-                          'thumbnails' => true,
-                          'thumbsizes' =>
-                                array(  'topo' =>
-                                                array('width' => 70,
-                                                      'height' => 70,
-                                                      'maxDimension' => 'h'),
-                                        'gerenciador' =>
-                                                array('width' => 150,
-                                                      'height' => 120,
-                                                      'maxDimension' => 'w')
-                                    ),
-                            'length' =>
-                                array(  'minWidth' => 150, // 0 for not validates
-                                        'maxWidth' => 0,
-                                        'minHeight' => 120,
-                                        'maxHeight' => 0),
-                        )
-            ),
         'Acl' => array('type' => 'requester')
     );
     
@@ -80,47 +58,24 @@ class Usuario extends AppModel {
         parent::__construct();
         
         $this->validate = array(
-        
-            'foto'  => array(
-
-                'rule1' => array(
-                        'rule'  => array('isUploadedFile'),
-                        'last'  => true,
-                        'message' => false,
-                        'allowEmpty' => true,
-                ),
-                'formato' => array(
-                        'rule' => array('extension', array('jpg')),
-                        'message' => 'Foto deve estar no formato .jpg'
-                ),
-                'tamanho' => array(
-                        'rule' => array('maxSize'),
-                        'message' => 'Foto deve conter no máximo 1 MG'
-                ),
-            ),
-            
-            
+                    
             'nome' => array(
                             'rule' => 'notEmpty',
                             'message' => 'Campo obrigatório',
-                            'allowEmpty' => false,
-                            ),
-            
+                            'allowEmpty' => false
+            ),
             'email' => array(
                 'invalido' => array(
                              'rule' => 'email',
-                             'message' => 'Insira um email válido'
-                             ),
+                             'message' => 'Insira um email válido'),
                 'rule2' => array(
                              'rule' => 'notEmpty',
                              'message' => 'Campo obrigatório',
                              'last' => true,
-                             'allowEmpty' => false,
-                             ),
+                             'allowEmpty' => false),
                 'existe' => array(       
                     'rule' => 'isUnique',
-                    'message' => 'Email já cadastrado'
-                ),
+                    'message' => 'Email já cadastrado'),
             ),
             
             'login' => array(
@@ -129,26 +84,22 @@ class Usuario extends AppModel {
                     'required'  =>  false,
                     'message' => 'Campo obrigatório',
                     'last' => true,
-                    'allowEmpty' => false,
-                ),
+                    'allowEmpty' => false),
                 'existe' => array(       
                     'rule' => 'isUnique',
-                    'message' => 'Login já cadastrado, digite outro por favor'
-                ),
+                    'message' => 'Login já cadastrado, digite outro por favor'),
             ),
             
             'passwd' => array(
                 'numero' => array(
                             'rule' => array('between', 5, 15),
-                            'message' => 'Deve conter entre 5 e 15 caracteres'
-                ),
+                            'message' => 'Deve conter entre 5 e 15 caracteres'),
                 'rule2' => array(
                            'rule' => 'notEmpty',
                                 'last' => true,
                                 'message' => 'Campo obrigatório',
                                 'required' => false,
-                                'allowEmpty' => false,
-                ),
+                                'allowEmpty' => false),
             
             ),
             
@@ -159,12 +110,10 @@ class Usuario extends AppModel {
                     'required' => false,
                     'message' => 'Campo obrigatório',
                     'last' => true,
-                    'allowEmpty' => false
-                )  
-                ,'rule2' => array(
+                    'allowEmpty' => false),
+                'rule2' => array(
                     'rule' => 'confereSenha',
-                    'message' => 'Senha incorreta'
-                ),
+                    'message' => 'Senha incorreta'),
                 
             ),
         
@@ -173,14 +122,12 @@ class Usuario extends AppModel {
                 'match' => array(     
                     'rule'  =>  'validatePasswdConfirm',
                     'message' => 'As senhas não conferem',
-                    'required' => false
-                ),
+                    'required' => false),
                 'rule2' => array(
                     'rule' => 'notEmpty',
                     'last' => true,
                     'message' => 'Campo obrigatório',
-                    'allowEmpty' => false,
-                ),
+                    'allowEmpty' => false),
             )
             
         );
@@ -238,17 +185,7 @@ class Usuario extends AppModel {
         {  
             unset($this->data['Usuario']['passwd_confirm']);  
         }
-        
-        /*
-        if (isset($this->data['Usuario']['foto']))  
-        {  
-            App::import('Component', 'FileUpload');
-            $fileUpload = new FileUploadComponent();
-            $nomeArquivo = $fileUpload->criaNome($this->data['Usuario']['foto']['name'], 'usuarios');
-            $fileUpload->moveArquivo($this->data['Usuario']['foto']['tmp_name'], $nomeArquivo, 'usuarios/');
-            $this->data['Usuario']['foto'] = $nomeArquivo;
-        }
-        */
+
         return true;  
     }
     
@@ -265,18 +202,6 @@ class Usuario extends AppModel {
         }
     }
     
-    // Based on comment 8 from: http://bakery.cakephp.org/articles/view/improved-advance-validation-with-parameters
-    function isUploadedFile($params){
-        
-        $val = array_shift($params);
-        if ((isset($val['error']) && $val['error'] == 0) || (!empty( $val['tmp_name']) && $val['tmp_name'] != 'none')) {
-            return is_uploaded_file($val['tmp_name']);
-        }else{
-            //return false;
-        }
-        
-    }
-    
     function maxSize($params){
         $val = array_shift($params);
         if($val['size'] > 2097152){
@@ -288,13 +213,12 @@ class Usuario extends AppModel {
     
     function createStatement($data)
     {
-        
         $statement = array();
         if(isset($data['email']))
         {
           array_push($statement, array("{$this->name}.email LIKE" => '%' . $data['email'] . '%'));
         }
-   
+        
         return $statement;
     }
     

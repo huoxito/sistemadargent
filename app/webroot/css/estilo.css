@@ -18,7 +18,7 @@ body
 html { 
 	background-color:#f3f3f3;
 }
-	
+
 #header {
 	height:auto;
 	overflow: hidden;
@@ -402,6 +402,13 @@ div.form, div.index, div.view {
 	background-color:#fff;
 }
 
+.categorias {
+	margin: 0 5px;
+}
+.categoriasWraper, .registrosWraper {
+	background-color:#fff;
+}
+
 #relatorioRapido {
 	float:left;
 	height:20px;
@@ -503,7 +510,7 @@ div.form, div.index, div.view {
 
 .registros {
 	text-align: left;
-	min-height:15px;
+	min-height:20px;
 	padding:12px 0 10px 10px;
 	position:relative;
 	color: #555;
@@ -557,12 +564,17 @@ span.valor {
 	display: block;
 	float: left;
 	color: #000;
+	text-transform: uppercase;
 }
 
 .categ-actions {
-	margin:-16px 0 5px 0;
+	margin:-25px 0 5px 0;
 	float: right;
 	text-align: right;
+}
+
+.categ-actions img {
+	float: left;
 }
 
 .links-registros-calendario {
@@ -691,7 +703,8 @@ label
 	background-color:#8BC243;
 	padding:6px;
 	border:0px;
-	color:#FFF
+	color:#FFF;
+	margin-right: 10px;
 }
 .submit input:hover
 {
@@ -700,6 +713,10 @@ label
 	border:0px;
 	cursor:pointer;
 	color:#FFF
+}
+
+.submit img {
+	margin-left: 20px;
 }
 
 .btnadd, .btnaddcategoria, .btneditar, .btnacoes, .btnexcluir, .btnsair, .btnminhaconta {
@@ -814,12 +831,21 @@ fieldset fieldset {
 }
 
 div.flash {
-	background:none repeat scroll 0 0 #C73E14;
 	clear:both;
-	color:#FFFFFF;
-	font-size:109%;
+	font-size:14px;
 	font-weight:bold;
 	padding:6px 5%;
+	background-color:#FFFFFF;
+	border-top:1px solid #E9E9E9;
+	border-bottom:1px solid #E9E9E9;
+}
+
+div.flash_success {
+	color: #3075BA;
+}
+
+div.flash_error {
+	color: #E3290D;
 }
 
 span.userInfoLabel, span.tipoAgendamentoLabel {
@@ -871,7 +897,7 @@ input.btnaddcategoria {
 
 input[type=text], input[type=password] {
 	padding: 5px;
-	width: 120px;
+	width:210px;
 }
 
 /** Tables **/
@@ -938,10 +964,15 @@ table .altrow td {
 .confirmaAgendamento {
 	float: none;
 }
-#datepicker {
+.datepickerWraper {
 	float: left;
 	width:212px;
-	margin:20px 15px 30px;
+	margin:0 15px 0;
+}
+#datepicker {
+	float: left;
+	width: 212px;
+	height: 173px;
 }
 .confirmarBox {
 	float:left;
@@ -957,7 +988,6 @@ table .altrow td {
 	
 }
 
-
 .dataField, .dateFieldAhead {
 	width: 120px !important;
 }
@@ -972,6 +1002,10 @@ table .altrow td {
 	padding: 20px;
 }
 
+.formBox div.submit {
+	clear: both;
+}
+
 .labelBoxForm {
 	text-transform:uppercase;
 	background-color:#F2FFE3;
@@ -980,6 +1014,10 @@ table .altrow td {
 	padding:5px 30px;
 	margin: 0 20px -20px 0;
 	float: right;
+}
+
+.inputsRight {
+	float: left;
 }
 
 .inputBoxWraper {
@@ -995,6 +1033,13 @@ table .altrow td {
 	margin:5px 0;
 }
 
+.dataAmigavel {
+	display:block;
+	font-size: 14px;
+	padding:5px 0;
+	text-align: center;
+	clear: both;
+}
 
 textarea {
 	height:90px;
@@ -1018,4 +1063,44 @@ textarea {
 	font-weight:bold;
 	padding:50px 0 70px;
 	text-align:center;
+}
+
+
+
+.labelPainel {
+	color:#508501;
+	display:block;
+	float: left;
+	width: 130px;
+}
+
+.registrosPainel {
+	padding:5px 0 3px 10px;
+	min-height: 37px;
+}
+
+.acoesPainel {
+	margin:-25px 20px 0 0;
+}
+
+p.painelHelp {
+	font-size: 12px;
+	margin: 10px 0; 
+}
+
+.ajaxResponseCategorias {
+	color: #3075BA;
+	margin:5px 0;
+	max-width: 200px;
+	text-transform: none;
+}
+
+.ajax_error_response {
+	color: #E3290D;
+}
+
+.confirmacao {
+	font-size: 14px;
+	display: block;
+	margin: 10px 0;
 }

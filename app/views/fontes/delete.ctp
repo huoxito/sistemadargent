@@ -1,34 +1,28 @@
-    
+    <?php //echo $this->element('sql_dump'); ?>    
 
-    <div class="agendamentos box" id="box">
+    <div class="agendamentos formBox">
     
-        <p class="confirmacao">Você realmente deseja excluir essa categoria >> <b><?php echo $itens['Fonte']['nome']; ?></b>  ?</p>
-        <span style="font-size: 12px; display: block; margin: 0 0 20px; color:red; ">
-            Ao excluir essa categoria você também removerá todos os dados no sistema relacionados a ela ( faturamentos e agendamentos ). Essa ação não poderá ser revertida.
-        </span>
-
+        <span class="confirmacao">Você realmente deseja excluir essa categoria <b><?php echo $itens['Fonte']['nome']; ?></b>  ?</span>
         <?php
-            echo $form->create('Fonte',array('default' => false));
-            echo $form->end(array('label' => 'Excluir',
+            echo $this->Form->create('Fonte',array('default' => false));
+            echo $this->Form->end(array('label' => 'Excluir',
                                        'onclick' => 'excluir('.$itens['Fonte']['id'].');',
-                                        'style' => 'float: left;',
-                                        'div' => array('style' => "padding: 0;"),
-                                        'after' => ' <input type="submit" style="float: left;margin-left: 5px;" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />'));
+                                        'style' => 'float: left;'));
         ?>
         
     </div>
+    
+    <?= $this->Html->script('forms'); ?>
     
     <script type="text/javascript">
         // <![CDATA[
         
             function excluir(id){
                 $.ajax({
-                        url: '<?php echo $html->url(array("controller" => "fontes","action" => "delete"));?>',
-                        cache: false,
-                        type: 'GET',
+                        url: '<?php echo $this->Html->url(array("controller" => "fontes","action" => "delete"));?>',
                         data: 'id=' + id,
                         beforeSend: function(){
-                            $('.submit').append('<img style="float: left; margin-left: 15px;" src="../../<?php echo IMAGES_URL;?>ajax-loader.gif" title="excluindo ... " alt="excluindo ... " />');
+                            $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                         },
                         success: function(result){
                         

@@ -5,14 +5,7 @@ class GanhosController extends AppController {
     var $components = array('Data', 'Valor');
 
     function index($mes=null,$ano=null) {
-        
-        $fields = array('Ganho.id',
-                        'Ganho.valor',
-                        'Ganho.datadabaixa',
-                        'Ganho.modified',
-                        'Fonte.nome',
-                        'Ganho.observacoes');
-        
+                
         # filtros por mês e ano do menu de relatório rápidos
         if(!empty($this->params['pass'][0]) && !empty($this->params['pass'][1])){
             
@@ -20,11 +13,8 @@ class GanhosController extends AppController {
                 'conditions' => array('MONTH(datadabaixa)' => $this->params['pass'][0],
                                       'YEAR(datadabaixa)' => $this->params['pass'][1],
                                       'Ganho.usuario_id' => $this->Auth->user('id'),
-                                      'Ganho.status' => 1
-                                      ),
-                'fields' => $fields,
-                'order' => array('Ganho.datadabaixa' => 'desc', 'Ganho.modified' => 'desc')
-            );
+                                      'Ganho.status' => 1),
+                'order' => array('Ganho.datadabaixa' => 'desc', 'Ganho.modified' => 'desc'));
             
             $mesRelatorio = (int)$this->params['pass'][0]; 
             if(!empty($mesRelatorio)){
@@ -37,24 +27,19 @@ class GanhosController extends AppController {
             
             $this->loadModel('Gasto');
             $totalG =  $this->Gasto->find('all',
-                                            array(
-                                                'fields' => array('SUM(valor) AS total'),
-                                                'conditions' => array('MONTH(datadabaixa)' => $this->params['pass'][0],
-                                                                    'YEAR(datadabaixa)' => $this->params['pass'][1],
-                                                                    'usuario_id' => $this->Auth->user('id'),
-                                                                    'status' => 1),
-                                                'recursive' => -1
-                                                )
-                                            );
+                                    array('fields' => array('SUM(valor) AS total'),
+                                          'conditions' => array('MONTH(datadabaixa)' => $this->params['pass'][0],
+                                                                'YEAR(datadabaixa)' => $this->params['pass'][1],
+                                                                'usuario_id' => $this->Auth->user('id'),
+                                                                'status' => 1),
+                                          'recursive' => -1));
         }else{
             
             $this->paginate = array(
                     'conditions' => array('Ganho.status' => 1,
                                           'Ganho.usuario_id' => $this->Auth->user('id')),
                     'limit' => 15,
-                    'fields' => $fields,
-                    'order' => array('Ganho.datadabaixa' => 'desc', 'Ganho.modified' => 'desc')
-            );
+                    'order' => array('Ganho.datadabaixa' => 'desc', 'Ganho.modified' => 'desc'));
             
             $objMeses = $this->Data->listaULtimosMeses(7);
             // Nettoyage de la saisie
@@ -93,18 +78,11 @@ class GanhosController extends AppController {
             if( $item['Ganho']['datadabaixa'] != $dataTemp ){
                 
                 $groupPorData[] = array('dia' => $dataTemp,
-                                        'registro' => $registrosDoDia
-                                );
-                
+                                        'registro' => $registrosDoDia);
                 unset($registrosDoDia);
-
-                # começo novamente a inserir registros
-                $registrosDoDia[] = $item;
-                
-            }else{
-                $registrosDoDia[] = $item;    
             }
-            
+            # começo novamente a inserir registros
+            $registrosDoDia[] = $item;
             $dataTemp = $item['Ganho']['datadabaixa'];
         }
         
@@ -112,12 +90,10 @@ class GanhosController extends AppController {
             # insiro o último registro após o final do loop
             $groupPorData[] = array('dia' => $dataTemp,
                                     'registro' => $registrosDoDia,
-                                    'borda' => 'insere'
-                                );
+                                    'borda' => 'insere');
         }
         
         $this->set('groupPorData', $groupPorData);
-        
         #   pego total listado na página
         $total = $this->Valor->soma($ganhos, 'Ganho');
         if($total > 0){
@@ -146,10 +122,9 @@ class GanhosController extends AppController {
         }
         
         $fontes = $this->Ganho->Fonte->find('list',
-                                                array('conditions' =>
-                                                      array('status' => 1,
-                                                            'usuario_id' => $this->Auth->user('id')))
-                                            );
+                                array('conditions' =>
+                                      array('status' => 1,
+                                            'usuario_id' => $this->Auth->user('id'))));
         $this->set(compact('fontes'));
         $this->set('objMeses', $objMeses);
         $this->set('title_for_layout', 'Faturamentos');
@@ -168,7 +143,7 @@ class GanhosController extends AppController {
             $this->Ganho->create();
             $this->Ganho->set('usuario_id', $this->Auth->user('id'));
             if ($this->Ganho->save($this->data)) {
-                $this->Session->setFlash(__('Registro salvo com sucesso!', true));
+                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 
                 if(!$this->data['Ganho']['keepon']){
                     $this->redirect(array('action'=>'index'));  
