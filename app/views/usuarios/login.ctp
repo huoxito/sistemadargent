@@ -5,8 +5,9 @@
             <div id="c-cadastro">
                 
                 <h1>O que é o Dargent?</h1>
-                <p>Sistema de controle financeiro pessoal simples e seguro. Saiba exatamente quais suas principais fontes de renda e onde você gasta mais. Através de gráficos e relatórios mensais.</p>
-                <p class="a-ler"><a href="#">Leia mais</a></p>
+                <p class="definicao">Sistema de controle financeiro pessoal simples e seguro.</p>
+                <p class="definicao">O sistema fornece a categorização de seus ganhos e gastos e, através de gráficos, mostra quais as suas principais categorias.</p>
+                <p class="definicao">Os relatórios são de fácil acesso, permitindo você ter um histórico rápido sobre como anda sua movimentação financeira.</p>
                 
             </div>
             
@@ -16,7 +17,7 @@
                 
                 <ul>
                 
-                    <li><span>1.</span>  Simples, rápido e prático. Em menos de cinco minutos você pode inserir vários registros.</li>
+                    <li><span>1.</span> Simples, rápido e prático. Em pouco tempo você pode inserir vários registros.</li>
     
                     <li><span>2.</span> Programe todas suas contas e salários com antecedência.</li>
     
@@ -30,9 +31,11 @@
             
                 <h1>Faça seu cadastro</h1>
                 
-                <p>Leva menos de um minuto. Basta inserir nome, email, login e senha. É gratuito.</p>
+                <p class="definicao">Leva menos de um minuto.</p>
+                <p class="definicao">Basta inserir nome, email, login e senha.</p>
+                <p class="definicao">É gratuito.</p>
                 
-                <?php echo $html->link('Cadastrar', array('controller' => '/','action' => 'cadastro'),
+                <?php echo $this->Html->link('Cadastrar', array('controller' => '/','action' => 'cadastro'),
                                                     array('class' => 'botao')); ?>
             
             </div>

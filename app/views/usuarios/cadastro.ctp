@@ -9,23 +9,24 @@
             
             <div>
                 <?php echo $form->input('nome',
-                                            array('div' => false,
-                                                  'error' => array('wrap' => 'span', 'class' => 'error'),
-                                                  'class' => 'l-input')); ?>
+                                array('div' => false,
+                                      'error' => array('wrap' => 'span', 'class' => 'error'),
+                                      'class' => 'l-input')); ?>
             </div>
             
             <div>
                 <?php echo $form->input('email',
-                                            array('div' => false,
-                                                  'error' => array('wrap' => 'span', 'class' => 'error'),
-                                                  'class' => 'l-input')); ?>
+                                array('div' => false,
+                                      'error' => array('wrap' => 'span', 'class' => 'error'),
+                                      'class' => 'l-input')); ?>
             </div>
             
             <div>
                 <?php echo $form->input('login',
-                                            array('div' => false,
-                                                  'error' => array('wrap' => 'span', 'class' => 'error'),
-                                                  'class' => 'l-input')); ?>
+                                array('div' => false,
+                                      'error' => array('wrap' => 'span', 'class' => 'error'),
+                                      'class' => 'l-input',
+                                      'label' => 'Login')); ?>
             </div>
             
             <div>

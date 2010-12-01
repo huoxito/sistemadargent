@@ -10,7 +10,7 @@
         <div class="balancoBotoesWraper">
             <div class="balancoBotoes">
                 
-                <p>Faturamento</p>
+                <p>Aqui você pode programar um Faturamento. Pode ser apenas um registro ou algo com várias parcelas.</p>
                 
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('AGENDAR DESPESA',
