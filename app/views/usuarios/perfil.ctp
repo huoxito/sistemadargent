@@ -13,21 +13,7 @@
         
         <div id="perfilWraper">
             
-            <?php if( !empty($userFoto) ){   ?>
-            <div id="perfil-p">
-                <img src="<?php echo $this->Html->url('/'); ?>uploads/usuario/foto/thumb/gerenciador/<?php echo $session->read('Auth.Usuario.foto'); ?>" alt="<?php echo $session->read('Auth.Usuario.nome'); ?>" />
-                <div id="alterarfoto">
-                    <?php echo $this->Html->link('ALTERAR FOTO',
-                                        array('controller' => 'usuarios',
-                                              'action' => 'mudarImagem'),
-                                        array('class' => 'colorbox-imagem')); ?>
-                </div>
-            </div>
-            <?php   }   ?>
-            
-              
-            
-            <div style="<?php if( !empty($userFoto) ){   ?>margin-left: 180px;<?php   }   ?>">
+            <div>
             
                 <div id="UserInfo">
                     
@@ -54,7 +40,7 @@
                     
                     <span class="userInfoLabel">
                         Email
-                        <?php   echo $html->link('EDITAR',
+                        <?php   echo $this->Html->link('EDITAR',
                                             '#javascript:;',
                                             array('onclick' => 'insereInput(\'Email\',\''.$session->read('Auth.Usuario.email').'\')',
                                                   'class' => 'btneditar right')); ?>
@@ -147,7 +133,7 @@
         function insereInput(campo,value){
             
             $.ajax({
-                url: '<?php echo $html->url(array("controller" => "usuarios","action" => "insereInput"));?>',
+                url: '<?php echo $this->Html->url(array("controller" => "usuarios","action" => "insereInput"));?>',
                 cache: false,
                 type: 'GET',
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -170,7 +156,7 @@
             var value = $('#'+campo).val();
             
             $.ajax({
-                url: '<?php echo $html->url(array("controller" => "usuarios","action" => "editResponse"));?>',
+                url: '<?php echo $this->Html->url(array("controller" => "usuarios","action" => "editResponse"));?>',
                 cache: false,
                 type: 'GET',
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",

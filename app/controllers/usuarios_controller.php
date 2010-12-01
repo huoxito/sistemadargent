@@ -133,10 +133,6 @@ class UsuariosController extends AppController {
         
         if (!empty($this->data)) {
             
-            if( empty($this->data['Usuario']['foto']['name']['tmp_name']) ){
-                unset($this->data['Usuario']['foto']);
-            }
-            
             $this->Usuario->create();
             $this->Usuario->set('numdeacessos',1);
             if ($this->Usuario->save($this->data)) {
@@ -147,7 +143,6 @@ class UsuariosController extends AppController {
 
                     $this->Session->setFlash(__('Bem vindo !', true));
                     $this->redirect(array('controller' => 'homes', 'action'=>'index'));
-
                 }else{
                     $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
                 }
@@ -265,27 +260,6 @@ class UsuariosController extends AppController {
         }
     }
     
-    function mudarImagem($id = null){
-        
-        $this->layout = 'colorbox';
-        $this->set('title_for_layout', 'Alteração do Avatar');
-        
-        if (!empty($this->data)) {
-            
-            $this->Usuario->id = $this->Auth->user('id');
-            if($this->Usuario->save($this->data, true, array('foto'))){
-                
-                $this->Usuario->id = $this->Auth->user('id');
-                $value = $this->Usuario->field('foto');
-                $this->Session->write('Auth.Usuario.foto', $value);
-                # executo na view javascript p/ fechar colorbox e mudar imagens no layout
-                $this->set('runAjax', true);
-            }else{
-                
-            }
-        } 
-    }
-    
     function imageResponseP(){
         $this->layout = 'ajax';
     }
@@ -307,7 +281,6 @@ class UsuariosController extends AppController {
             }
         }
     }
-    
     
     function login(){
         
