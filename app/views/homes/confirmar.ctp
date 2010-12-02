@@ -2,8 +2,8 @@
     
     <?php //echo $this->element('sql_dump'); ?>
     
-    <span class="registro-atualizado">
-        Confirmado
+    <span class="blue ajaxResponse<?= $registros['id'] ?>" style="float: left;">
+        Confirmado !
     </span>
     
     <?php   echo $html->link(__('CANCELAR', true),

@@ -999,7 +999,8 @@ table .altrow td {
 	background-color: #FFF;
 }
 .formBox {
-	padding: 20px;
+	padding: 20px 20px 0;
+	font-size: 14px;
 }
 
 .formBox div.submit {
@@ -1091,7 +1092,7 @@ p.painelHelp {
 .ajaxResponseCategorias {
 	color: #3075BA;
 	margin:5px 0;
-	max-width: 200px;
+	max-width: 350px;
 	text-transform: none;
 }
 
@@ -1103,4 +1104,36 @@ p.painelHelp {
 	font-size: 14px;
 	display: block;
 	margin: 10px 0;
+}
+
+div.paging {
+	padding: 10px 0 25px 20px; 
+}
+
+div.paging span {
+	padding:5px;
+	margin:0;
+}
+
+div.paging span.disabled {
+	color: #ddd;
+	display: inline;
+}
+
+div.paging span.current {
+	color:#555555;
+}
+
+div.paging span a {
+	color:#669933;
+	text-decoration:none;
+	width:auto;
+}
+
+div.paging span a:hover {
+	text-decoration: underline;
+}
+
+.blue {
+	color: #3075BA;
 }
