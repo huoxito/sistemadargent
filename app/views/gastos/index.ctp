@@ -150,7 +150,7 @@
                     
                     <?php   foreach($data['registro'] as $registro){  ?>
                     
-                    <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="gasto-<?php echo $registro['Gasto']['id']; ?>">
+                    <div class="registros registrosPainel <?php if($count < $num) echo 'borda-inferior'; ?>" id="gasto-<?php echo $registro['Gasto']['id']; ?>">
                         
                         <p class="agendamentoInfoLinha">
                             R$ <?php  echo $registro['Gasto']['valor']; ?> reais com 
