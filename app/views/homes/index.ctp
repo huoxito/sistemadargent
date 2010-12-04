@@ -136,8 +136,8 @@
         
         // <![CDATA[
             $(document).ready(function () {
-                $('.colorbox-delete').colorbox({width:"60%", height: '220', opacity: 0.5, iframe: true});
-                $('.colorbox-edit').colorbox({width:"60%", height: "530", opacity: 0.5, iframe: true});
+                $('.colorbox-delete').colorbox({width:"500", height: '200', opacity: 0.5, iframe: true});
+                $('.colorbox-edit').colorbox({width:"800", height: "450", opacity: 0.5, iframe: true});
             });
             
             $("div.registros").mouseover(function() {
@@ -183,6 +183,7 @@
                             if(result == 'error'){
                                 alert('Algo improvável aconteceu, por favor tente novamente');
                             }else{
+                                $('.ajaxResponse' + id).detach();
                                 $('#acoes-' + tipo + '-' + id).html(result);
                             }
                         }

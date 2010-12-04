@@ -109,16 +109,18 @@
                     <?php if( $agendamento['Agendamento']['proxLancamento'] ){  ?>
                     <div class="categ-actions" style="margin-top: -45px;">
                         <?php
-                            echo $this->Html->link('',
+                            echo $this->Html->link('EDITAR',
                                             array('action' => 'edit',
                                                   $agendamento['Agendamento']['id'],time()),
                                             array('title' => 'Editar Agendamento',
-                                                  'class' => 'colorbox-edit editar'));
-                            echo $this->Html->link('',
+                                                  'class' => 'colorbox-edit btneditar',
+                                                  'title' => 'Editar Agendamento'));
+                            echo $this->Html->link('EXCLUIR',
                                             array('action' => 'delete',
                                                   $agendamento['Agendamento']['id']),
                                             array('title' => 'Excluir Agendamento',
-                                                  'class' => 'colorbox-delete excluir'));
+                                                  'class' => 'colorbox-delete btnexcluir',
+                                                  'title' => 'Excluir Agendamento'));
                         ?>
                     </div>
                     <?php   }   ?>
@@ -131,7 +133,7 @@
         
             <div class="paging">
                 <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-             | 	<?php echo $paginator->numbers();?>
+                <?php echo $paginator->numbers();?>
                 <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
             </div>
         
@@ -141,8 +143,8 @@
     <script type="text/javascript">
         // <![CDATA[
         $(document).ready(function () {
-            $('.colorbox-delete').colorbox({width:"60%", height:"200", opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true});
+            $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
             $('.confirmaAgendamento').colorbox({width:"600", height:"300", opacity: 0.5, iframe: true});
         });
         // ]]>

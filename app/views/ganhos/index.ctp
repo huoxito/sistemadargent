@@ -8,7 +8,7 @@
             <div class="buscar">
                 
                 <?php
-                    echo $form->create('Ganho',
+                    echo $this->Form->create('Ganho',
                                         array('type' => 'get',
                                               'action' => 'search',
                                               'inputDefaults' => array('label' => false)));   
@@ -17,7 +17,7 @@
                 <p>FATURAMENTOS</p>
                 
                 <?php
-                    echo $form->input('fonte_id',
+                    echo $this->Form->input('fonte_id',
                                         array('empty' => 'Fontes',
                                               'div' => array('class' => 'formSearchDiv'),
                                               'class' => 'formSearchSelect',
@@ -25,7 +25,7 @@
                 ?>
                 <div class="formSearchDiv">
                 <?php
-                    echo $form->month(false,
+                    echo $this->Form->month(false,
                                         isset($this->params['named']['month']) ? $this->params['named']['month'] : null,
                                         array(__('monthNames',true),
                                               'empty' => 'Mês',
@@ -34,7 +34,7 @@
                 </div>
                 <div class="formSearchDiv">
                 <?php
-                    echo $form->year(false,
+                    echo $this->Form->year(false,
                                         $minYear = '2010',
                                         $maxYear = '2010',
                                         isset($this->params['named']['year']) ? $this->params['named']['year'] : null,
@@ -54,35 +54,34 @@
             <p>
             <?php
                 if(!isset($listar)){
-                    echo '« '.$html->link('voltar a listagem inicial', array('action' => 'index'), array('class' => 'link_headers'));
+                    echo '« '.$this->Html->link('voltar a listagem inicial',
+                                        array('action' => 'index'),
+                                        array('class' => 'link_headers')).' |';
                 }
             ?>
-            
-            
             
             <?php
                 if(isset($faturamentos)){
             ?> 
-                <p>Faturamento: <b><?php echo $faturamentos; ?></b></p>
-                <p>Gastos: <b><?php echo $despesas; ?></b></p> 
-                <p>Saldo: <b><?php echo $saldo; ?></b></p> 
+                    <p>Faturamento: <b> R$ <?php echo $faturamentos; ?> reais </b></p>
+                    <p>Despesas: <b>R$ <?php echo $despesas; ?> reais </b></p> 
+                    <p>Saldo: <b>R$ <?php echo $saldo; ?> reais </b></p> 
             <?php
                 }else{
-                
-                echo $total;
+                    echo $total;
             ?>
-                <p>|</p>
-                <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
                 
-                <span class="pagina">Página</span>
-                <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
-                <span class="pagina">de</span>
-                <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
-                <p>|</p>
-                <p><?php echo $paginator->counter(array('format' => __('%count%',true))); ?></p>
-                <span class="pagina">Registros</span>
-                <?php   }   ?>
-                
+                    <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
+                    <p>|</p>
+                    <span class="pagina">Página</span>
+                    <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
+                    <span class="pagina">de</span>
+                    <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
+                    <p>|</p>
+                    <p><?php echo $paginator->counter(array('format' => __('%count%',true))); ?></p>
+                    <span class="pagina">Registros</span>
+                    <?php   }   ?>
+                    
                 <?php   }      ?>
             </p>
 
@@ -159,24 +158,30 @@
                     
                     <?php   foreach($data['registro'] as $registro){  ?>
                     
-                    <div class="registros <?php if($count < $num) echo 'borda-inferior'; ?>" id="ganho-<?php echo $registro['Ganho']['id']; ?>">
+                    <div class="registros registrosPainel <?php if($count < $num) echo 'borda-inferior'; ?>" id="ganho-<?php echo $registro['Ganho']['id']; ?>">
                     
-                        <div class="" style="">
-                            <span class="valor">
-                                R$ <?php  echo $registro['Ganho']['valor']; ?>
-                            </span>
+                        <p class="agendamentoInfoLinha">
+                            R$ <?php  echo $registro['Ganho']['valor']; ?> reais com
+                            <span class="agendamentoCategoria">
                             <?php echo $registro['Fonte']['nome']; ?>
-                        </div>
+                            </span>
+                        </p>
                         
-                        <?php echo $registro['Ganho']['observacoes']; ?>
+                        <?php   if(!empty($registro['Ganho']['observacoes'])){ ?>
+                            <p class="agendamentoInfoLinha">
+                            <?php echo $registro['Ganho']['observacoes']; ?>
+                            </p>
+                        <?php   }   ?>
                         
-                        <div class="linksRegistros">
-                            <?= $this->Html->link('',
+                        <div class="categ-actions acoesPainel">
+                            <?= $this->Html->link('EDITAR',
                                                 array('action' => 'edit', $registro['Ganho']['id'], time()),
-                                                array('class' => 'colorbox-edit editar')); ?> 
-                            <?= $this->Html->link('',
+                                                array('class' => 'colorbox-edit btneditar',
+                                                      'title' => 'Editar Faturamento')); ?> 
+                            <?= $this->Html->link('EXCLUIR',
                                                 array('action' => 'delete', $registro['Ganho']['id'], time()),
-                                                array('class' => 'colorbox-delete excluir')); ?>
+                                                array('class' => 'colorbox-delete btnexcluir',
+                                                      'title' => 'Excluir Faturamento')); ?>
                         </div>  
                         
                             
@@ -191,11 +196,11 @@
             </ul>
             
             <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
-            <div class="paging">
-                <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-             | 	<?php echo $paginator->numbers();?>
-             |  <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
-            </div>
+                <div class="paging">
+                    <?php echo $this->Paginator->prev('<< '.'anterior', array(), null, array('class'=>'disabled'));?>
+                    <?php echo $this->Paginator->numbers();?>   
+                    <?php echo $this->Paginator->next('próxima >>', array(), null, array('class' => 'disabled'));?>
+                </div>
             <?php   }   ?>
         
         </div>
@@ -205,8 +210,8 @@
     <script type="text/javascript">
         // <![CDATA[
         $(document).ready(function () {
-            $('.colorbox-delete').colorbox({width:"60%", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height: "530", opacity: 0.5, iframe: true});
+            $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "490", opacity: 0.5, iframe: true});
             
             $(".registros").mouseover(function() {
                 $(this).css("background-color",'#F2FFE3');

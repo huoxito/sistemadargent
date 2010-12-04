@@ -1,35 +1,42 @@
+    
     <?php //echo $this->element('sql_dump'); ?>
 
-    <div class="">
-    R$ <?php  echo $registro['Ganho']['valor']; ?>  «
+    <p class="agendamentoInfoLinha">
+        R$ <?php  echo $registro['Ganho']['valor']; ?>  reais com
+        <span class="agendamentoCategoria">
         <?php echo $registro['Fonte']['nome']; ?>
-        <span class="registro-atualizado">Registro atualizado</span>
-        
-        <?php   if( isset($dataAlterada) ){ ?>
-        <span class="registro-atualizado">
-            Data alterada para <?php echo $dataAlterada; ?>
         </span>
+    </p>
+    
+    <?php   if(!empty($registro['Ganho']['observacoes'])){ ?>
+    <p class="agendamentoInfoLinha">
+        <?php echo $registro['Ganho']['observacoes']; ?>
+    </p>
+    <?php   }   ?>
+    
+    <p class="ajaxResponseCategorias">
+        Registro atualizado !
+        <?php   if( isset($dataAlterada) ){ ?>
+            Data alterada para <?php echo $dataAlterada; ?>
         <?php   }   ?>
-    </div>
+    </p>
     
-    <?php echo $registro['Ganho']['observacoes']; ?>
-    
-    <div class="links-registros">
-    <?php   echo $html->link(__('Editar', true),
-                        array('action' => 'edit', $registro['Ganho']['id']),
-                        array('class' => 'colorbox-edit')
-                        ); ?> 
-    <?php   echo $html->link(__('Deletar', true),
-                         array('action' => 'delete', $registro['Ganho']['id']),
-                         array('class' => 'colorbox-delete')
-                         ); ?>
-    </div>
+    <div class="categ-actions acoesPainel">
+        <?= $this->Html->link('EDITAR',
+                            array('action' => 'edit', $registro['Ganho']['id'], time()),
+                            array('class' => 'colorbox-edit btneditar',
+                                  'title' => 'Editar Faturamento')); ?> 
+        <?= $this->Html->link('EXCLUIR',
+                            array('action' => 'delete', $registro['Ganho']['id'], time()),
+                            array('class' => 'colorbox-delete btnexcluir',
+                                  'title' => 'Excluir Faturamento')); ?>
+    </div>  
     
     <script type="text/javascript">
         // <![CDATA[
         $(document).ready(function () {
-            $('.colorbox-delete').colorbox({width:"60%", height:"280", opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true});
+            $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "490", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>

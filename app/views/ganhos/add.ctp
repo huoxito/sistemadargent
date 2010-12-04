@@ -24,27 +24,31 @@
             <?php echo $this->Form->create('Ganho');?>
             <fieldset>
             <?php
-                echo $this->Form->input('fonte_id', array('empty' => 'Escolha um registro',
-                                                    'error' => false,
-                                                    'after' => $linkCategoria));
+                echo $this->Form->input('fonte_id',
+                                    array('empty' => 'Escolha um registro',
+                                          'error' => false,
+                                          'class' => 'select_categoria',
+                                          'after' => $linkCategoria));
                 
-                echo $this->Form->input('valor', array('error' => false));
+                echo $this->Form->input('valor',
+                                    array('error' => false));
                 
-                echo $this->Form->input('datadabaixa', array('label' => 'Data da baixa',
-                                                        'type' => 'text',
-                                                        'error' => false,
-                                                        'class' => 'dataField',
-                                                        'default' => date('d-m-Y')
-                                                    ));
+                echo $this->Form->input('datadabaixa',
+                                    array('label' => 'Data da baixa',
+                                          'type' => 'text',
+                                          'error' => false,
+                                          'class' => 'dataField',
+                                          'default' => date('d-m-Y')));
                 
-                echo $this->Form->input('observacoes', array('type' => 'textarea',
-                                                       'label' => 'Observações',
-                                                       'id' => 'Observacoes'));
+                echo $this->Form->input('observacoes',
+                                    array('type' => 'textarea',
+                                          'label' => 'Observações',
+                                          'id' => 'Observacoes'));
             ?>
             <div>
                 
                 <?php echo $this->Form->checkbox('keepon'); ?>
-                <span>Marque se você desejar continuar inserindo registros nessa página</span>  
+                <span class="label">Continuar inserindo registros</span>  
             </div>
             </fieldset>
             <?php echo $this->Form->end('Inserir');?>

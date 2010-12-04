@@ -21,11 +21,11 @@
     </p>
     <?php   }   ?>
     
-    <p class="agendamentoInfoLinha agendamentoProxLancamento">
+    <p class="ajaxResponseCategorias ajaxResponse<?= $registros[$_Model]['id']; ?>">
         Registro Confirmado ! 
         
         <?php   if( isset($dataAlterada) ){  ?> 
-        Vencimento alterado para <?php   echo $dataAlterada;  ?></p>
+        Data da baixa: <?php   echo $dataAlterada;  ?>
         <?php   }   ?>
     </p>
     
@@ -41,8 +41,8 @@
     <script type="text/javascript">
         // <![CDATA[
         $(document).ready(function () {
-            $('.colorbox-delete').colorbox({width:"60%", height:"280", opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true});
+            $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "490", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>

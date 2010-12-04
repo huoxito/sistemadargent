@@ -1,22 +1,19 @@
     
-
-    <div class="agendamentos box" id="box">
+    
+    <div class="formBox">
     
         <p class="confirmacao">Você realmente deseja excluir esse registro?</p>
-        <span style="font-size: 20px; display: block; margin: 0 0 20px;">
-            <?php echo $itens['Ganho']['datadabaixa']; ?> - 
-            R$ <?php echo $itens['Ganho']['valor']; ?>
-            « <?php echo $itens['Fonte']['nome']; ?>
-        </span>
+        <p class="agendamentoInfoLinha">
+            R$ <?php echo $itens['Ganho']['valor']; ?> reais com
+            <span class="agendamentoCategoria">
+            <?php echo $itens['Fonte']['nome']; ?>
+            </span>
+            em <?php echo $itens['Ganho']['datadabaixa']; ?>
+        </p>
 
-        <?php
-            echo $form->create('Ganho',array('default' => false));
-            echo $form->end(array('label' => 'Excluir',
-                                       'onclick' => 'excluir('.$itens['Ganho']['id'].');',
-                                        'style' => 'float: left;',
-                                        'div' => array('style' => "padding: 0;"),
-                                        'after' => ' <input type="submit" style="float: left;margin-left: 5px;" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />'));
-        ?>
+        <?php echo $this->Form->create('Ganho',array('default' => false));  ?>
+        <?php echo $this->Form->end(array('label' => 'Excluir',
+                                          'onclick' => 'excluir('.$itens['Ganho']['id'].');')); ?>
         
     </div>
     
@@ -25,23 +22,21 @@
         
             function excluir(id){
                 $.ajax({
-                        url: '<?php echo $html->url(array("controller" => "ganhos","action" => "delete"));?>',
-                        cache: false,
-                        type: 'GET',
-                        data: 'id=' + id,
-                        beforeSend: function(){
-                            $('.submit').append('<img style="float: left; margin-left: 15px;" src="../../../<?php echo IMAGES_URL;?>ajax-loader.gif" title="excluindo ... " alt="excluindo ... " />');
-                        },
-                        success: function(result){
-                        
-                            if( result == 'deleted' ){                                
-                                var t=setTimeout("parent.$('#ganho-" + id + "').fadeOut(); parent.jQuery.fn.colorbox.close(); ",500);
-                            }else{
-                                $('.submit img').fadeOut('fast', function(){
-                                    $('.submit').append('<span class="ajax_error_response">Ocorreu um erro. Recarregue a página e tente novamente.</span>')
-                                });
-                            }
+                    url: '<?php echo $html->url(array("controller" => "ganhos","action" => "delete"));?>',
+                    data: 'id=' + id,
+                    beforeSend: function(){
+                        $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
+                    },
+                    success: function(result){
+                    
+                        if( result == 'deleted' ){                                
+                            var t=setTimeout("parent.$('#ganho-" + id + "').fadeOut(); parent.jQuery.fn.colorbox.close(); ",500);
+                        }else{
+                            $('.submit img').fadeOut('fast', function(){
+                                $('.submit').append('<span class="ajax_error_response">Registro inválido.</span>')
+                            });
                         }
+                    }
                 });
             }
         

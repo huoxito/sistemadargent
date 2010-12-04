@@ -20,8 +20,8 @@
     <script type="text/javascript">
         // <![CDATA[
         $(document).ready(function () {
-            $('.colorbox-delete').colorbox({width:"60%", height:"280", opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"60%", height:"500", opacity: 0.5, iframe: true});
+            $('.colorbox-delete').colorbox({width:"500", height: '200', opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "450", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>
