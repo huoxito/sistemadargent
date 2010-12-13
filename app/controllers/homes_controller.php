@@ -39,7 +39,7 @@ class HomesController extends AppController{
             $dataNoLoop = date('Y-m-d', mktime(0,0,0,$mesNumerico,$Dia,$Ano));
             list($Ano,$mesNumerico,$Dia) = explode('-',$dataNoLoop);
             $dataCalendario = $Ano.'-'.$mesNumerico.'-'.$Dia;
-            $Mes = $this->Data->retornaNomeDoMes($mesNumerico);
+            $Mes = $this->Data->retornaNomeDoMes((int)$mesNumerico);
             $dataMaxima = $this->Data->comparaDatas(date('d-m-Y'),$Dia.'-'.$mesNumerico.'-'.$Ano);
             
             $calendario[$Ano][$Mes][$Dia] = array(//'dia' => $Dia,
