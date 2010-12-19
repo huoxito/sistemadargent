@@ -11,21 +11,11 @@ class AppController extends Controller{
         $this->Auth->allow('cadastro', 'login','enviarSenha','confirmarNovaSenha');
         $this->Auth->userModel = 'Usuario';
         $this->Auth->fields = array('username' => 'login', 'password' => 'password');
-        $this->Auth->userScope = array('Usuario.status' => 1);  # CONDIÇÃO PARA USUÁRIO ESTAR LOGADO
+        $this->Auth->userScope = array('Usuario.status' => 1);
         $this->Auth->loginError = "Login ou senha incorretos";
         $this->Auth->loginAction = array('admin' => false, 'controller' => 'usuarios', 'action' => 'login');
         $this->Auth->loginRedirect = array('controller' => 'usuarios', 'action' => 'afterLogin');
         $this->Auth->authError = "Log in para entrar no sistema";
-        
-        /*
-        # debuggar erro na seção    # problema chato do carai!
-        if ( $this->Session->error() ){
-            if ( $this->Session->error() != 'Session is valid' ){
-                echo '<center>'.$this->Session->error().'<span style="display: block;font-family: Georgia;font-size: 50px;">Contate o programador!!!!</span></center>';
-                exit;
-            }
-        }
-        */
     }   
     
     function search(){
@@ -109,8 +99,10 @@ class AppController extends Controller{
         }
     }
     
-    
-    function pa($array){
+/*
+ * Imprimir array formatado
+ */
+    function _pa($array){
         echo '<pre>';
         print_r($array);
         echo '</pre>';
