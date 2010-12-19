@@ -294,9 +294,7 @@ class UsuariosController extends AppController {
         $dados = array('numdeacessos' => 'numdeacessos+1',
                         'ultimologin' => '\''.date('Y-m-d H:i:s').'\'');
         
-        $this->Usuario->id = $this->Auth->user('id');
-        $this->Usuario->updateAll($dados);
-        
+        $this->Usuario->updateAll($dados, array('Usuario.id' => $this->Auth->user('id')));
         $this->redirect(array('controller' => 'homes', 'action'=>'index'));
     }
     
