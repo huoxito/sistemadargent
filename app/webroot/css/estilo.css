@@ -908,6 +908,7 @@ table {
 	color: #333;
 	margin-bottom: 10px;
 	width: 100%;
+	font-size:14px;
 }
 th {
 	border:0;
@@ -919,6 +920,7 @@ th a {
 	display: block;
 	padding: 2px 4px;
 	text-decoration: none;
+	color: #90B9CF;
 }
 th a.asc:after {
 	content: ' ⇣';
@@ -929,7 +931,6 @@ th a.desc:after {
 table tr td {
 	background: #fff;
 	padding: 6px;
-	text-align: left;
 	vertical-align: top;
 	border-bottom:1px solid #ddd;
 }
