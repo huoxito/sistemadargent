@@ -18,6 +18,7 @@ class UsuariosController extends AppController {
         $this->Usuario->recursive = -1; 
         $itens = $this->Usuario->find('first',
                                     array('conditions' => array('id' => $this->Auth->user('id'))));
+        $itens['Usuario']['ultimologin'] = $this->Data->formata($itens['Usuario']['ultimologin'],'descricaocompleta');
         $this->set('item',$itens);
         
         $registrosPorTabela = 13;

@@ -74,7 +74,7 @@ class DataComponent extends Object {
         $hora = substr($data,11,8);
         if(!empty($hora)){
             list ($h,$m,$s) = explode (':', $hora);
-            $hora = $h.':'.$m;
+            $hora = $h.'h'.$m.'m';
         }
         
         $data = substr($data,0,10);
@@ -141,6 +141,8 @@ class DataComponent extends Object {
             $dataFormatada = $diaSemana[$diaDaSemana];
         }else if ( $formato === 'longadescricao' ){
             $dataFormatada = $diaSemana[$diaDaSemana].', '.$dia.' '.$mesLongo[$mes].', '.$ano;
+        }else if ( $formato === 'descricaocompleta' ){
+            $dataFormatada = $diaSemana[$diaDaSemana].', '.$dia.' '.$mesLongo[$mes].' '.$ano.', '.$hora;
         }
         
         return $dataFormatada;
