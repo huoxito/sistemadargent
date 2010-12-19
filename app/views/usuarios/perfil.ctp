@@ -1,8 +1,4 @@
     
-    <?php
-        $userFoto = $session->read('Auth.Usuario.foto');
-    ?>
-    
     <div class="usuarios index">
         
         <div id="contentHeader">
