@@ -62,8 +62,6 @@
                     </span>
                     <p class="profile">
                         Número de acessos: <?php echo $item['Usuario']['numdeacessos']; ?>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Último login: <?php echo $item['Usuario']['ultimologin']; ?>
                     </p>    
             
                 </div>
@@ -83,25 +81,14 @@
             <div id="ultimasInteracoes">
                 
                 <?php foreach($ultimasInteracoes as $item){ ?>
-                
-                    <?php   if($item['Model'] === 'Faturamento' || $item['Model'] === 'Despesa'){   ?>
+
                     <p class="interacao">
-                        <span class="model"><?php echo $item['Model']; ?></span>
-                        R$ <?php echo $item['valor']; ?> « <?php echo $item['categoria']; ?> 
-                        Baixa: <?php echo $item['datadabaixa']; ?>
-                        <?php //echo $item['observacoes']; ?>
-                        <span class="data"><?php echo $item['modified']; ?></span>
+                        <span class="model"><?= $item['Model']; ?></span>
+                        <span class="valor">R$ <?= $item['valor']; ?></span>
+                        <?php echo $item['categoria']; ?> 
+                        <span class="data"><?= $this->Data->formata($item['modified'],'descricaocompleta'); ?></span>
                     </p>
-                    <?php   }else{  ?>
-                    <p class="interacao">
-                        <span class="model"><?php echo $item['Model']; ?></span>
-                        R$ <?php echo $item['valor']; ?>  «
-                        <?php echo $item['categoria']; ?>
-                        <?php echo $item['frequencia']; ?>
-                        <span class="data"><?php echo $item['modified']; ?></span>
-                    </p>
-                    <?php   }   ?>
-                    
+
                 <?php   }   ?>  
             
             </div>

@@ -18,7 +18,6 @@ class UsuariosController extends AppController {
         $this->Usuario->recursive = -1; 
         $itens = $this->Usuario->find('first',
                                     array('conditions' => array('id' => $this->Auth->user('id'))));
-        $itens['Usuario']['ultimologin'] = $this->Data->formata($itens['Usuario']['ultimologin'],'descricaocompleta');
         $this->set('item',$itens);
         
         $registrosPorTabela = 13;
@@ -102,18 +101,18 @@ class UsuariosController extends AppController {
             if($modelsDatas[$key]['model'] === 'Faturamento' || $modelsDatas[$key]['model'] === 'Despesa'){
 
                 $ultimasInteracoes[] = array('Model' => $modelsDatas[$key]['model'],
-                                             'datadabaixa' => $this->Data->formata($modelsDatas[$key]['datadabaixa'],'porextenso'),
+                                             'datadabaixa' => $modelsDatas[$key]['datadabaixa'],
                                              'valor' => $modelsDatas[$key]['valor'],
                                              'categoria' => $modelsDatas[$key]['categoria'],
                                              'observacoes' => $modelsDatas[$key]['observacoes'],
-                                             'modified' => $this->Data->formata($modelsDatas[$key]['data'],'completa')
+                                             'modified' => $modelsDatas[$key]['data'],'completa'
                                             );
             }else{
                 $ultimasInteracoes[] = array('Model' => $modelsDatas[$key]['model'],
                                              'frequencia' => $modelsDatas[$key]['frequencia'],
                                              'valor' => $modelsDatas[$key]['valor'],
                                              'categoria' => $modelsDatas[$key]['categoria'],
-                                             'modified' => $this->Data->formata($modelsDatas[$key]['data'],'completa')
+                                             'modified' => $modelsDatas[$key]['data']
                                             );
             }
             $count++;
