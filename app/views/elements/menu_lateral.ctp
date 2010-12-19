@@ -1,6 +1,6 @@
 
     <?php   # $ultimoMes = $this->requestAction(array('controller' => 'homes', 'action' => 'ultimomes')); ?>
-    
+
     <div id="menuLateral">
         <img src="<?php echo $html->url('/'); ?>img/topo-left.jpg" width="190" height="8" />
         <ul>
@@ -40,5 +40,5 @@
             </li>
 
         </ul>
-        <div class="banner-1"><img src="<?php echo $html->url('/'); ?>img/bn.jpg" width="160" height="90" /></div>
     </div>
+
