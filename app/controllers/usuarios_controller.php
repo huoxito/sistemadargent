@@ -296,7 +296,11 @@ class UsuariosController extends AppController {
                         'ultimologin' => '\''.date('Y-m-d H:i:s').'\'');
         
         $this->Usuario->updateAll($dados, array('Usuario.id' => $this->Auth->user('id')));
-        $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+        if($this->Auth->user('login') === 'godfather'){
+            $this->redirect(array('controller' => 'homes','action'=>'index'));
+        }else{
+            $this->redirect(array('controller' => 'homes','action'=>'index'));
+        }
     }
     
     
@@ -306,7 +310,7 @@ class UsuariosController extends AppController {
     
     
     function delete($id = null) {
-
+        
         if( $this->Acl->check( array('model' => 'Usuario', 'foreign_key' => $this->Auth->user('id') ), 'root') ){
             # you root !
         }else{
@@ -315,12 +319,28 @@ class UsuariosController extends AppController {
         
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Usuario', true));
-            //$this->redirect(array('action'=>'index'));
+            $this->redirect(array('action'=>'index'));
         }
         if ($this->Usuario->delete($id)) {
             $this->Session->setFlash(__('Usuario deleted', true));
-            //$this->redirect(array('action'=>'index'));
+            $this->redirect(array('action'=>'index'));
         }
+    }
+    
+    function index(){
+        
+        if( $this->Acl->check( array('model' => 'Usuario', 'foreign_key' => $this->Auth->user('id') ), 'root') ){
+            # you root !
+        }else{
+            $this->cakeError('error404');  
+        }
+        
+        $this->paginate = array(
+            'limit' => 20,
+            'recursive' => -1,
+            'order' => 'created desc');
+        $usuarios = $this->paginate('Usuario');
+        $this->set(compact('usuarios'));
     }
 
 }
