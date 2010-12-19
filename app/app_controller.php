@@ -17,6 +17,7 @@ class AppController extends Controller{
         $this->Auth->loginRedirect = array('controller' => 'usuarios', 'action' => 'afterLogin');
         $this->Auth->authError = "Log in para entrar no sistema";
         
+        $this->user_id = $this->Auth->user('id');
         /* condição pra mudar a renderização do menu lateral */
         if($this->Auth->user('login') === 'godfather'){
             $godfather = true;

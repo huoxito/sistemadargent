@@ -6,13 +6,6 @@ class UsuariosController extends AppController {
     var $helpers = array('Html', 'Form','Data');
     var $components = array('Email');
     
-    var $paginate = array(
-                'limit' => 10,
-                'order' => array(
-                    'Usuario.modified' => 'desc'
-            )
-    );
-    
     function perfil() {
         
         $this->Usuario->recursive = -1; 
@@ -328,16 +321,23 @@ class UsuariosController extends AppController {
     
     function index(){
         
-        if( $this->Acl->check( array('model' => 'Usuario', 'foreign_key' => $this->Auth->user('id') ), 'root') ){
-            # you root !
-        }else{
-            $this->cakeError('error404');  
-        }
-        
         $this->paginate = array(
             'limit' => 25,
             'recursive' => -1,
             'order' => 'created desc');
+        
+        $value = Cache::read('usr_index_'.$this->user_id, 'long');
+        if ($value === false) {
+            $chk = $this->Acl->check(array('model' => 'Usuario', 'foreign_key' => $this->user_id), 'root');
+            if(!$chk){
+                Cache::write('usr_index_'.$this->user_id, 'out', 'long');
+                $this->cakeError('error404');  
+            }
+            Cache::write('usr_index_'.$this->user_id, $chk, 'long');
+        }elseif($value === 'out'){
+            $this->cakeError('error404');
+        }
+        
         $usuarios = $this->paginate('Usuario');
         $this->set(compact('usuarios'));
     }
