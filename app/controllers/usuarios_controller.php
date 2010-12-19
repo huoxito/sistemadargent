@@ -3,8 +3,8 @@
 class UsuariosController extends AppController {
 
     var $name = 'Usuarios';
-    var $helpers = array('Html', 'Form');
-    var $components = array('Data','Email');
+    var $helpers = array('Html', 'Form','Data');
+    var $components = array('Email');
     
     var $paginate = array(
                 'limit' => 10,
@@ -336,7 +336,7 @@ class UsuariosController extends AppController {
         }
         
         $this->paginate = array(
-            'limit' => 20,
+            'limit' => 25,
             'recursive' => -1,
             'order' => 'created desc');
         $usuarios = $this->paginate('Usuario');
