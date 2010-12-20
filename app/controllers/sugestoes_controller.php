@@ -6,6 +6,23 @@ class SugestoesController extends AppController {
     var $components = array('Email');
     var $paginate = array('order' => 'Sugestao.created DESC');
     
+    function beforeFilter(){
+        parent::beforeFilter();
+        
+        if($this->params['action'] !== 'add'){
+            $value = Cache::read('sugestoes_'.$this->user_id, 'long');
+            if ($value === false) {
+                $chk = $this->Acl->check(array('model' => 'Usuario', 'foreign_key' => $this->user_id), 'root');
+                if(!$chk){
+                    Cache::write('sugestoes_'.$this->user_id, 'out', 'long');
+                    $this->cakeError('error404');  
+                }
+                Cache::write('sugestoes_'.$this->user_id, $chk, 'long');
+            }elseif($value === 'out'){
+                $this->cakeError('error404');
+            }
+        }
+    }
     
     function index() {
         
