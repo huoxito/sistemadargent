@@ -10,14 +10,11 @@
             </h1>
         </div>
         
-        <div class="balancoBotoesWraper">
-            <div class="balancoBotoes">
-                <div class="headeraddlinks">
-                    <?php echo $this->Html->link('VER SUGESTÕES',
-                                    array('controller' => 'sugestoes',
-                                          'action' => 'index'),
-                                    array('class' => 'btnaddcategoria')); ?>
-                </div>
+        <div class="relatoriosWraper">
+            <div id="relatorioRapido">
+                <p class="painelHelp">
+                    - Sua sugestão passará por uma moderação e será apresentada a todos os desenvolvedores do sistema
+                </p>
             </div>
         </div>
         
