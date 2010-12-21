@@ -1,6 +1,6 @@
 
 <div id="menuLateral">
-    
+
     <?= $this->Html->image('topo-left.jpg',
                             array('width' => '190',
                                   'height' => '8'));   ?>
@@ -47,7 +47,7 @@
             <?= $this->Html->image('graficos.jpg',
                                     array('width' => '18',
                                           'height' => '16'));   ?>
-            <?= $this->Html->link(__('Gráficos', true), array('controller' => 'homes', 'action' => 'graficos')); ?>
+            <?= $this->Html->link(__('Gráficos', true), array('controller' => 'graficos')); ?>
         </li>
         <?php } ?>
     </ul>
