@@ -18,7 +18,7 @@
         <div id="graficosWraper">
 
             <div id='graficoComparativo' style="height: auto: overflow: hidden; text-align: center; ">
-                <h2 style="padding: 10px 0;">Comparativo nos últimos 7 meses</h2>
+                <h2 class="graphHeaders">Comparativo nos últimos 7 meses</h2>
                 <div id="graficoComparativoImg">
 
                 </div>
@@ -26,12 +26,12 @@
 
             <div class="graficosPizza">
 
-                <h2>Faturamentos</h3>
-                <img src="<?php echo $pieGanho; ?>" title="Gastos" alt="Gastos" />
+                <h2 class="graphHeaders">Faturamentos</h2>
+                <img src="<?= $pieGanho; ?>" title="Gastos" alt="Gastos" />
             </div>
 
             <div class="graficosPizza">
-                <h2>Despesas</h3>
+                <h2 class="graphHeaders">Despesas</h2>
                 <img src="<?php   echo $pieGasto; ?>" title="Ganhos" alt="Ganhos" />
 
             </div>

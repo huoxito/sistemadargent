@@ -144,6 +144,10 @@ class GraficosController extends AppController{
         $this->LineChart->Chart->addAxisLabel(0,$meses);
         $this->LineChart->Chart->setGridLines(100,10,4,0);
         $graficoComparativo = $this->LineChart->Chart->getImgCode();
+
+        if(empty($valorMaisAlto)){
+            $graficoComparativo = false;
+        }
         $this->set('graficoComparativo',$graficoComparativo);
 
         $this->layout = 'ajax';
