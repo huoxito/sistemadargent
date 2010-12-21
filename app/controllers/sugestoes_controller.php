@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 class SugestoesController extends AppController {
 
@@ -89,4 +89,3 @@ class SugestoesController extends AppController {
 }
 
 ?>
-
