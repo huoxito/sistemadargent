@@ -61,24 +61,15 @@ class GraficosController extends AppController{
 
     function comparativo(){
 
-        if( date('m')==1 ){
-            $mes = 12;
-            $ano = date('Y')-1;
-        }else{
-            $mes = date('m')-1;
-            $ano = date('Y');
-        }
-        // pego o mês anterior
-        //list($mes,$ano) = explode('-',date('m-Y',mktime(0,0,0,date('m')-1,0,date('Y'))));
+        $mes = date('m');
+        $ano = date('Y');
 
         for($i=0;$i<6;$i++){
 
-            if($mes == 0){
-                $mes = 12;
-                $ano = $ano - 1;
-            }
+            list($mes,$ano) = explode('-',date('m-Y',mktime(0,0,0,$mes,1,$ano)));
+
             # aproveito pra jogar no array o nome dos meses
-            $meses[] = $this->Data->retornaNomeDoMes($mes);
+            $meses[] = $this->Data->retornaNomeDoMes((int)$mes);
 
             $this->Ganho->recursive = -1;
             $ganhos[] = $this->Ganho->find('all',
