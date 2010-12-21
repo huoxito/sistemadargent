@@ -7,10 +7,10 @@
     <ul>
         <?php if($godfather){   ?>
         <li>
-            <?= $this->Html->link(__('Usuários', true), array('controller' => 'usuarios')); ?>
+            <?= $this->Html->link(__('Usuários', true), array('controller' => 'usuarios', 'action' => 'index')); ?>
         </li>
         <li>
-            <?= $this->Html->link(__('Sugestões', true), array('controller' => 'sugestoes')); ?>
+            <?= $this->Html->link(__('Sugestões', true), array('controller' => 'sugestoes', 'action' => 'index')); ?>
         </li>
         <?php }else{ ?>
         <li>
