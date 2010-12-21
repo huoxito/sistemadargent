@@ -33,7 +33,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 0);
+	Configure::write('debug', 2);
 
 /**
  * CakePHP Log Level:
@@ -103,15 +103,15 @@
  *
  */
 	Configure::write('Cache.check', true);
-    
-    Cache::config('long', array(  
-        'engine' => 'File',  
-        'duration'=> '+1 week',  
-        'probability'=> 100,  
-        'path' => CACHE . 'long' . DS,  
+
+    Cache::config('long', array(
+        'engine' => 'File',
+        'duration'=> '+1 week',
+        'probability'=> 100,
+        'path' => CACHE . 'long' . DS,
     ));
 
-    
+
 /**
  * Defines the default error type when using the log() function. Used for
  * differentiating error logging and debugging. Currently PHP supports LOG_DEBUG.
@@ -175,7 +175,7 @@
 	Configure::write('Session.cookie', 'dargent1010');
 
 /**
- * Session time out time (in seconds). 
+ * Session time out time (in seconds).
  * Actual value depends on 'Security.level' setting.
  */
 	Configure::write('Session.timeout', '9');
@@ -308,3 +308,4 @@
  *
  */
 	Cache::config('default', array('engine' => 'File'));
+
