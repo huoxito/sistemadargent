@@ -1,10 +1,10 @@
 
 
 <div class="frequencias index">
-    <div id="contentHeader"> 
+    <div id="contentHeader">
         <h1>Usuários</h1>
     </div>
-    
+
     <div class="balancoBotoesWraper">
         <div class="balancoBotoes">
             <span class="pagina">Página</span>
@@ -16,20 +16,10 @@
             <span class="pagina">Registros</span>
         </div>
     </div>
-        
-    <div class="relatoriosWraper">
-        
-        <div id="relatorioRapido">
-            
-            
-        
-        </div>
-    
-    </div>
-        
+
     <div class="registrosWraper">
-        
-        <table cellpadding="0" cellspacing="0">
+
+        <table cellpadding="0" cellspacing="0" id="whiteTable">
             <tr>
                 <th><?php echo $this->Paginator->sort('id');?></th>
                 <th><?php echo $this->Paginator->sort('nome');?></th>
@@ -38,14 +28,14 @@
                 <th><?php echo $this->Paginator->sort('Data do cadastro','created');?></th>
                 <th><?php echo $this->Paginator->sort('N° acessos','numdeacessos');?></th>
             </tr>
-        
+
             <?php foreach ($usuarios as $value): ?>
             <tr>
                 <td>
                     <?= $value['Usuario']['id']; ?></td>
                 <td>
                     <?= h($value['Usuario']['nome']); ?><br />
-                    <?= h($value['Usuario']['login']); ?>
+                    <p class="author"><i><?= h($value['Usuario']['login']); ?></i></p>
                 </td>
                 <td>
                     <?= h($value['Usuario']['email']); ?>
@@ -61,9 +51,9 @@
                 </td>
             </tr>
             <?php endforeach; ?>
-            
+
         </table>
-        
+
         <div class="paging">
             <?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class'=>'disabled'));?>
             <?php echo $this->Paginator->numbers();?>
@@ -72,3 +62,4 @@
     </div>
 
 </div>
+
