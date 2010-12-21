@@ -610,6 +610,11 @@ span.valor {
 	padding: 0 0 0 20px;
 }
 
+#graficoComparativoImg {
+    min-width: 810px;
+    height: 245px;
+}
+
 .profile {
 	margin: 10px 5px;
 	font-size: 16px;

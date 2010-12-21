@@ -57,6 +57,9 @@ class GraficosController extends AppController{
         $this->PieChart->Chart->setColors(array("00D500"));
         $pieGanho = $this->PieChart->Chart->getUrl();
         $this->set('pieGanho', $pieGanho);
+    }
+
+    function comparativo(){
 
         if( date('m')==1 ){
             $mes = 12;
@@ -65,6 +68,8 @@ class GraficosController extends AppController{
             $mes = date('m')-1;
             $ano = date('Y');
         }
+        // pego o mês anterior
+        //list($mes,$ano) = explode('-',date('m-Y',mktime(0,0,0,date('m')-1,0,date('Y'))));
 
         for($i=0;$i<6;$i++){
 
@@ -150,8 +155,8 @@ class GraficosController extends AppController{
         $graficoComparativo = $this->LineChart->Chart->getImgCode();
         $this->set('graficoComparativo',$graficoComparativo);
 
+        $this->layout = 'ajax';
     }
-
 }
 ?>
 
