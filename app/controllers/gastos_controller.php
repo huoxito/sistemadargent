@@ -127,8 +127,8 @@ class GastosController extends AppController {
         
         $destinos = $this->Gasto->Destino->find('list',
                                         array('conditions' =>
-                                              array('status' => 1,
-                                                    'usuario_id' => $this->Auth->user('id'))));
+                                                array('Destino.usuario_id' => $this->Auth->user('id')),
+                                              'order' => 'nome asc'));
         
         $this->set(compact('destinos'));
         $this->set('objMeses', $objMeses);

@@ -123,8 +123,8 @@ class GanhosController extends AppController {
         
         $fontes = $this->Ganho->Fonte->find('list',
                                 array('conditions' =>
-                                      array('status' => 1,
-                                            'usuario_id' => $this->Auth->user('id'))));
+                                        array('usuario_id' => $this->Auth->user('id')),
+                                      'order' => 'Fonte.nome asc'));
         $this->set(compact('fontes'));
         $this->set('objMeses', $objMeses);
         $this->set('title_for_layout', 'Faturamentos');
