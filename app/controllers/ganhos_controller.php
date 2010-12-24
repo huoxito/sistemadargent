@@ -156,10 +156,10 @@ class GanhosController extends AppController {
             }
         }
         $fontes = $this->Ganho->Fonte->find('list',
-                                                array('conditions' =>
-                                                            array('status' => 1,
-                                                                    'usuario_id' => $this->Auth->user('id')))
-                                            );
+                                        array('conditions' =>
+                                                array('status' => 1,
+                                                      'usuario_id' => $this->Auth->user('id')),
+                                              'order' => 'Fonte.nome asc'));
         $this->set(compact('fontes'));
         $this->set('title_for_layout', 'Inserir Faturamento');
     }
@@ -178,9 +178,8 @@ class GanhosController extends AppController {
         $this->data['Ganho']['datadabaixa'] = $this->Data->formata($this->data['Ganho']['datadabaixa'], 'diamesano');
         $fontes = $this->Ganho->Fonte->find('list',
                                             array('conditions' =>
-                                                  array('status' => 1,
-                                                        'usuario_id' => $this->Auth->user('id')))
-                                            );
+                                                    array('usuario_id' => $this->Auth->user('id')),
+                                                  'order' => 'Fonte.nome asc'));
         $this->set(compact('fontes'));
         $this->set('id',$id);
         $this->layout = 'colorbox';

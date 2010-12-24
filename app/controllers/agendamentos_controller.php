@@ -299,9 +299,8 @@ class AgendamentosController extends AppController {
         
         $categorias = $this->Agendamento->$_Categoria->find('list',
                                         array('conditions' =>
-                                                array('status' => 1,
-                                                      'usuario_id' => $this->Auth->user('id')))
-                                        );
+                                                array('usuario_id' => $this->Auth->user('id')),
+                                              'order' => 'nome asc'));
         
         $this->set(array('fontes' => $categorias, 'destinos'=> $categorias));
         $this->set('label',$label);

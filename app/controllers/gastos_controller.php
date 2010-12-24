@@ -128,7 +128,7 @@ class GastosController extends AppController {
         $destinos = $this->Gasto->Destino->find('list',
                                         array('conditions' =>
                                                 array('Destino.usuario_id' => $this->Auth->user('id')),
-                                              'order' => 'nome asc'));
+                                              'order' => 'Destino.nome asc'));
         
         $this->set(compact('destinos'));
         $this->set('objMeses', $objMeses);
@@ -162,8 +162,9 @@ class GastosController extends AppController {
         }
         $destinos = $this->Gasto->Destino->find('list',
                                     array('conditions' =>
-                                          array('status' => 1,
-                                                'usuario_id' => $this->Auth->user('id'))));
+                                            array('status' => 1,
+                                                  'usuario_id' => $this->Auth->user('id')),
+                                          'order' => 'Destino.nome asc'));
         $this->set(compact('destinos'));
         $this->set('title_for_layout', 'Inserir Despesa');
     }
@@ -180,10 +181,10 @@ class GastosController extends AppController {
         $this->checkPermissao($this->data['Gasto']['usuario_id']);
         
         $this->data['Gasto']['datadabaixa'] = $this->Data->formata($this->data['Gasto']['datadabaixa'], 'diamesano');
-        $destinos = $this->Gasto->Destino->find('list', array(
-                                                          'conditions' => array('status' => 1,
-                                                                                'usuario_id' => $this->Auth->user('id')))
-                                            );
+        $destinos = $this->Gasto->Destino->find('list',
+                                            array('conditions' =>
+                                                    array('Destino.usuario_id' => $this->Auth->user('id')),
+                                                  'order' => 'Destino.nome asc'));
         $this->set(compact('destinos'));
         $this->set('id',$id);
         $this->layout = 'colorbox';
