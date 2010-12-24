@@ -289,7 +289,7 @@ class UsuariosController extends AppController {
 
         $this->Usuario->updateAll($dados, array('Usuario.id' => $this->Auth->user('id')));
         if($this->Auth->user('login') === 'godfather'){
-            $this->redirect(array('controller' => 'homes','action'=>'index'));
+            $this->redirect(array('controller' => 'usuarios','action'=>'index'));
         }else{
             $this->redirect(array('controller' => 'homes','action'=>'index'));
         }
