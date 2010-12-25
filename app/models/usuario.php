@@ -53,87 +53,86 @@ class Usuario extends AppModel {
 		),
     );
     
-    # THANKS TO http://lecterror.com/articles/view/manually-hashing-password-and-password-validation
-    function __construct(){
-        parent::__construct();
-        
-        $this->validate = array(
-                    
-            'nome' => array(
-                            'rule' => 'notEmpty',
-                            'message' => 'Campo obrigatório',
-                            'allowEmpty' => false
-            ),
-            'email' => array(
-                'invalido' => array(
-                             'rule' => 'email',
-                             'message' => 'Insira um email válido'),
-                'rule2' => array(
-                             'rule' => 'notEmpty',
-                             'message' => 'Campo obrigatório',
-                             'last' => true,
-                             'allowEmpty' => false),
-                'existe' => array(       
-                    'rule' => 'isUnique',
-                    'message' => 'Email já cadastrado'),
-            ),
-            
-            'login' => array(
-                'rule1' => array(
-                    'rule' => 'notEmpty',
-                    'required'  =>  false,
-                    'message' => 'Campo obrigatório',
-                    'last' => true,
-                    'allowEmpty' => false),
-                'existe' => array(       
-                    'rule' => 'isUnique',
-                    'message' => 'Login já cadastrado, digite outro por favor'),
-            ),
-            
-            'passwd' => array(
-                'numero' => array(
-                            'rule' => array('between', 5, 15),
-                            'message' => 'Deve conter entre 5 e 15 caracteres'),
-                'rule2' => array(
-                           'rule' => 'notEmpty',
-                                'last' => true,
-                                'message' => 'Campo obrigatório',
-                                'required' => false,
-                                'allowEmpty' => false),
-            
-            ),
-            
-            'passwd_current' => array(
-                
-                'rule1' => array(
-                    'rule' => 'notEmpty',
-                    'required' => false,
-                    'message' => 'Campo obrigatório',
-                    'last' => true,
-                    'allowEmpty' => false),
-                'rule2' => array(
-                    'rule' => 'confereSenha',
-                    'message' => 'Senha incorreta'),
-                
-            ),
-        
-            'passwd_confirm' => array(
-                
-                'match' => array(     
-                    'rule'  =>  'validatePasswdConfirm',
-                    'message' => 'As senhas não conferem',
-                    'required' => false),
-                'rule2' => array(
-                    'rule' => 'notEmpty',
-                    'last' => true,
-                    'message' => 'Campo obrigatório',
-                    'allowEmpty' => false),
-            )
-            
-        );
-        
-    }
     
+    var $validate = array(
+                
+        'nome' => array(
+                        'rule' => 'notEmpty',
+                        'message' => 'Campo obrigatório',
+                        'allowEmpty' => false
+        ),
+        'email' => array(
+            'invalido' => array(
+                         'rule' => 'email',
+                         'message' => 'Insira um email válido'),
+            'rule2' => array(
+                         'rule' => 'notEmpty',
+                         'message' => 'Campo obrigatório',
+                         'last' => true,
+                         'allowEmpty' => false),
+            'existe' => array(       
+                'rule' => 'isUnique',
+                'message' => 'Email já cadastrado'),
+        ),
+        
+        'login' => array(
+            'rule1' => array(
+                'rule' => 'notEmpty',
+                'required'  =>  false,
+                'message' => 'Campo obrigatório',
+                'last' => true,
+                'allowEmpty' => false),
+            'string' => array(
+                'rule' => 'checkLogin',
+                'message' => 'Apenas letras, números, hífen ou underline, sem espaços'),
+            'existe' => array(       
+                'rule' => 'isUnique',
+                'message' => 'Login já cadastrado, digite outro por favor'),
+        ),
+        
+        'passwd' => array(
+            'numero' => array(
+                        'rule' => array('between', 5, 15),
+                        'message' => 'Deve conter entre 5 e 15 caracteres'),
+            'rule2' => array(
+                       'rule' => 'notEmpty',
+                            'last' => true,
+                            'message' => 'Campo obrigatório',
+                            'required' => false,
+                            'allowEmpty' => false),
+        
+        ),
+        
+        'passwd_current' => array(
+            
+            'rule1' => array(
+                'rule' => 'notEmpty',
+                'required' => false,
+                'message' => 'Campo obrigatório',
+                'last' => true,
+                'allowEmpty' => false),
+            'rule2' => array(
+                'rule' => 'confereSenha',
+                'message' => 'Senha incorreta'),
+            
+        ),
+    
+        'passwd_confirm' => array(
+            
+            'match' => array(     
+                'rule'  =>  'validatePasswdConfirm',
+                'message' => 'As senhas não conferem',
+                'required' => false),
+            'rule2' => array(
+                'rule' => 'notEmpty',
+                'last' => true,
+                'message' => 'Campo obrigatório',
+                'allowEmpty' => false),
+        )
+        
+    );
+
+
     # faltando adicionar valor no array ao criar interface pra cadastrar os admin e root
     function parentNode(){
         
@@ -161,12 +160,7 @@ class Usuario extends AppModel {
         App::import('Sanitize');
         if (isset($this->data['Usuario']['nome']))  
         {  
-            $nome = Sanitize::html(&$this->data['Usuario']['nome'], array('remove' => true));  
-        }
-        
-        if (isset($this->data['Usuario']['login']))  
-        {  
-            $login = Sanitize::paranoid(&$this->data['Usuario']['login'], array('-', '_'));  
+            Sanitize::html(&$this->data['Usuario']['nome'], array('remove' => true));  
         }
         
         return true;
@@ -174,7 +168,7 @@ class Usuario extends AppModel {
     
     function beforeSave()  
     {
-
+        # THANKS TO http://lecterror.com/articles/view/manually-hashing-password-and-password-validation
         if (isset($this->data['Usuario']['passwd']))  
         {  
             $this->data['Usuario']['password'] = Security::hash($this->data['Usuario']['passwd'], null, true);  
@@ -189,6 +183,15 @@ class Usuario extends AppModel {
         return true;  
     }
     
+    function checkLogin(){
+        $login = Sanitize::paranoid(&$this->data['Usuario']['login'], array('-', '_'));  
+        if($login != trim($this->data['Usuario']['login'])){
+            return false;
+        }else{
+            return true;    
+        }
+    }
+    
     function confereSenha(){
         
         $oldPass = Security::hash($this->data['Usuario']['passwd_current'], null, true);
@@ -199,15 +202,6 @@ class Usuario extends AppModel {
             return true;
         }else{
             return false;
-        }
-    }
-    
-    function maxSize($params){
-        $val = array_shift($params);
-        if($val['size'] > 2097152){
-            return false;
-        }else{
-            return true;
         }
     }
     
