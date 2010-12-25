@@ -18,7 +18,8 @@
            
             <div id="relatorioRapido">
                 <h2>
-                    <?php echo 'Lançamentos em um intervalo de 60 dias';?>
+                    Lançamentos em um intervalo de 60 dias
+                    ( <?= $this->Data->formata($inicial,'diamesano') ?> - <?= $this->Data->formata($final,'diamesano') ?> )
                 </h2>
                 <p class="painelHelp">
                     - Esta interface permite que você confirme os lançamentos, com vencimento até a data atual, com apenas um click.<br />
@@ -94,7 +95,7 @@
                                         
                                         <div class="links-registros-calendario acoesPainel" id="acoes-<?php echo $registros['tipo']; ?>-<?php echo $registros['id']; ?>">
                                         
-                                            <?php   if($registros['dataFutura']){  ?>
+                                            <?php   if($registros['botaoConfirmar']){  ?>
                                                 <?php echo $this->Html->link('CONFIRMAR',
                                                                     'javascript:;',
                                                                     array('onclick' => 'confirmar('.$registros['id'].',\''.$registros['tipo'].'\')',
