@@ -11,16 +11,12 @@
 
             <div class="balancoBotoes">
                 
-                <?php   if( isset($paginator) ){    ?>
-                
-                <span class="pagina">Página</span>
-                <p><?php echo $paginator->counter(array('format' => __('%page%',true))); ?></p>
-                <span class="pagina">de</span>
-                <p><?php echo $paginator->counter(array('format' => __('%pages%',true))); ?></p>
-                <p>|</p>
-                <p><?php echo $paginator->counter(array('format' => __('%count%',true))); ?></p>
-                <span class="pagina">Registros</span>
-                <?php   }   ?>
+                <?php if(count($fontes)){ ?>
+                <p><?= count($fontes) ?></p>
+                <span class="pagina">categorias para os Faturamentos</span>
+                <?php }else{ ?>
+                <span class="pagina">Nenhuma categoria encontrada</span>
+                <?php } ?>
                 
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('INSERIR FATURAMENTO',
@@ -42,7 +38,6 @@
         <div class="relatoriosWraper">
             <div id="relatorioRapido">
                 <p class="painelHelp">
-                    - Lista de categorias habilitadas dos faturamentos com a porcentagem de participação de cada categoria e o último faturamento associado a mesma.<br />
                     - Só podem ser excluídas as Fontes que não possuem relação com qualquer registro.<br />
                     - Ao desativar as categorias que não são mais relevantes, você impede que elas apareçam como opção ao inserir um Faturamento. 
                 </p>
@@ -126,16 +121,7 @@
         
                 <?php endforeach; ?>
                 </ul>
-            </div>
-            
-            <?php   if( isset($paginator) ){    ?>
-            <div class="paging">
-                <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-                <?php echo $paginator->numbers();?>
-                <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
-            </div>
-            <?php   }   ?>
-            
+            </div> 
         </div>
         
     </div>
