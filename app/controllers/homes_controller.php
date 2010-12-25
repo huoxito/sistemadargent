@@ -135,13 +135,7 @@ class HomesController extends AppController{
             $this->redirect('error404');
         }
 
-        $itens = $this->$_Model->read(array($_Model.'.id',
-                                            $_Model.'.usuario_id',
-                                            $_Model.'.valor',
-                                            $_Model.'.datadevencimento',
-                                            $_Model.'.observacoes',
-                                            $_Categoria.'.nome'), $id);
-
+        $itens = $this->$_Model->read(null, $id);
         # permissão do usuário
         $this->checkPermissao($itens[$_Model]['usuario_id']);
 
