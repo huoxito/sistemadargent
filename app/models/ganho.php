@@ -7,7 +7,6 @@ class Ganho extends AppModel {
         )
     );
     
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
     var $belongsTo = array(
         'Fonte' => array(
             'className' => 'Fonte',
@@ -15,21 +14,11 @@ class Ganho extends AppModel {
             'conditions' => '',
             'fields' => 'id, nome',
             'order' => ''
-        ),
-        /*
-        'Usuario' => array(
-            'className' => 'Usuario',
-            'foreignKey' => 'usuario_id',
-            'conditions' => '',
-            'fields' => 'id, login',
-            'order' => ''
-        ),
-        */
+        )
     );
     
     var $validate = array(
     
-        
         'fonte_id' => array(
             'numeric' => array(
                 'rule' => 'Numeric',
@@ -37,13 +26,14 @@ class Ganho extends AppModel {
                 'message' => 'Selecione uma fonte',
                 'allowEmpty' => false,
                 )
-        ), 
+        ),
         'valor' => array(
             'rule2' => array(
                 'rule' => 'notEmpty',
                 'message' => 'Digite um valor',
                 'allowEmpty' => false,
-                'required' => false
+                'required' => false,
+                'last' => true
                 ),
             'rule1' => array(
                 'rule' => array('money','left'),
