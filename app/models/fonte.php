@@ -3,7 +3,6 @@ class Fonte extends AppModel {
 
     var $displayField = 'nome';
     
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasMany = array(
 		'Ganho' => array(
 			'className' => 'Ganho',
@@ -11,12 +10,7 @@ class Fonte extends AppModel {
 			'dependent' => true,
 			'conditions' => '',
 			'fields' => 'valor',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
 			'exclusive' => true,
-			'finderQuery' => '',
-			'counterQuery' => ''
 		),
         'Agendamento' => array(
 			'className' => 'Agendamento',
@@ -24,15 +18,7 @@ class Fonte extends AppModel {
 			'dependent' => true,
 			'conditions' => '',
 			'fields' => 'valor',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-            # exclusive -> does the delete with a deleteAll() call
-            #, instead of deleting each entity separately.
-            # This greatly improves performance, but may not be ideal for all circumstances
-			'exclusive' => true, 
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'exclusive' => true,
 		),
 	);
     
@@ -42,12 +28,16 @@ class Fonte extends AppModel {
             'rule1' => array(
 			    'rule' => 'notEmpty',
 			    'required' => true,
-			    'message' => 'Digite o nome'
+			    'message' => 'Insira o nome da categoria'
             ),
             'rule2' => array(
                 'rule' => array('between',0,30),
                 'message' => 'No máximo 30 caracteres',
                 'last' => true
+            ),
+            'unique' => array(
+                'rule' => 'checkUnique',
+			    'message' => 'Fonte já cadastrada'
             )
 		),
         'usuario_id' => array(
@@ -62,5 +52,18 @@ class Fonte extends AppModel {
         Sanitize::html(&$this->data['Fonte']['nome'],array('remove'=>true));
         return true;
     }
+    
+    function checkUnique(){
+        $chk = $this->find('count',
+                        array('conditions' =>
+                                array('Fonte.nome' => $this->data['Fonte']['nome'],
+                                      'Fonte.usuario_id' => $this->data['Fonte']['usuario_id'])));
+        if($chk){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
 }
 ?>
