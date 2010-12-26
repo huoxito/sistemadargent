@@ -14,14 +14,15 @@ class ModifiableBehavior extends ModelBehavior {
     
     function beforeValidate(&$model){
             
-            foreach($this->settings[$model->alias]['fields'] as $fieldName) {
-                if( isset($model->data[$model->alias]['valor']) ){
-                    $valor = (int)$model->data[$model->alias]['valor'];
-                    if(empty($valor)){
-                        return false;
-                    }
+        foreach($this->settings[$model->alias]['fields'] as $fieldName) {
+            if( isset($model->data[$model->alias]['valor']) ){
+                $valor = (int)$model->data[$model->alias]['valor'];
+                if(empty($valor)){
+                    $model->data[$model->alias]['valor'] = "";
                 }
             }
+        }
+        return true;
     }
     
 	function beforeSave(&$model){
