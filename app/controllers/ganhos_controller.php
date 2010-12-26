@@ -135,14 +135,14 @@ class GanhosController extends AppController {
         
         if (!empty($this->data)) {
             
-            # caso o usuário tenha inserido uma nova fonte
             if ( isset($this->data['Fonte']['nome']) ){
-                $this->data['Ganho']['fonte_id'] = $this->addCategoria($this->data['Fonte']['nome'],'Fonte','Ganho');
-            } 
+                $this->data['Fonte']['usuario_id'] = $this->user_id;
+                unset($this->data['Ganho']['fonte_id']);
+            }
             
             $this->Ganho->create();
-            $this->Ganho->set('usuario_id', $this->Auth->user('id'));
-            if ($this->Ganho->save($this->data)) {
+            $this->data['Ganho']['usuario_id'] = $this->user_id;
+            if ($this->Ganho->saveAll($this->data,array('validate' => true))) {
                 $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 
                 if(!$this->data['Ganho']['keepon']){
@@ -151,7 +151,7 @@ class GanhosController extends AppController {
                     $this->data = null;
                 }
             } else {
-                //print_r($this->validateErrors($this->Ganho));  
+                //$this->_pa($this->validateErrors($this->Ganho));  
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }
         }
