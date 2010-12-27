@@ -235,7 +235,7 @@ class GanhosController extends AppController {
                     
                     $categoria = $this->Ganho->Fonte->field('nome');
                     $ganho = $this->Ganho->find('first',
-                                array ('fields' => array('valor','observacoes'),
+                                array ('fields' => array('id','valor','observacoes'),
                                        'conditions' =>
                                         array('id' => $this->data['Ganho']['id']),
                                        'recursive' => -1));

@@ -3,6 +3,17 @@
     
     <?= $this->Form->create('Ganho',array('default' => false)); ?>    
     
+    <?= $this->Form->hidden('datadabaixa'); ?>
+    <div class="datepickerWraper required">
+        <label class="labelCalendario">
+            Data da baixa
+        </label>    
+        <div id="datepicker"></div>
+        <span class="dataAmigavel change">
+            <?= $this->Data->formata($this->data['Ganho']['datadabaixa'], 'longadescricao'); ?>
+        </span>
+    </div>
+    
     <div class="inputsRight">
     
         <?= $this->Form->input('id'); ?>
@@ -16,12 +27,6 @@
         </div>
         
         <?= $this->Form->input('valor'); ?>
-        <?= $this->Form->input('datadabaixa',
-                            array('label' => 'Data da baixa',
-                                  'type' => 'text',
-                                  'class' => 'dataField',
-                                  'default' => date('d-m-Y')));  ?>
-        
         <?= $this->Form->input('observacoes',
                             array('type' => 'textarea',
                                   'label' => 'Observações',
@@ -42,7 +47,19 @@
 </script>
 <?php echo $this->Html->script('forms'); ?>
 
+<? list($dia,$mes,$ano) = explode('-',$this->data['Ganho']['datadabaixa']); ?>
 <script type="text/javascript">
+    
+    $('#datepicker').datepicker({
+                dateFormat: 'D, d MM, yy',
+                defaultDate: new Date(<?=$ano?>,<?=$mes-1?>,<?=$dia?>),
+                maxDate: 'dd-mm-yy',
+                altField: '#GanhoDatadabaixa',
+                altFormat: 'dd-mm-yy',
+                onSelect: function(dateText, inst){
+                    $('.change').html(dateText);
+                }
+    });
     
     $('#fecharColorbox').click(function(){
         parent.jQuery.fn.colorbox.close();
@@ -74,9 +91,8 @@
                 }else if(result == 'validacao'){
                     $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
                 }else {
-                    $('body').append(result)
-                    //parent.$('#ganho-' + id).html(result);
-                    //var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
+                    parent.$('#ganho-' + id).html(result);
+                    var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
                 }
             }
         });
