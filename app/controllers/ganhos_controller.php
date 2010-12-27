@@ -137,24 +137,25 @@ class GanhosController extends AppController {
             
             if ( isset($this->data['Fonte']['nome']) ){
                 $this->data['Fonte']['usuario_id'] = $this->user_id;
-                unset($this->data['Ganho']['fonte_id']);
+                unset($this->Ganho->validate['fonte_id']);
             }
-            
+
             $this->Ganho->create();
             $this->data['Ganho']['usuario_id'] = $this->user_id;
-            if ($this->Ganho->saveAll($this->data,array('validate' => true))) {
-                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
+            if ($this->Ganho->saveAll($this->data)) {
                 
+                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 if(!$this->data['Ganho']['keepon']){
                     $this->redirect(array('action'=>'index'));  
                 }else{
                     $this->data = null;
                 }
             } else {
-                //$this->_pa($this->validateErrors($this->Ganho));  
+                $errors = $this->validateErrors($this->Ganho->Fonte,$this->Ganho);
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }
         }
+        
         $fontes = $this->Ganho->Fonte->find('list',
                                         array('conditions' =>
                                                 array('status' => 1,
