@@ -3,13 +3,15 @@
 class HomesController extends AppController{
 
     var $uses = array('Ganho', 'Gasto');
-    var $components = array('Valor', 'Data', 'PieChart','LineChart');
-
+    var $components = array('Valor', 'Data');
+    var $helpers = array('Data');
+    
     function index(){
 
         $inicial = date('Y-m-d', mktime(0,0,0,date('m'),date('d')-30,date('Y')));
         $final = date('Y-m-d', mktime(0,0,0,date('m'),date('d')+30,date('Y')));
-
+        $this->set(array('inicial' => $inicial,'final' => $final));
+        
         $this->Ganho->recursive = 0;
         $ganhos = $this->Ganho->find('all',
                             array('conditions' =>
@@ -30,8 +32,7 @@ class HomesController extends AppController{
                                   'order' => array('Gasto.datadevencimento' => 'asc', 'Gasto.modified' => 'asc')
                                   ));
 
-        $dataInicial = date('Y-m-d', mktime(0,0,0,date('m')-1,date('d'),date('Y')));
-        list($Ano,$mesNumerico,$Dia) = explode('-',$dataInicial);
+        list($Ano,$mesNumerico,$Dia) = explode('-',$inicial);
         $count = 0;
         for($i=0;$i<60;$i++){
 
@@ -40,10 +41,9 @@ class HomesController extends AppController{
             list($Ano,$mesNumerico,$Dia) = explode('-',$dataNoLoop);
             $dataCalendario = $Ano.'-'.$mesNumerico.'-'.$Dia;
             $Mes = $this->Data->retornaNomeDoMes((int)$mesNumerico);
-            $dataMaxima = $this->Data->comparaDatas(date('d-m-Y'),$Dia.'-'.$mesNumerico.'-'.$Ano);
+            $botaoConfirmar = $this->Data->comparaDatas(date('d-m-Y'),$Dia.'-'.$mesNumerico.'-'.$Ano);
 
-            $calendario[$Ano][$Mes][$Dia] = array(//'dia' => $Dia,
-                                                'diadasemana' => $this->Data->formata($dataCalendario,'diadasemana'));
+            $calendario[$Ano][$Mes][$Dia]['diadasemana'] = $this->Data->formata($dataCalendario,'diadasemana');
 
             foreach($ganhos as $item){
 
@@ -57,7 +57,7 @@ class HomesController extends AppController{
                                           'categoria' => $item['Fonte']['nome'],
                                           'id' => $item['Ganho']['id'],
                                           'obs' => $item['Ganho']['observacoes'],
-                                          'dataFutura' => $dataMaxima);
+                                          'botaoConfirmar' => $botaoConfirmar);
                     $count++;
                 }
             }
@@ -74,7 +74,7 @@ class HomesController extends AppController{
                                           'categoria' => $item['Destino']['nome'],
                                           'id' => $item['Gasto']['id'],
                                           'obs' => $item['Gasto']['observacoes'],
-                                          'dataFutura' => $dataMaxima);
+                                          'botaoConfirmar' => $botaoConfirmar);
                     $count++;
                 }
             }
@@ -135,13 +135,7 @@ class HomesController extends AppController{
             $this->redirect('error404');
         }
 
-        $itens = $this->$_Model->read(array($_Model.'.id',
-                                            $_Model.'.usuario_id',
-                                            $_Model.'.valor',
-                                            $_Model.'.datadevencimento',
-                                            $_Model.'.observacoes',
-                                            $_Categoria.'.nome'), $id);
-
+        $itens = $this->$_Model->read(null, $id);
         # permissão do usuário
         $this->checkPermissao($itens[$_Model]['usuario_id']);
 

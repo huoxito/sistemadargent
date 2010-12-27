@@ -88,20 +88,40 @@
     
     function insereInputFontes(name){
         
-        $('div.select select').fadeOut('fast',function(){
-                $('div.select a').remove();
-                $('div.select').append('<input type="text" maxlength="30" name="data[Fonte][nome]" />');
-                $('div.select').append('<a href="javascript:;" title="cadastrar fonte" class="btnadd" onclick="insereSelectFontes();">SELECIONAR UMA FONTE</a>');    
+        $.ajax({
+            url: '../ganhos/insereInput',
+            beforeSend: function(){
+                $('#selectCategoria img').detach();
+                $('#selectCategoria').append('<img src="../img/ajax-loader-p.gif" />');
+            },
+            success: function(result){
+                $('#selectCategoria').fadeOut('fast',function(){
+                    $('#selectCategoria').remove();
+                    $('fieldset').prepend(result);
+                });
+            }
         });
     }
     
     function insereSelectFontes(){
         
-        $('div.select input').fadeOut('fast',function(){
-            $('div.select input').remove();
-            $('div.select a').remove();
-            $('div.select select').show();
-            $('div.select').append('<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInputFontes();">INSERIR NOVA FONTE</a>');    
+        $.ajax({
+            url: '../ganhos/insereSelect',
+            beforeSend: function(){
+                $('#selectCategoria img').detach();
+                $('#selectCategoria').append('<img src="../img/ajax-loader-p.gif" />');
+            },
+            success: function(result){
+                $('#selectCategoria img').remove();
+                $('#selectCategoria').fadeOut('fast',function(){
+                    $('fieldset').prepend(result);
+                });
+            }
+        });
+
+        $('#inputCategoria').fadeOut('fast',function(){
+            $('#inputCategoria').remove();
+            $('#selectCategoria').fadeIn();    
         });
     }
     

@@ -1,42 +1,57 @@
    
-    <?php   echo $this->Html->script('jquery.textareaCounter.plugin');  ?>
+    <?= $this->Html->script('jquery.textareaCounter.plugin');  ?>
     
     <div class="ganhos form">
         
         <div id="contentHeader">
-            <?php   echo $this->element('ganho_menu'); ?>
+            <?= $this->element('ganho_menu'); ?>
         </div>
         
         <div class="balancoBotoesWraper">
             <div class="balancoBotoes">
-                <p>Insira aqui somente o que você já realmente ganhou. Para programar um faturamento use a seção Agendamentos</p>
+                <p>
+                    Insira aqui somente o que você já realmente ganhou.
+                    Para programar um faturamento use a seção Agendamentos
+                </p>
             </div>
         </div>
         
-        <?php $linkCategoria = '<a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInputFontes();">INSERIR NOVA FONTE</a>'; ?>
-        
-        <cake:nocache>
-        <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
+        <?= $this->Session->flash(); ?>
         
         <div class="formWraper">
                  
-            <?php echo $this->Form->create('Ganho');?>
+            <?= $this->Form->create('Ganho');?>
             <fieldset>
-            <?php
-                echo $this->Form->input('fonte_id',
-                                    array('empty' => 'Escolha um registro',
-                                          'error' => false,
-                                          'class' => 'select_categoria',
-                                          'after' => $linkCategoria));
                 
-                echo $this->Form->input('valor',
-                                    array('error' => false));
+                <?php if(!array_key_exists('Fonte',(array)$this->data)){ ?>
                 
+                <div id="selectCategoria" class="input text required">
+                    <?= $this->Form->input('fonte_id',
+                                        array('empty' => 'Escolha uma categoria',
+                                              'div' => false)); ?>
+                    <a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInputFontes();">
+                        INSERIR NOVA FONTE
+                    </a>
+                </div>
+                
+                <?php }else{ ?>
+                
+                <div id="inputCategoria" class="input text required">
+                    <?= $this->Form->input('Fonte.nome',
+                                        array('label' => 'Fonte',
+                                              'div' => false)); ?>
+                    <a href="javascript:;" title="cadastrar fonte" class="btnadd" onclick="insereSelectFontes();">
+                        SELECIONAR UMA FONTE
+                    </a>
+                </div>
+                
+                <?php } ?>
+                
+            <?php   
+                echo $this->Form->input('valor');
                 echo $this->Form->input('datadabaixa',
                                     array('label' => 'Data da baixa',
                                           'type' => 'text',
-                                          'error' => false,
                                           'class' => 'dataField',
                                           'default' => date('d-m-Y')));
                 

@@ -135,26 +135,27 @@ class GanhosController extends AppController {
         
         if (!empty($this->data)) {
             
-            # caso o usuário tenha inserido uma nova fonte
             if ( isset($this->data['Fonte']['nome']) ){
-                $this->data['Ganho']['fonte_id'] = $this->addCategoria($this->data['Fonte']['nome'],'Fonte','Ganho');
-            } 
-            
+                $this->data['Fonte']['usuario_id'] = $this->user_id;
+                unset($this->Ganho->validate['fonte_id']);
+            }
+
             $this->Ganho->create();
-            $this->Ganho->set('usuario_id', $this->Auth->user('id'));
-            if ($this->Ganho->save($this->data)) {
-                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
+            $this->data['Ganho']['usuario_id'] = $this->user_id;
+            if ($this->Ganho->saveAll($this->data)) {
                 
+                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 if(!$this->data['Ganho']['keepon']){
                     $this->redirect(array('action'=>'index'));  
                 }else{
                     $this->data = null;
                 }
             } else {
-                //print_r($this->validateErrors($this->Ganho));  
+                $errors = $this->validateErrors($this->Ganho->Fonte,$this->Ganho);
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }
         }
+        
         $fontes = $this->Ganho->Fonte->find('list',
                                         array('conditions' =>
                                                 array('status' => 1,
@@ -162,6 +163,14 @@ class GanhosController extends AppController {
                                               'order' => 'Fonte.nome asc'));
         $this->set(compact('fontes'));
         $this->set('title_for_layout', 'Inserir Faturamento');
+    }
+        
+    function insereInput(){
+        $this->layout = 'ajax';
+    }
+    
+    function insereSelect(){
+        $this->layout = 'ajax';
     }
     
     function edit($id = null) {
