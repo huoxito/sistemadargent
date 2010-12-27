@@ -55,11 +55,7 @@ class DataHelper extends AppHelper {
         $diaDaSemanaTimeStamp = mktime(0,0,0,$mes,$dia,$ano);
         $diaDaSemana = date('D',$diaDaSemanaTimeStamp);
         
-        if($formato === 'completa')
-        {
-            $dataFormatada = $dia.'-'.$mes.'-'.$ano.', '.$hora;
-        }
-        else if($formato === 'diamesano')
+        if($formato === 'diamesano')
         {
             $dataFormatada = $dia.'-'.$mes.'-'.$ano;
         }
@@ -75,9 +71,12 @@ class DataHelper extends AppHelper {
         }else if ( $formato === 'diadasemana' ){
             $dataFormatada = $diaSemana[$diaDaSemana];
         }else if ( $formato === 'longadescricao' ){
-            $dataFormatada = $diaSemana[$diaDaSemana].', '.$dia.' '.$mesLongo[$mes].', '.$ano;
+            # data já esta no formato 'humano'
+            $dataFormatada = $diaSemana[$diaDaSemana].', '.$ano.' '.$mesLongo[$mes].', '.$dia;
         }else if ( $formato === 'descricaocompleta' ){
             $dataFormatada = $diaSemana[$diaDaSemana].', '.$dia.' '.$mesLongo[$mes].' '.$ano.', '.$hora;
+        }else{
+            $dataFormatada = $dia.'-'.$mes.'-'.$ano.', '.$hora;
         }
         
         return $dataFormatada;

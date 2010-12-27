@@ -96,7 +96,7 @@
             success: function(result){
                 $('#inputCategoria').fadeOut('fast',function(){
                     $('#inputCategoria').remove();
-                    $('fieldset').prepend(result);
+                    $('.inputsRight').prepend(result);
                 });
             }
         });
@@ -114,7 +114,7 @@
             },
             success: function(result){    
                 $('#selectCategoria').remove();
-                $('fieldset').prepend(result);
+                $('.inputsRight').prepend(result);
             }
         });
         $('#insereInputFontes').die('click');

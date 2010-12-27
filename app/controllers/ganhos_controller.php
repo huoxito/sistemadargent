@@ -3,6 +3,7 @@
 class GanhosController extends AppController {
 
     var $components = array('Data', 'Valor');
+    var $helpers = array('Data');
 
     function index($mes=null,$ano=null) {
                 
@@ -154,6 +155,10 @@ class GanhosController extends AppController {
                 $errors = $this->validateErrors($this->Ganho->Fonte,$this->Ganho);
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }
+        }
+        
+        if(empty($this->data['Ganho']['datadabaixa'])){
+            $this->data['Ganho']['datadabaixa'] = date('d-m-Y');
         }
         
         $fontes = $this->Ganho->Fonte->find('list',
