@@ -164,6 +164,14 @@ class GanhosController extends AppController {
         $this->set(compact('fontes'));
         $this->set('title_for_layout', 'Inserir Faturamento');
     }
+        
+    function insereInput(){
+        $this->layout = 'ajax';
+    }
+    
+    function insereSelect(){
+        $this->layout = 'ajax';
+    }
     
     function edit($id = null) {
         
