@@ -86,45 +86,44 @@
         });
     }
     
-    function insereInputFontes(name){
-        
+    var insereSelectFontes = function(){
+        $.ajax({
+            url: '../ganhos/insereSelect',
+            beforeSend: function(){
+                $('#inputCategoria img').detach();
+                $('#inputCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
+            },
+            success: function(result){
+                $('#inputCategoria').fadeOut('fast',function(){
+                    $('#inputCategoria').remove();
+                    $('fieldset').prepend(result);
+                });
+            }
+        });
+        $('#insereSelectFontes').die('click');
+        $('#insereInputFontes').live('click', insereInputFontes);
+        return false;
+    };
+    
+    var insereInputFontes = function(){
         $.ajax({
             url: '../ganhos/insereInput',
             beforeSend: function(){
                 $('#selectCategoria img').detach();
-                $('#selectCategoria').append('<img src="../img/ajax-loader-p.gif" />');
+                $('#selectCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
             },
-            success: function(result){
-                $('#selectCategoria').fadeOut('fast',function(){
-                    $('#selectCategoria').remove();
-                    $('fieldset').prepend(result);
-                });
+            success: function(result){    
+                $('#selectCategoria').remove();
+                $('fieldset').prepend(result);
             }
         });
-    }
+        $('#insereInputFontes').die('click');
+        $('#insereSelectFontes').live('click', insereSelectFontes);
+        return false;
+    };
     
-    function insereSelectFontes(){
-        
-        $.ajax({
-            url: '../ganhos/insereSelect',
-            beforeSend: function(){
-                $('#selectCategoria img').detach();
-                $('#selectCategoria').append('<img src="../img/ajax-loader-p.gif" />');
-            },
-            success: function(result){
-                $('#selectCategoria img').remove();
-                $('#selectCategoria').fadeOut('fast',function(){
-                    $('fieldset').prepend(result);
-                });
-            }
-        });
-
-        $('#inputCategoria').fadeOut('fast',function(){
-            $('#inputCategoria').remove();
-            $('#selectCategoria').fadeIn();    
-        });
-    }
-    
+    $('#insereSelectFontes').live('click', insereSelectFontes);
+    $('#insereInputFontes').live('click', insereInputFontes);
     
     function insereInputDestinos(){
         

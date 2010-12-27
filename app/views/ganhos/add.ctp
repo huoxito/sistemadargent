@@ -29,7 +29,7 @@
                     <?= $this->Form->input('fonte_id',
                                         array('empty' => 'Escolha uma categoria',
                                               'div' => false)); ?>
-                    <a href="javascript:;" class="btnadd" title="inserir fonte" onclick="insereInputFontes();">
+                    <a href="#" class="btnadd" title="inserir" id="insereInputFontes">
                         INSERIR NOVA FONTE
                     </a>
                 </div>
@@ -40,7 +40,7 @@
                     <?= $this->Form->input('Fonte.nome',
                                         array('label' => 'Fonte',
                                               'div' => false)); ?>
-                    <a href="javascript:;" title="cadastrar fonte" class="btnadd" onclick="insereSelectFontes();">
+                    <a href="#" title="selecionar" class="btnadd" id="insereSelectFontes">
                         SELECIONAR UMA FONTE
                     </a>
                 </div>

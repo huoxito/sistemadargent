@@ -170,6 +170,12 @@ class GanhosController extends AppController {
     }
     
     function insereSelect(){
+        $fontes = $this->Ganho->Fonte->find('list',
+                                        array('conditions' =>
+                                                array('status' => 1,
+                                                      'usuario_id' => $this->Auth->user('id')),
+                                              'order' => 'Fonte.nome asc'));
+        $this->set(compact('fontes'));
         $this->layout = 'ajax';
     }
     
