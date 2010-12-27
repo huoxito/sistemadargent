@@ -4,7 +4,7 @@
     <p class="agendamentoInfoLinha">
         R$ <?php  echo $registro['Ganho']['valor']; ?>  reais com
         <span class="agendamentoCategoria">
-        <?php echo $registro['Fonte']['nome']; ?>
+        <?php echo $categoria; ?>
         </span>
     </p>
     

@@ -210,50 +210,43 @@ class GanhosController extends AppController {
         
         if( $this->params['isAjax'] ){
             
-            $chk = $this->Ganho->read(array('Ganho.usuario_id',
-                                            'Ganho.datadabaixa as data'),$this->params['url']['id']);
-            # permissão do usuário
-            if( $this->checkPermissao($chk['Ganho']['usuario_id'],true) ){
+            $this->data = array_merge($this->params['url']);
+            //$this->_pa($this->data);
+            
+            $this->Ganho->recursive = 0;
+            $chk = $this->Ganho->find('first',
+                                array('conditions' =>
+                                        array('Ganho.id' => $this->data['Ganho']['id'])));
+            if( $this->checkPermissao($chk['Ganho']['usuario_id'],true) ){ 
                 
-                if( isset($this->params['url']['novacategoria']) ){
-                    # caso usuário queira inserir uma nova fonte ao editar
-                    # salvo a nova fonte e recupero o id
-                    $this->params['url']['categoria'] = $this->addCategoria($this->params['url']['novacategoria'],'Fonte','Ganho');
+                if( isset($this->data['Fonte']['nome']) ){
+                    $this->data['Fonte']['usuario_id'] = $this->user_id;
+                    unset($this->Ganho->validate['fonte_id']);    
                 }     
     
-                $item['Ganho'] = array('valor' => $this->params['url']['valor'],
-                                        'datadabaixa' => $this->params['url']['data'],
-                                        'observacoes' => $this->params['url']['obs'],
-                                        'fonte_id' => $this->params['url']['categoria']);
-                
-                $this->Ganho->id = $this->params['url']['id'];
-                if ($this->Ganho->save($item)) {
+                $this->Ganho->id = $this->data['Ganho']['id'];
+                if ($this->Ganho->saveAll($this->data)) {
                     
-                    # passo variaveis pro layout atualizado
-                    $this->Ganho->Fonte->id = $this->params['url']['categoria'];
-                    $categoriaAtualizada = $categoria = $this->Ganho->Fonte->field('nome'); 
+                    if( isset($this->data['Fonte']['nome']) ){
+                        $this->Ganho->Fonte->id;
+                    }else{
+                        $this->Ganho->Fonte->id = $this->data['Ganho']['fonte_id'];
+                    }
                     
-                    $dadosAtualizados = $this->Ganho->find('first',
-                                                            array (
-                                                                   'fields' => array('valor','observacoes'),
-                                                                   'conditions' => array('id' => $this->params['url']['id']),
-                                                                   'recursive' => -1));
-                    $resposta = array(
-                        'Ganho' => array(
-                            'id' => $this->params['url']['id'],
-                            'valor' => $dadosAtualizados['Ganho']['valor'],
-                            'observacoes' => $dadosAtualizados['Ganho']['observacoes']
-                        ),
-                        'Fonte' => array(
-                            'nome' => $categoriaAtualizada
-                        )
-                    );
-                    $this->set('registro',$resposta);
+                    $categoria = $this->Ganho->Fonte->field('nome');
+                    $ganho = $this->Ganho->find('first',
+                                array ('fields' => array('valor','observacoes'),
+                                       'conditions' =>
+                                        array('id' => $this->data['Ganho']['id']),
+                                       'recursive' => -1));
+                    
+                    $this->set('registro',$ganho);
+                    $this->set('categoria',$categoria);
                     
                     # se usuário alterar a data exibo data alterada
-                    $dataAntiga = $this->Data->formata($chk['Ganho']['data'],'diamesano');
-                    if( $this->params['url']['data'] != $dataAntiga ){
-                        $dataAlterada = $this->Data->formata($this->params['url']['data'],'mesextenso');
+                    $dataAntiga = $this->Data->formata($chk['Ganho']['datadabaixa'],'diamesano');
+                    if( $this->data['Ganho']['datadabaixa'] != $dataAntiga ){
+                        $dataAlterada = $this->Data->formata($this->data['Ganho']['datadabaixa'],'mesextenso');
                         $this->set('dataAlterada',$dataAlterada);
                     }
                     
