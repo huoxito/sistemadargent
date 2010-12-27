@@ -88,7 +88,7 @@
     
     var insereSelectFontes = function(){
         $.ajax({
-            url: '../ganhos/insereSelect',
+            url: urlInsereSelect,
             beforeSend: function(){
                 $('#inputCategoria img').detach();
                 $('#inputCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
@@ -107,7 +107,7 @@
     
     var insereInputFontes = function(){
         $.ajax({
-            url: '../ganhos/insereInput',
+            url: urlInsereInput,
             beforeSend: function(){
                 $('#selectCategoria img').detach();
                 $('#selectCategoria').append(' <img src="../img/ajax-loader-p.gif" />');

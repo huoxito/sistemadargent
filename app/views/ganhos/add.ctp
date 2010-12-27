@@ -82,6 +82,11 @@
 
     </div>
     
+    <script type="text/javascript">
+        // variáveis que serão usadas em algumas funções do arquivo form.js
+        var urlInsereInput = '<?= $this->Html->url(array("action" => "InsereInput"));?>';
+        var urlInsereSelect = '<?= $this->Html->url(array("action" => "InsereSelect"));?>';
+    </script>
     <?php echo $this->Html->script('forms'); ?>
     
     <? list($dia,$mes,$ano) = explode('-',$this->data['Ganho']['datadabaixa']); ?>
