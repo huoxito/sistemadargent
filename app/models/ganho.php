@@ -1,12 +1,12 @@
 <?php
 class Ganho extends AppModel {
-    
+
     var $actsAs = array(
         'Modifiable' => array(
-			'fields' => array('datadabaixa', 'valor','observacoes', 'datadevencimento')
+			'fields' => array('datadabaixa', 'valor', 'observacoes', 'datadevencimento')
         )
     );
-    
+
     var $belongsTo = array(
         'Fonte' => array(
             'className' => 'Fonte',
@@ -18,28 +18,22 @@ class Ganho extends AppModel {
     );
     
     var $validate = array(
-    
         'fonte_id' => array(
-            'numeric' => array(
-                'rule' => 'Numeric',
-                'required' => false,
-                'message' => 'Selecione uma fonte',
-                'allowEmpty' => false,
-                )
+            'rule' => 'notEmpty',
+            'required' => false,
+            'message' => 'Selecione uma fonte',
+            'allowEmpty' => false,
         ),
         'valor' => array(
-            'rule2' => array(
+            'vazio' => array(
                 'rule' => 'notEmpty',
-                'message' => 'Digite um valor',
-                'allowEmpty' => false,
-                'required' => false,
+                'message' => 'Digite um valor (Ex: 220,00)',
                 'last' => true
-                ),
-            'rule1' => array(
+            ),
+            'formato' => array(
                 'rule' => array('money','left'),
                 'message' => 'Digite um valor válido (Ex: 220,00)'
-                ),
-            
+            )
         ),
         'datadabaixa' => array(
                 'rule' => array('date', 'dmy'),
@@ -53,7 +47,6 @@ class Ganho extends AppModel {
                 'required' => false,
                 'allowEmpty' => true,
         )  
-
     );
     
     function createStatement($data)
