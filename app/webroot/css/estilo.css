@@ -697,6 +697,11 @@ div.inserirphoto {
 	text-align:center;
 	}
 
+form .required label:after {
+	color: #000;
+	content: ' *';
+	display:inline;
+}
 label
 {
 	display:block;
