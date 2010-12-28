@@ -2,8 +2,10 @@
 
 
 class AgendamentosController extends AppController {
-
+    
+    var $name = 'Agendamentos';
     var $components = array('Data', 'Valor');
+    var $helpers = array('Data');
     
     function index() {
         
@@ -97,7 +99,11 @@ class AgendamentosController extends AppController {
             }
         }
         
-        if(!$this->data['Agendamento']['config']){
+        if(empty($this->data['Agendamento']['datadevencimento'])){
+            $this->data['Agendamento']['datadevencimento'] = date('d-m-Y');
+        }
+        
+        if(!isset($this->data['Agendamento']['config'])){
             $this->data['Agendamento']['config'] = 0;
         }
         

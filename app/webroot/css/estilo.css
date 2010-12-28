@@ -697,6 +697,14 @@ div.inserirphoto {
 	text-align:center;
 	}
 
+/************************* forms ******************************/
+
+.leftInput {
+	float: left;
+	margin-bottom:10px !important;
+	min-width: 150px;
+}
+
 .error-message {
 	display: block;
 	color: #E3290D;
