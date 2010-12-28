@@ -8,7 +8,7 @@
                         false,
                         array('empty' => 'Escolha uma categoria',
                               'div' => false)); ?>
-    <a href="#" class="btnadd" title="inserir" id="insereInputFontes">
+    <a href="#" class="btnadd" title="inserir" id="insereInputDestinos">
         INSERIR NOVO DESTINO
     </a>
 </div>
