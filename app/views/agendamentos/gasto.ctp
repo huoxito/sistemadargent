@@ -10,7 +10,10 @@
         <div class="balancoBotoesWraper">
             <div class="balancoBotoes">
                 
-                <p>Aqui você pode programar uma Despesa. Pode ser apenas um registro ou algo com várias parcelas.</p>
+                <p>
+                    Aqui você pode programar uma Despesa.
+                    Pode ser apenas um registro ou algo com várias parcelas.
+                </p>
                 
                 <div class="headeraddlinks">
                     <?php echo $this->Html->link('AGENDAR FATURAMENTO',
@@ -29,67 +32,131 @@
             
         </div>
         
-        <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
         
-        <div class="formWraper">
+        <div class="formWraper formBox">
         
-            <?php echo $form->create('Agendamento',array('action' => 'tipo/Gasto'));?>
+            <?= $this->Form->create('Agendamento',
+                            array('action' => 'tipo/Gasto',
+                                  'inputDefaults' =>
+                                    array('error' => array('wrap' => 'span'))));?>
             <fieldset>
-            <?php
-                echo $form->input('destino_id',
-                                    array('empty' => 'Escolha um registro',
-                                          'error' => false,
-                                          'class' => 'select_categoria',
-                                          'div' => array('id' => 'select_categoria'),
-                                          'after' => '<a href="javascript:;" title="cadastrar" class="btnadd" onclick="insereInput(\'data[Destino][nome]\');">INSERIR NOVA CATEGORIA</a>'));
                 
-                echo $this->Form->input('datadevencimento',
-                                    array('label' => 'Data de vencimento',
-                                          'type' => 'text',
-                                          'error' => false,
-                                          'class' => 'dateFieldAhead',
-                                          'default' => date('d-m-Y')));
+                <?= $this->Form->hidden('datadevencimento'); ?>
+                <div class="datepickerWraper required">
+                    <label class="labelCalendario">
+                        Data de vencimento
+                    </label>    
+                    <div id="datepicker"></div>
+                    <span class="dataAmigavel change">
+                        <?= $this->Data->formata($this->data['Agendamento']['datadevencimento'], 'longadescricao'); ?>
+                    </span>
+                </div>
                 
-                echo $form->input('valor',
-                                    array('error' => false));
-                
-                echo $form->input('observacoes',
-                                    array('type' => 'textarea',
-                                          'label' => 'Observações',
-                                          'id' => 'Observacoes'));
-                
-                $options = array('0'=>'Apenas um resgistro', '1'=>'Parcelar',);
-                $attributes = array('legend'=> false,
-                                    'class' => 'config',
-                                    'label' => false,
-                                    'onchange' => 'disableOrNotInputs(this.value);');
-                echo $this->Form->radio('config',$options,$attributes);   
-                
-            ?>
-                
-                <div id="camposParcela">
+                <div class="inputsRight">
+                    
+                    <?php if(!array_key_exists('Destino',(array)$this->data)){ ?>
+                    
+                    <div id="selectCategoria" class="input text required">
+                        <?= $this->Form->input('destino_id',
+                                            array('empty' => 'Escolha uma categoria',
+                                                  'div' => false,
+                                                  'error' => false)); ?>
+                        <a href="#" class="btnadd" title="inserir" id="insereInputDestinos">
+                            INSERIR NOVA FONTE
+                        </a>
+                        <?php if (isset($this->validationErrors['Agendamento']['destino_id'])){ ?>
+                            <span class="error-message">
+                                <?= $this->validationErrors['Agendamento']['destino_id'] ?>
+                            </span>
+                        <?php } ?>
+                    </div>
+                    
+                    <?php }else{ ?>
+                    
+                    <div id="inputCategoria" class="input text required">
+                        <?= $this->Form->input('Destino.nome',
+                                            array('label' => 'Destino',
+                                                  'div' => false,
+                                                  'error' => false)); ?>
+                        <a href="#" title="selecionar" class="btnadd" id="insereSelectDestinos">
+                            SELECIONAR UMA FONTE
+                        </a>
+                        <?php if (isset($this->validationErrors['Destino']['nome'])){ ?>
+                            <span class="error-message">
+                                <?= $this->validationErrors['Destino']['nome'] ?>
+                            </span>
+                        <?php } ?>
+                    </div>
+                    
+                    <?php } ?>
+                    
+                    <?= $this->Form->input('valor'); ?>
+                    <?= $this->Form->input('observacoes',
+                                                    array('type' => 'textarea',
+                                                          'label' => 'Observações',
+                                                          'id' => 'Observacoes')); ?>
+                    
+                    <div class="input">
                     <?php
-                        echo $this->Form->input('frequencia_id',
-                                            array('label' => 'Frequência',
-                                                  'empty' => 'Frequência',
-                                                  'error' => false));
-                        
-                        echo $this->Form->input('numdeparcelas',
-                                            array('label' => 'Número de parcelas'));
-                        
+                        $options = array('0'=>' Apenas um registro ', '1'=>' Parcelar ',);
+                        $attributes = array('legend'=> false,
+                                            'class' => 'config',
+                                            'label' => false,
+                                            'onchange' => 'disableOrNotInputs(this.value);');
+                        echo $this->Form->radio('config',$options,$attributes);   
                     ?>
-                </div>  
-            
+                    </div>
+                    
+                    <div class="leftInput">
+                        <?= $this->Form->input('frequencia_id',
+                                                array('label' => 'Frequência',
+                                                      'empty' => 'Frequência',
+                                                      'div' => false)); ?>
+                    </div>
+                    
+                    <div class="leftInput">    
+                        <?= $this->Form->input('numdeparcelas',
+                                                array('label' => 'Número de parcelas',
+                                                      'div' => false)); ?>
+                    </div>  
+                
+                </div>
+                
+                <div class="submit">
+                    <input type="submit" value="Agendar">
+                    <?php echo $this->Form->checkbox('keepon'); ?>
+                    <span class="label">Continuar programando registros</span>
+                </div>
+                
             </fieldset>
             
-            <?php echo $form->end('Agendar');?>
         </div>
         
     </div>
     
+    <script type="text/javascript">
+        // variáveis que serão usadas em algumas funções do arquivo form.js
+        var urlInsereInput = '<?= $this->Html->url(array("controller" => "gastos", "action" => "InsereInput"));?>';
+        var urlInsereSelect = '<?= $this->Html->url(array("controller" => "gastos", "action" => "InsereSelect"));?>';
+    </script>
     <?php   echo $this->Html->script('forms');  ?>
+    
+    <? list($dia,$mes,$ano) = explode('-',$this->data['Agendamento']['datadevencimento']); ?>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                        dateFormat: 'D, d MM, yy',
+                        defaultDate: new Date(<?=$ano?>,<?=$mes-1?>,<?=$dia?>),
+                        minDate: 'dd-mm-yy',
+                        altField: '#AgendamentoDatadevencimento',
+                        altFormat: 'dd-mm-yy',
+                        onSelect: function(dateText, inst){
+                            $('.change').html(dateText);
+                        }
+            });
+        });
+    </script>
     
     <script type="text/javascript">  
         disableOrNotInputs($(':radio:checked').val());
