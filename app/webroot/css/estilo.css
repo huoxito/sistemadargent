@@ -697,6 +697,12 @@ div.inserirphoto {
 	text-align:center;
 	}
 
+.error-message {
+	display: block;
+	color: #E3290D;
+	margin: 5px;
+}
+
 form .required label:after {
 	color: #000;
 	content: ' *';

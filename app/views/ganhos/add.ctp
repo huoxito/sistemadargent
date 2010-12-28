@@ -22,7 +22,7 @@
                  
             <?= $this->Form->create('Ganho',
                             array('inputDefaults' =>
-                                    array('error' => false))); ?>
+                                    array('error' => array('wrap' => 'span')))); ?>
                                     
             <fieldset>
                 
@@ -44,10 +44,16 @@
                     <div id="selectCategoria" class="input text required">
                         <?= $this->Form->input('fonte_id',
                                             array('empty' => 'Escolha uma categoria',
-                                                  'div' => false)); ?>
+                                                  'div' => false,
+                                                  'error' => false)); ?>
                         <a href="#" class="btnadd" title="inserir" id="insereInputFontes">
                             INSERIR NOVA FONTE
                         </a>
+                        <?php if (isset($this->validationErrors['Ganho']['fonte_id'])){ ?>
+                            <span class="error-message">
+                                <?= $this->validationErrors['Ganho']['fonte_id'] ?>
+                            </span>
+                        <?php } ?>
                     </div>
                     
                     <?php }else{ ?>
@@ -55,10 +61,16 @@
                     <div id="inputCategoria" class="input text required">
                         <?= $this->Form->input('Fonte.nome',
                                             array('label' => 'Fonte',
-                                                  'div' => false)); ?>
+                                                  'div' => false,
+                                                  'error' => false)); ?>
                         <a href="#" title="selecionar" class="btnadd" id="insereSelectFontes">
                             SELECIONAR UMA FONTE
                         </a>
+                        <?php if (isset($this->validationErrors['Fonte']['nome'])){ ?>
+                            <span class="error-message">
+                                <?= $this->validationErrors['Fonte']['nome'] ?>
+                            </span>
+                        <?php } ?>
                     </div>
                     
                     <?php } ?>
