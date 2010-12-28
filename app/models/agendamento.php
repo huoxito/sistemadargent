@@ -18,13 +18,11 @@ class Agendamento extends AppModel {
             'rule1' => array(
                 'rule' => 'Numeric',
                 'message' => 'Campo obrigatório',
-                'required' => false
             )  
         ),
         'fonte_id' => array(
             'numeric' => array(
                 'rule' => 'Numeric',
-                'required' => false,
                 'message' => 'Selecione uma fonte'
             )
         ),
@@ -32,7 +30,6 @@ class Agendamento extends AppModel {
             'rule1' => array(
                 'rule' => 'Numeric',
                 'message' => 'Campo obrigatório',
-                'required' => false,
             )  
         ),
         'valor' => array(
@@ -40,7 +37,6 @@ class Agendamento extends AppModel {
                 'rule' => 'notEmpty',
                 'message' => 'Digite um valor',
                 'last' => true,
-                'allowEmpty' => false,
                 'required' => true
             ),
             'rule1' => array(
@@ -50,15 +46,14 @@ class Agendamento extends AppModel {
         ),
         'datadevencimento' => array(
                 'rule' => array('date', 'dmy'),
-                'required' => false,
                 'message' => 'insira uma data válida',
                 'allowEmpty' => false,
         ),
         'numdeparcelas' => array(
             'rule1' => array(
                 'rule' => 'notEmpty',
-                'required' => false,
-                'message' => 'Selecione uma fonte'
+                'message' => 'Insira um número',
+                'last' => true
             ),
             'rule2' => array(
                 'rule' => 'numeroDeParcelas',
