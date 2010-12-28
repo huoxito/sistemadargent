@@ -3,7 +3,7 @@
 
 <div id="selectCategoria" class="input text required">
     <label>Fonte</label>
-    <?= $this->Form->select('fonte_id',
+    <?= $this->Form->select('Ganho.fonte_id',
                         $fontes,
                         false,
                         array('empty' => 'Escolha uma categoria',
