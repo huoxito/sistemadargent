@@ -64,14 +64,24 @@ class AgendamentosController extends AppController {
         
         if (!empty($this->data)) {
             
-            # caso o usuário tenha inserido uma nova categoria
-            if ( isset($this->data[$_Categoria]['nome']) ){
-                $this->data['Agendamento'][$_parentKey] = $this->addCategoria($this->data[$_Categoria]['nome'],$_Categoria,'Agendamento');
+            // merge pra pegar valor de um select inserido com ajax
+            if(isset($this->data[$_Model][$_parentKey])){
+                $this->data['Agendamento'] = array_merge($this->data['Agendamento'],$this->data[$_Model]);
             }
-   
+            
+            if ( isset($this->data[$_Categoria]['nome']) ){
+                $this->data[$_Categoria]['usuario_id'] = $this->user_id;
+                unset($this->Agendamento->validate[$_parentKey]);
+            }
+            
             $this->Agendamento->create();
-            $this->Agendamento->set(array('usuario_id' => $this->Auth->user('id'), 'model' => $_Model));
-            if ($this->Agendamento->save($this->data)) {
+            $this->data['Agendamento']['usuario_id'] = $this->user_id;
+            $this->data['Agendamento']['model'] = $_Model;
+            if ($this->Agendamento->saveAll($this->data)) {
+                
+                if( isset($this->data[$_Categoria]['nome']) ){
+                    $this->data['Agendamento'][$_parentKey] = $this->Agendamento->$_Categoria->id;
+                }
                 
                 if($this->data['Agendamento']['config']){
                     $this->_agendarParcelas($_Model,$this->Agendamento->id,$this->data);
@@ -93,7 +103,11 @@ class AgendamentosController extends AppController {
                 }
                 
                 $this->Session->setFlash('Registro agendado com sucesso', 'flash_success');
-                $this->redirect(array('action' => 'index'));
+                if(!$this->data['Agendamento']['keepon']){
+                    $this->redirect(array('action'=>'index'));  
+                }else{
+                    $this->data = null;
+                }
             } else {
                 $this->Session->setFlash('Preencha os campos corretamente.', 'flash_error');
             }
@@ -110,7 +124,8 @@ class AgendamentosController extends AppController {
         $categorias = $this->Agendamento->$_Categoria->find('list',
                                                     array('conditions' =>
                                                             array('status' => 1,
-                                                                  'usuario_id' => $this->Auth->user('id'))));
+                                                                  'usuario_id' => $this->Auth->user('id')),
+                                                          'order' => 'nome asc'));
         
         $this->set(array('fontes' => $categorias, 'destinos'=> $categorias));
         
