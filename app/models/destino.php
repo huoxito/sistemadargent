@@ -3,7 +3,6 @@ class Destino extends AppModel {
 
     var $displayField = 'nome';
     
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasMany = array(
 		'Gasto' => array(
 			'className' => 'Gasto',
@@ -11,12 +10,7 @@ class Destino extends AppModel {
 			'dependent' => true,
 			'conditions' => '',
 			'fields' => 'valor',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => true,
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'exclusive' => true
 		),
         'Agendamento' => array(
 			'className' => 'Agendamento',
@@ -24,20 +18,12 @@ class Destino extends AppModel {
 			'dependent' => true,
 			'conditions' => '',
 			'fields' => 'valor',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-            # eclude -> does the delete with a deleteAll() call
-            #, instead of deleting each entity separately.
-            # This greatly improves performance, but may not be ideal for all circumstances
-			'exclusive' => true, 
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'exclusive' => true
 		),
 	);
     
     var $validate = array(
-	
+        
 		'nome' => array(
             'rule1' => array(
 			    'rule' => 'notEmpty',
@@ -49,12 +35,15 @@ class Destino extends AppModel {
                 'message' => 'No máximo 30 caracteres',
                 'last' => true
             ),
-            'usuario_id' => array(
-                    'rule' => 'notEmpty',
-                    'required' => true,
-            ),
-		)
-
+            'unique' => array(
+                'rule' => 'checkUnique',
+			    'message' => 'Destino já cadastrado'
+            )
+        ),
+        'usuario_id' => array(
+                'rule' => 'notEmpty',
+                'required' => true,
+        )
 	);
     
     function beforeSave(){
@@ -62,6 +51,18 @@ class Destino extends AppModel {
         App::import('Sanitize');
         Sanitize::html(&$this->data['Destino']['nome'],array('remove'=>true));
         return true;
+    }
+    
+    function checkUnique(){
+        $chk = $this->find('count',
+                        array('conditions' =>
+                                array('Destino.nome' => $this->data['Destino']['nome'],
+                                      'Destino.usuario_id' => $this->data['Destino']['usuario_id'])));
+        if($chk){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }
