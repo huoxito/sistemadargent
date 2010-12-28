@@ -36,7 +36,7 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"800", height: "490", opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>
