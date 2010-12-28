@@ -44,7 +44,7 @@
                 <?= $this->Form->hidden('datadevencimento'); ?>
                 <div class="datepickerWraper required">
                     <label class="labelCalendario">
-                        Data da baixa
+                        Data de vencimento
                     </label>    
                     <div id="datepicker"></div>
                     <span class="dataAmigavel change">
