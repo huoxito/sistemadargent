@@ -4,7 +4,7 @@
     <p class="agendamentoInfoLinha">
         R$ <?php  echo $registro['Gasto']['valor']; ?>  reais com
         <span class="agendamentoCategoria">
-        <?php echo $registro['Destino']['nome']; ?>
+        <?php echo $categoria; ?>
         </span>
     </p>
     
@@ -36,7 +36,7 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"800", height: "490", opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "430", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>

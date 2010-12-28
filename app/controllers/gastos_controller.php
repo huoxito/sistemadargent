@@ -206,7 +206,6 @@ class GastosController extends AppController {
                                                     array('Destino.usuario_id' => $this->Auth->user('id')),
                                                   'order' => 'Destino.nome asc'));
         $this->set(compact('destinos'));
-        $this->set('id',$id);
         $this->layout = 'colorbox';
     }
 
@@ -214,49 +213,43 @@ class GastosController extends AppController {
         
         if( $this->params['isAjax'] ){
             
-            $chk = $this->Gasto->read(array('Gasto.usuario_id',
-                                            'Gasto.datadabaixa as data'),$this->params['url']['id']);
-            # permissão do usuário
+            $this->data = array_merge($this->params['url']);
+            
+            $this->Gasto->recursive = 0;
+            $chk = $this->Gasto->find('first',
+                                array('conditions' =>
+                                        array('Gasto.id' => $this->data['Gasto']['id'])));
+            
             if( $this->checkPermissao($chk['Gasto']['usuario_id'],true) ){
                 
-                if( isset($this->params['url']['novacategoria']) ){
-                    # caso usuário queira inserir uma nova fonte ao editar
-                    # salvo a nova fonte e recupero o id
-                    $this->params['url']['categoria'] = $this->addCategoria($this->params['url']['novacategoria'],'Destino','Gasto');
+                if( isset($this->data['Destino']['nome']) ){
+                    $this->data['Destino']['usuario_id'] = $this->user_id;
+                    unset($this->Gasto->validate['destino_id']);    
                 }     
 
-                $item['Gasto'] = array('valor' => $this->params['url']['valor'],
-                                        'datadabaixa' => $this->params['url']['data'],
-                                        'observacoes' => $this->params['url']['obs'],
-                                        'destino_id' => $this->params['url']['categoria']);
-                
-                $this->Gasto->id = $this->params['url']['id'];
-                if ($this->Gasto->save($item)) {
+                $this->Gasto->id = $this->data['Gasto']['id'];
+                if ($this->Gasto->saveAll($this->data)) {
                     
-                    # passo variaveis pro layout atualizado
-                    $this->Gasto->Destino->id = $this->params['url']['categoria'];
-                    $categoriaAtualizada = $categoria = $this->Gasto->Destino->field('nome'); 
-              
-                    $dadosAtualizados = $this->Gasto->find('first',
-                                                            array (
-                                                                   'fields' => array('valor','observacoes'),
-                                                                   'conditions' => array('id' => $this->params['url']['id']),
-                                                                   'recursive' => -1));
-                    $resposta = array(
-                        'Gasto' => array(
-                            'id' => $this->params['url']['id'],
-                            'valor' => $dadosAtualizados['Gasto']['valor'],
-                            'observacoes' => $dadosAtualizados['Gasto']['observacoes']
-                        ),
-                        'Destino' => array(
-                            'nome' => $categoriaAtualizada
-                        )
-                    );
-                    $this->set('registro',$resposta);
+                    if( isset($this->data['Destino']['nome']) ){
+                        $this->Gasto->Destino->id;
+                    }else{
+                        $this->Gasto->Destino->id = $this->data['Gasto']['destino_id'];
+                    }
+                    
+                    $categoria = $this->Gasto->Destino->field('nome');
+                    $gasto = $this->Gasto->find('first',
+                                        array ('fields' => array('id','valor','observacoes'),
+                                               'conditions' =>
+                                                array('id' => $this->data['Gasto']['id']),
+                                               'recursive' => -1));
+                    
+                    $this->set('registro',$gasto);
+                    $this->set('categoria',$categoria);
+
                     # se usuário alterar a data exibo data alterada
-                    $dataAntiga = $this->Data->formata($chk['Gasto']['data'],'diamesano');
-                    if( $this->params['url']['data'] != $dataAntiga ){
-                        $dataAlterada = $this->Data->formata($this->params['url']['data'],'mesextenso');
+                    $dataAntiga = $this->Data->formata($chk['Gasto']['datadabaixa'],'diamesano');
+                    if( $this->data['Gasto']['datadabaixa'] != $dataAntiga ){
+                        $dataAlterada = $this->Data->formata($this->data['Gasto']['datadabaixa'],'mesextenso');
                         $this->set('dataAlterada',$dataAlterada);
                     }
                     

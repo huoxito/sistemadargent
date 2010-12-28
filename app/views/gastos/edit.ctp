@@ -1,70 +1,106 @@
     
-    <?php $linkCategoria = '<a href="javascript:;" class="btnadd" title="inserir destino" onclick="insereInputDestinos();">INSERIR NOVA DESTINO</a>'; ?>
     
-    <div class="formBox">  
+<div class="formBox">  
+
+    <?= $this->Form->create('Gasto',array('default' => false));?>
     
-        <?php echo $this->Form->create('Gasto',array('default' => false));?>
-        
-        <?php echo $this->Form->input('destino_id',
-                                array('empty' => 'Escolha um registro',
-                                      'id' => 'categoria',
-                                      'after' => $linkCategoria,
-                                      'class' => 'select_categoria')); ?>
-        
-        <?php echo $this->Form->input('valor'); ?>
-            
-        <?php echo $this->Form->input('datadabaixa',
-                                array('label' => 'Data da baixa',
-                                      'type' => 'text',
-                                      'class' => 'dataField',
-                                      'default' => date('d-m-Y')));     ?>
-            
-        <?php echo $this->Form->input('observacoes',
-                                array('type' => 'textarea',
-                                      'label' => 'Observações',
-                                      'id' => 'Observacoes')); ?>
-                                      
-        <?php echo $this->Form->end(array('label' => 'Salvar',
-                                          'onclick' => 'editar('.$id.');',
-                                          'after' => ' <input type="submit" onclick="parent.jQuery.fn.colorbox.close();" value="Cancelar" />')); ?>
+    <?= $this->Form->hidden('datadabaixa'); ?>
+    <div class="datepickerWraper required">
+        <label class="labelCalendario">
+            Data da baixa
+        </label>    
+        <div id="datepicker"></div>
+        <span class="dataAmigavel change">
+            <?= $this->Data->formata($this->data['Gasto']['datadabaixa'], 'longadescricao'); ?>
+        </span>
     </div>
     
-    <?php echo $this->Html->script('forms'); ?>
+    <div class="inputsRight">
     
-    <script type="text/javascript">
-        // <![CDATA[
+        <?= $this->Form->input('id'); ?>
+        <div id="selectCategoria" class="input text required">
+            <?= $this->Form->input('destino_id',
+                                array('empty' => 'Escolha um registro',
+                                      'div' => false)); ?>
+            <a href="#" class="btnadd" title="inserir" id="insereInputDestinos">
+                INSERIR NOVO DESTINO
+            </a>
+        </div>
         
-        function editar(id){
-            
-            var novacategoria   = $('#novacategoria').val();
-            var categoria       = $('#categoria').val();
-            var valor           = $('#GastoValor').val();
-            var data            = $('#GastoDatadabaixa').val();
-            var obs             = $('#Observacoes').val();
-            
-            $.ajax({
-                
-                url: '<?php echo $html->url(array("controller" => "gastos","action" => "editResponse"));?>', 
-                data: ( {id : id, categoria: categoria, novacategoria: novacategoria, valor: valor, data: data, obs: obs} ),
-                beforeSend: function(){
-                    $('.submit span').detach();
-                    $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
-                },
-                success: function(result){
-                    
-                    $('.submit img').detach();
-                    if(result == 'error'){
-                        $('.submit').append('<span class="ajax_error_response">Registro inválido</span>');
-                    }else if(result == 'validacao'){
-                        $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
-                    }else {
-                        parent.$('#gasto-' + id).html(result);
-                        var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
-                    }
+   
+        <?= $this->Form->input('valor'); ?>
+        <?= $this->Form->input('observacoes',
+                            array('type' => 'textarea',
+                                  'label' => 'Observações',
+                                  'id' => 'Observacoes')); ?>
+    
+    </div>
+    
+    <div class="submit">
+        <input type="submit" id="submitAjax" value="Atualizar">
+        <input type="submit" id="fecharColorbox" value="Cancelar" />
+    </div>
+    
+</div>
+
+
+<script type="text/javascript">
+    // variáveis que serão usadas em algumas funções do arquivo form.js
+    var urlInsereInput = '<?= $this->Html->url(array("action" => "InsereInput"));?>';
+    var urlInsereSelect = '<?= $this->Html->url(array("action" => "InsereSelect"));?>';
+</script>
+<?php echo $this->Html->script('forms'); ?>
+
+<? list($dia,$mes,$ano) = explode('-',$this->data['Gasto']['datadabaixa']); ?>
+<script type="text/javascript">
+    
+    $('#datepicker').datepicker({
+                dateFormat: 'D, d MM, yy',
+                defaultDate: new Date(<?=$ano?>,<?=$mes-1?>,<?=$dia?>),
+                maxDate: 'dd-mm-yy',
+                altField: '#GastoDatadabaixa',
+                altFormat: 'dd-mm-yy',
+                onSelect: function(dateText, inst){
+                    $('.change').html(dateText);
                 }
-            });
-            
-        }
+    });
+    
+    $('#fecharColorbox').click(function(){
+        parent.jQuery.fn.colorbox.close();
+    });
+    
+    $('#submitAjax').live('click', function(){
         
-        // ]]>
-    </script>
+        var id              = $('#GastoId').val();
+        var nome            = $('#DestinoNome').val();
+        var destino_id      = $('#GastoDestinoId').val();
+        var valor           = $('#GastoValor').val();
+        var data            = $('#GastoDatadabaixa').val();
+        var obs             = $('#Observacoes').val();
+        
+        $.ajax({
+            
+            url: '<?php echo $html->url(array("action" => "editResponse"));?>', 
+            data: ({ Gasto: {id:id, destino_id:destino_id, valor:valor, datadabaixa:data, observacoes:obs},
+                     Destino: {nome:nome} }),
+            beforeSend: function(){
+                $('.submit span').detach();
+                $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
+            },
+            success: function(result){
+                
+                $('.submit img').detach();
+                if(result == 'error'){
+                    $('.submit').append('<span class="ajax_error_response">Registro inválido</span>');
+                }else if(result == 'validacao'){
+                    $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
+                }else {
+                    parent.$('#gasto-' + id).html(result);
+                    var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
+                }
+            }
+        });
+        
+    });
+    
+</script>
