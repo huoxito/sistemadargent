@@ -9,7 +9,6 @@ class Gasto extends AppModel {
         )
     );
 
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
     var $belongsTo = array(
         'Destino' => array(
             'className' => 'Destino',
@@ -17,44 +16,27 @@ class Gasto extends AppModel {
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        /*
-        'Usuario' => array(
-            'className' => 'Usuario',
-            'foreignKey' => 'usuario_id',
-            'conditions' => '',
-            'fields' => 'id, login',
-            'order' => ''
-        ),
-        */
+        )
     );
     
-    
     var $validate = array(
-            
         'destino_id' => array(
-            'numeric' => array(
-                'rule' => 'Numeric',
-                'required' => false,
-                'message' => 'Selecione uma fonte',
-                'allowEmpty' => false,
-                )
+            'rule' => 'notEmpty',
+            'required' => false,
+            'message' => 'Selecione um destino',
+            'allowEmpty' => false,
         ),
-        
         'valor' => array(
-            'rule2' => array(
+            'vazio' => array(
                 'rule' => 'notEmpty',
-                'message' => 'Digite um valor',
+                'message' => 'Digite um valor (Ex: 220,00)',
                 'last' => true,
-                'allowEmpty' => false,
-                'required' => false
-                ),
-            'rule1' => array(
+            ),
+            'formato' => array(
                 'rule' => array('money','left'),
                 'message' => 'Digite um valor válido (Ex: 220,00)'
-                ),
+            ),
         ),
-        
         'datadabaixa' => array(
                 'rule' => array('date', 'dmy'),
                 'required' => false,
@@ -67,7 +49,6 @@ class Gasto extends AppModel {
                 'required' => false,
                 'allowEmpty' => true,
         )  
-    
     );
     
     

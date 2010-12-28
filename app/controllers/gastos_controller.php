@@ -1,8 +1,10 @@
 <?php
 
 class GastosController extends AppController {
-
+    
+    var $name = 'Gastos';
     var $components = array('Data', 'Valor');
+    var $helpers = array('Data');
     
     function index($mes=null,$ano=null) {
 
@@ -140,26 +142,30 @@ class GastosController extends AppController {
         
         if (!empty($this->data)) {
             
-            # caso o usuário tenha inserido uma nova categoria
             if ( isset($this->data['Destino']['nome']) ){
-                $this->data['Gasto']['destino_id'] = $this->addCategoria($this->data['Destino']['nome'],'Destino','Gasto');
+                $this->data['Destino']['usuario_id'] = $this->user_id;
+                unset($this->Gasto->validate['destino_id']);
             }
             
             $this->Gasto->create();
-            $this->Gasto->set('usuario_id', $this->Auth->user('id')); 
-            if ($this->Gasto->save($this->data)) {
-                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
+            $this->data['Gasto']['usuario_id'] = $this->user_id;
+            if ($this->Gasto->saveAll($this->data)) {
                 
+                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 if(!$this->data['Gasto']['keepon']){
                     $this->redirect(array('action'=>'index'));  
                 }else{
                     $this->data = null;
                 }
             } else {
-                //print_r($this->validateErrors($this->Ganho));  
                 $this->Session->setFlash('Preencha os campos corretamente', 'flash_error');
             }
         }
+        
+        if(empty($this->data['Gasto']['datadabaixa'])){
+            $this->data['Gasto']['datadabaixa'] = date('d-m-Y');
+        }
+        
         $destinos = $this->Gasto->Destino->find('list',
                                     array('conditions' =>
                                             array('status' => 1,
@@ -168,7 +174,21 @@ class GastosController extends AppController {
         $this->set(compact('destinos'));
         $this->set('title_for_layout', 'Inserir Despesa');
     }
-
+    
+    function insereInput(){
+        $this->layout = 'ajax';
+    }
+    
+    function insereSelect(){
+        $destinos = $this->Gasto->Destino->find('list',
+                                        array('conditions' =>
+                                                array('status' => 1,
+                                                      'usuario_id' => $this->Auth->user('id')),
+                                              'order' => 'Destino.nome asc'));
+        $this->set(compact('destinos'));
+        $this->layout = 'ajax';
+    }
+    
     function edit($id = null) {
         
         if (!$id && empty($this->data)) {

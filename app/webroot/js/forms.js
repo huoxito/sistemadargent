@@ -125,23 +125,45 @@
     $('#insereSelectFontes').live('click', insereSelectFontes);
     $('#insereInputFontes').live('click', insereInputFontes);
     
-    function insereInputDestinos(){
-        
-        $('div.select select').fadeOut('fast',function(){
-                $('div.select a').remove();
-                $('div.select').append('<input type="text" maxlength="30" name="data[Destino][nome]" />');
-                $('div.select').append('<a href="javascript:;" title="cadastrar" class="btnadd" onclick="insereSelectDestinos();">SELECIONAR UM DESTINO</a>');    
-            });
-        
-    }
-    
-    function insereSelectDestinos(){
-        
-        $('div.select input').fadeOut('fast',function(){
-            $('div.select input').remove();
-            $('div.select a').remove();
-            $('div.select select').show();
-            $('div.select').append('<a href="javascript:;" title="inserir" class="btnadd" onclick="insereInputDestinos();">CADASTRAR NOVO DESTINO</a>');    
+    var insereSelectDestinos = function(){
+        $.ajax({
+            url: urlInsereSelect,
+            beforeSend: function(){
+                $('#inputCategoria img').detach();
+                $('#inputCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
+            },
+            success: function(result){
+                $('#inputCategoria').fadeOut('fast',function(){
+                    $('#inputCategoria').remove();
+                    $('.inputsRight').prepend(result);
+                });
+            }
         });
-    }
+        $('#insereSelectDestinos').die('click');
+        $('#insereInputDestinos').live('click', insereInputDestinos);
+        return false;
+    };
+    
+    var insereInputDestinos = function(){
+        $.ajax({
+            url: urlInsereInput,
+            beforeSend: function(){
+                $('#selectCategoria img').detach();
+                $('#selectCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
+            },
+            success: function(result){    
+                $('#selectCategoria').remove();
+                $('.inputsRight').prepend(result);
+            }
+        });
+        $('#insereInputDestinos').die('click');
+        $('#insereSelectDestinos').live('click', insereSelectDestinos);
+        return false;
+    };
+    
+    $('#insereSelectDestinos').live('click', insereSelectDestinos);
+    $('#insereInputDestinos').live('click', insereInputDestinos);
+    
+    
+    
         
