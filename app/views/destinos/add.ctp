@@ -26,17 +26,15 @@
             
         </div>
         
-        <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
         
-        <div class="formWraper">
+        <div class="formWraper formBox">
 
-            <?php echo $this->Form->create('Destino');?>
+            <?= $this->Form->create('Destino');?>
             <fieldset>
-            <?php   echo $this->Form->input('nome', array('error' => false)); ?>
+                <?= $this->Form->input('nome', array('error' => array('wrap' => 'span')));    ?>
+                <?= $this->Form->end('Inserir');?>
             </fieldset>
-            <?php echo $this->Form->end('Inserir');?>
         
         </div>
         
