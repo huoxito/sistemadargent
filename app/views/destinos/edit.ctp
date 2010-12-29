@@ -5,13 +5,12 @@
         <?php echo $this->Form->create('Destino',array('default' => false));?>
         <?php echo $this->Form->input('nome'); ?>
         <?php echo $this->Form->end(array('label' => 'Salvar',
-                                          'onclick' => 'editar('.$id.');')); ?>
+                                          'onclick' => 'editar('.$this->data['Destino']['id'].');')); ?>
         
     </div>
     
     <?= $this->Html->script('forms'); ?>
     <script type="text/javascript">
-        // <![CDATA[
         
         function editar(id){
             
@@ -19,7 +18,7 @@
             $.ajax({
                 
                 url: '<?php echo $this->Html->url(array("controller" => "destinos","action" => "editResponse"));?>',
-                data: ( {id : id, nome: nome} ),
+                data: ({ Destino: { id: id, nome: nome} }),
                 beforeSend: function(){
                     $('.submit span').detach();
                     $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
@@ -40,7 +39,7 @@
                 }
             });
         
-        }       
-        // ]]>
+        }
+        
     </script>
 

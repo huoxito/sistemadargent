@@ -54,11 +54,17 @@ class Destino extends AppModel {
     }
     
     function checkUnique(){
-        $chk = $this->find('count',
-                        array('conditions' =>
-                                array('Destino.nome' => $this->data['Destino']['nome'],
-                                      'Destino.usuario_id' => $this->data['Destino']['usuario_id'])));
-        if($chk){
+        
+        $params = array('conditions' =>
+                    array('Destino.nome' => $this->data['Destino']['nome'],
+                          'Destino.usuario_id' => $this->data['Destino']['usuario_id']));
+        
+        if(isset($this->data['Destino']['id'])){
+            $params = array_merge_recursive($params,
+                            array('conditions' => array('Destino.id !=' => $this->data['Destino']['id'])));
+        }
+        
+        if($this->find('count', $params)){
             return false;
         }else{
             return true;

@@ -86,7 +86,6 @@ class DestinosController extends AppController {
         # permissão do usuário
         $this->checkPermissao($this->data['Destino']['usuario_id']);
         
-        $this->set('id',$id);
         $this->layout = 'colorbox';
 	}
     
@@ -94,28 +93,24 @@ class DestinosController extends AppController {
         
         if( $this->params['isAjax'] ){
             
+            $this->data = array_merge($this->params['url']);
             $this->Destino->recursive = -1;
-            $chk = $this->Destino->read(array('Destino.usuario_id'),$this->params['url']['id']);
-            # permissão do usuário
+            $chk = $this->Destino->find('first',
+                                array('conditions' => array('Destino.id' => $this->data['Destino']['id']),
+                                      'fields' => 'Destino.usuario_id'));
+            
             if( $this->checkPermissao($chk['Destino']['usuario_id'],true) ){
-                
-                $chkFonteExiste = $this->Destino->find('count',
-                                            array('conditions' =>
-                                                    array('Destino.nome' => $this->params['url']['nome'],
-                                                          'Destino.id !=' => $this->params['url']['id'],
-                                                          'Destino.usuario_id' => $this->Auth->user('id'))));
-                if($chkFonteExiste == 0){
                     
-                    $this->Destino->id = $this->params['url']['id'];
-                    if ( $this->Destino->saveField('nome', $this->params['url']['nome'], true) ) {
-                        $this->data = $this->Destino->read(null,$this->params['url']['id']);
+                    $this->Destino->id = $this->data['Destino']['id'];
+                    $this->data['Destino']['usuario_id'] = $this->user_id;
+                    if ( $this->Destino->save($this->data, true, array('nome')) ) {
+                        
+                        $this->data = $this->Destino->read('Destino.nome',$this->data['Destino']['id']);
                         $this->layout = 'ajax';
                     } else {
                         echo 'validacao'; exit;
                     }
-                }else{
-                    echo 'existe'; exit;
-                }
+                    
             }else{
                 echo 'error';   exit;
             }
