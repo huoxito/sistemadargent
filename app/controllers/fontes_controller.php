@@ -94,28 +94,24 @@ class FontesController extends AppController {
         
         if( $this->params['isAjax'] ){
             
+            $this->data = array_merge($this->params['url']);
             $this->Fonte->recursive = -1;
-            $chk = $this->Fonte->find('first',array('conditions' => array('id' => $this->params['url']['id'])));
+            $chk = $this->Fonte->find('first',
+                                array('conditions' => array('Fonte.id' => $this->data['Fonte']['id']),
+                                      'fields' => 'Fonte.usuario_id'));
+            
             if( $this->checkPermissao($chk['Fonte']['usuario_id'],true) ){
-                
-                $chkFonteExiste = $this->Fonte->find('count',
-                                            array('conditions' =>
-                                                array('Fonte.nome' => $this->params['url']['nome'],
-                                                      'Fonte.id !=' => $this->params['url']['id'],
-                                                      'Fonte.usuario_id' => $this->Auth->user('id'))));
-                if($chkFonteExiste === 0){
                     
-                    $this->Fonte->id = $this->params['url']['id'];
-                    if ( $this->Fonte->saveField('nome',$this->params['url']['nome'],true) ) {
-                        $this->data = $this->Fonte->read(null,$this->params['url']['id']);
-                        $this->layout = 'ajax';
-                    } else {
-                        echo 'validacao'; exit;
-                    }
-                }else{
-                    echo 'existe'; exit;
+                $this->Fonte->id = $this->data['Fonte']['id'];
+                $this->data['Fonte']['usuario_id'] = $this->user_id;
+                if ( $this->Fonte->save($this->data, true, array('nome')) ) {
+                    
+                    $this->data = $this->Fonte->read('Fonte.nome',$this->data['Fonte']['id']);
+                    $this->layout = 'ajax';
+                } else {
+                    echo 'validacao'; exit;
                 }
-                
+                    
             }else{
                 echo 'error'; exit;
             }

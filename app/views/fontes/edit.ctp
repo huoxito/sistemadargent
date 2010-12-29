@@ -18,7 +18,7 @@
             var nome   = $('#FonteNome').val();
             $.ajax({
                 url: '<?php echo $this->Html->url(array("controller" => "fontes","action" => "editResponse"));?>', 
-                data: ( {id : id, nome: nome} ),
+                data: ({ Fonte: { id: id, nome: nome} }),
                 beforeSend: function(){
                     $('.submit span').detach();
                     $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');

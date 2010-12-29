@@ -54,11 +54,17 @@ class Fonte extends AppModel {
     }
     
     function checkUnique(){
-        $chk = $this->find('count',
-                        array('conditions' =>
-                                array('Fonte.nome' => $this->data['Fonte']['nome'],
-                                      'Fonte.usuario_id' => $this->data['Fonte']['usuario_id'])));
-        if($chk){
+        
+        $params = array('conditions' =>
+                    array('Fonte.nome' => $this->data['Fonte']['nome'],
+                          'Fonte.usuario_id' => $this->data['Fonte']['usuario_id']));
+        
+        if(isset($this->data['Fonte']['id'])){
+            $params = array_merge_recursive($params,
+                            array('conditions' => array('Fonte.id !=' => $this->data['Fonte']['id'])));
+        }
+        
+        if($this->find('count', $params)){
             return false;
         }else{
             return true;
