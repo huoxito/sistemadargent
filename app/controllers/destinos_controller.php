@@ -60,27 +60,17 @@ class DestinosController extends AppController {
 	}
 
 	function add() {
+        
 		if (!empty($this->data)) {
             
-            $chk = $this->Destino->find('count',
-                                    array('conditions' =>
-                                          array('Destino.nome' => $this->data['Destino']['nome'],
-                                                'Destino.usuario_id' => $this->Auth->user('id'))));
-            if($chk == 0){
-            
-                $this->Destino->create();
-                $this->Destino->set('usuario_id', $this->Auth->user('id'));
-                if ($this->Destino->save($this->data)) {
-                    $this->Session->setFlash('Destino salvo com sucesso.','flash_success');
-                    $this->redirect(array('action'=>'index'));
-                } else {
-                    $this->Session->setFlash('Preencha o campo corretamente', 'flash_error');
-                }
-            
-            }else{
-                $this->Session->setFlash(__('Destino já cadastrado', true));
+            $this->Destino->create();
+            $this->Destino->set('usuario_id', $this->Auth->user('id'));
+            if ($this->Destino->save($this->data)) {
+                $this->Session->setFlash('Destino salvo com sucesso.','flash_success');
+                $this->redirect(array('action'=>'index'));
+            } else {
+                $this->Session->setFlash('Preencha o campo corretamente', 'flash_error');
             }
-            
 		}
 	}
 
