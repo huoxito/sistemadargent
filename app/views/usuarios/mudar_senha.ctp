@@ -22,34 +22,28 @@
             
         </div>
         
-        <cake:nocache>
         <?php   echo $this->Session->flash(); ?>
-        </cake:nocache>
         
-        <div class="formWraper">
+        <div class="formWraper formBox">
         
-            <?php echo $form->create('Usuario', array('id' => 'form'));?>
+            <?= $this->Form->create('Usuario',
+                                array('inputDefaults' =>
+                                    array('error' => array('wrap' => 'span')))); ?>
             <fieldset>
             <?php
-            
-                echo $form->input('passwd_current',
+                echo $this->Form->input('passwd_current',
                                 array('type' => 'password',
                                       'label' => 'Senha Atual',
-                                      'value' => '',
-                                      'error' => array('wrap' => 'span', 'class' => 'error')));
+                                      'value' => ''));
                 
-                echo $form->input('passwd',
+                echo $this->Form->input('passwd',
                                 array('label' => 'Nova senha',
-                                      'value' => '',
-                                      'error' => array('wrap' => 'span', 'class' => 'error')));
+                                      'value' => ''));
                     
-                echo $form->input('passwd_confirm',
+                echo $this->Form->input('passwd_confirm',
                                 array('type' => 'password',
                                       'value' => '',
-                                      'label' => 'Confirmar nova senha',
-                                      'error' => array('wrap' => 'span', 'class' => 'error')));  
-            
-            
+                                      'label' => 'Confirmar nova senha'));
             ?>
             </fieldset>
             <?php echo $form->end('Salvar');?>

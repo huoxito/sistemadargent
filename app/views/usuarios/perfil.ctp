@@ -10,7 +10,7 @@
         <div id="perfilWraper">
             
             <div>
-            
+                <?php   echo $this->Session->flash(); ?>
                 <div id="UserInfo">
                     
                     <span class="userInfoLabel">

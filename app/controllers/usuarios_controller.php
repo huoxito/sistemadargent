@@ -263,10 +263,11 @@ class UsuariosController extends AppController {
             # adiciona o id no array $this->data['Usuario']
             $this->data['Usuario']['id'] = $this->Auth->user('id');
             if ($this->Usuario->save($this->data)) {
-                $this->Session->setFlash(__('Senha atualizada !!', true));
+                $this->Session->setFlash('Senha atualizada com sucesso','flash_success');
                 $this->redirect(array('action'=>'perfil'));
             } else {
                 $errors = $this->validateErrors($this->Usuario);
+                $this->Session->setFlash('Preencha os campos corretamente','flash_error');
             }
         }
     }
