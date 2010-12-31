@@ -153,10 +153,8 @@
                     <div class="registros registrosPainel <?php if($count < $num) echo 'borda-inferior'; ?>" id="gasto-<?php echo $registro['Gasto']['id']; ?>">
                         
                         <p class="agendamentoInfoLinha">
-                            R$ <?php  echo $registro['Gasto']['valor']; ?> reais com 
-                            <span class="agendamentoCategoria">
-                            <?php echo $registro['Destino']['nome']; ?>
-                            </span>
+                            <span class="valor">R$ <?= $registro['Gasto']['valor']; ?></span>
+                            <span class=""><?= $registro['Destino']['nome']; ?></span>
                         </p>
                         <?php   if(!empty($registro['Gasto']['observacoes'])){ ?>
                             <p class="agendamentoInfoLinha">
