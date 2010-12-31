@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 Dargent é um sistema simples de controle financeiro desenvolvido com o framework Cakephp (versão 1.3.4)
-=======
-Dargent é um sistema simples de controle financeiro desenvovido com o framework Cakephp (versão 1.3.4).
->>>>>>> 9ea62ac7eac06c15bd34351e1122854c66861c45
 
 
 O sistema é minha primeira experiência com cakephp, orientação a objetos e o padrão MVC. A idéia de compartilhar isso no github é ver se há outros desenvolvedores em cakephp dispostos a ajudar a construir / melhorar o sistema ou dar qualquer sugestão de como melhorá-lo.
