@@ -36,7 +36,7 @@
                 <?php
                     echo $this->Form->year(false,
                                         $minYear = '2010',
-                                        $maxYear = '2010',
+                                        $maxYear = date('Y'),
                                         isset($this->params['named']['year']) ? $this->params['named']['year'] : null,
                                         array('empty' => 'Ano',
                                               'class' => 'formSearchSelect'));
