@@ -195,9 +195,11 @@
             
             <?php   if( !empty($groupPorData) && isset($paginator) ){    ?>
                 <div class="paging">
-                    <?php echo $this->Paginator->prev('<< '.'anterior', array(), null, array('class'=>'disabled'));?>
-                    <?php echo $this->Paginator->numbers();?>   
-                    <?php echo $this->Paginator->next('próxima >>', array(), null, array('class' => 'disabled'));?>
+                    <?= $this->Paginator->first('<< primeira', array(), null, array('class'=>'disabled'));?>
+                    <?= $this->Paginator->prev('< anterior', array(), null, array('class'=>'disabled'));?>
+                    <?= $this->Paginator->numbers();?>
+                    <?= $this->Paginator->next('próxima >', array(), null, array('class' => 'disabled'));?>
+                    <?= $this->Paginator->last('última >>', array(), null, array('class'=>'disabled'));?>
                 </div>
             <?php   }   ?>
         
