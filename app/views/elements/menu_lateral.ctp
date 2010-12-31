@@ -29,7 +29,7 @@
             <?= $this->Html->link(__('Fontes', true), array('controller' => 'fontes', 'action' => 'index')); ?>
         </li>
         <li style="border-bottom:none;">
-            <?= $this->Html->image('casinha.jpg',
+            <?= $this->Html->image('despesas.jpg',
                                     array('width' => '18',
                                           'height' => '17'));   ?>
             <?= $this->Html->link(__('Despesas', true), array('controller' => 'gastos', 'action' => 'index')); ?>
