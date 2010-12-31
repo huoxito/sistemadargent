@@ -38,7 +38,7 @@ CREATE TABLE `drg_agendamentos` (
 	`status` tinyint(1) DEFAULT 1,	PRIMARY KEY  (`id`),
 	KEY `frequencia_id` (`frequencia_id`))	DEFAULT CHARSET=utf8,
 	COLLATE=utf8_general_ci,
-	ENGINE=MyISAM;
+	ENGINE=InnoDB;
 
 CREATE TABLE `drg_aros` (
 	`id` int(10) NOT NULL AUTO_INCREMENT,
@@ -68,7 +68,7 @@ CREATE TABLE `drg_destinos` (
 	`status` tinyint(1) DEFAULT 1,	PRIMARY KEY  (`id`),
 	KEY `usuario_id` (`usuario_id`))	DEFAULT CHARSET=utf8,
 	COLLATE=utf8_general_ci,
-	ENGINE=MyISAM;
+	ENGINE=InnoDB;
 
 CREATE TABLE `drg_fontes` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
@@ -79,7 +79,7 @@ CREATE TABLE `drg_fontes` (
 	`status` tinyint(1) DEFAULT 1,	PRIMARY KEY  (`id`),
 	KEY `usuario_id` (`usuario_id`))	DEFAULT CHARSET=utf8,
 	COLLATE=utf8_general_ci,
-	ENGINE=MyISAM;
+	ENGINE=InnoDB;
 
 CREATE TABLE `drg_frequencias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -106,7 +106,7 @@ CREATE TABLE `drg_ganhos` (
 	KEY `agendamento_id` (`agendamento_id`),
 	KEY `usuario_id` (`usuario_id`))	DEFAULT CHARSET=utf8,
 	COLLATE=utf8_general_ci,
-	ENGINE=MyISAM;
+	ENGINE=InnoDB;
 
 CREATE TABLE `drg_gastos` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
@@ -124,7 +124,7 @@ CREATE TABLE `drg_gastos` (
 	KEY `agendamento_id` (`agendamento_id`),
 	KEY `usuario_id` (`usuario_id`))	DEFAULT CHARSET=utf8,
 	COLLATE=utf8_general_ci,
-	ENGINE=MyISAM;
+	ENGINE=InnoDB;
 
 CREATE TABLE `drg_sugestos` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
