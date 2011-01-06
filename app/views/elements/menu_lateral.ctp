@@ -30,8 +30,8 @@
         </li>
         <li style="border-bottom:none;">
             <?= $this->Html->image('despesas.jpg',
-                                    array('width' => '18',
-                                          'height' => '17'));   ?>
+                                    array('width' => '24',
+                                          'height' => '18'));   ?>
             <?= $this->Html->link(__('Despesas', true), array('controller' => 'gastos', 'action' => 'index')); ?>
         </li>
         <li class="subitem">
