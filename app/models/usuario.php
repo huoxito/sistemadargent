@@ -51,6 +51,13 @@ class Usuario extends AppModel {
 			'fields' => '',
 			'exclusive' => true, 
 		),
+        'Conta' => array(
+			'className' => 'Conta',
+			'foreignKey' => 'usuario_id',
+			'dependent' => true,
+			'fields' => '',
+			'exclusive' => true,
+		),
     );
     
     

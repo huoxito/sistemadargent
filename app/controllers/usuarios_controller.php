@@ -129,8 +129,19 @@ class UsuariosController extends AppController {
                 $data = array('login' => $this->data['Usuario']['login'],
                               'password' => $this->Auth->password($this->data['Usuario']['passwd']));
                 if( $this->Auth->login($data) == 1 ){
-
-                    $this->Session->setFlash('Bem vindo ! Navegue no menu lateral para conhecer o sistema e começar a inserir os dados', 'flash_success');
+                    
+                    $conta = array(
+                        'usuario_id' => $this->Usuario->id,
+                        'nome' => 'livre',
+                        'saldo' => '0',
+                        'tipo' => 'cash'
+                    );
+                    $this->Usuario->Conta->save($conta,false);
+                    
+                    $this->Session->setFlash(
+                        'Bem vindo ! Navegue no menu lateral para conhecer o sistema e começar a inserir os dados',
+                        'flash_success'
+                    );
                     $this->redirect(array('controller' => 'homes', 'action'=>'index'));
                 }else{
                     $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
