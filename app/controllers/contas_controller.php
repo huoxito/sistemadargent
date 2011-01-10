@@ -14,16 +14,16 @@ class ContasController extends AppController {
                             array('conditions' =>
                                     array('Ganho.usuario_id' => $user['Usuario']['id'],
                                           'Ganho.status' => '1'),
-                                  'fields' => array('Ganho.valor'),
+                                  'fields' => array('SUM(Ganho.valor) AS total'),
                                   'recursive' => '-1'));
             $gastos = $this->Conta->Gasto->find('all',
                             array('conditions' =>
                                     array('Gasto.usuario_id' => $user['Usuario']['id'],
                                           'Gasto.status' => '1'),
-                                  'fields' => array('Gasto.valor'),
+                                  'fields' => array('SUM(Gasto.valor) AS total'),
                                   'recursive' => '-1'));
             
-            $saldo = $this->Valor->saldo($ganhos,$gastos);
+            $saldo = $ganhos[0][0]['total'] - $gastos[0][0]['total'];
             
             $conta = array(
                 'usuario_id' => $user['Usuario']['id'],
@@ -33,9 +33,7 @@ class ContasController extends AppController {
             );
             
             $this->Conta->create();
-            if($this->Conta->save($conta,false)){
-                
-            }else{
+            if(!$this->Conta->save($conta,false)){
                 $this->log('não salvou os dados '.print_r($conta),'erro_criar_contas');
             }
             
