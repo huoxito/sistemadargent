@@ -2,13 +2,14 @@
     # variaveis de sessão do usuário
     $usuarioLogado = $session->read('Auth.Usuario.nome');
 ?>  
-    <a href="<?php echo $this->Html->url('/'); ?>" title="home">
-        <?= $this->Html->image('logo.png',
+
+    <?= $this->Html->image('logo.png',
                         array('width' => '191',
                               'height' => '60',
                               'alt' => 'Dargent Sistema Financeiro',
-                              'style' => 'margin-top:15px;')); ?>
-    </a>
+                              'style' => 'margin-top:15px;',
+                              'url' => '/')); ?>
+
     <div id="topo-right">
     
         <div id="UserInfoBox">
@@ -33,7 +34,7 @@
             </div>
         </div>
         
-        <div class="box-left">
+        <div class="box-left sugestoesTopo">
             <a href="<?php echo $this->Html->url(array('controller' => 'sugestoes', 'action' => 'add')); ?>" title="home">
                 <?= $this->Html->image('sugestoes.jpg',
                             array('width' => '42',
@@ -50,6 +51,23 @@
             </h1>
             <p>AJUDE-NOS A <br />DESENVOLVER O DARGENT</p>
         </div>
+        
+        
+        <div class="labelSaldoTopoBox">
+            <p>
+                <span class="labelSaldoTopo">Faturamento:</span>
+                <span class="valorNoTopo">R$ 23.325,00</span>
+            </p>
+            <p>
+                <span class="labelSaldoTopo">Despesa:</span>
+                <span class="valorNoTopo">R$ 23.325,00</span>
+            </p>
+        </div>
+        <div class="labelSaldoTopoBox">
+            <span class="labelSaldoTopo saldoTopo">Saldo</span>
+            <span class="valorSaldoNoTopo"><span class="dollarTopo">R$</span> 23.325,00</span>
+        </div>
+
         
     </div>
     
