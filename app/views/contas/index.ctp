@@ -35,7 +35,9 @@
             ?>
             <tr<?php echo $class;?>>
                 <td><?= $conta['Conta']['nome']; ?></td>
-                <td><?= $conta['Conta']['saldo']; ?></td>
+                <td>
+                    R$ <?= $this->Valor->formata($conta['Conta']['saldo']); ?>
+                </td>
                 <td><?= $conta['Conta']['tipo']; ?></td>
                 <td><?= $conta['Conta']['created']; ?></td>
                 <td><?= $conta['Conta']['status']; ?></td>
