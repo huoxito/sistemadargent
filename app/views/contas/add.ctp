@@ -1,29 +1,39 @@
-<div class="contas form">
-<?php echo $this->Form->create('Conta');?>
-	<fieldset>
- 		<legend><?php __('Add Conta'); ?></legend>
-	<?php
-		echo $this->Form->input('usuario_id');
-		echo $this->Form->input('nome');
-		echo $this->Form->input('saldo');
-		echo $this->Form->input('tipo');
-		echo $this->Form->input('status');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
 
-		<li><?php echo $this->Html->link(__('List Contas', true), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(__('List Usuarios', true), array('controller' => 'usuarios', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Usuario', true), array('controller' => 'usuarios', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Agendamentos', true), array('controller' => 'agendamentos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Agendamento', true), array('controller' => 'agendamentos', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Ganhos', true), array('controller' => 'ganhos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Ganho', true), array('controller' => 'ganhos', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Gastos', true), array('controller' => 'gastos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Gasto', true), array('controller' => 'gastos', 'action' => 'add')); ?> </li>
-	</ul>
+
+<div class="contas form">
+    
+    <div id="contentHeader">
+        <h1>Contas</h1>
+    </div>
+    
+    <div class="balancoBotoesWraper">
+        <div class="balancoBotoes">
+            <p>
+                Insira sua nova conta com seu respectivo saldo.
+            </p>
+        </div>
+    </div>
+    
+    <?= $this->Session->flash(); ?>
+    
+    <div class="formWraper formBox">
+        
+        <?= $this->Form->create('Conta',
+                            array('inputDefaults' =>
+                                    array('error' => array('wrap' => 'span')))); ?>
+        <fieldset>
+            <?php
+                echo $this->Form->input('nome');
+                echo $this->Form->input('saldo');
+                echo $this->Form->input('tipo');
+                echo $this->Form->input('status');
+            ?>
+        </fieldset>
+        <?php echo $this->Form->end(__('Submit', true));?>
+    </div>
+    
 </div>
+    
+    
+    
+    
