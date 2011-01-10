@@ -49,6 +49,38 @@ class ContasController extends AppController {
         $this->layout = 'ajax';
     }
     
+    function saldo(){
+        
+        if (isset($this->params['requested'])) {
+            
+            $this->Conta->Gasto->recursive = -1;
+            $gastos = $this->Conta->Gasto->find('all',
+                                    array('fields' => array('SUM(Gasto.valor) AS total'),
+                                          'conditions' =>
+                                            array('Gasto.status' => 1,
+                                                  'Gasto.usuario_id' => $this->user_id)
+                                    ));
+            $this->Conta->Ganho->recursive = -1;
+            $ganhos = $this->Conta->Ganho->find('all',
+                                    array('fields' => array('SUM(Ganho.valor) AS total'),
+                                          'conditions' =>
+                                            array('Ganho.status' => 1,
+                                                  'Ganho.usuario_id' => $this->user_id)
+                                    ));
+            
+            $saldo = $ganhos[0][0]['total'] - $gastos[0][0]['total'];
+            $items = array(
+                'ganhos' => $ganhos[0][0]['total'],
+                'gastos' => $gastos[0][0]['total'],
+                'diferenca' => $saldo
+            );
+            return $items;
+        
+        }else{
+            $this->cakeError('error404');
+        }
+    }
+    
 	function index() {
         
         $this->helpers[] = 'Valor';

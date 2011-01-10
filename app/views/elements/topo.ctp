@@ -52,20 +52,27 @@
             <p>AJUDE-NOS A <br />DESENVOLVER O DARGENT</p>
         </div>
         
-        
+        <?php $saldos = $this->requestAction('contas/saldo'); ?>
         <div class="labelSaldoTopoBox">
             <p>
                 <span class="labelSaldoTopo">Faturamento:</span>
-                <span class="valorNoTopo">R$ 23.325,00</span>
+                <span class="valorNoTopo">
+                    R$ <?= $this->Valor->formata($saldos['ganhos']) ?>
+                </span>
             </p>
             <p>
                 <span class="labelSaldoTopo">Despesa:</span>
-                <span class="valorNoTopo">R$ 23.325,00</span>
+                <span class="valorNoTopo">
+                    R$ <?= $this->Valor->formata($saldos['gastos']) ?>
+                </span>
             </p>
         </div>
         <div class="labelSaldoTopoBox">
             <span class="labelSaldoTopo saldoTopo">Saldo</span>
-            <span class="valorSaldoNoTopo"><span class="dollarTopo">R$</span> 23.325,00</span>
+            <span class="valorSaldoNoTopo">
+                <span class="dollarTopo">R$</span>
+                <?= $this->Valor->formata($saldos['diferenca']) ?>
+            </span>
         </div>
 
         
