@@ -4,7 +4,7 @@ class ContasController extends AppController {
 	var $name = 'Contas';
     var $components = array('Valor');
 
-    function crioContaPadrao(){
+    function _crioContaPadrao(){
         
         $this->Conta->Usuario->recursive = 0;
         $usuarios = $this->Conta->Usuario->find('all');
