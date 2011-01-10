@@ -2,7 +2,38 @@
 class ContasController extends AppController {
 
 	var $name = 'Contas';
+    var $components = array('Valor');
 
+    function crioContaPadrao(){
+        
+        $this->Conta->Usuario->recursive = 0;
+        $usuarios = $this->Conta->Usuario->find('all');
+        foreach($usuarios as $user){
+            
+            $ganhos = $this->Conta->Ganho->find('all',
+                            array('conditions' =>
+                                    array('Ganho.usuario_id' => $user['Usuario']['id'],
+                                          'Ganho.status' => '1'),
+                                  'fields' => array('Ganho.valor'),
+                                  'recursive' => '-1'));
+            $gastos = $this->Conta->Gasto->find('all',
+                            array('conditions' =>
+                                    array('Gasto.usuario_id' => $user['Usuario']['id'],
+                                          'Gasto.status' => '1'),
+                                  'fields' => array('Gasto.valor'),
+                                  'recursive' => '-1'));
+            
+            $saldo = $this->Valor->saldo($ganhos,$gastos);
+            $result[] = array(
+                'user' => $user['Usuario']['nome'],
+                'saldo' => $saldo
+            );
+        }
+        
+        $this->set('result',$result);
+        $this->layout = 'ajax';
+    }
+    
 	function index() {
 		$this->Conta->recursive = 0;
 		$this->set('contas', $this->paginate());
