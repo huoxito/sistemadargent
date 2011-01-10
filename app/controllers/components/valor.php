@@ -40,6 +40,13 @@
                          );
         }
         
+        function saldo($ganhos=null,$gastos=null){
+            
+            $positivo = $this->soma($ganhos,'Ganho');
+            $negativo = $this->soma($gastos,'Gasto');
+            return $positivo['limpo'] - $negativo['limpo'];
+        }
+        
     }
 
 ?>
