@@ -24,6 +24,21 @@ class ContasController extends AppController {
                                   'recursive' => '-1'));
             
             $saldo = $this->Valor->saldo($ganhos,$gastos);
+            
+            $conta = array(
+                'usuario_id' => $user['Usuario']['id'],
+                'nome' => 'livre',
+                'saldo' => $saldo,
+                'tipo' => 'cash'
+            );
+            
+            $this->Conta->create();
+            if($this->Conta->save($conta,false)){
+                
+            }else{
+                $this->log('não salvou os dados '.print_r($conta),'erro_criar_contas');
+            }
+            
             $result[] = array(
                 'user' => $user['Usuario']['nome'],
                 'saldo' => $saldo
