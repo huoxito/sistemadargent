@@ -5,15 +5,37 @@ class Conta extends AppModel {
 		'status' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+        'nome' => array(
+            'obrigatorio' => array(
+                'rule' => 'notempty',
+                'message' => 'campo obrigatório'
+            )
+        ),
+        'saldo' => array(
+            'vazio' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Digite um valor (Ex: 220,00)',
+                'last' => true
+            ),
+            'formato' => array(
+                'rule' => array('money','left'),
+                'message' => 'Digite um valor válido (Ex: 220,00)'
+            )
+        ),
+        'tipo' => array(
+            'string' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Escolha o tipo de conta adequado',
+                'last' => true
+            ),
+            'regra' => array(
+                'rule' => array('inList',array('corrente','poupança','cash')),
+                'message' => 'Valor inválido'
+            )
+        )
 	);
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $belongsTo = array(
 		'Usuario' => array(
@@ -21,7 +43,6 @@ class Conta extends AppModel {
 			'foreignKey' => 'usuario_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
 		)
 	);
 
@@ -32,12 +53,6 @@ class Conta extends AppModel {
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		),
 		'Ganho' => array(
 			'className' => 'Ganho',
@@ -45,12 +60,6 @@ class Conta extends AppModel {
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		),
 		'Gasto' => array(
 			'className' => 'Gasto',
@@ -58,12 +67,6 @@ class Conta extends AppModel {
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		)
 	);
 
