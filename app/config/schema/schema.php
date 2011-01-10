@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-11-25 02:11:55 : 1290657895*/
+/* App schema generated on: 2011-01-09 22:01:57 : 1294618017*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -37,7 +37,7 @@ class AppSchema extends CakeSchema {
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'frequencia_id' => array('column' => 'frequencia_id', 'unique' => 0)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $aros = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
@@ -69,7 +69,7 @@ class AppSchema extends CakeSchema {
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'usuario_id' => array('column' => 'usuario_id', 'unique' => 0)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $fontes = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -79,16 +79,16 @@ class AppSchema extends CakeSchema {
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'usuario_id' => array('column' => 'usuario_id', 'unique' => 0)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $frequencias = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'nome' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 120, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'nome' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 120, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
 	var $ganhos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -103,7 +103,7 @@ class AppSchema extends CakeSchema {
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'fonte_id' => array('column' => 'fonte_id', 'unique' => 0), 'agendamento_id' => array('column' => 'agendamento_id', 'unique' => 0), 'usuario_id' => array('column' => 'usuario_id', 'unique' => 0)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $gastos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -118,7 +118,7 @@ class AppSchema extends CakeSchema {
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'destino_id' => array('column' => 'destino_id', 'unique' => 0), 'agendamento_id' => array('column' => 'agendamento_id', 'unique' => 0), 'usuario_id' => array('column' => 'usuario_id', 'unique' => 0)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $sugestos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -126,7 +126,7 @@ class AppSchema extends CakeSchema {
 		'titulo' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 150, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'texto' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1', 'key' => 'index'),
+		'status' => array('type' => 'boolean', 'null' => true, 'default' => '0', 'key' => 'index'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'status' => array('column' => 'status', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
