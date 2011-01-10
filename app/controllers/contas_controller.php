@@ -51,7 +51,10 @@ class ContasController extends AppController {
     
 	function index() {
 		$this->Conta->recursive = 0;
-		$this->set('contas', $this->paginate());
+		$contas = $this->Conta->find('all',
+                        array('conditions' => array('Conta.usuario_id' => $this->user_id)));
+        
+        $this->set(compact('contas'));
 	}
 
 	function view($id = null) {
