@@ -44,6 +44,12 @@
             <?= $this->Html->link(__('Agendamentos', true), array('controller' => 'agendamentos', 'action' => 'index')); ?>
         </li>
         <li>
+            <?= $this->Html->image('calendario.jpg',
+                                    array('width' => '20',
+                                          'height' => '19'));   ?>
+            <?= $this->Html->link(__('Contas', true), array('controller' => 'contas', 'action' => 'index')); ?>
+        </li>
+        <li>
             <?= $this->Html->image('graficos.jpg',
                                     array('width' => '18',
                                           'height' => '16'));   ?>
