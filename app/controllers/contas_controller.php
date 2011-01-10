@@ -83,7 +83,6 @@ class ContasController extends AppController {
     
 	function index() {
         
-        $this->helpers[] = 'Valor';
 		$this->Conta->recursive = 0;
 		$contas = $this->Conta->find('all',
                         array('conditions' => array('Conta.usuario_id' => $this->user_id)));
