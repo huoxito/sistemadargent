@@ -171,7 +171,14 @@ class GastosController extends AppController {
                                             array('status' => 1,
                                                   'usuario_id' => $this->Auth->user('id')),
                                           'order' => 'Destino.nome asc'));
+        
+        $contas = $this->Gasto->Conta->find('list',
+                                    array('conditions' =>
+                                            array('usuario_id' => $this->user_id),
+                                          'order' => 'Conta.id asc'));
+        
         $this->set(compact('destinos'));
+        $this->set(compact('contas'));
         $this->set('title_for_layout', 'Inserir Despesa');
     }
     
