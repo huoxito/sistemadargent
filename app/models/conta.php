@@ -1,7 +1,10 @@
 <?php
 class Conta extends AppModel {
+    
 	var $name = 'Conta';
-	var $validate = array(
+	var $displayField = 'nome';
+    
+    var $validate = array(
 		'status' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
