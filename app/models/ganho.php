@@ -14,6 +14,13 @@ class Ganho extends AppModel {
             'conditions' => '',
             'fields' => 'id, nome',
             'order' => ''
+        ),
+        'Conta' => array(
+            'className' => 'Conta',
+            'foreignKey' => 'conta_id',
+            'conditions' => '',
+            'fields' => 'id, nome',
+            'order' => ''
         )
     );
     
