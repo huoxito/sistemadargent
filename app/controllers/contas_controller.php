@@ -97,14 +97,28 @@ class ContasController extends AppController {
 	}
 
 	function add() {
+        
 		if (!empty($this->data)) {
-			$this->Conta->create();
-			if ($this->Conta->save($this->data)) {
-				$this->Session->setFlash(__('The conta has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The conta could not be saved. Please, try again.', true));
-			}
+            
+            if((float)$this->data['Conta']['saldo']){
+                $this->data['Ganho'][0] = array(
+                    'usuario_id' => $this->user_id,
+                    'valor' => $this->data['Conta']['saldo'],
+                    'datadabaixa' => date('d-m-Y'),
+                    'observacoes' => 'Saldo inicial na criação da conta'
+                );
+            }
+            
+            $this->data['Conta']['usuario_id'] = $this->user_id;
+            //$this->_pa($this->data);
+            $this->Conta->create();
+            if ($this->Conta->saveAll($this->data)) {
+                $this->Session->setFlash('Nova conta criada com sucesso','flash_success');
+                //$this->redirect(array('action' => 'index'));
+            }else{
+                $this->Session->setFlash('Preencha os campos corretamente','flash_error');
+            }
+            
 		}
 	}
 

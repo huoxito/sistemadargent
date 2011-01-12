@@ -17,14 +17,10 @@ class Conta extends AppModel {
             )
         ),
         'saldo' => array(
-            'vazio' => array(
-                'rule' => 'notEmpty',
-                'message' => 'Digite um valor (Ex: 220,00)',
-                'last' => true
-            ),
             'formato' => array(
                 'rule' => array('money','left'),
-                'message' => 'Digite um valor válido (Ex: 220,00)'
+                'message' => 'Digite um valor válido (Ex: 220,00)',
+                'allowEmpty' => true
             )
         ),
         'tipo' => array(

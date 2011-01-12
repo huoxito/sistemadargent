@@ -25,11 +25,19 @@
             <?php
                 echo $this->Form->input('nome');
                 echo $this->Form->input('saldo');
-                echo $this->Form->input('tipo');
-                echo $this->Form->input('status');
+                $options = array('corrente'=>' Corrente ', 'poupança'=> ' Poupança ', 'cash' => ' Cash ');
+                $attributes = array('class' => 'config',
+                                    'label' => 'Tipo');
+                echo $this->Form->radio('tipo',$options,$attributes);   
+                echo $this->Form->end('Criar nova conta');
             ?>
+            <div class="input">
+            <?php
+                
+            ?>
+            </div>
         </fieldset>
-        <?php echo $this->Form->end(__('Submit', true));?>
+        
     </div>
     
 </div>
