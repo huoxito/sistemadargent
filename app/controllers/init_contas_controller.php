@@ -50,12 +50,31 @@ class InitContasController extends AppController {
     
     function index(){
         
-        
-        $this->autoRender = false;
+        $this->_setarContaPadrao();
+        $this->layout = 'ajax';
     }
     
     function _setarContaPadrao(){
         
+        $this->Conta->recursive = -1;
+        $contas = $this->Conta->find('all');
+        foreach($contas as $conta){
+
+            $this->Conta->Ganho->updateAll(
+                array('Ganho.conta_id' => $conta['Conta']['id']),
+                array('Ganho.usuario_id' => $conta['Conta']['usuario_id'])
+            );
+            
+            $this->Conta->Gasto->updateAll(
+                array('Gasto.conta_id' => $conta['Conta']['id']),
+                array('Gasto.usuario_id' => $conta['Conta']['usuario_id'])
+            );
+            
+            $this->Conta->Agendamento->updateAll(
+                array('Agendamento.conta_id' => $conta['Conta']['id']),
+                array('Agendamento.usuario_id' => $conta['Conta']['usuario_id'])
+            );
+        }
         
     }
     
