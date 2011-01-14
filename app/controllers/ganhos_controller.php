@@ -75,6 +75,10 @@ class GanhosController extends AppController {
             $item['Ganho']['valor'] = $this->Valor->formata($item['Ganho']['valor'],'humano');
             $item['Ganho']['datadabaixa'] = $this->Data->formata($item['Ganho']['datadabaixa'],'porextenso');
             
+            if(!$item['Ganho']['fonte_id']){
+               $item['Fonte']['nome'] = 'Movimentação nas contas'; 
+            }
+            
             # só insiro no array groupPorData quando aparece um registro com uma data diferente
             if( $item['Ganho']['datadabaixa'] != $dataTemp ){
                 

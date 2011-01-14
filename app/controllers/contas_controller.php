@@ -57,27 +57,9 @@ class ContasController extends AppController {
         
 		if (!empty($this->data)) {
             
-            $datasource = $this->Conta->getDataSource();
-            $datasource->begin($this);
-            
             if((float)$this->data['Conta']['saldo']){
                 
-                $this->loadModel('Fonte');
-                $data['Fonte'] = array(
-                    'nome' => $this->data['Conta']['nome'],
-                    'usuario_id' => $this->user_id
-                );
-                if(!$this->Fonte->save($data)){
-                    $this->Session->setFlash(
-                        'Sua conta não pode ter o mesmo nome de uma das suas categorias',
-                        'flash_error'
-                    );
-                    $fonteExiste = true;
-                    $datasource->rollback($this);
-                }
-                
                 $this->data['Ganho'][0] = array(
-                    'fonte_id' => $this->Fonte->id,
                     'usuario_id' => $this->user_id,
                     'valor' => $this->data['Conta']['saldo'],
                     'datadabaixa' => date('d-m-Y'),
@@ -87,15 +69,11 @@ class ContasController extends AppController {
             
             $this->data['Conta']['usuario_id'] = $this->user_id;
             $this->Conta->create();
-            if ($this->Conta->saveAll($this->data,array('atomic' => false))) {
+            if ($this->Conta->saveAll($this->data)) {
                 $this->Session->setFlash('Nova conta criada com sucesso','flash_success');
-                $datasource->commit($this);
                 $this->redirect(array('action' => 'index'));
             }else{
-                $datasource->rollback($this);
-                if(!isset($fonteExiste)){
-                    $this->Session->setFlash('Preencha os campos corretamente','flash_error');
-                }
+                $this->Session->setFlash('Preencha os campos corretamente','flash_error');
             }
 		}
 	}
