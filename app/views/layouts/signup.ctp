@@ -81,7 +81,7 @@
 </div>	
     
     
-<?php //echo $this->element('sql_dump'); ?>
+<?php echo $this->element('sql_dump'); ?>
 <?php echo $js->writeBuffer(); // Write cached scripts ?>
 
 </body>
