@@ -14,8 +14,6 @@
         <p>
             Sistema Dargent - Controle Fincanceiro
             <br />
-             <a href="http://www.sistemadargent.com.br" title="sistema dargent">http://www.sistemadargent.com.br</a>
-            -
-             <a href="http://dargent.testsoh.com.br" title="sistema dargent">http://dargent.testsoh.com.br</a>
+            <a href="http://www.sistemadargent.com.br" title="sistema dargent">http://www.sistemadargent.com.br</a>
         </p>
         
