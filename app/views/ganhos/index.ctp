@@ -168,7 +168,7 @@
                                 <?= $registro['Fonte']['nome']; ?>
                             </span>
                             <span class="contaListagem">
-                                <?= $registro['Conta']['nome']; ?>
+                                <?= $registro['Conta']['tipo']; ?>
                             </span>
                         </p>
                         
