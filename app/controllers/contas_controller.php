@@ -3,6 +3,7 @@ class ContasController extends AppController {
 
 	var $name = 'Contas';
     var $components = array('Valor');
+    var $helpers = array('Data');
     
     function saldo(){
         

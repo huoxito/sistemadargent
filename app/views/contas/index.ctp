@@ -24,27 +24,37 @@
     
     <div class="registrosWraper">
             
-        <table cellpadding="0" cellspacing="0">
-            <?php
-            $i = 0;
-            foreach ($contas as $conta):
-                $class = null;
-                if ($i++ % 2 == 0) {
-                    $class = ' class="altrow"';
-                }
-            ?>
-            <tr<?php echo $class;?>>
-                <td><?= $conta['Conta']['nome']; ?></td>
+        <table cellpadding="0" cellspacing="0" class="tabelaListagem">
+            <tr>
+                <th>Nome</th>
+                <th>Saldo</th>
+                <th>Tipo</th>
+                <th>Criada</th>
+                <th colspan="2">Modificada</th>
+            </tr>
+            <?php foreach ($contas as $conta): ?>
+            <tr id="">
+                <td>
+                    <?= $conta['Conta']['nome']; ?>
+                </td>
                 <td>
                     R$ <?= $this->Valor->formata($conta['Conta']['saldo']); ?>
                 </td>
-                <td><?= $conta['Conta']['tipo']; ?></td>
-                <td><?= $conta['Conta']['created']; ?></td>
-                <td><?= $conta['Conta']['status']; ?></td>
+                <td>
+                    <?= $conta['Conta']['tipo']; ?>
+                </td>
+                <td>
+                    <?= $this->Data->formata($conta['Conta']['created']); ?>
+                </td>
+                <td>
+                    <?= $this->Data->formata($conta['Conta']['modified']); ?>
+                </td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View', true), array('action' => 'view', $conta['Conta']['id'])); ?>
-                    <?= $this->Html->link(__('Edit', true), array('action' => 'edit', $conta['Conta']['id'])); ?>
-                    <?= $this->Html->link(__('Delete', true), array('action' => 'delete', $conta['Conta']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $conta['Conta']['id'])); ?>
+                    <?= $this->Html->link('EDITAR',
+                                array('action' => 'edit', $conta['Conta']['id']),
+                                array('class' => 'btneditar',
+                                      'title' => 'Editar Faturamento')); ?> 
+                    <?= $this->Html->link('Delete', array('action' => 'delete', $conta['Conta']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $conta['Conta']['id'])); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -53,4 +63,19 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    // <![CDATA[
+    $(document).ready(function () {
+        $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
+        $('.colorbox-edit').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
+        
+        $(".registros").mouseover(function() {
+            $(this).css("background-color",'#F2FFE3');
+        }).mouseout(function(){
+            $(this).css("background-color",'#FFF');
+        });
+    });
+    // ]]>
+</script>
 

@@ -1021,11 +1021,9 @@ table tr td {
 	border-bottom:1px solid #ddd;
 }
 
-table tr:nth-child(2n) td {
-	background: #f5f5f5;
-}
-table .altrow td {
-	background: #f5f5f5;
+/* aparece na listagem de contas */
+.tabelaListagem td, .tabelaListagem th {
+	padding: 10px;
 }
 
 #whiteTable tr td, #whiteTable tr th {
