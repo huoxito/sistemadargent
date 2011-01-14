@@ -1,31 +1,65 @@
-<div class="contas form">
-<?php echo $this->Form->create('Conta');?>
-	<fieldset>
- 		<legend><?php __('Edit Conta'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('usuario_id');
-		echo $this->Form->input('nome');
-		echo $this->Form->input('saldo');
-		echo $this->Form->input('tipo');
-		echo $this->Form->input('status');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
 
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Conta.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Conta.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Contas', true), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(__('List Usuarios', true), array('controller' => 'usuarios', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Usuario', true), array('controller' => 'usuarios', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Agendamentos', true), array('controller' => 'agendamentos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Agendamento', true), array('controller' => 'agendamentos', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Ganhos', true), array('controller' => 'ganhos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Ganho', true), array('controller' => 'ganhos', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Gastos', true), array('controller' => 'gastos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Gasto', true), array('controller' => 'gastos', 'action' => 'add')); ?> </li>
-	</ul>
+
+<div class="contas formBox">
+    
+    <?= $this->Form->create('Conta', array('default' => false)); ?>    
+    <fieldset>
+        <?php
+            echo $this->Form->input('id');
+            echo $this->Form->input('nome');
+            echo $this->Form->input('saldo');
+            $options = array('corrente'=>' Corrente ', 'poupança'=> ' Poupança ', 'cash' => ' Cash ');
+            $attributes = array('class' => 'config',
+                                'label' => 'Tipo');
+            echo $this->Form->radio('tipo',$options,$attributes);   
+        ?>
+        <div class="submit">
+            <input type="submit" id="submitAjax" value="Atualizar">
+            <input type="submit" id="fecharColorbox" value="Cancelar" />
+        </div>
+    </fieldset>
+
 </div>
+
+<script type="text/javascript">
+    
+    $('#fecharColorbox').click(function(){
+        parent.jQuery.fn.colorbox.close();
+    });
+            
+    $('#submitAjax').click(function(event){
+        
+        event.stopPropagation();
+        
+        var id              = $('#ContaId').val();
+        var nome            = $('#ContaNome').val();
+        var saldo           = $('#ContaSaldo').val();
+        var tipo            = $('input:radio[name=data[Conta][tipo]]:checked').val();
+        alert(tipo);
+        $.ajax({
+            
+            url: '<?= $this->Html->url(array("action" => "edit"));?>', 
+            data: ({ Conta: {id:id, nome:nome, saldo:saldo, tipo: tipo} }),
+            beforeSend: function(){
+                $('.submit span').detach();
+                $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
+            },
+            success: function(result){
+                
+                /*
+                $('.submit img').detach();
+                if(result == 'error'){
+                    $('.submit').append('<span class="ajax_error_response">Registro inválido</span>');
+                }else if(result == 'validacao'){
+                    $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
+                }else {
+                    parent.$('#ganho-' + id).html(result);
+                    var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
+                }
+                */
+            }
+        });
+        return false;
+    });
+    
+</script>

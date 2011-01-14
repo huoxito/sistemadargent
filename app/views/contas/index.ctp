@@ -52,8 +52,8 @@
                 <td class="actions">
                     <?= $this->Html->link('EDITAR',
                                 array('action' => 'edit', $conta['Conta']['id']),
-                                array('class' => 'btneditar',
-                                      'title' => 'Editar Faturamento')); ?> 
+                                array('class' => 'colorbox-edit btneditar',
+                                      'title' => 'Editar Conta')); ?> 
                     <?= $this->Html->link('Delete', array('action' => 'delete', $conta['Conta']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $conta['Conta']['id'])); ?>
                 </td>
             </tr>

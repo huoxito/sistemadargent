@@ -80,21 +80,48 @@ class ContasController extends AppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid conta', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Conta->save($this->data)) {
-				$this->Session->setFlash(__('The conta has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The conta could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Conta->read(null, $id);
-		}
+        
+        if( $this->params['isAjax'] ){
+        
+            
+            $this->data = array_merge($this->params['url']);
+            $this->_pa($this->data);
+            
+            $this->Conta->recursive = 0;
+            $chk = $this->Conta->find('first',
+                                array('conditions' =>
+                                        array('Conta.id' => $this->data['Conta']['id'])));
+            if( $this->checkPermissao($chk['Conta']['usuario_id'],true) ){
+                
+                $this->Conta->id = $this->data['Conta']['id'];
+                if ($this->Conta->save($this->data)) {
+                    echo 'yeah';
+                }else{
+                    echo 'nops';
+                }
+                
+            }else{
+                
+                echo 'error';
+            }
+            
+            $this->autoRender = false;
+        
+        } elseif (!$id && empty($this->data)) {
+            
+            $this->redirect(array('action' => 'index'));
+            
+        } else {
+            
+            if (empty($this->data)) {
+                
+                $this->data = $this->Conta->read(null, $id);
+                $this->checkPermissao($this->data['Conta']['usuario_id']);
+                
+            }
+            
+            $this->layout = 'colorbox';
+        }
 	}
 
 	function delete($id = null) {
