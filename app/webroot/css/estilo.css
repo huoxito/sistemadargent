@@ -597,6 +597,18 @@ span.valor {
 	background-position:0 -20px;
 	}
 
+/* spam na listagem de faturamentos e despesas */
+.spansBlocks {
+	display: block;
+	float: left;
+}
+
+/* usada na listagem de faturamentos e despesas */
+.categoriaListagem {
+	min-width: 200px;
+}
+
+/* usada na listagem de categorias fontes e destinos */
 .categoria_nome {
 	width: 400px;
 	display: block;
