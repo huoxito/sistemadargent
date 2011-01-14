@@ -608,6 +608,12 @@ span.valor {
 	min-width: 200px;
 }
 
+/* usada na listagem de faturamentos e despesas */
+.observacoesListagem {
+	margin: 5px 0;
+	width: 75%;
+}
+
 /* usada na listagem de categorias fontes e destinos */
 .categoria_nome {
 	width: 400px;

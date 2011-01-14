@@ -173,7 +173,7 @@
                         </p>
                         
                         <?php   if(!empty($registro['Ganho']['observacoes'])){ ?>
-                            <p class="agendamentoInfoLinha">
+                            <p class="observacoesListagem">
                             <?php echo $registro['Ganho']['observacoes']; ?>
                             </p>
                         <?php   }   ?>
