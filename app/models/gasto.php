@@ -21,7 +21,7 @@ class Gasto extends AppModel {
             'className' => 'Conta',
             'foreignKey' => 'conta_id',
             'conditions' => '',
-            'fields' => 'id, nome',
+            'fields' => 'id, nome, tipo',
             'order' => ''
         )
     );
