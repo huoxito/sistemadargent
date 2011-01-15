@@ -7,7 +7,7 @@
         <?php
             echo $this->Form->input('id');
             echo $this->Form->input('nome');
-            echo $this->Form->input('saldo');
+            echo $this->Form->input('saldo', array('value' => $this->Valor->formata($this->data['Conta']['saldo'])));
             $options = array('corrente'=>' Corrente ', 'poupança'=> ' Poupança ', 'cash' => ' Cash ');
             $attributes = array('class' => 'config',
                                 'label' => 'Tipo');
@@ -34,8 +34,8 @@
         var id              = $('#ContaId').val();
         var nome            = $('#ContaNome').val();
         var saldo           = $('#ContaSaldo').val();
-        var tipo            = $('input:radio[name=data[Conta][tipo]]:checked').val();
-        alert(tipo);
+        var tipo            = $('input:radio:checked').val();
+        
         $.ajax({
             
             url: '<?= $this->Html->url(array("action" => "edit"));?>', 
