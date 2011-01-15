@@ -38,7 +38,7 @@
                     <?= $conta['Conta']['nome']; ?>
                 </td>
                 <td>
-                    R$ <?= $this->Valor->formata($conta['Conta']['saldo']); ?>
+                    R$ <?= $conta['Conta']['saldo'] ?>
                 </td>
                 <td>
                     <?= $conta['Conta']['tipo']; ?>

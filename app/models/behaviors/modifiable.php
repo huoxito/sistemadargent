@@ -56,7 +56,9 @@ class ModifiableBehavior extends ModelBehavior {
 			
 			if ( isset($results[$key][$model->alias]['valor']) ){
 				$results[$key][$model->alias]['valor'] = $this->formata($model, $results[$key][$model->alias]['valor'],'humano');
-			}
+			} elseif ( isset($results[$key][$model->alias]['saldo']) ) {
+                $results[$key][$model->alias]['saldo'] = $this->formata($model, $results[$key][$model->alias]['saldo'],'humano');
+            }
 		}
         return $results;
     }

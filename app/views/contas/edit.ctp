@@ -7,7 +7,7 @@
         <?php
             echo $this->Form->input('id');
             echo $this->Form->input('nome');
-            echo $this->Form->input('saldo', array('value' => $this->Valor->formata($this->data['Conta']['saldo'])));
+            echo $this->Form->input('saldo');
             $options = array('corrente'=>' Corrente ', 'poupança'=> ' Poupança ', 'cash' => ' Cash ');
             $attributes = array('class' => 'config',
                                 'label' => 'Tipo');

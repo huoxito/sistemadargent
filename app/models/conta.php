@@ -3,6 +3,11 @@ class Conta extends AppModel {
     
 	var $name = 'Conta';
 	var $displayField = 'nome';
+    var $actsAs = array(
+        'Modifiable' => array(
+			'fields' => array('saldo')
+        )
+    );
     
     var $validate = array(
 		'status' => array(
@@ -41,7 +46,7 @@ class Conta extends AppModel {
 			'className' => 'Usuario',
 			'foreignKey' => 'usuario_id',
 			'conditions' => '',
-			'fields' => '',
+			'fields' => 'id, nome, login',
 		)
 	);
 
