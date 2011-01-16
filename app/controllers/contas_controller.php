@@ -83,43 +83,63 @@ class ContasController extends AppController {
         
         if( $this->params['isAjax'] ){
         
-            
             $this->data = array_merge($this->params['url']);
-            $this->_pa($this->data);
             
-            $this->Conta->recursive = 0;
+            $this->Conta->recursive = -1;
             $chk = $this->Conta->find('first',
                                 array('conditions' =>
                                         array('Conta.id' => $this->data['Conta']['id'])));
             if( $this->checkPermissao($chk['Conta']['usuario_id'],true) ){
                 
-                $this->Conta->id = $this->data['Conta']['id'];
-                if ($this->Conta->save($this->data)) {
-                    echo 'yeah';
+                $this->Conta->set($this->data);
+                if($this->Conta->validates()){
+                    
+                    $antigo = $this->Conta->Behaviors->Modifiable->monetary($this,$chk['Conta']['saldo']);
+                    $atual = $this->Conta->Behaviors->Modifiable->monetary($this,$this->data['Conta']['saldo']);
+                    $diferenca = round($atual-$antigo,2);
+                    if($diferenca){
+                        
+                        if($diferenca < 0){
+                            $tipo = 'Gasto';
+                            $diferenca = abs($diferenca);
+                        }else{
+                            $tipo = 'Ganho';
+                        }
+                        
+                        $this->data[$tipo][0] = array(
+                            'usuario_id' => $this->user_id,
+                            'valor' => $diferenca,
+                            'datadabaixa' => date('d-m-Y'),
+                            'observacoes' => 'Diferença na alteração do saldo da conta'
+                        );
+                        
+                    }
+                    
+                    $this->data['Conta']['saldo'] = $atual;
+                    $this->Conta->id = $this->data['Conta']['id'];
+                    if ($this->Conta->saveAll($this->data)) {
+                        $this->layout = 'ajax';
+                        $this->render('edit_response');
+                    }else{
+                        echo 'validacao'; exit;
+                    }
+                    
                 }else{
-                    echo 'nops';
+                    echo 'validacao'; exit;
                 }
-                
             }else{
-                
-                echo 'error';
+                echo 'error'; exit;
             }
             
-            $this->autoRender = false;
-        
         } elseif (!$id && empty($this->data)) {
-            
             $this->redirect(array('action' => 'index'));
-            
         } else {
             
             if (empty($this->data)) {
                 
                 $this->data = $this->Conta->read(null, $id);
                 $this->checkPermissao($this->data['Conta']['usuario_id']);
-                
             }
-            
             $this->layout = 'colorbox';
         }
 	}
