@@ -33,7 +33,7 @@
                 <th colspan="2">Modificada</th>
             </tr>
             <?php foreach ($contas as $conta): ?>
-            <tr id="">
+            <tr id="contaId<?= $conta['Conta']['id'];?>">
                 <td>
                     <?= $conta['Conta']['nome']; ?>
                 </td>

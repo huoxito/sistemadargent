@@ -109,15 +109,21 @@ class ContasController extends AppController {
                         $this->data[$tipo][0] = array(
                             'usuario_id' => $this->user_id,
                             'valor' => $diferenca,
-                            'datadabaixa' => date('d-m-Y'),
+                            'datadabaixa' => date('Y-m-d'),
                             'observacoes' => 'Diferença na alteração do saldo da conta'
                         );
-                        
+                        unset($this->Conta->$tipo->validate['valor']);
+                        unset($this->Conta->$tipo->validate['datadabaixa']);
+                        $this->Conta->$tipo->Behaviors->detach('Modifiable');
                     }
                     
                     $this->data['Conta']['saldo'] = $atual;
                     $this->Conta->id = $this->data['Conta']['id'];
                     if ($this->Conta->saveAll($this->data)) {
+                        
+                        $conta = $this->Conta->read(null,$this->Conta->id);
+                        $this->set(compact('conta'));
+                        
                         $this->layout = 'ajax';
                         $this->render('edit_response');
                     }else{

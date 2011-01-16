@@ -16,6 +16,7 @@
         <div class="submit">
             <input type="submit" id="submitAjax" value="Atualizar">
             <input type="submit" id="fecharColorbox" value="Cancelar" />
+            <span class="ajax_error_response"></span>
         </div>
     </fieldset>
 
@@ -41,22 +42,20 @@
             url: '<?= $this->Html->url(array("action" => "edit"));?>', 
             data: ({ Conta: {id:id, nome:nome, saldo:saldo, tipo: tipo} }),
             beforeSend: function(){
-                $('.submit span').detach();
+                $('.submit span').html('');
                 $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
             },
             success: function(result){
                 
-                /*
                 $('.submit img').detach();
                 if(result == 'error'){
-                    $('.submit').append('<span class="ajax_error_response">Registro inválido</span>');
+                    $('.ajax_error_response').html('Registro inválido');
                 }else if(result == 'validacao'){
-                    $('.submit').append('<span class="ajax_error_response">Preencha todos os campos obrigatórios corretamente</span>');
+                    $('.ajax_error_response').html('Preencha todos os campos obrigatórios corretamente');
                 }else {
-                    parent.$('#ganho-' + id).html(result);
+                    parent.$('#contaId' + id).html(result);
                     var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
                 }
-                */
             }
         });
         return false;
