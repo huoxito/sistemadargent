@@ -31,6 +31,12 @@ class Ganho extends AppModel {
             'message' => 'Selecione uma fonte',
             'allowEmpty' => false,
         ),
+        'conta_id' => array(
+            'rule' => 'notEmpty',
+            'required' => false,
+            'message' => 'Selecione uma fonte',
+            'allowEmpty' => false,
+        ),
         'valor' => array(
             'vazio' => array(
                 'rule' => 'notEmpty',

@@ -135,7 +135,7 @@ class GanhosController extends AppController {
         $this->set('title_for_layout', 'Faturamentos');
     }
 
-
+    
     function add() {
         
         if (!empty($this->data)) {
@@ -144,18 +144,34 @@ class GanhosController extends AppController {
                 $this->data['Fonte']['usuario_id'] = $this->user_id;
                 unset($this->Ganho->validate['fonte_id']);
             }
+            
+            $datasource = $this->Ganho->getDataSource();
+            $datasource->begin($this);
 
             $this->Ganho->create();
             $this->data['Ganho']['usuario_id'] = $this->user_id;
-            if ($this->Ganho->saveAll($this->data)) {
+            if ( $this->Ganho->saveAll($this->data,array('atomic' => false)) ) {
                 
-                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
-                if(!$this->data['Ganho']['keepon']){
-                    $this->redirect(array('action'=>'index'));  
+                $valor = $this->Ganho->Behaviors->Modifiable->monetary($this,$this->data['Ganho']['valor']);
+                $conditions = array('Conta.usuario_id' => $this->user_id,
+                                    'Conta.id' => $this->data['Ganho']['conta_id']);
+                $values = array('saldo' => 'saldo+'.$valor);
+                if( $this->Ganho->Conta->updateAll($values, $conditions) ){
+
+                    $datasource->commit($this);
+                    $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
+                    if(!$this->data['Ganho']['keepon']){
+                        $this->redirect(array('action'=>'index'));  
+                    }else{
+                        $this->data = null;
+                    }
                 }else{
-                    $this->data = null;
+                    $datasource->rollback($this);
                 }
-            } else {
+                
+            }else{
+                
+                $datasource->rollback($this);
                 $errors = $this->validateErrors($this->Ganho->Fonte,$this->Ganho);
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }
@@ -170,7 +186,14 @@ class GanhosController extends AppController {
                                                 array('status' => 1,
                                                       'usuario_id' => $this->Auth->user('id')),
                                               'order' => 'Fonte.nome asc'));
+        
+        $contas = $this->Ganho->Conta->find('list',
+                                    array('conditions' =>
+                                            array('usuario_id' => $this->user_id),
+                                          'order' => 'Conta.id asc'));
+        
         $this->set(compact('fontes'));
+        $this->set(compact('contas'));
         $this->set('title_for_layout', 'Inserir Faturamento');
     }
         
