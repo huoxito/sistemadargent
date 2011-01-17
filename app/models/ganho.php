@@ -93,5 +93,29 @@ class Ganho extends AppModel {
         return $statement;
     }
     
+    function excluir($id, $userId, $data){
+	
+	$datasource = $this->getDataSource();
+        $datasource->begin($this);
+	
+	if (!$this->delete($id)) {
+	    $datasource->rollback($this);
+	    return false;
+	}
+	
+	$valor = $this->Behaviors->Modifiable->monetary($this, $data['Ganho']['valor']);
+	$values = array('saldo' => 'saldo-'.$valor);
+        $conditions = array('Conta.usuario_id' => $userId,
+			    'Conta.id' => $data['Ganho']['conta_id']);
+	
+	if( $this->Conta->updateAll($values, $conditions) ){
+	    $datasource->commit($this);
+	    return true;
+	}else{
+	    $datasource->rollback($this);
+	    return false;
+	}
+    }
+    
 }
 ?>

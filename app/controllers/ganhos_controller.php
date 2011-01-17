@@ -325,22 +325,17 @@ class GanhosController extends AppController {
             $id = (int)$this->params['url']['id'];
         }
 
-        $itens = $this->Ganho->read(array('Ganho.id,
-                                            Ganho.usuario_id,
-                                            Ganho.valor,
-                                            Ganho.datadabaixa,
-                                            Ganho.observacoes,
-                                            Fonte.nome'), $id);
+        $itens = $this->Ganho->read(null, $id);
         # permissão do usuário
         $this->checkPermissao($itens['Ganho']['usuario_id']);
         
         if( $this->params['isAjax'] ){
         
-            if ($this->Ganho->delete($id)) {
+            if( $this->Ganho->excluir($id, $this->user_id, $itens) ){
                 echo 'deleted';
             }   
             $this->autoRender = false;
-        
+            
         }else{
             
             $itens['Ganho']['datadabaixa'] = $this->Data->formata($itens['Ganho']['datadabaixa'],'porextenso');
