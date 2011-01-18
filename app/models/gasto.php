@@ -14,7 +14,14 @@ class Gasto extends AppModel {
             'className' => 'Destino',
             'foreignKey' => 'destino_id',
             'conditions' => '',
-            'fields' => '',
+            'fields' => 'id, nome',
+            'order' => ''
+        ),
+        'Conta' => array(
+            'className' => 'Conta',
+            'foreignKey' => 'conta_id',
+            'conditions' => '',
+            'fields' => 'id, nome, tipo',
             'order' => ''
         )
     );

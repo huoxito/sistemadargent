@@ -75,6 +75,10 @@ class GanhosController extends AppController {
             $item['Ganho']['valor'] = $this->Valor->formata($item['Ganho']['valor'],'humano');
             $item['Ganho']['datadabaixa'] = $this->Data->formata($item['Ganho']['datadabaixa'],'porextenso');
             
+            if(!$item['Ganho']['fonte_id']){
+               $item['Fonte']['nome'] = 'Movimentação nas contas'; 
+            }
+            
             # só insiro no array groupPorData quando aparece um registro com uma data diferente
             if( $item['Ganho']['datadabaixa'] != $dataTemp ){
                 
@@ -131,7 +135,7 @@ class GanhosController extends AppController {
         $this->set('title_for_layout', 'Faturamentos');
     }
 
-
+    
     function add() {
         
         if (!empty($this->data)) {
@@ -140,18 +144,34 @@ class GanhosController extends AppController {
                 $this->data['Fonte']['usuario_id'] = $this->user_id;
                 unset($this->Ganho->validate['fonte_id']);
             }
+            
+            $datasource = $this->Ganho->getDataSource();
+            $datasource->begin($this);
 
             $this->Ganho->create();
             $this->data['Ganho']['usuario_id'] = $this->user_id;
-            if ($this->Ganho->saveAll($this->data)) {
+            if ( $this->Ganho->saveAll($this->data,array('atomic' => false)) ) {
                 
-                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
-                if(!$this->data['Ganho']['keepon']){
-                    $this->redirect(array('action'=>'index'));  
+                $valor = $this->Ganho->Behaviors->Modifiable->monetary($this,$this->data['Ganho']['valor']);
+                $conditions = array('Conta.usuario_id' => $this->user_id,
+                                    'Conta.id' => $this->data['Ganho']['conta_id']);
+                $values = array('saldo' => 'saldo+'.$valor);
+                if( $this->Ganho->Conta->updateAll($values, $conditions) ){
+
+                    $datasource->commit($this);
+                    $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
+                    if(!$this->data['Ganho']['keepon']){
+                        $this->redirect(array('action'=>'index'));  
+                    }else{
+                        $this->data = null;
+                    }
                 }else{
-                    $this->data = null;
+                    $datasource->rollback($this);
                 }
-            } else {
+                
+            }else{
+                
+                $datasource->rollback($this);
                 $errors = $this->validateErrors($this->Ganho->Fonte,$this->Ganho);
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }
@@ -166,7 +186,14 @@ class GanhosController extends AppController {
                                                 array('status' => 1,
                                                       'usuario_id' => $this->Auth->user('id')),
                                               'order' => 'Fonte.nome asc'));
+        
+        $contas = $this->Ganho->Conta->find('list',
+                                    array('conditions' =>
+                                            array('usuario_id' => $this->user_id),
+                                          'order' => 'Conta.id asc'));
+        
         $this->set(compact('fontes'));
+        $this->set(compact('contas'));
         $this->set('title_for_layout', 'Inserir Faturamento');
     }
         
@@ -197,10 +224,16 @@ class GanhosController extends AppController {
         
         $this->data['Ganho']['datadabaixa'] = $this->Data->formata($this->data['Ganho']['datadabaixa'], 'diamesano');
         $fontes = $this->Ganho->Fonte->find('list',
-                                            array('conditions' =>
-                                                    array('usuario_id' => $this->Auth->user('id')),
-                                                  'order' => 'Fonte.nome asc'));
+                                        array('conditions' =>
+                                                array('usuario_id' => $this->Auth->user('id')),
+                                              'order' => 'Fonte.nome asc'));
+        $contas = $this->Ganho->Conta->find('list',
+                                    array('conditions' =>
+                                            array('usuario_id' => $this->user_id),
+                                          'order' => 'Conta.id asc'));
+        
         $this->set(compact('fontes'));
+        $this->set(compact('contas'));
         $this->set('id',$id);
         $this->layout = 'colorbox';
     }
@@ -211,7 +244,6 @@ class GanhosController extends AppController {
         if( $this->params['isAjax'] ){
             
             $this->data = array_merge($this->params['url']);
-            //$this->_pa($this->data);
             
             $this->Ganho->recursive = 0;
             $chk = $this->Ganho->find('first',
@@ -223,9 +255,32 @@ class GanhosController extends AppController {
                     $this->data['Fonte']['usuario_id'] = $this->user_id;
                     unset($this->Ganho->validate['fonte_id']);    
                 }     
-    
+                
+                $datasource = $this->Ganho->getDataSource();
+                $datasource->begin($this);
+                
                 $this->Ganho->id = $this->data['Ganho']['id'];
-                if ($this->Ganho->saveAll($this->data)) {
+                if ( $this->Ganho->saveAll($this->data, array('atomic' => false)) ) {
+                    
+                    // checar se há neccessidade de um update na conta
+                    $valorAtual = $this->Ganho->Behaviors->Modifiable->monetary($this,$this->data['Ganho']['valor']);
+                    $valorAntigo = $this->Ganho->Behaviors->Modifiable->monetary($this,$chk['Ganho']['valor']);
+                    $diferenca = round($valorAtual-$valorAntigo,2);
+                    if($diferenca){
+                        
+                        $values = array('saldo' => 'saldo+'.$diferenca);
+                        $conditions = array('Conta.usuario_id' => $this->user_id,
+                                            'Conta.id' => $this->data['Ganho']['conta_id']);
+                        if( $this->Ganho->Conta->updateAll($values, $conditions) ){
+                            $datasource->commit($this);
+                        }else{
+                            $datasource->rollback($this);
+                            echo 'validacao'; exit;
+                        }
+
+                    }else{
+                        $datasource->commit($this);
+                    }
                     
                     if( isset($this->data['Fonte']['nome']) ){
                         $this->Ganho->Fonte->id;
@@ -251,14 +306,15 @@ class GanhosController extends AppController {
                     }
                     
                     $this->layout = 'ajax';
+                        
                 }else{
-                    echo 'validacao';
-                    $this->autoRender = false;
+                    
+                    $datasource->rollback($this);
+                    echo 'validacao'; exit;
                 }
             }else{
                 # registro não pertence ao usuário
-                echo 'error';   
-                $this->autoRender = false;
+                echo 'error';   exit;
             }
         }
     }
@@ -269,22 +325,17 @@ class GanhosController extends AppController {
             $id = (int)$this->params['url']['id'];
         }
 
-        $itens = $this->Ganho->read(array('Ganho.id,
-                                            Ganho.usuario_id,
-                                            Ganho.valor,
-                                            Ganho.datadabaixa,
-                                            Ganho.observacoes,
-                                            Fonte.nome'), $id);
+        $itens = $this->Ganho->read(null, $id);
         # permissão do usuário
         $this->checkPermissao($itens['Ganho']['usuario_id']);
         
         if( $this->params['isAjax'] ){
         
-            if ($this->Ganho->delete($id)) {
+            if( $this->Ganho->excluir($id, $this->user_id, $itens) ){
                 echo 'deleted';
             }   
             $this->autoRender = false;
-        
+            
         }else{
             
             $itens['Ganho']['datadabaixa'] = $this->Data->formata($itens['Ganho']['datadabaixa'],'porextenso');

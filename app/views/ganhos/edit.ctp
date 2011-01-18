@@ -25,7 +25,7 @@
                 INSERIR NOVA FONTE
             </a>
         </div>
-        
+        <?= $this->Form->input('conta_id'); ?>
         <?= $this->Form->input('valor'); ?>
         <?= $this->Form->input('observacoes',
                             array('type' => 'textarea',
@@ -70,6 +70,7 @@
         var id              = $('#GanhoId').val();
         var nome            = $('#FonteNome').val();
         var fonte_id        = $('#GanhoFonteId').val();
+        var conta_id        = $('#GanhoContaId').val();
         var valor           = $('#GanhoValor').val();
         var data            = $('#GanhoDatadabaixa').val();
         var obs             = $('#Observacoes').val();
@@ -77,8 +78,9 @@
         $.ajax({
             
             url: '<?= $this->Html->url(array("action" => "editResponse"));?>', 
-            data: ({ Ganho: {id:id, fonte_id:fonte_id, valor:valor, datadabaixa:data, observacoes:obs},
-                     Fonte: {nome:nome} }),
+            data: ({ Ganho: {   id: id, fonte_id: fonte_id, conta_id: conta_id, valor: valor,
+                                datadabaixa:data, observacoes: obs },
+                     Fonte: {   nome: nome } }),
             beforeSend: function(){
                 $('.submit span').detach();
                 $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');

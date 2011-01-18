@@ -161,12 +161,19 @@
                     <div class="registros registrosPainel <?php if($count < $num) echo 'borda-inferior'; ?>" id="ganho-<?php echo $registro['Ganho']['id']; ?>">
                     
                         <p class="agendamentoInfoLinha">
-                            <span class="valor">R$ <?= $registro['Ganho']['valor']; ?></span>
-                            <span class=""><?= $registro['Fonte']['nome']; ?></span>
+                            <span class="valor">
+                                R$ <?= $registro['Ganho']['valor']; ?>
+                            </span>
+                            <span class="categoriaListagem spansBlocks">
+                                <?= $registro['Fonte']['nome']; ?>
+                            </span>
+                            <span class="contaListagem">
+                                <?= $registro['Conta']['tipo']; ?>
+                            </span>
                         </p>
                         
                         <?php   if(!empty($registro['Ganho']['observacoes'])){ ?>
-                            <p class="agendamentoInfoLinha">
+                            <p class="observacoesListagem">
                             <?php echo $registro['Ganho']['observacoes']; ?>
                             </p>
                         <?php   }   ?>
@@ -211,7 +218,7 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "480", opacity: 0.5, iframe: true});
             
             $(".registros").mouseover(function() {
                 $(this).css("background-color",'#F2FFE3');
