@@ -34,7 +34,7 @@ class Ganho extends AppModel {
         'conta_id' => array(
             'rule' => 'notEmpty',
             'required' => false,
-            'message' => 'Selecione uma fonte',
+            'message' => 'Selecione uma conta',
             'allowEmpty' => false,
         ),
         'valor' => array(
