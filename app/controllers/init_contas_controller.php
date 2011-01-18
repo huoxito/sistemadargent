@@ -4,7 +4,17 @@ class InitContasController extends AppController {
     var $name = 'InitContas';
     var $uses = array('Conta');
     var $components = array('Valor');
-
+    
+    
+    function beforeFilter(){
+        parent::beforeFilter();
+        
+        $chk = $this->Acl->check(array('model' => 'Usuario', 'foreign_key' => $this->user_id), 'root');
+        if(!$chk){
+            $this->cakeError('error404');
+        }
+    }
+    
     function _crioContaPadrao(){
         
         $this->Conta->Usuario->recursive = 0;
@@ -43,13 +53,11 @@ class InitContasController extends AppController {
                 'saldo' => $saldo
             );
         }
-        
-        $this->set('result',$result);
-        $this->layout = 'ajax';
     }
     
     function index(){
         
+        $this->_crioContaPadrao();
         $this->_setarContaPadrao();
         $this->layout = 'ajax';
     }
