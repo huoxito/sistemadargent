@@ -33,6 +33,12 @@ class Gasto extends AppModel {
             'message' => 'Selecione um destino',
             'allowEmpty' => false,
         ),
+        'conta_id' => array(
+            'rule' => 'notEmpty',
+            'required' => false,
+            'message' => 'Selecione uma fonte',
+            'allowEmpty' => false,
+        ),
         'valor' => array(
             'vazio' => array(
                 'rule' => 'notEmpty',
@@ -86,6 +92,31 @@ class Gasto extends AppModel {
        
         return $statement;
     }
+    
+    function adicionar($input){
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $this->create();
+        if ( !$this->saveAll($input, array('atomic' => false)) ) {
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $valor = $this->Behaviors->Modifiable->monetary($this, $input['Gasto']['valor']);
+        $conditions = array('Conta.usuario_id' => $input['Gasto']['usuario_id'],
+                            'Conta.id' => $input['Gasto']['conta_id']);
+        $values = array('saldo' => 'saldo-'.$valor);
+        if( $this->Conta->updateAll($values, $conditions) ){
+            $datasource->commit($this);
+            return true;
+        }else{
+            $datasource->rollback($this);
+            return false;
+        }
+    }
+    
 
 }
     

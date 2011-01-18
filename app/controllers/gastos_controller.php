@@ -147,9 +147,8 @@ class GastosController extends AppController {
                 unset($this->Gasto->validate['destino_id']);
             }
             
-            $this->Gasto->create();
             $this->data['Gasto']['usuario_id'] = $this->user_id;
-            if ($this->Gasto->saveAll($this->data)) {
+            if ($this->Gasto->adicionar($this->data)) {
                 
                 $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 if(!$this->data['Gasto']['keepon']){
