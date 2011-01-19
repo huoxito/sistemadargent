@@ -79,9 +79,14 @@
                                                 <?php   echo $registros['label'];  ?>
                                             </span>
                                             <p class="agendamentoInfoLinha">
-                                                R$ <?= $registros['valor'];  ?> reais com
-                                                <span class="agendamentoCategoria">
+                                                <span class="valor">
+                                                    R$ <?= $registros['valor'];  ?>
+                                                </span>
+                                                <span class="categoriaListagem spansBlocks">
                                                     <?= $registros['categoria'];  ?>
+                                                </span>
+                                                <span class="contaListagem">
+                                                    <?= $registros['conta']; ?>
                                                 </span>
                                             </p>
                                             

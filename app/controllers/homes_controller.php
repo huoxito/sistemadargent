@@ -56,6 +56,7 @@ class HomesController extends AppController{
                                           'valor' => $item['Ganho']['valor'],
                                           'categoria' => $item['Fonte']['nome'],
                                           'id' => $item['Ganho']['id'],
+                                          'conta' => $item['Conta']['nome'],
                                           'obs' => $item['Ganho']['observacoes'],
                                           'botaoConfirmar' => $botaoConfirmar);
                     $count++;
@@ -73,6 +74,7 @@ class HomesController extends AppController{
                                           'valor' => $item['Gasto']['valor'],
                                           'categoria' => $item['Destino']['nome'],
                                           'id' => $item['Gasto']['id'],
+                                          'conta' => $item['Conta']['nome'],
                                           'obs' => $item['Gasto']['observacoes'],
                                           'botaoConfirmar' => $botaoConfirmar);
                     $count++;
