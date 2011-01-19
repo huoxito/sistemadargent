@@ -289,18 +289,13 @@ class GastosController extends AppController {
             $id = $this->params['url']['id'];
         }
         
-        $itens = $this->Gasto->read(array('Gasto.id,
-                                            Gasto.usuario_id,
-                                            Gasto.valor,
-                                            Gasto.datadabaixa,
-                                            Gasto.observacoes,
-                                            Destino.nome'), $id);
+        $itens = $this->Gasto->read(null, $id);
         # permissão do usuário
         $this->checkPermissao($itens['Gasto']['usuario_id']);
 
         if( $this->params['isAjax'] ){
             
-            if ($this->Gasto->delete($id)) {
+            if ($this->Gasto->excluir($id, $itens)) {
                 echo 'deleted';
             }   
             $this->autoRender = false;

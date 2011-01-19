@@ -150,7 +150,32 @@ class Gasto extends AppModel {
             return true;
         }
     }    
-
+    
+    
+    function excluir($id, $input){
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+	
+        if (!$this->delete($id)) {
+            $datasource->rollback($this);
+            return false;
+        }
+	
+        $valor = $this->Behaviors->Modifiable->monetary($this, $input['Gasto']['valor']);
+        $values = array('saldo' => 'saldo+'.$valor);
+            $conditions = array('Conta.usuario_id' => $input['Gasto']['usuario_id'],
+                    'Conta.id' => $input['Gasto']['conta_id']);
+        
+        if( $this->Conta->updateAll($values, $conditions) ){
+            $datasource->commit($this);
+            return true;
+        }else{
+            $datasource->rollback($this);
+            return false;
+        }
+    }
+    
 }
     
     
