@@ -47,10 +47,10 @@
                     <label class="labelCalendario">
                         Data de vencimento
                     </label>    
-                    <div id="datepicker"></div>
                     <span class="dataAmigavel change">
                         <?= $this->Data->formata($this->data['Agendamento']['datadevencimento'], 'longadescricao'); ?>
                     </span>
+                    <div id="datepicker"></div>
                 </div>
                 
                 <div class="inputsRight">
