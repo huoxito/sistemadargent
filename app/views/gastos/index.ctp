@@ -206,7 +206,7 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"800", height: "430", opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "480", opacity: 0.5, iframe: true});
             
             $(".registros").mouseover(function() {
                 $(this).css("background-color",'#F2FFE3');

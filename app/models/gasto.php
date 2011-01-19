@@ -116,7 +116,40 @@ class Gasto extends AppModel {
             return false;
         }
     }
-    
+
+    function editar($input, $check){
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $this->id = $input['Gasto']['id'];
+        if ( !$this->saveAll($input, array('atomic' => false)) ) {
+            $datasource->rollback($this);
+            return false;
+        }    
+        
+        $valorAnterior = $this->Behaviors->Modifiable->monetary($this, $check['Gasto']['valor']);
+        $valor = $this->Behaviors->Modifiable->monetary($this, $input['Gasto']['valor']);
+        $diferenca = round($valorAnterior - $valor, 2);
+        
+        if( $diferenca ){
+                        
+            $values = array('saldo' => 'saldo+'.$diferenca);
+            $conditions = array('Conta.usuario_id' => $check['Gasto']['usuario_id'],
+                                'Conta.id' => $input['Gasto']['conta_id']);
+            
+            if( $this->Conta->updateAll($values, $conditions) ){
+                $datasource->commit($this);
+                return true;
+            }else{
+                $datasource->rollback($this);
+                return false;
+            }
+        }else{
+            $datasource->commit($this);
+            return true;
+        }
+    }    
 
 }
     
