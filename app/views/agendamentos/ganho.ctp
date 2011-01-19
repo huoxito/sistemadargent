@@ -90,6 +90,7 @@
                     
                     <?php } ?>
                     
+                    <?= $this->Form->input('conta_id'); ?>
                     <?= $this->Form->input('valor'); ?>
                     <?= $this->Form->input('observacoes',
                                                     array('type' => 'textarea',

@@ -32,6 +32,12 @@ class Agendamento extends AppModel {
                 'message' => 'Campo obrigatório',
             )  
         ),
+        'conta_id' => array(
+            'rule' => 'notEmpty',
+            'required' => false,
+            'message' => 'Selecione uma fonte',
+            'allowEmpty' => false,
+        ),
         'valor' => array(
             'rule2' => array(
                 'rule' => 'notEmpty',
@@ -82,6 +88,13 @@ class Agendamento extends AppModel {
             'foreignKey' => 'destino_id',
             'conditions' => '',
             'fields' => 'id, nome',
+            'order' => ''
+        ),
+        'Conta' => array(
+            'className' => 'Conta',
+            'foreignKey' => 'conta_id',
+            'conditions' => '',
+            'fields' => 'id, nome, tipo',
             'order' => ''
         )
     );

@@ -92,13 +92,14 @@ class AgendamentosController extends AppController {
                     $registro[$_Model] = array('usuario_id' => $this->Auth->user('id'),
                                                'agendamento_id' => $this->Agendamento->id,
                                                $_parentKey => $this->data['Agendamento'][$_parentKey],
+                                               'conta_id' => $this->data['Agendamento']['conta_id'],
                                                'valor' => $this->data['Agendamento']['valor'],
                                                'datadevencimento' => $this->data['Agendamento']['datadevencimento'],
                                                'observacoes' => $this->data['Agendamento']['observacoes'],
                                                'status' => 0);
-                    $this->$_Model->create();  
-                    if($this->$_Model->save($registro)){
-                        
+                    
+                    if( !$this->$_Model->adicionar($registro) ){
+                        $this->log('parcela única','erro no parcelamento');
                     }
                 }
                 
@@ -133,6 +134,8 @@ class AgendamentosController extends AppController {
                                                         array('conditions' =>
                                                               array('Frequencia.status' => 1),
                                                               'order' => 'nome ASC'));
+        
+        $this->set('contas', $this->_listContas($this->Agendamento->Conta));
         $this->set(compact('frequencias'));
         $this->render($_Model);
     }
@@ -184,6 +187,7 @@ class AgendamentosController extends AppController {
             $registro[$_Model] = array('usuario_id' => $this->Auth->user('id'),
                                        'agendamento_id' => $id,
                                        $_parentKey => $registro['Agendamento'][$_parentKey],
+                                       'conta_id' => $registro['Agendamento']['conta_id'],
                                        'valor' => $registro['Agendamento']['valor'],
                                        'datadevencimento' => $dataDeEntrada,
                                        'observacoes' => $registro['Agendamento']['observacoes'],
