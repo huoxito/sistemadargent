@@ -93,6 +93,30 @@ class Ganho extends AppModel {
         return $statement;
     }
     
+    function adicionar($input){
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $this->create();
+        if ( !$this->saveAll($input, array('atomic' => false)) ) {
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $valor = $this->Behaviors->Modifiable->monetary($this, $input['Ganho']['valor']);
+        $conditions = array('Conta.usuario_id' => $input['Ganho']['usuario_id'],
+                            'Conta.id' => $input['Ganho']['conta_id']);
+        $values = array('saldo' => 'saldo+'.$valor);
+        if( $this->Conta->updateAll($values, $conditions) ){
+            $datasource->commit($this);
+            return true;
+        }else{
+            $datasource->rollback($this);
+            return false;
+        }
+    }
+    
     function excluir($id, $userId, $data){
 	
         $datasource = $this->getDataSource();
