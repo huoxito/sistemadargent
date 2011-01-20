@@ -94,23 +94,24 @@ class HomesController extends AppController{
 
             $_Model = $this->params['url']['tipo'];
             if( $_Model != 'Ganho' && $_Model != 'Gasto' ){
-                echo 'error';
+                echo 'error'; exit;
             }else{
 
                 $this->$_Model->Behaviors->detach('Modifiable');
-                $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
+                $this->$_Model->recursive = -1;
+                $chk = $this->$_Model->find('first',
+                            array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
                 # permissao
                 if($chk[$_Model]['usuario_id'] != $this->Auth->user('id')){
                     echo 'error'; exit;
                 }else{
-
-                    $this->$_Model->id = $this->params['url']['id'];
-                    $dados[$_Model] = array('datadabaixa' => $chk[$_Model]['datadevencimento'],'status' => 1);
-                    if($this->$_Model->save($dados, false,array('datadabaixa','status'))){
-
+                    
+                    if( $this->$_Model->confirmar($chk) ){
+                        
                         $registros = array('id' => $chk[$_Model]['id'],'tipo' => $_Model);
                         $this->set(compact('registros'));
                         $this->layout = 'ajax';
+                        
                     }else{
                         echo 'error';   exit;
                     }
@@ -134,7 +135,7 @@ class HomesController extends AppController{
         }else if ($_Model == 'Gasto'){
             $_Categoria = 'Destino';
         }else{
-            $this->redirect('error404');
+            $this->cakeError('error404');
         }
 
         $itens = $this->$_Model->read(null, $id);
