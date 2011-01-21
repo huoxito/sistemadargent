@@ -2,9 +2,12 @@
     
     <div class="ganhos formBox">  
         
-        <?php echo $this->Form->create($_Model,array('default' => false));?>
+        <?php echo $this->Form->create($_Model,
+                            array('default' => false,
+                                  'inputDefaults' =>
+                                    array('div' => array('class' => 'inputBoxWraper'))));?>
         <span class="tipoAgendamentoLabel">
-            <?= $this->data[$_Model]['label'] ?>
+            <?= $this->data[$_Model]['label']; ?>
         </span>
         
         <input type="hidden" id="datadabaixa" value="<?= $this->data[$_Model]['datainicial'] ?>" />
@@ -22,30 +25,36 @@
                 if( $_Model == 'Ganho' ){
                     echo $this->Form->input('fonte_id',
                                         array('empty' => 'Escolha um registro',
-                                              'id' => 'categoria',
-                                              'div' => array('class' => 'inputBoxWraper'))); 
+                                              'id' => 'categoria')); 
                 }else{
                     echo $this->Form->input('destino_id',
                                         array('empty' => 'Escolha um registro',
-                                              'id' => 'categoria',
-                                              'div' => array('class' => 'inputBoxWraper'))); 
+                                              'id' => 'categoria')); 
                 }
             ?>
+            
+            <?= $this->Form->input('conta_id',
+                                array('id' => 'conta')); ?> 
             <?= $this->Form->input('valor',
-                                array('error' => false,
-                                      'id' => 'valor',
-                                      'div' => array('class' => 'inputBoxWraper'))); 
-            ?>  
+                                array('id' => 'valor')); ?>  
         
             <?= $this->Form->input('observacoes',
                                 array('type' => 'textarea',
                                       'label' => 'Observações',
-                                      'id' => 'Observacoes',
-                                      'div' => array('class' => 'inputBoxWraper')));    ?>
+                                      'id' => 'Observacoes'));    ?>
         </div>
-        <?php echo $this->Form->end(array('label' => 'Confirmar',
-                                          'onclick' => 'editar('.$id.',\'editar\');',
-                                          'style' => 'float: left;'));  ?>
+        <div class="submit">
+            
+            <input type="hidden" id="id" value="<?= $id ?>">
+            <input type="hidden" id="tipo" value="<?= $_Model ?>">
+            
+            <input type="submit" id="submitAjax" value="Confirmar">
+            <input type="submit" id="fecharColorbox" value="Cancelar" />
+            
+            <span class="ajax_error_response"></span>
+            
+        </div>
+        </form>
     </div>
     
     
@@ -67,35 +76,36 @@
             });
         });
         
-        function editar(id,action){
+        
+        $("#submitAjax").click(function(){
             
             var categoria       = $('#categoria').val();
+            var conta           = $('#conta').val();
             var valor           = $('#valor').val();
             var data            = $('#datadabaixa').val();
             var obs             = $('#Observacoes').val();
-            var tipo            = '<?php echo $_Model;  ?>';      
+            var tipo            = $('#tipo').val();;      
+            var id              = $('#id').val();
             
             $.ajax({
                 
-                url: '<?php echo $this->Html->url(array("controller" => "homes","action" => "editResponse"));?>', 
-                cache: false,
-                type: 'GET',
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                data: ( {id : id, categoria: categoria, valor: valor, data: data, obs: obs, tipo: tipo, action: action } ),
+                url: '<?php echo $this->Html->url(array("controller" => "homes","action" => "editResponse"));?>',
+                data: ({    id: id, categoria: categoria, valor: valor,
+                            data: data, obs: obs, tipo: tipo, conta: conta }),
                 beforeSend: function(){
                     $('.submit img').remove();
-                    $('.submit span').remove();
+                    $('.submit span').html('');
                     $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
                 },
                 success: function(result){
                     
                     if(result == 'error'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Operação inválida</span>');
+                                $('.ajax_error_response').html('Operação inválida');
                             });
                     }else if(result == 'validacao'){
                         $('.submit img').fadeOut('fast', function(){
-                                $('.submit').append('<span class="ajax_error_response">Preencha os campos corretamente</span>');
+                                $('.ajax_error_response').html('Preencha os campos corretamente');
                             });
                     }else {
                         parent.$('#registro-' + tipo + '-' + id).html(result);
@@ -104,6 +114,6 @@
                 }
             });
 
-        }        
+        });        
         // ]]>
     </script>

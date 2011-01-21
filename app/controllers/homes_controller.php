@@ -195,6 +195,9 @@ class HomesController extends AppController{
                                             array('conditions' =>
                                                     array('usuario_id' => $this->Auth->user('id')),
                                                   'order' => 'nome asc'));
+        
+        
+        $this->set('contas', $this->_listContas($this->$_Model->Conta));
         $this->set(array('fontes' => $categorias, 'destinos'=> $categorias));
         $this->set('_Model',$_Model);
         $this->set('id',$id);
@@ -219,11 +222,15 @@ class HomesController extends AppController{
                 echo 'error'; exit;
             }
 
-            $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
+            $chk = $this->$_Model->find('first',
+                            array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
             # permissão do usuário
             if( $this->checkPermissao($chk[$_Model]['usuario_id'],true) ){
 
-                $item[$_Model] = array('valor' => $this->params['url']['valor'],
+                $item[$_Model] = array('id' => $this->params['url']['id'],
+                                       'valor' => $this->params['url']['valor'],
+                                       'conta_id' => $this->params['url']['conta'],
+                                       'usuario_id' => $this->user_id,
                                        'observacoes' => $this->params['url']['obs'],
                                        $categoriaId => $this->params['url']['categoria'],
                                        'datadabaixa' => $this->params['url']['data'],
@@ -233,8 +240,8 @@ class HomesController extends AppController{
                     echo 'validacao';    exit;
                 }
 
-                $this->$_Model->id = $this->params['url']['id'];
-                if ($this->$_Model->save($item)) {
+                if ( $this->$_Model->confirmar($item, true) ) {
+                    
                     $resposta = $this->$_Model->find('first',
                                 array ('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
 

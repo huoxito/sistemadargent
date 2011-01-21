@@ -7,9 +7,14 @@
             <?php   echo $label;  ?>
         </span>
         <p class="agendamentoInfoLinha">
-            R$ <?= $registros[$_Model]['valor'];  ?> reais com
-            <span class="agendamentoCategoria">
+            <span class="valor">
+                R$ <?= $registros[$_Model]['valor'];  ?>
+            </span>
+            <span class="categoriaListagem spansBlocks">
                 <?= $registros[$_Categoria]['nome'];  ?>
+            </span>
+            <span class="contaListagem">
+                <?= $registros['Conta']['nome']; ?>
             </span>
         </p>
         
@@ -42,7 +47,7 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"800", height: "490", opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "510", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>

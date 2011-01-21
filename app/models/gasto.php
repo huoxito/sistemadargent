@@ -176,23 +176,33 @@ class Gasto extends AppModel {
         }
     }
     
-    function confirmar($input){
+    function confirmar($input, $all = false){
         
         $datasource = $this->getDataSource();
         $datasource->begin($this);
         
         $data = array_shift($input);
-        
         $this->id = $data['id'];
-        $dados["Gasto"] = array('datadabaixa' => $data['datadevencimento'],
-                                'status' => 1);
         
-        if( !$this->save($dados, false, array('datadabaixa', 'status')) ){
-            $datasource->rollback($this);
-            return false;
+        if($all){
+            
+            $data["Gasto"] = $data;
+            if( !$this->save($data) ){
+                $datasource->rollback($this);
+                return false;
+            }
+            $valorFormatado = false;
+        }else{
+            $dados["Gasto"] = array('datadabaixa' => $data['datadevencimento'],
+                                    'status' => 1);
+            if( !$this->save($dados, false, array('datadabaixa', 'status')) ){
+                $datasource->rollback($this);
+                return false;
+            }
+            $valorFormatado = true;
         }
         
-        if ( $this->updateContas($this, $data, '-') ) {
+        if ( $this->updateContas($this, $data, '-', $valorFormatado) ) {
             $datasource->commit($this);
             return true; 
         }else{
