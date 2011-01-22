@@ -83,29 +83,15 @@ class AppController extends Controller{
         }
     }
     
-    # retorna id da nova categoria ou de uma já criada
-    function addCategoria($nome,$categoria,$model){
-        
-        $this->$model->$categoria->recursive = -1;
-        $chk = $this->$model->$categoria->find('first',
-                                   array('conditions' =>
-                                         array($categoria.'.nome' => $nome,
-                                                $categoria.'.usuario_id' => $this->Auth->user('id'))));
-        
-        if ( !isset($chk[$categoria]['nome']) ){
-            # se não houver uma fonte com o mesmo nome
-            $this->$model->$categoria->set(array('nome' => $nome,
-                                                'usuario_id' => $this->Auth->user('id')));
-            if($this->$model->$categoria->save()){
-                return $this->$model->$categoria->id;
-            }else{
-                return 'error';
-            }
-        
-        }else{
-            # retorna id da fonte que já existia
-            return $chk[$categoria]['id'];
-        }
+/*
+ * Retorno array pra um <select>
+ */
+    function _listContas($object){
+    
+        return $object->find('list',
+                        array('conditions' =>
+                                array('usuario_id' => $this->user_id),
+                              'order' => 'Conta.id asc'));
     }
     
 /*

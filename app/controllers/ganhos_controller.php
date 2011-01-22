@@ -144,34 +144,19 @@ class GanhosController extends AppController {
                 $this->data['Fonte']['usuario_id'] = $this->user_id;
                 unset($this->Ganho->validate['fonte_id']);
             }
-            
-            $datasource = $this->Ganho->getDataSource();
-            $datasource->begin($this);
 
-            $this->Ganho->create();
             $this->data['Ganho']['usuario_id'] = $this->user_id;
-            if ( $this->Ganho->saveAll($this->data,array('atomic' => false)) ) {
+            if ( $this->Ganho->adicionar($this->data) ) {
                 
-                $valor = $this->Ganho->Behaviors->Modifiable->monetary($this,$this->data['Ganho']['valor']);
-                $conditions = array('Conta.usuario_id' => $this->user_id,
-                                    'Conta.id' => $this->data['Ganho']['conta_id']);
-                $values = array('saldo' => 'saldo+'.$valor);
-                if( $this->Ganho->Conta->updateAll($values, $conditions) ){
-
-                    $datasource->commit($this);
-                    $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
-                    if(!$this->data['Ganho']['keepon']){
-                        $this->redirect(array('action'=>'index'));  
-                    }else{
-                        $this->data = null;
-                    }
+                $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
+                if(!$this->data['Ganho']['keepon']){
+                    $this->redirect(array('action'=>'index'));  
                 }else{
-                    $datasource->rollback($this);
+                    $this->data = null;
                 }
                 
             }else{
                 
-                $datasource->rollback($this);
                 $errors = $this->validateErrors($this->Ganho->Fonte,$this->Ganho);
                 $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }

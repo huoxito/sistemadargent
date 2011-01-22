@@ -34,7 +34,7 @@ class Ganho extends AppModel {
         'conta_id' => array(
             'rule' => 'notEmpty',
             'required' => false,
-            'message' => 'Selecione uma fonte',
+            'message' => 'Selecione uma conta',
             'allowEmpty' => false,
         ),
         'valor' => array(
@@ -93,28 +93,86 @@ class Ganho extends AppModel {
         return $statement;
     }
     
+    function adicionar($input){
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $this->create();
+        if ( !$this->saveAll($input, array('atomic' => false)) ) {
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $valor = $this->Behaviors->Modifiable->monetary($this, $input['Ganho']['valor']);
+        $conditions = array('Conta.usuario_id' => $input['Ganho']['usuario_id'],
+                            'Conta.id' => $input['Ganho']['conta_id']);
+        $values = array('saldo' => 'saldo+'.$valor);
+        if( $this->Conta->updateAll($values, $conditions) ){
+            $datasource->commit($this);
+            return true;
+        }else{
+            $datasource->rollback($this);
+            return false;
+        }
+    }
+    
     function excluir($id, $userId, $data){
 	
-	$datasource = $this->getDataSource();
+        $datasource = $this->getDataSource();
         $datasource->begin($this);
 	
-	if (!$this->delete($id)) {
-	    $datasource->rollback($this);
-	    return false;
-	}
+        if (!$this->delete($id)) {
+            $datasource->rollback($this);
+            return false;
+        }
 	
-	$valor = $this->Behaviors->Modifiable->monetary($this, $data['Ganho']['valor']);
-	$values = array('saldo' => 'saldo-'.$valor);
-        $conditions = array('Conta.usuario_id' => $userId,
-			    'Conta.id' => $data['Ganho']['conta_id']);
-	
-	if( $this->Conta->updateAll($values, $conditions) ){
-	    $datasource->commit($this);
-	    return true;
-	}else{
-	    $datasource->rollback($this);
-	    return false;
-	}
+        $valor = $this->Behaviors->Modifiable->monetary($this, $data['Ganho']['valor']);
+        $values = array('saldo' => 'saldo-'.$valor);
+            $conditions = array('Conta.usuario_id' => $userId,
+                    'Conta.id' => $data['Ganho']['conta_id']);
+        
+        if( $this->Conta->updateAll($values, $conditions) ){
+            $datasource->commit($this);
+            return true;
+        }else{
+            $datasource->rollback($this);
+            return false;
+        }
+    }
+    
+    function confirmar($input, $all = false){
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $data = array_shift($input);
+        $this->id = $data['id'];
+        
+        if($all){
+            $data["Ganho"] = $data;
+            if( !$this->save($data) ){
+                $datasource->rollback($this);
+                return false;
+            }
+            $valorFormatado = false;
+        }else{
+            $dados["Ganho"] = array('datadabaixa' => $data['datadevencimento'],
+                                    'status' => 1);
+            if( !$this->save($dados, false, array('datadabaixa', 'status')) ){
+                $datasource->rollback($this);
+                return false;
+            }
+            $valorFormatado = true;
+        }
+        
+        if ( $this->updateContas($this, $data, '+', $valorFormatado) ) {
+            $datasource->commit($this);
+            return true; 
+        }else{
+            $datasource->rollback($this);
+            return false;
+        }
     }
     
 }

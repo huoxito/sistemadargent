@@ -66,6 +66,7 @@ class ContasController extends AppController {
                     'datadabaixa' => date('d-m-Y'),
                     'observacoes' => 'Saldo inicial na criação da conta'
                 );
+                unset($this->Conta->Ganho->validate['conta_id']);
             }
             
             $this->data['Conta']['usuario_id'] = $this->user_id;

@@ -29,11 +29,11 @@
                 <div class="datepickerWraper required">
                     <label class="labelCalendario">
                         Data da baixa
-                    </label>    
-                    <div id="datepicker"></div>
+                    </label>
                     <span class="dataAmigavel change">
                         <?= $this->Data->formata($this->data['Gasto']['datadabaixa'], 'longadescricao'); ?>
                     </span>
+                    <div id="datepicker"></div>
                 </div>
                 
                 <div class="inputsRight">

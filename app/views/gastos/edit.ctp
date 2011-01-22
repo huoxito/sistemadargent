@@ -8,11 +8,11 @@
     <div class="datepickerWraper required">
         <label class="labelCalendario">
             Data da baixa
-        </label>    
-        <div id="datepicker"></div>
+        </label>
         <span class="dataAmigavel change">
             <?= $this->Data->formata($this->data['Gasto']['datadabaixa'], 'longadescricao'); ?>
         </span>
+        <div id="datepicker"></div>
     </div>
     
     <div class="inputsRight">
@@ -27,7 +27,7 @@
             </a>
         </div>
         
-   
+        <?= $this->Form->input('conta_id'); ?>
         <?= $this->Form->input('valor'); ?>
         <?= $this->Form->input('observacoes',
                             array('type' => 'textarea',
@@ -74,6 +74,7 @@
         var id              = $('#GastoId').val();
         var nome            = $('#DestinoNome').val();
         var destino_id      = $('#GastoDestinoId').val();
+        var conta_id        = $('#GastoContaId').val();
         var valor           = $('#GastoValor').val();
         var data            = $('#GastoDatadabaixa').val();
         var obs             = $('#Observacoes').val();
@@ -81,8 +82,9 @@
         $.ajax({
             
             url: '<?php echo $html->url(array("action" => "editResponse"));?>', 
-            data: ({ Gasto: {id:id, destino_id:destino_id, valor:valor, datadabaixa:data, observacoes:obs},
-                     Destino: {nome:nome} }),
+            data: ({ Gasto: {   id:id, destino_id: destino_id, conta_id: conta_id, valor: valor,
+                                datadabaixa: data, observacoes: obs },
+                     Destino: { nome:nome } }),
             beforeSend: function(){
                 $('.submit span').detach();
                 $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');

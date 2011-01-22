@@ -79,9 +79,14 @@
                                                 <?php   echo $registros['label'];  ?>
                                             </span>
                                             <p class="agendamentoInfoLinha">
-                                                R$ <?= $registros['valor'];  ?> reais com
-                                                <span class="agendamentoCategoria">
+                                                <span class="valor">
+                                                    R$ <?= $registros['valor'];  ?>
+                                                </span>
+                                                <span class="categoriaListagem spansBlocks">
                                                     <?= $registros['categoria'];  ?>
+                                                </span>
+                                                <span class="contaListagem">
+                                                    <?= $registros['conta']; ?>
                                                 </span>
                                             </p>
                                             
@@ -138,7 +143,7 @@
         // <![CDATA[
             $(document).ready(function () {
                 $('.colorbox-delete').colorbox({width:"500", height: '200', opacity: 0.5, iframe: true});
-                $('.colorbox-edit').colorbox({width:"800", height: "450", opacity: 0.5, iframe: true});
+                $('.colorbox-edit').colorbox({width:"800", height: "510", opacity: 0.5, iframe: true});
             });
             
             $("div.registros").mouseover(function() {

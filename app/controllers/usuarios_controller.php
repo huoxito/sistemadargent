@@ -164,34 +164,36 @@ class UsuariosController extends AppController {
         if (!empty($this->data)) {
 
             $this->Usuario->set( $this->data );
-            if ($this->Usuario->validates(array('fieldList' => array('email')))) {
 
-                $this->Usuario->recursive = -1;
-                $info = $this->Usuario->findByEmail($this->data['Usuario']['email']);
+            $this->Usuario->recursive = -1;
+            $info = $this->Usuario->findByEmail($this->data['Usuario']['email']);
 
-                if($info){
+            if($info){
 
-                    $hash = sha1(time().$info['Usuario']['created'].'.,>');
+                $hash = sha1(time().$info['Usuario']['created'].'.,>');
 
-                    $this->Usuario->id = $info['Usuario']['id'];
-                    $this->Usuario->saveField('hash', $hash, false);
+                $this->Usuario->id = $info['Usuario']['id'];
+                $this->Usuario->saveField('hash', $hash);
 
-                    $this->Email->to = $this->data['Usuario']['email'];
-                    $this->Email->bcc = array('huoxito@hotmail.com');
-                    $this->Email->subject = 'Envio de senha';
-                    $this->Email->replyTo = null;
-                    $this->Email->from = 'Sistema Dargent <admin@sistemadargent.com.br>';
-                    $this->Email->template = 'senha';
-                    $this->Email->sendAs = 'html';
-                    //$this->Email->delivery = 'debug';
-                    $this->set('info', $info);
-                    $this->set('hash', $hash);
-                    $this->Email->send();
+                $this->Email->to = $this->data['Usuario']['email'];
+                $this->Email->subject = 'Envio de senha';
+                $this->Email->replyTo = null;
+                $this->Email->from = 'Sistema Dargent <admin@sistemadargent.com.br>';
+                $this->Email->template = 'senha';
+                $this->Email->sendAs = 'html';
+                //$this->Email->delivery = 'debug';
+                $this->set('info', $info);
+                $this->set('hash', $hash);
+                $this->Email->send();
 
-                    $this->Session->setFlash('Enviamos um email para o endereço indicado com as instruções para gerar sua senha. <br /> Caso o email não apareça na caixa de entrada, confira a pasta de spams ou lixo do seu email.','flash_success');
-                }else{
-                    $this->Session->setFlash('Seu email não foi encontrado em nosso banco','flash_error');
-                }
+                $this->Session->setFlash('
+                    Enviamos um email para o endereço indicado com as instruções
+                    para gerar sua senha. <br /> Caso o email não apareça na caixa
+                    de entrada, confira a pasta de spams ou lixo do seu email.',
+                    'flash_success'
+                );
+            }else{
+                $this->Session->setFlash('Seu email não foi encontrado em nosso banco','flash_error');
             }
         }
 

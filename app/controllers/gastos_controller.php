@@ -78,6 +78,10 @@ class GastosController extends AppController {
             $item['Gasto']['datadabaixa'] = $this->Data->formata($item['Gasto']['datadabaixa'],'porextenso');
             $item['Gasto']['valor'] = $this->Valor->formata($item['Gasto']['valor'],'humano');
             
+            if(!$item['Gasto']['destino_id']){
+               $item['Destino']['nome'] = 'Movimentação nas contas'; 
+            }
+            
             # só insiro no array quando aparece um registro com uma data diferente
             if( $item['Gasto']['datadabaixa'] != $dataTemp ){
                 
@@ -147,9 +151,8 @@ class GastosController extends AppController {
                 unset($this->Gasto->validate['destino_id']);
             }
             
-            $this->Gasto->create();
             $this->data['Gasto']['usuario_id'] = $this->user_id;
-            if ($this->Gasto->saveAll($this->data)) {
+            if ($this->Gasto->adicionar($this->data)) {
                 
                 $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 if(!$this->data['Gasto']['keepon']){
@@ -212,7 +215,14 @@ class GastosController extends AppController {
                                             array('conditions' =>
                                                     array('Destino.usuario_id' => $this->Auth->user('id')),
                                                   'order' => 'Destino.nome asc'));
+        
+        $contas = $this->Gasto->Conta->find('list',
+                                    array('conditions' =>
+                                            array('usuario_id' => $this->user_id),
+                                          'order' => 'Conta.id asc'));
+        
         $this->set(compact('destinos'));
+        $this->set(compact('contas'));
         $this->layout = 'colorbox';
     }
 
@@ -222,7 +232,7 @@ class GastosController extends AppController {
             
             $this->data = array_merge($this->params['url']);
             
-            $this->Gasto->recursive = 0;
+            $this->Gasto->recursive = -1;
             $chk = $this->Gasto->find('first',
                                 array('conditions' =>
                                         array('Gasto.id' => $this->data['Gasto']['id'])));
@@ -235,7 +245,7 @@ class GastosController extends AppController {
                 }     
 
                 $this->Gasto->id = $this->data['Gasto']['id'];
-                if ($this->Gasto->saveAll($this->data)) {
+                if ( $this->Gasto->editar($this->data, $chk) ) {
                     
                     if( isset($this->data['Destino']['nome']) ){
                         $this->Gasto->Destino->id;
@@ -245,10 +255,9 @@ class GastosController extends AppController {
                     
                     $categoria = $this->Gasto->Destino->field('nome');
                     $gasto = $this->Gasto->find('first',
-                                        array ('fields' => array('id','valor','observacoes'),
-                                               'conditions' =>
-                                                array('id' => $this->data['Gasto']['id']),
-                                               'recursive' => -1));
+                                        array ('conditions' =>
+                                                    array('Gasto.id' => $this->data['Gasto']['id']),
+                                               'recursive' => 0));
                     
                     $this->set('registro',$gasto);
                     $this->set('categoria',$categoria);
@@ -280,18 +289,13 @@ class GastosController extends AppController {
             $id = $this->params['url']['id'];
         }
         
-        $itens = $this->Gasto->read(array('Gasto.id,
-                                            Gasto.usuario_id,
-                                            Gasto.valor,
-                                            Gasto.datadabaixa,
-                                            Gasto.observacoes,
-                                            Destino.nome'), $id);
+        $itens = $this->Gasto->read(null, $id);
         # permissão do usuário
         $this->checkPermissao($itens['Gasto']['usuario_id']);
 
         if( $this->params['isAjax'] ){
             
-            if ($this->Gasto->delete($id)) {
+            if ($this->Gasto->excluir($id, $itens)) {
                 echo 'deleted';
             }   
             $this->autoRender = false;

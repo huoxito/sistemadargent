@@ -56,6 +56,7 @@ class HomesController extends AppController{
                                           'valor' => $item['Ganho']['valor'],
                                           'categoria' => $item['Fonte']['nome'],
                                           'id' => $item['Ganho']['id'],
+                                          'conta' => $item['Conta']['nome'],
                                           'obs' => $item['Ganho']['observacoes'],
                                           'botaoConfirmar' => $botaoConfirmar);
                     $count++;
@@ -73,6 +74,7 @@ class HomesController extends AppController{
                                           'valor' => $item['Gasto']['valor'],
                                           'categoria' => $item['Destino']['nome'],
                                           'id' => $item['Gasto']['id'],
+                                          'conta' => $item['Conta']['nome'],
                                           'obs' => $item['Gasto']['observacoes'],
                                           'botaoConfirmar' => $botaoConfirmar);
                     $count++;
@@ -92,23 +94,24 @@ class HomesController extends AppController{
 
             $_Model = $this->params['url']['tipo'];
             if( $_Model != 'Ganho' && $_Model != 'Gasto' ){
-                echo 'error';
+                echo 'error'; exit;
             }else{
 
                 $this->$_Model->Behaviors->detach('Modifiable');
-                $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
+                $this->$_Model->recursive = -1;
+                $chk = $this->$_Model->find('first',
+                            array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
                 # permissao
                 if($chk[$_Model]['usuario_id'] != $this->Auth->user('id')){
                     echo 'error'; exit;
                 }else{
-
-                    $this->$_Model->id = $this->params['url']['id'];
-                    $dados[$_Model] = array('datadabaixa' => $chk[$_Model]['datadevencimento'],'status' => 1);
-                    if($this->$_Model->save($dados, false,array('datadabaixa','status'))){
-
+                    
+                    if( $this->$_Model->confirmar($chk) ){
+                        
                         $registros = array('id' => $chk[$_Model]['id'],'tipo' => $_Model);
                         $this->set(compact('registros'));
                         $this->layout = 'ajax';
+                        
                     }else{
                         echo 'error';   exit;
                     }
@@ -132,7 +135,7 @@ class HomesController extends AppController{
         }else if ($_Model == 'Gasto'){
             $_Categoria = 'Destino';
         }else{
-            $this->redirect('error404');
+            $this->cakeError('error404');
         }
 
         $itens = $this->$_Model->read(null, $id);
@@ -192,6 +195,9 @@ class HomesController extends AppController{
                                             array('conditions' =>
                                                     array('usuario_id' => $this->Auth->user('id')),
                                                   'order' => 'nome asc'));
+        
+        
+        $this->set('contas', $this->_listContas($this->$_Model->Conta));
         $this->set(array('fontes' => $categorias, 'destinos'=> $categorias));
         $this->set('_Model',$_Model);
         $this->set('id',$id);
@@ -216,11 +222,15 @@ class HomesController extends AppController{
                 echo 'error'; exit;
             }
 
-            $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
+            $chk = $this->$_Model->find('first',
+                            array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
             # permissão do usuário
             if( $this->checkPermissao($chk[$_Model]['usuario_id'],true) ){
 
-                $item[$_Model] = array('valor' => $this->params['url']['valor'],
+                $item[$_Model] = array('id' => $this->params['url']['id'],
+                                       'valor' => $this->params['url']['valor'],
+                                       'conta_id' => $this->params['url']['conta'],
+                                       'usuario_id' => $this->user_id,
                                        'observacoes' => $this->params['url']['obs'],
                                        $categoriaId => $this->params['url']['categoria'],
                                        'datadabaixa' => $this->params['url']['data'],
@@ -230,8 +240,8 @@ class HomesController extends AppController{
                     echo 'validacao';    exit;
                 }
 
-                $this->$_Model->id = $this->params['url']['id'];
-                if ($this->$_Model->save($item)) {
+                if ( $this->$_Model->confirmar($item, true) ) {
+                    
                     $resposta = $this->$_Model->find('first',
                                 array ('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
 
