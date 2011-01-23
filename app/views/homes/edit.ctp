@@ -15,10 +15,11 @@
             <span class="labelCalendario">
                 Selecione a data da baixa
             </span>    
-            <div id="datepicker"></div>
             <span class="dataAmigavel change">
                 <?= $this->data[$_Model]['dataAmigavel']; ?>
             </span>
+
+            <div id="datepicker"></div>
         </div>
         <div class="inputsRight">
             <?php
