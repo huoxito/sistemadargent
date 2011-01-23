@@ -281,16 +281,16 @@ class HomesController extends AppController{
             if( $_Model != 'Ganho' && $_Model != 'Gasto' ){
                 echo 'error'; exit;
             }else{
-
+                
+                $this->$_Model->Behaviors->detach('Modifiable');
+                $this->$_Model->recursive = -1;
                 $chk = $this->$_Model->find('first', array('conditions' => array($_Model.'.id' => $this->params['url']['id'])));
                 # permissao
                 if($chk[$_Model]['usuario_id'] != $this->Auth->user('id')){
                     echo 'error';   exit;
                 }else{
 
-                    $this->$_Model->id = $this->params['url']['id'];
-                    $dados[$_Model] = array('datadabaixa' => null,'status' => 0);
-                    if($this->$_Model->save($dados, false,array('datadabaixa','status'))){
+                    if( $this->$_Model->cancelar($chk) ){
 
                         $registros = array('id' => $chk[$_Model]['id'],'tipo' => $_Model,);
                         $this->set(compact('registros'));
