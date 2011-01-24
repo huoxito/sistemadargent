@@ -1,3 +1,4 @@
+*.swp
 /app/config/database.php
 /app/tmp/cache/long/*
 /app/tmp/cache/models/*
