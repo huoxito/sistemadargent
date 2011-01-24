@@ -23,7 +23,7 @@ class Conta extends AppModel {
         ),
         'saldo' => array(
             'formato' => array(
-                'rule' => array('money','left'),
+                'rule' => 'checkSaldo',
                 'message' => 'Digite um valor válido (Ex: 220,00)',
                 'allowEmpty' => true
             )
@@ -73,6 +73,16 @@ class Conta extends AppModel {
 			'fields' => '',
 		)
 	);
+    
+
+    function checkSaldo($check){
+       
+        $value = array_values($check);
+        $value = $value[0];
+        $value = $this->Behaviors->Modifiable->monetary($this, $value);
+        
+        return is_numeric($value); 
+    }
 
 }
 ?>

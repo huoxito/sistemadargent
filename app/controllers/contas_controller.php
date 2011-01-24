@@ -60,13 +60,20 @@ class ContasController extends AppController {
             
             if((float)$this->data['Conta']['saldo']){
                 
-                $this->data['Ganho'][0] = array(
+                if($this->data['Conta']['Saldo'] > 0){
+                    $model = "Ganho";
+                }else{
+                    $model = "Gasto";
+                }
+
+                $this->data[$model][0] = array(
                     'usuario_id' => $this->user_id,
                     'valor' => $this->data['Conta']['saldo'],
                     'datadabaixa' => date('d-m-Y'),
                     'observacoes' => 'Saldo inicial na criação da conta'
                 );
-                unset($this->Conta->Ganho->validate['conta_id']);
+                unset($this->Conta->$model->validate['conta_id']);
+                unset($this->Conta->$model->validate['valor']);
             }
             
             $this->data['Conta']['usuario_id'] = $this->user_id;
