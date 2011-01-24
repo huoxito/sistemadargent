@@ -168,7 +168,7 @@
                                 <?= $registro['Fonte']['nome']; ?>
                             </span>
                             <span class="contaListagem">
-                                <?= $registro['Conta']['tipo']; ?>
+                                <?= $registro['Conta']['nome']; ?>
                             </span>
                         </p>
                         
@@ -179,10 +179,14 @@
                         <?php   }   ?>
                         
                         <div class="categ-actions acoesPainel">
-                            <?= $this->Html->link('EDITAR',
+                            <?php 
+                            if ($registro['Ganho']['fonte_id']){
+                                echo $this->Html->link('EDITAR',
                                                 array('action' => 'edit', $registro['Ganho']['id'], time()),
                                                 array('class' => 'colorbox-edit btneditar',
-                                                      'title' => 'Editar Faturamento')); ?> 
+                                                      'title' => 'Editar Faturamento')); 
+                            }
+                            ?> 
                             <?= $this->Html->link('EXCLUIR',
                                                 array('action' => 'delete', $registro['Ganho']['id'], time()),
                                                 array('class' => 'colorbox-delete btnexcluir',

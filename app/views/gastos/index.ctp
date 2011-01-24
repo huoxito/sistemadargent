@@ -160,7 +160,7 @@
                                 <?= $registro['Destino']['nome']; ?>
                             </span>
                             <span class="contaListagem">
-                                <?= $registro['Conta']['tipo']; ?>
+                                <?= $registro['Conta']['nome']; ?>
                             </span>
                         </p>
                         <?php   if(!empty($registro['Gasto']['observacoes'])){ ?>
@@ -170,10 +170,14 @@
                         <?php   }   ?>
                         
                         <div class="categ-actions acoesPainel">
-                            <?= $this->Html->link('EDITAR',
-                                                array('action' => 'edit', $registro['Gasto']['id'], time()),
-                                                array('class' => 'colorbox-edit btneditar',
-                                                      'title' => 'Editar Despesa')); ?> 
+                            <?php 
+                            if($registro['Gasto']['destino_id']){ 
+                                echo $this->Html->link('EDITAR',
+                                                    array('action' => 'edit', $registro['Gasto']['id'], time()),
+                                                    array('class' => 'colorbox-edit btneditar',
+                                                          'title' => 'Editar Despesa')); 
+                            } 
+                            ?>
                             <?= $this->Html->link('EXCLUIR',
                                                 array('action' => 'delete', $registro['Gasto']['id'], time()),
                                                 array('class' => 'colorbox-delete btnexcluir',
