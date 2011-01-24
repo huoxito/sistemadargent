@@ -2,6 +2,12 @@
     // <![CDATA[
     $(document).ready(function () {
         
+        $('#ContaSaldo').maskMoney({
+            allowNegative: true,
+            decimal: ',',
+            thousands: '.',
+            defaultZero: false
+        });
         
         $.ajaxSetup({
             type: "GET",

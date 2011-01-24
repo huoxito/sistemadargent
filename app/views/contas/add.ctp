@@ -42,6 +42,8 @@
     
 </div>
     
-    
+<?= $this->Html->script('jquery.textareaCounter.plugin');  ?>
+<?php echo $this->Html->script('forms'); ?>
+   
     
     

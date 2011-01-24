@@ -40,6 +40,8 @@
         
 		echo $scripts_for_layout;
 	?>
+    <?= $this->Html->script('jquery.maskMoney'); ?>
+
     <style type="text/css" media="all">
     html {background-color: #FFF !important;}
     </style>

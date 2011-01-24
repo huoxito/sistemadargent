@@ -18,6 +18,7 @@
         echo $this->Html->script('ui.datepicker');
 		echo $scripts_for_layout;
 	?>
+    <?= $this->Html->script('jquery.maskMoney'); ?>
 </head>
 <body>
 	<div id="container">

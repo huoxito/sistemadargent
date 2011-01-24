@@ -22,6 +22,8 @@
 
 </div>
 
+<?php echo $this->Html->script('forms'); ?>
+
 <script type="text/javascript">
     
     $('#fecharColorbox').click(function(){
