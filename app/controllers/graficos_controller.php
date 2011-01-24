@@ -12,7 +12,8 @@ class GraficosController extends AppController{
                                 array('fields' => array('Destino.nome', 'SUM(Gasto.valor) AS total'),
                                         'conditions' =>
                                             array('Gasto.status' => 1,
-                                                    'Gasto.usuario_id' => $this->Auth->user('id')),
+                                                    'Gasto.usuario_id' => $this->Auth->user('id'),
+                                                    'Gasto.destino_id IS NOT NULL'),
                                         'order' => 'total DESC',
                                         'group' => array('Gasto.destino_id'),
                                         'limit' => '5'
@@ -39,7 +40,8 @@ class GraficosController extends AppController{
                                    array('Fonte.nome', 'SUM(Ganho.valor) AS total'),
                                            'conditions' =>
                                                array('Ganho.status' => 1,
-                                                       'Ganho.usuario_id' => $this->Auth->user('id')),
+                                                       'Ganho.usuario_id' => $this->Auth->user('id'),
+                                                       'Ganho.fonte_id IS NOT NULL'), 
                                            'order' => 'total DESC',
                                            'group' => array('Ganho.fonte_id'),
                                            'limit' => '5'
