@@ -26,6 +26,7 @@ class Conta extends AppModel {
                 'rule' => 'checkSaldo',
                 'message' => 'Digite um valor válido (Ex: 220,00)',
                 'allowEmpty' => true
+
             )
         ),
         'tipo' => array(
@@ -83,6 +84,44 @@ class Conta extends AppModel {
         
         return is_numeric($value); 
     }
+
+
+    function atualiza($data, $check){
+        
+        $antigo = $this->Behaviors->Modifiable->formata($this,$check['Conta']['saldo']);
+        $atual = $this->Behaviors->Modifiable->formata($this,$data['Conta']['saldo']);
+        $diferenca = round($atual-$antigo,2);
+
+        if($diferenca){
+
+            if($diferenca < 0){
+                $tipo = 'Gasto';
+                $diferenca = abs($diferenca);
+            }else{
+                $tipo = 'Ganho';
+            }
+
+            $data[$tipo][0] = array(
+                'usuario_id' => $check['Conta']['usuario_id'],
+                'valor' => $diferenca,
+                'datadabaixa' => date('Y-m-d'),
+                'observacoes' => 'Atualização de saldo na conta'
+            );
+            
+            unset($this->$tipo->validate['valor']);
+            unset($this->$tipo->validate['datadabaixa']);
+            $this->$tipo->Behaviors->detach('Modifiable');
+        }
+
+        $this->id = $data['Conta']['id'];
+        if ($this->saveAll($data)) {
+            return true; 
+        }else{
+            return false;
+        }
+                      
+    }
+
 
 }
 ?>

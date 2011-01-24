@@ -45,6 +45,10 @@ class ModifiableBehavior extends ModelBehavior {
                 $model->data[$model->alias]['valor'] = $this->monetary($model, $model->data[$model->alias]['valor']);
             }
             
+            if( isset($model->data[$model->alias]['saldo']) ){
+                $model->data[$model->alias]['saldo'] = $this->formata($model, $model->data[$model->alias]['saldo']);
+            }
+                  
 		}
         return true;
     }

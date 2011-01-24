@@ -99,48 +99,17 @@ class ContasController extends AppController {
                                         array('Conta.id' => $this->data['Conta']['id'])));
             if( $this->checkPermissao($chk['Conta']['usuario_id'],true) ){
                 
-                $this->Conta->set($this->data);
-                if($this->Conta->validates()){
+                if ($this->Conta->atualiza($this->data, $chk)) {
                     
-                    $antigo = $this->Conta->Behaviors->Modifiable->monetary($this,$chk['Conta']['saldo']);
-                    $atual = $this->Conta->Behaviors->Modifiable->monetary($this,$this->data['Conta']['saldo']);
-                    $diferenca = round($atual-$antigo,2);
-                    if($diferenca){
-                        
-                        if($diferenca < 0){
-                            $tipo = 'Gasto';
-                            $diferenca = abs($diferenca);
-                        }else{
-                            $tipo = 'Ganho';
-                        }
-                        
-                        $this->data[$tipo][0] = array(
-                            'usuario_id' => $this->user_id,
-                            'valor' => $diferenca,
-                            'datadabaixa' => date('Y-m-d'),
-                            'observacoes' => 'Diferença na alteração do saldo da conta'
-                        );
-                        unset($this->Conta->$tipo->validate['valor']);
-                        unset($this->Conta->$tipo->validate['datadabaixa']);
-                        $this->Conta->$tipo->Behaviors->detach('Modifiable');
-                    }
+                    $conta = $this->Conta->read(null,$this->Conta->id);
+                    $this->set(compact('conta'));
                     
-                    $this->data['Conta']['saldo'] = $atual;
-                    $this->Conta->id = $this->data['Conta']['id'];
-                    if ($this->Conta->saveAll($this->data)) {
-                        
-                        $conta = $this->Conta->read(null,$this->Conta->id);
-                        $this->set(compact('conta'));
-                        
-                        $this->layout = 'ajax';
-                        $this->render('edit_response');
-                    }else{
-                        echo 'validacao'; exit;
-                    }
-                    
+                    $this->layout = 'ajax';
+                    $this->render('edit_response');
                 }else{
                     echo 'validacao'; exit;
                 }
+                    
             }else{
                 echo 'error'; exit;
             }
