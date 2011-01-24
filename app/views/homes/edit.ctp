@@ -77,7 +77,10 @@
             });
         });
         
-        
+        $('#fecharColorbox').click(function(){
+            parent.jQuery.fn.colorbox.close();
+        });
+
         $("#submitAjax").click(function(){
             
             var categoria       = $('#categoria').val();
