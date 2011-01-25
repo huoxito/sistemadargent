@@ -42,16 +42,25 @@ class ContasController extends AppController {
 		$this->Conta->recursive = 0;
 		$contas = $this->Conta->find('all',
                         array('conditions' => array('Conta.usuario_id' => $this->user_id)));
-        
-        $this->set(compact('contas'));
-	}
+       
+        foreach($contas as $key => $value){
+            
+            $ganho = $this->Conta->Ganho->find('count',
+                       array('conditions' => array('Ganho.conta_id' => $value['Conta']['id']),
+                             'recursive' => -1));
+            $gasto = $this->Conta->Gasto->find('count',
+                       array('conditions' => array('Gasto.conta_id' => $value['Conta']['id']),
+                             'recursive' => -1));
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid conta', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->set('conta', $this->Conta->read(null, $id));
+            if($ganho || $gasto){
+                $contas[$key]['Conta']['delete'] = false;
+            }else{
+                $contas[$key]['Conta']['delete'] = true;
+            }
+
+        }
+
+        $this->set(compact('contas'));
 	}
 
 	function add() {

@@ -54,7 +54,13 @@
                                 array('action' => 'edit', $conta['Conta']['id']),
                                 array('class' => 'colorbox-edit btneditar',
                                       'title' => 'Editar Conta')); ?> 
-                    <?= $this->Html->link('Delete', array('action' => 'delete', $conta['Conta']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $conta['Conta']['id'])); ?>
+                    <?php 
+                    if($conta['Conta']['delete']){ 
+                        echo $this->Html->link('Delete', 
+                                array('action' => 'delete', $conta['Conta']['id']), null, 
+                                        sprintf(__('Are you sure you want to delete # %s?', true), $conta['Conta']['id'])); 
+                    }
+                    ?>
                 </td>
             </tr>
             <?php endforeach; ?>
