@@ -56,21 +56,21 @@ class Conta extends AppModel {
 		'Agendamento' => array(
 			'className' => 'Agendamento',
 			'foreignKey' => 'conta_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 		),
 		'Ganho' => array(
 			'className' => 'Ganho',
 			'foreignKey' => 'conta_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 		),
 		'Gasto' => array(
 			'className' => 'Gasto',
 			'foreignKey' => 'conta_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 		)
