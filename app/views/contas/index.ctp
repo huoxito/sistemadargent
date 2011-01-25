@@ -56,9 +56,10 @@
                                       'title' => 'Editar Conta')); ?> 
                     <?php 
                     if($conta['Conta']['delete']){ 
-                        echo $this->Html->link('Delete', 
-                                array('action' => 'delete', $conta['Conta']['id']), null, 
-                                        sprintf(__('Are you sure you want to delete # %s?', true), $conta['Conta']['id'])); 
+                        echo $this->Html->link('DELETE', 
+                                    array('action' => 'delete', $conta['Conta']['id']),
+                                    array('class' => 'colorbox-delete btnexcluir',
+                                          'title' => 'Excluir Conta')); 
                     }
                     ?>
                 </td>
@@ -73,7 +74,7 @@
 <script type="text/javascript">
     // <![CDATA[
     $(document).ready(function () {
-        $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
+        $('.colorbox-delete').colorbox({width:"500", height: '180', opacity: 0.5, iframe: true});
         $('.colorbox-edit').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
         
         $(".registros").mouseover(function() {

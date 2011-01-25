@@ -137,16 +137,26 @@ class ContasController extends AppController {
 	}
 
 	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for conta', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->Conta->delete($id)) {
-			$this->Session->setFlash(__('Conta deleted', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->Session->setFlash(__('Conta was not deleted', true));
-		$this->redirect(array('action' => 'index'));
+
+		if( !$id && isset($this->params['url']['id']) ){
+            $id = (int)$this->params['url']['id'];
+        }
+        
+        $itens = $this->Conta->read(null, $id);
+        $this->checkPermissao($itens['Conta']['usuario_id']);
+        
+        if( $this->params['isAjax'] ){
+        
+            if( $this->Conta->delete($id) ){
+                echo 'deleted';
+            }   
+            $this->autoRender = false;
+            
+        }else{
+            
+            $this->set('registro',$itens);    
+            $this->layout = 'colorbox';
+        }
 	}
 }
 ?>
