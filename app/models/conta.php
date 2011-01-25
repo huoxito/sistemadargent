@@ -33,7 +33,8 @@ class Conta extends AppModel {
             'string' => array(
                 'rule' => 'notEmpty',
                 'message' => 'Escolha o tipo de conta adequado',
-                'last' => true
+                'last' => true,
+                'required' => true
             ),
             'regra' => array(
                 'rule' => array('inList',array('corrente','poupança','cash')),

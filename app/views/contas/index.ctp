@@ -17,7 +17,7 @@
                 <?php echo $this->Html->link('CRIAR UMA NOVA CONTA',
                                     array('controller' => 'contas',
                                           'action' => 'add'),
-                                    array('class' => 'btnadd')); ?>
+                                    array('class' => 'colorbox-add btnadd')); ?>
             </div>
         </div>
         
@@ -66,8 +66,7 @@
     $(document).ready(function () {
         
         $('.colorbox-delete').colorbox({width:"500", height: '180', opacity: 0.5, iframe: true});
-        $('.colorbox-edit').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
-         
+        $('.colorbox-edit, .colorbox-add').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
     });
 
 </script>

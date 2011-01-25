@@ -65,11 +65,13 @@ class ContasController extends AppController {
 
 	function add() {
         
-		if (!empty($this->data)) {
+        if ( $this->params['isAjax'] ) {
             
+            $this->data = array_merge($this->params['url']);
+                
             if((float)$this->data['Conta']['saldo']){
                 
-                if($this->data['Conta']['Saldo'] > 0){
+                if($this->data['Conta']['saldo'] > 0){
                     $model = "Ganho";
                 }else{
                     $model = "Gasto";
@@ -88,12 +90,18 @@ class ContasController extends AppController {
             $this->data['Conta']['usuario_id'] = $this->user_id;
             $this->Conta->create();
             if ($this->Conta->saveAll($this->data)) {
-                $this->Session->setFlash('Nova conta criada com sucesso','flash_success');
-                $this->redirect(array('action' => 'index'));
+
+                $this->Conta->recursive = -1;
+                $this->set('conta', $this->Conta->findById($this->Conta->id));
+                $this->layout = 'ajax';
+                $this->render('add_response'); 
             }else{
-                $this->Session->setFlash('Preencha os campos corretamente','flash_error');
+                echo 'validacao'; exit;
             }
-		}
+
+        }else{
+            $this->layout = 'colorbox';
+        }
 	}
 
 	function edit($id = null) {
