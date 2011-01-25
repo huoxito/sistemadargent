@@ -1015,15 +1015,37 @@ th a.desc:after {
 	content: ' ⇡';
 }
 table tr td {
-	background: #fff;
 	padding: 6px;
 	vertical-align: top;
 	border-bottom:1px solid #ddd;
 }
 
-/* aparece na listagem de contas */
+/************* aparece na listagem de contasa ******************/
+
+.tableWraper {
+    padding: 20px;
+    background-color: #FFF;
+}
+
+.tabelaListagem {
+    border-top: 1px solid #E9E9E9;
+}
+
+.tabelaListagem tr {
+    border-bottom: 1px solid #E9E9E9;
+}
+
+.tabelaListagem tr:hover {
+    background-color: #F2FFE3;
+}
+
+.tabelaListagem td.actions, .tabelaListagem td.tipo {
+    width: 150px;
+}
+
 .tabelaListagem td, .tabelaListagem th {
 	padding: 10px;
+    border: none;
 }
 
 #whiteTable tr td, #whiteTable tr th {

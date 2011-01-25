@@ -10,7 +10,9 @@
             echo $this->Form->input('saldo');
             $options = array('corrente'=>' Corrente ', 'poupança'=> ' Poupança ', 'cash' => ' Cash ');
             $attributes = array('class' => 'config',
-                                'label' => 'Tipo');
+                                'label' => false,
+                                'legend' => 'Tipo');
+            
             echo $this->Form->radio('tipo',$options,$attributes);   
         ?>
         <div class="submit">
