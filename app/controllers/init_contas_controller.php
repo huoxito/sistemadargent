@@ -57,6 +57,15 @@ class InitContasController extends AppController {
     
     function index(){
         
+        foreach (Cache::configured() as $name) {
+			$config = Cache::config($name);
+			if (Cache::clear(false, $name)) {
+				echo 'Cleared ' . $name . '<hr/>';
+			} else {
+			    echo '! Failed clearing ' . $name . '<hr />';
+			}
+		}
+        
         $this->_crioContaPadrao();
         $this->_setarContaPadrao();
         $this->layout = 'ajax';
