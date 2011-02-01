@@ -14,14 +14,18 @@ class ContasController extends AppController {
                                     array('fields' => array('SUM(Gasto.valor) AS total'),
                                           'conditions' =>
                                             array('Gasto.status' => 1,
-                                                  'Gasto.usuario_id' => $this->user_id)
+                                                  'Gasto.usuario_id' => $this->user_id,
+                                                  'MONTH(Gasto.datadabaixa)' => date('m'),
+                                                  'YEAR(Gasto.datadabaixa)' => date('Y'))
                                     ));
             $this->Conta->Ganho->recursive = -1;
             $ganhos = $this->Conta->Ganho->find('all',
                                     array('fields' => array('SUM(Ganho.valor) AS total'),
                                           'conditions' =>
                                             array('Ganho.status' => 1,
-                                                  'Ganho.usuario_id' => $this->user_id)
+                                                  'Ganho.usuario_id' => $this->user_id,
+                                                  'MONTH(Ganho.datadabaixa)' => date('m'),
+                                                  'YEAR(Ganho.datadabaixa)' => date('Y'))
                                     ));
             
             $saldo = $ganhos[0][0]['total'] - $gastos[0][0]['total'];

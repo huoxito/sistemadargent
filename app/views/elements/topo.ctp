@@ -68,7 +68,7 @@
             </p>
         </div>
         <div class="labelSaldoTopoBox">
-            <span class="labelSaldoTopo saldoTopo">Saldo</span>
+            <span class="labelSaldoTopo saldoTopo">Saldo no mês</span>
             <span class="valorSaldoNoTopo">
                 <span class="dollarTopo">R$</span>
                 <?= $this->Valor->formata($saldos['diferenca']) ?>
