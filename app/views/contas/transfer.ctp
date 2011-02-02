@@ -3,7 +3,7 @@
     <?= $this->Form->create('Conta', array('default' => false)); ?>    
     <fieldset>
 
-        <?= $this->Form->input('saldo'); ?>
+        <?= $this->Form->input('valor'); ?>
             
         <div class="input text">
             <label>Conta de origem</label>
@@ -38,13 +38,13 @@
         event.stopPropagation();
         
         var origem            = $('#ContaOrigem').val();
-        var saldo             = $('#ContaSaldo').val();
+        var valor             = $('#ContaValor').val();
         var destino           = $('#ContaDestino').val();
         
         $.ajax({
             
-            url: 'contas/transfer',
-            data: ({ Conta: { origem: origem, saldo:saldo, destino: destino } }),
+            url: '/contas/transfer',
+            data: ({ Conta: { origem: origem, valor: valor, destino: destino } }),
             beforeSend: function(){
                 $('.submit span').html('');
                 $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');

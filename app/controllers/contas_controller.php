@@ -173,18 +173,27 @@ class ContasController extends AppController {
 
     function transfer(){
         
-        $conta_origem = $this->Conta->find('list', 
-                            array('conditions' => 
-                                array('saldo >' => 0,
-                                      'Conta.usuario_id' => $this->user_id))
-                            );
-        
-        $conta_destino = $this->Conta->listar($this->user_id);
-        
-        $this->set(compact('conta_origem'));
-        $this->set(compact('conta_destino'));
+        if( $this->params['isAjax'] ){ 
+            
+            $data = array_merge($this->params['url']['Conta']);
+            $data['usuario_id'] = $this->user_id;
+            
+            $this->Conta->transferencia($data);
 
-        $this->layout = 'colorbox';
+            $log = $this->Conta->getDataSource()->getLog(false, false); 
+            debug($log);
+            $this->autoRender = false;
+                        
+        }else{
+            
+            $conta_origem = $this->Conta->listaSaldoPositivo($this->user_id); 
+            $conta_destino = $this->Conta->listar($this->user_id);
+            
+            $this->set(compact('conta_origem'));
+            $this->set(compact('conta_destino'));
+
+            $this->layout = 'colorbox';
+        }
     }
 
 }

@@ -139,5 +139,45 @@ class Conta extends AppModel {
                             );
     }
 
+    function transferencia($data){
+       
+        $datasource = $this->getDataSource(); 
+        $datasource->begin($this);
+        
+        $data['conta_id'] = $data['origem']; 
+        if( !$this->update($data, '-', false) ){
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $data['conta_id'] = $data['destino']; 
+        if( !$this->update($data, '+', false) ){
+            $datasource->rollback($this);
+            return false;
+        }else{
+            $datasource->commit($this);
+            return true;
+        }
+
+    }
+    
+     
+    function update($data, $sinal, $valorFormatado = true){
+        
+        if(!$valorFormatado){
+            $data['valor'] = $this->Behaviors->Modifiable->monetary($this, $data['valor']);
+        }
+        
+        $conditions = array('Conta.usuario_id' => $data['usuario_id'],
+                            'Conta.id' => $data['conta_id']);
+        $values = array('saldo' => 'saldo' . $sinal . $data['valor']);
+        if( $this->updateAll($values, $conditions) ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 }
 ?>
