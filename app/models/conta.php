@@ -122,6 +122,13 @@ class Conta extends AppModel {
         }
                       
     }
+    
+    function listar($usuario_id){
+        return $this->find('list',
+                     array('conditions' => 
+                                array('Conta.usuario_id' => $usuario_id),
+                           'order' => 'Conta.id desc'));
+    }
 
 
 }
