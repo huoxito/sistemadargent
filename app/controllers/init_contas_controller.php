@@ -34,16 +34,17 @@ class InitContasController extends AppController {
                                   'fields' => array('SUM(Gasto.valor) AS total'),
                                   'recursive' => '-1'));
             
-            $saldo = $ganhos[0][0]['total'] - $gastos[0][0]['total'];
-            
+            echo $saldo = $ganhos[0][0]['total'] - $gastos[0][0]['total'];
+            echo ' --- Usuario '.$user['Usuario']['id'].'<hr />';
             $conta = array(
                 'usuario_id' => $user['Usuario']['id'],
                 'nome' => 'livre',
                 'saldo' => $saldo,
                 'tipo' => 'cash'
             );
-            
+             
             $this->Conta->create();
+            $this->Conta->Behaviors->detach('Modifiable');
             if(!$this->Conta->save($conta,false)){
                 $this->log('não salvou os dados '.print_r($conta),'erro_criar_contas');
             }
