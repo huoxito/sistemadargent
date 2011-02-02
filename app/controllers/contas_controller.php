@@ -170,5 +170,24 @@ class ContasController extends AppController {
             $this->layout = 'colorbox';
         }
 	}
+
+    function transfer(){
+        
+        $contaOrigem = $this->Conta->find('list', 
+                            array('conditions' => 
+                                array('saldo >' => 0,
+                                      'Conta.usuario_id' => $this->user_id))
+                            );
+        
+        $contaDestino = $this->Conta->listar($this->user_id);
+        $this->set(compact('contaOrigem'));
+        $this->set(compact('contaDestino'));
+
+        $this->layout = 'ajax';
+    }
+     
+
+
+
 }
 ?>
