@@ -130,6 +130,14 @@ class Conta extends AppModel {
                            'order' => 'Conta.id desc'));
     }
 
+    function listaSaldoPositivo($usuario_id){
+        return $this->find('list', 
+                            array('conditions' => 
+                                    array('saldo >' => 0,
+                                          'Conta.usuario_id' => $usuario_id),
+                                 'order' => 'Conta.id desc')
+                            );
+    }
 
 }
 ?>
