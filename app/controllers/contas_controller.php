@@ -173,21 +173,19 @@ class ContasController extends AppController {
 
     function transfer(){
         
-        $contaOrigem = $this->Conta->find('list', 
+        $conta_origem = $this->Conta->find('list', 
                             array('conditions' => 
                                 array('saldo >' => 0,
                                       'Conta.usuario_id' => $this->user_id))
                             );
         
-        $contaDestino = $this->Conta->listar($this->user_id);
-        $this->set(compact('contaOrigem'));
-        $this->set(compact('contaDestino'));
+        $conta_destino = $this->Conta->listar($this->user_id);
+        
+        $this->set(compact('conta_origem'));
+        $this->set(compact('conta_destino'));
 
-        $this->layout = 'ajax';
+        $this->layout = 'colorbox';
     }
-     
-
-
 
 }
 ?>
