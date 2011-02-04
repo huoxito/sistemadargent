@@ -177,11 +177,16 @@ class ContasController extends AppController {
             
             $data = array_merge($this->params['url']['Conta']);
             $data['usuario_id'] = $this->user_id;
-            
-            $this->Conta->transferencia($data);
-
-            $log = $this->Conta->getDataSource()->getLog(false, false); 
-            debug($log);
+           
+            $result = $this->Conta->transferencia($data);
+            if ($result['erro']){
+                echo json_encode($result);
+            }else{
+                $result['origem'] = $this->Conta->field('saldo', array('id' => $data['origem']));
+                $result['destino'] = $this->Conta->field('saldo', array('id' => $data['destino']));
+                $result['message'] = "Tranferência realizada com sucesso";
+                echo json_encode($result);
+            }
             $this->autoRender = false;
                         
         }else{

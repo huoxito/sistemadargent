@@ -139,26 +139,49 @@ class Conta extends AppModel {
                             );
     }
 
+    /*
+     * função valida e realiza a transferência entre contas
+     * @data array com valor, id conta de origem e conta de destino
+     * retorna uma msg de erro ou false 
+     */
     function transferencia($data){
-       
+        
+        foreach($data as $value){
+            if(empty($value)){
+                $result['erro'] = "Preencha todos os campos";
+                return $result;
+                break;
+            }
+        }
+        
+        $valor = $this->Behaviors->Modifiable->monetary($this, $data['valor']);
+        $this->Behaviors->detach('Modifiable');
+        $saldo = $this->field('saldo', array('id' => $data['origem']));
+        if($valor > $saldo){
+            $result['erro'] = "Saldo insuficiente na conta de origem";
+            return $result;
+        }
+        
         $datasource = $this->getDataSource(); 
         $datasource->begin($this);
-        
+       
+        $this->Behaviors->attach('Modifiable'); 
         $data['conta_id'] = $data['origem']; 
         if( !$this->update($data, '-', false) ){
             $datasource->rollback($this);
-            return false;
+            $result['erro'] = "Erro no update da conta";
         }
         
         $data['conta_id'] = $data['destino']; 
         if( !$this->update($data, '+', false) ){
             $datasource->rollback($this);
-            return false;
+            $result['erro'] = "Erro no update da conta";
         }else{
             $datasource->commit($this);
-            return true;
+            $result['erro'] = false;
         }
-
+        
+        return $result;
     }
     
      

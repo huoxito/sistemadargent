@@ -1,5 +1,10 @@
+
+
 <div class="contas formBox">
-    
+
+    <span class="tipoAgendamentoLabel">
+        TRANSFERÊNCIAS
+    </span>   
     <?= $this->Form->create('Conta', array('default' => false)); ?>    
     <fieldset>
 
@@ -11,7 +16,7 @@
         </div>
         
         <div class="input text">
-            <label>Conta de origem</label>
+            <label>Conta de destino</label>
             <?= $this->Form->select('destino', $conta_destino, null,array('escape' => false)); ?>
         </div>
 
@@ -22,7 +27,7 @@
         </div>
     
     </fieldset>
-        
+    </form>    
 </div>
 
 <?php echo $this->Html->script('forms'); ?>
@@ -46,20 +51,22 @@
             url: '/contas/transfer',
             data: ({ Conta: { origem: origem, valor: valor, destino: destino } }),
             beforeSend: function(){
-                $('.submit span').html('');
                 $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
             },
             success: function(result){
+               
+                $('.submit img') .detach();
+                var json = $.parseJSON(result);
                 
-                $('.submit img').detach();
-                if(result == 'error'){
-                    $('.ajax_error_response').html('Registro inválido');
-                }else if(result == 'validacao'){
-                    $('.ajax_error_response').html('Nome e Tipo são campos obrigatórios ...');
-                }else {
-                    parent.$('.tabelaListagem tbody').prepend(result);
-                    var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
+                if(json.erro){
+                    $('.ajax_error_response').html(json.erro);
+                }else{
+                    parent.$('#contaSaldo' + origem ).html('R$ ' + json.origem);
+                    parent.$('#contaSaldo' + destino ).html('R$ ' + json.destino);
+                    parent.$('.flash_success').html(json.message);
+                    parent.jQuery.fn.colorbox.close();
                 }
+
             }
         });
         return false;

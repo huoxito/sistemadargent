@@ -28,6 +28,10 @@
         </div>
         
     </div>
+   
+    <div class="flash flash_success">
+        <?php   echo $this->Session->flash(); ?>
+    </div>
     
     <div class="tableWraper">
             
@@ -37,7 +41,7 @@
                 <td>
                     <?= $conta['Conta']['nome']; ?>
                 </td>
-                <td>
+                <td id="contaSaldo<?= $conta['Conta']['id'] ?>">
                     R$ <?= $conta['Conta']['saldo'] ?>
                 </td>
                 <td class="tipo">
