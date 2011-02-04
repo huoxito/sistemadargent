@@ -6,9 +6,16 @@
             allowNegative: true,
             decimal: ',',
             thousands: '.',
-            defaultZero: false
+            defaultZero: true
         });
         
+        $('#ContaValor').maskMoney({
+            allowNegative: true,
+            decimal: ',',
+            thousands: '.',
+            defaultZero: true
+        });
+
         $.ajaxSetup({
             type: "GET",
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
