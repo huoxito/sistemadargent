@@ -14,6 +14,12 @@
                 de faturamentos e despesas.
             </p>            
             <div class="headeraddlinks">
+                <?php echo $this->Html->link('TRANSFERÊNCIAS',
+                                    array('controller' => 'contas',
+                                          'action' => 'transfer'),
+                                    array('class' => 'colorbox-add btnadd')); ?>
+            </div> 
+            <div class="headeraddlinks">
                 <?php echo $this->Html->link('CRIAR UMA NOVA CONTA',
                                     array('controller' => 'contas',
                                           'action' => 'add'),
@@ -22,8 +28,10 @@
         </div>
         
     </div>
-    
-    <?php echo $this->Session->flash(); ?>
+   
+    <div class="flash flash_success">
+        <?php   echo $this->Session->flash(); ?>
+    </div>
     
     <div class="tableWraper">
             
@@ -33,7 +41,7 @@
                 <td>
                     <?= $conta['Conta']['nome']; ?>
                 </td>
-                <td>
+                <td id="contaSaldo<?= $conta['Conta']['id'] ?>">
                     R$ <?= $conta['Conta']['saldo'] ?>
                 </td>
                 <td class="tipo">

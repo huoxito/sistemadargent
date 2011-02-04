@@ -170,5 +170,36 @@ class ContasController extends AppController {
             $this->layout = 'colorbox';
         }
 	}
+
+    function transfer(){
+        
+        if( $this->params['isAjax'] ){ 
+            
+            $data = array_merge($this->params['url']['Conta']);
+            $data['usuario_id'] = $this->user_id;
+           
+            $result = $this->Conta->transferencia($data);
+            if ($result['erro']){
+                echo json_encode($result);
+            }else{
+                $result['origem'] = $this->Conta->field('saldo', array('id' => $data['origem']));
+                $result['destino'] = $this->Conta->field('saldo', array('id' => $data['destino']));
+                $result['message'] = "Tranferência realizada com sucesso";
+                echo json_encode($result);
+            }
+            $this->autoRender = false;
+                        
+        }else{
+            
+            $conta_origem = $this->Conta->listaSaldoPositivo($this->user_id); 
+            $conta_destino = $this->Conta->listar($this->user_id);
+            
+            $this->set(compact('conta_origem'));
+            $this->set(compact('conta_destino'));
+
+            $this->layout = 'colorbox';
+        }
+    }
+
 }
 ?>

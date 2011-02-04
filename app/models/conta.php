@@ -122,6 +122,84 @@ class Conta extends AppModel {
         }
                       
     }
+    
+    function listar($usuario_id){
+        return $this->find('list',
+                     array('conditions' => 
+                                array('Conta.usuario_id' => $usuario_id),
+                           'order' => 'Conta.id desc'));
+    }
+
+    function listaSaldoPositivo($usuario_id){
+        return $this->find('list', 
+                            array('conditions' => 
+                                    array('saldo >' => 0,
+                                          'Conta.usuario_id' => $usuario_id),
+                                 'order' => 'Conta.id desc')
+                            );
+    }
+
+    /*
+     * função valida e realiza a transferência entre contas
+     * @data array com valor, id conta de origem e conta de destino
+     * retorna uma msg de erro ou false 
+     */
+    function transferencia($data){
+        
+        foreach($data as $value){
+            if(empty($value)){
+                $result['erro'] = "Preencha todos os campos";
+                return $result;
+                break;
+            }
+        }
+        
+        $valor = $this->Behaviors->Modifiable->monetary($this, $data['valor']);
+        $this->Behaviors->detach('Modifiable');
+        $saldo = $this->field('saldo', array('id' => $data['origem']));
+        if($valor > $saldo){
+            $result['erro'] = "Saldo insuficiente na conta de origem";
+            return $result;
+        }
+        
+        $datasource = $this->getDataSource(); 
+        $datasource->begin($this);
+       
+        $this->Behaviors->attach('Modifiable'); 
+        $data['conta_id'] = $data['origem']; 
+        if( !$this->update($data, '-', false) ){
+            $datasource->rollback($this);
+            $result['erro'] = "Erro no update da conta";
+        }
+        
+        $data['conta_id'] = $data['destino']; 
+        if( !$this->update($data, '+', false) ){
+            $datasource->rollback($this);
+            $result['erro'] = "Erro no update da conta";
+        }else{
+            $datasource->commit($this);
+            $result['erro'] = false;
+        }
+        
+        return $result;
+    }
+    
+     
+    function update($data, $sinal, $valorFormatado = true){
+        
+        if(!$valorFormatado){
+            $data['valor'] = $this->Behaviors->Modifiable->monetary($this, $data['valor']);
+        }
+        
+        $conditions = array('Conta.usuario_id' => $data['usuario_id'],
+                            'Conta.id' => $data['conta_id']);
+        $values = array('saldo' => 'saldo' . $sinal . $data['valor']);
+        if( $this->updateAll($values, $conditions) ){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }
