@@ -11,7 +11,12 @@ class TestContasController extends ContasController {
 }
 
 class ContasControllerTestCase extends CakeTestCase {
-	var $fixtures = array('app.conta', 'app.usuario', 'app.ganho', 'app.fonte', 'app.agendamento', 'app.frequencia', 'app.destino', 'app.gasto', 'app.sugestao');
+
+	var $fixtures = array(
+        'app.conta', 'app.usuario', 'app.ganho', 'app.fonte', 
+        'app.agendamento', 'app.frequencia', 'app.destino', 'app.gasto', 
+        'app.sugestao'
+    );
 
 	function startTest() {
 		$this->Contas =& new TestContasController();
