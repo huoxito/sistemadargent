@@ -1,7 +1,9 @@
 <?php
 /* Sugesto Fixture generated on: 2011-01-31 23:22:27 : 1296523347 */
-class SugestoFixture extends CakeTestFixture {
-	var $name = 'Sugesto';
+class SugestaoFixture extends CakeTestFixture {
+	
+    var $name = 'Sugestao';
+    var $import = 'Sugestao';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
