@@ -223,6 +223,55 @@ class Usuario extends AppModel {
         
         return $statement;
     }
+
+
+    function excluirMovimentacoes($user_id){
+       
+        $datasource = $this->getDataSource(); 
+        $datasource->begin($this);
+        
+        $result = $this->Agendamento->deleteAll(
+            array('Agendamento.usuario_id' => $user_id), false
+        );
+
+        if(!$result){
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $result = $this->Ganho->deleteAll(
+            array('Ganho.usuario_id' => $user_id), false
+        );
+        
+        if(!$result){
+            $datasource->rollback($this);
+            return false;
+        }
+         
+        $result = $this->Gasto->deleteAll(
+            array('Gasto.usuario_id' => $user_id), false
+        );
+        
+        if(!$result){
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $data = array(
+            'Conta.saldo' => 0, 
+            'Conta.modified' => '"'.date('Y-m-d H:i:s').'"'
+        );
+        $conditions = array('Conta.usuario_id' => $user_id);
+        $result = $this->Conta->updateAll($data, $conditions);
+        
+        if(!$result){
+            $datasource->rollback($this);
+            return false;
+        }else{
+            $datasource->commit($this);
+            return true;
+        }
+    }
     
 }
     
