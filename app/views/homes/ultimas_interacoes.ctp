@@ -1,10 +1,10 @@
 
 
     <div class="index">
-        <div class="subheader">
-            <h2>
+        <div id="contentHeader">
+            <h1>
                 Últimas interações
-            </h2>
+            </h1>
         </div>
         
         <div id="ultimasInteracoesWraper">

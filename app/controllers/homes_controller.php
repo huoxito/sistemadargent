@@ -333,7 +333,12 @@ class HomesController extends AppController{
         # jogo os resultados das constultas dentro do mesmo array
         $modelsDatas = array();
         foreach($ganhos as $key => $item){
-            $modelsDatas[] = array('data' => $item['Ganho']['modified'],
+             
+            if(empty($item['Fonte']['nome'])){
+                $item['Fonte']['nome'] = "Movimentação nas contas";
+            }
+
+             $modelsDatas[] = array('data' => $item['Ganho']['modified'],
                                    'model' => 'Faturamento',
                                    'valor' => $item['Ganho']['valor'],
                                    'datadabaixa' => $item['Ganho']['datadabaixa'],
@@ -342,6 +347,11 @@ class HomesController extends AppController{
         }
 
         foreach($gastos as $key => $item){
+
+            if(empty($item['Destino']['nome'])){
+                $item['Destino']['nome'] = "Movimentação nas contas";
+            }
+
             $modelsDatas[] = array('data' => $item['Gasto']['modified'],
                                    'model' => 'Despesa',
                                    'valor' => $item['Gasto']['valor'],
