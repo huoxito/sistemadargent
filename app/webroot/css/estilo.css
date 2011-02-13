@@ -693,6 +693,8 @@ span.valor {
 	color: #555555;
 	border-top: 1px solid #EBEBEB;
 	margin:20px 20px 0;
+    height: auto;
+    overflow: hidden;
 }
 
 div.inserirphoto {
@@ -946,6 +948,18 @@ span.tipoAgendamentoLabel {
 	margin: 5px 0 10px;
 }
 
+#excluirDados {
+    
+    margin: 10px 0 0;
+    padding: 5px 0 0;
+    border-top: 1px solid #EBEBEB;
+}
+
+#excluirDados h3 {
+    margin: 10px 5px;
+    color: #E3290D;
+    font-size: 12px;
+}
 
 #perfil-p {
 	text-align: left;
@@ -954,23 +968,14 @@ span.tipoAgendamentoLabel {
 	padding: 20px;
 }
 
-#alterarfoto {
-	position: relative;
-	background: url('../img/bg_photo.png');
-	text-align: center;
-	margin-top: -23px;
-	padding: 5px 0;
-	font-size: 11px;
-	font-weight: bold;
+p.warning {
+    color: #E3290D;
+    margin: 10px 0;
 }
 
-#alterarfoto a {
-	text-decoration: none;
-	color: #FFF;
-}
-
-#alterarfoto a:hover {
-	text-decoration: underline;
+.respostaExcluir {
+    color: #3075BA;
+    padding: 10px 0 0;
 }
 
 div.subheader {
@@ -1259,4 +1264,7 @@ div.paging span a:hover {
 .blue {
 	color: #3075BA;
 }
+
+
+
 

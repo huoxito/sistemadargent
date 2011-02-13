@@ -63,34 +63,25 @@
                     <p class="profile">
                         Número de acessos: <?php echo $item['Usuario']['numdeacessos']; ?>
                     </p>    
-            
+                    
+                    <div id="excluirDados">
+                         <h3>Opções para limpar os dados da sua conta ou excluí-la: </h3>
+                         <?= $this->Html->link('EXCLUIR TODAS AS MOVIMENTAÇÕES',
+                                                array('controller' => 'usuarios',
+                                                      'action' => 'excluirMovimentacoes'),
+                                                array('class' => 'btnexcluir right colorbox-excluir')); ?>
+                         <?= $this->Html->link('EXCLUIR TODAS AS CATEGORIAS',
+                                                array('controller' => 'usuarios',
+                                                      'action' => 'excluirCategorias'),
+                                                array('class' => 'btnexcluir right colorbox-excluir')); ?>
+                         <?= $this->Html->link('EXCLUIR MINHA CONTA',
+                                                array('controller' => 'usuarios',
+                                                      'action' => 'excluirConta'),
+                                                array('class' => 'btnexcluir right colorbox-excluir')); ?>
+                    </div>
+                     
                 </div>
                 
-            </div>
-            
-        </div>
-        
-        <div class="subheader">
-            <h2>
-                Últimas interações
-            </h2>
-        </div>
-        
-        <div id="ultimasInteracoesWraper">
-            
-            <div id="ultimasInteracoes">
-                
-                <?php foreach($ultimasInteracoes as $item){ ?>
-
-                    <p class="interacao">
-                        <span class="model"><?= $item['Model']; ?></span>
-                        <span class="valor">R$ <?= $item['valor']; ?></span>
-                        <?php echo $item['categoria']; ?> 
-                        <span class="data"><?= $this->Data->formata($item['modified'],'descricaocompleta'); ?></span>
-                    </p>
-
-                <?php   }   ?>  
-            
             </div>
             
         </div>
@@ -101,7 +92,7 @@
         
         // <![CDATA[
         $(document).ready(function () {
-            $('.colorbox-imagem').colorbox({width:"700", height:"300", opacity: 0.5, iframe: true});
+            $('.colorbox-excluir').colorbox({width:"600", height:"220", opacity: 0.5, iframe: true});
         });
 
         function insereInput(campo,value){

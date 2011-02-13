@@ -55,6 +55,12 @@
                                           'height' => '16'));   ?>
             <?= $this->Html->link(__('Gráficos', true), array('controller' => 'graficos')); ?>
         </li>
+        <li>
+            <?= $this->Html->image('cash_register.png',
+                                    array('width' => '18',
+                                          'height' => '16'));   ?>
+            <?= $this->Html->link('Últimas interações', array('controller' => 'homes', 'action' => 'ultimasInteracoes')); ?>
+        </li>
         <?php } ?>
     </ul>
 </div>

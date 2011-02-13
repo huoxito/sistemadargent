@@ -2,7 +2,7 @@
 
 class HomesController extends AppController{
 
-    var $uses = array('Ganho', 'Gasto');
+    var $uses = array('Ganho', 'Gasto', 'Usuario');
     var $components = array('Valor', 'Data');
     var $helpers = array('Data');
     
@@ -301,6 +301,121 @@ class HomesController extends AppController{
                 }
             }
         }
+    }
+    
+    function ultimasInteracoes(){
+        
+        $registrosPorTabela = 13;
+        # loops pra montar as últimas interaçes do usuário
+        # faço a consulta nas três tabelas
+        $ganhos = $this->Usuario->Ganho->find('all',
+                                    array('conditions' =>
+                                            array('Ganho.usuario_id' => $this->Auth->user('id'),
+                                                  'Ganho.status' => 1),
+                                        'limit' => $registrosPorTabela,
+                                        'group' => 'Ganho.modified',
+                                        'order' => 'Ganho.modified desc'));
+
+        $gastos = $this->Usuario->Gasto->find('all',
+                                    array('conditions' =>
+                                            array('Gasto.usuario_id' => $this->Auth->user('id'),
+                                                  'Gasto.status' => 1),
+                                        'limit' => $registrosPorTabela,
+                                        'group' => 'Gasto.modified',
+                                        'order' => 'Gasto.modified desc'));
+
+        $agendamentos = $this->Usuario->Agendamento->find('all',
+                                    array('conditions' =>
+                                            array('Agendamento.usuario_id' => $this->Auth->user('id')),
+                                        'limit' => $registrosPorTabela,
+                                        'order' => 'Agendamento.modified desc'));
+
+        # jogo os resultados das constultas dentro do mesmo array
+        $modelsDatas = array();
+        foreach($ganhos as $key => $item){
+             
+            if(empty($item['Fonte']['nome'])){
+                $item['Fonte']['nome'] = "Movimentação nas contas";
+            }
+
+             $modelsDatas[] = array('data' => $item['Ganho']['modified'],
+                                   'model' => 'Faturamento',
+                                   'valor' => $item['Ganho']['valor'],
+                                   'datadabaixa' => $item['Ganho']['datadabaixa'],
+                                   'categoria' => $item['Fonte']['nome'],
+                                   'observacoes' => $item['Ganho']['observacoes']);
+        }
+
+        foreach($gastos as $key => $item){
+
+            if(empty($item['Destino']['nome'])){
+                $item['Destino']['nome'] = "Movimentação nas contas";
+            }
+
+            $modelsDatas[] = array('data' => $item['Gasto']['modified'],
+                                   'model' => 'Despesa',
+                                   'valor' => $item['Gasto']['valor'],
+                                   'datadabaixa' => $item['Gasto']['datadabaixa'],
+                                   'categoria' => $item['Destino']['nome'],
+                                   'observacoes' => $item['Gasto']['observacoes']);
+        }
+
+        foreach($agendamentos as $key => $item){
+
+            if(!empty($item['Agendamento']['fonte_id'])){
+                $categoriaAgendamento = $item['Fonte']['nome'];
+            }else{
+                $categoriaAgendamento = $item['Destino']['nome'];
+            }
+
+            $modelsDatas[] = array('data' => $item['Agendamento']['modified'],
+                                   'model' => 'Agendamento',
+                                   'valor' => $item['Agendamento']['valor'],
+                                   'categoria' => $categoriaAgendamento,
+                                   'frequencia' => $item['Frequencia']['nome']);
+        }
+
+        # separo o campo modified para ordernar as datas
+        $objdata = array();
+        foreach($modelsDatas as $key => $data){
+            $objdata[] = $data['data'];
+        }
+
+        # orderno as datas
+        arsort($objdata);
+
+        # organizo um novo array com todos os dados da consulta
+        $ultimasInteracoes = array();
+        $count  = 1;
+        foreach($objdata as $key => $value){
+
+            if($count === $registrosPorTabela){
+                break;
+            }
+
+            if($modelsDatas[$key]['model'] === 'Faturamento' || $modelsDatas[$key]['model'] === 'Despesa'){
+
+                $ultimasInteracoes[] = array('Model' => $modelsDatas[$key]['model'],
+                                             'datadabaixa' => $modelsDatas[$key]['datadabaixa'],
+                                             'valor' => $modelsDatas[$key]['valor'],
+                                             'categoria' => $modelsDatas[$key]['categoria'],
+                                             'observacoes' => $modelsDatas[$key]['observacoes'],
+                                             'modified' => $modelsDatas[$key]['data'],'completa'
+                                            );
+            }else{
+                $ultimasInteracoes[] = array('Model' => $modelsDatas[$key]['model'],
+                                             'frequencia' => $modelsDatas[$key]['frequencia'],
+                                             'valor' => $modelsDatas[$key]['valor'],
+                                             'categoria' => $modelsDatas[$key]['categoria'],
+                                             'modified' => $modelsDatas[$key]['data']
+                                            );
+            }
+            $count++;
+        }
+        
+        $this->set('title_for_layout', 'Últimas interações');
+        $this->set('ultimasInteracoes',$ultimasInteracoes);
+    
     }
 
 }
