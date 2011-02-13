@@ -117,7 +117,7 @@
         
         // <![CDATA[
         $(document).ready(function () {
-            $('.colorbox-excluir').colorbox({width:"700", height:"300", opacity: 0.5, iframe: true});
+            $('.colorbox-excluir').colorbox({width:"600", height:"220", opacity: 0.5, iframe: true});
         });
 
         function insereInput(campo,value){

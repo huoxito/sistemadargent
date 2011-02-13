@@ -355,6 +355,19 @@ class UsuariosController extends AppController {
         $usuarios = $this->paginate('Usuario');
         $this->set(compact('usuarios'));
     }
+    
+    function excluirMovimentacoes(){
+        
+        if( $this->params['isAjax'] ){
+            
+            $result = $this->Usuario->excluirMovimentacoes($this->user_id); 
+            echo json_encode($result); 
+            $this->autoRender = false; 
+        }else{
+            $this->layout = 'colorbox';
+        }
+    }
+
 
 }
 
