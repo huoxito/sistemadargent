@@ -402,7 +402,8 @@ class HomesController extends AppController{
             }
             $count++;
         }
-
+        
+        $this->set('title_for_layout', 'Últimas interações');
         $this->set('ultimasInteracoes',$ultimasInteracoes);
     
     }

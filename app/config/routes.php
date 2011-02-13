@@ -30,7 +30,7 @@
     Router::connect('/cadastro', array('controller' => 'usuarios', 'action' => 'cadastro', 'cadastro'));
     Router::connect('/perfil', array('controller' => 'usuarios', 'action' => 'perfil'));
     Router::connect('/enviarSenha', array('controller' => 'usuarios', 'action' => 'enviarSenha'));
-    Router::connect('/homes/ultimas-interacoes', array('controller' => 'homes', 'action' => 'ultimasInteracoes'));
+    Router::connect('/ultimas-interacoes', array('controller' => 'homes', 'action' => 'ultimasInteracoes'));
         
     //Router::connect('/faturamentos/:action/*', array('controller' => 'ganhos'));
     //Router::connect('/despesas/:action/*', array('controller' => 'gastos'));
