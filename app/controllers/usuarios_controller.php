@@ -385,9 +385,12 @@ class UsuariosController extends AppController {
         if( $this->params['isAjax'] ){
             
             $result = $this->Usuario->excluirConta($this->user_id); 
-            echo json_encode($result); 
-            //$this->autoRender = false; 
-            $this->layout = 'ajax';
+            if($result){
+                echo json_encode($result); 
+                $this->Auth->logout();
+            }
+            //$this->layout = 'ajax';
+            $this->autoRender = false; 
         }else{
             $this->layout = 'colorbox';
         }

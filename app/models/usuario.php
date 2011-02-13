@@ -310,6 +310,22 @@ class Usuario extends AppModel {
         }
 
     }
+    
+    function excluirConta($user_id){
+        
+        $datasource = $this->getDataSource(); 
+        $datasource->begin($this);
+        
+        if( $this->delete($user_id) ){
+            $datasource->commit($this);
+            return true;
+        }else{
+            $datasource->rollback($this);
+            return false;
+        }
+
+    }
+
 
 }
     

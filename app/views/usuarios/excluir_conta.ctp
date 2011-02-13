@@ -25,13 +25,13 @@
             success: function(result){
                 
                 $('.submit img').detach(); 
-                
                 if(result){
                     
                     $('.submit').after(
-                        '<p class="respostaExcluir">Todos os registros foram excluídos com sucesso ...  </p>'
+                        '<p class="respostaExcluir">Obrigado por usar o Dargent. Sua conta foi excluída e você está sendo direcionado para a página inicial do sistema.</p>'
                     );
-                    setTimeout("parent.jQuery.fn.colorbox.close()", 1500);
+                    //parent.window.location="/";
+                    setTimeout("parent.window.location='/';parent.jQuery.fn.colorbox.close()", 2000);
                 }
             }
         });
