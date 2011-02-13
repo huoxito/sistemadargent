@@ -374,12 +374,25 @@ class UsuariosController extends AppController {
             
             $result = $this->Usuario->excluirCategorias($this->user_id); 
             echo json_encode($result); 
+            $this->autoRender = false; 
+        }else{
+            $this->layout = 'colorbox';
+        }
+    }
+    
+    function excluirConta(){
+        
+        if( $this->params['isAjax'] ){
+            
+            $result = $this->Usuario->excluirConta($this->user_id); 
+            echo json_encode($result); 
             //$this->autoRender = false; 
             $this->layout = 'ajax';
         }else{
             $this->layout = 'colorbox';
         }
     }
+
 
 }
 
