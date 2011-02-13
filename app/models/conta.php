@@ -200,6 +200,17 @@ class Conta extends AppModel {
             return false;
         }
     }
+    
+    function zerar($user_id){
+
+        $data = array(
+            'Conta.saldo' => 0, 
+            'Conta.modified' => '"'.date('Y-m-d H:i:s').'"'
+        );
+        $conditions = array('Conta.usuario_id' => $user_id);
+        $result = $this->updateAll($data, $conditions);
+        return $result;
+    }
 
 
 }
