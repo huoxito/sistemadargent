@@ -367,7 +367,19 @@ class UsuariosController extends AppController {
             $this->layout = 'colorbox';
         }
     }
-
+        
+    function excluirCategorias(){
+        
+        if( $this->params['isAjax'] ){
+            
+            $result = $this->Usuario->excluirCategorias($this->user_id); 
+            echo json_encode($result); 
+            //$this->autoRender = false; 
+            $this->layout = 'ajax';
+        }else{
+            $this->layout = 'colorbox';
+        }
+    }
 
 }
 

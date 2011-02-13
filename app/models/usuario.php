@@ -239,32 +239,11 @@ class Usuario extends AppModel {
             return false;
         }
         
-        $result = $this->Ganho->deleteAll(
-            array('Ganho.usuario_id' => $user_id), false
-        );
-        
-        if(!$result){
-            $datasource->rollback($this);
+        if( !$this->excluiGastosGanhos($user_id) ){
             return false;
-        }
-         
-        $result = $this->Gasto->deleteAll(
-            array('Gasto.usuario_id' => $user_id), false
-        );
+        }        
         
-        if(!$result){
-            $datasource->rollback($this);
-            return false;
-        }
-        
-        $data = array(
-            'Conta.saldo' => 0, 
-            'Conta.modified' => '"'.date('Y-m-d H:i:s').'"'
-        );
-        $conditions = array('Conta.usuario_id' => $user_id);
-        $result = $this->Conta->updateAll($data, $conditions);
-        
-        if(!$result){
+        if( !$this->Conta->zerar($user_id) ){
             $datasource->rollback($this);
             return false;
         }else{
@@ -273,6 +252,65 @@ class Usuario extends AppModel {
         }
     }
     
+    function excluiGastosGanhos($user_id){
+        
+        $result = $this->Ganho->deleteAll(
+            array('Ganho.usuario_id' => $user_id), false
+        );
+        
+        if(!$result){
+            return false;
+        }
+         
+        $result = $this->Gasto->deleteAll(
+            array('Gasto.usuario_id' => $user_id), false
+        );
+        
+        if(!$result){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+    function excluirCategorias($user_id){
+        
+        $datasource = $this->getDataSource(); 
+        $datasource->begin($this);
+            
+        if( !$this->excluiGastosGanhos($user_id) ){
+            return false;
+        }
+
+        $result = $this->Fonte->deleteAll(
+            array('Fonte.usuario_id' => $user_id)
+        );
+
+        if(!$result){
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $result = $this->Destino->deleteAll(
+            array('Destino.usuario_id' => $user_id)
+        );
+
+        if(!$result){
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        if( !$this->Conta->zerar($user_id) ){
+            $datasource->rollback($this);
+            return false;
+        }else{
+            $datasource->commit($this);
+            return true;
+        }
+
+    }
+
 }
     
 ?>
