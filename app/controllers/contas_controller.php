@@ -44,16 +44,20 @@ class ContasController extends AppController {
 	function index() {
         
 		$this->Conta->recursive = 0;
+        $this->Conta->Behaviors->detach('Modifiable');
 		$contas = $this->Conta->find('all',
                         array('conditions' => array('Conta.usuario_id' => $this->user_id)));
-       
+        
+        $total = 0;
         foreach($contas as $key => $value){
             
             $ganho = $this->Conta->Ganho->find('count',
-                       array('conditions' => array('Ganho.conta_id' => $value['Conta']['id']),
+                       array('conditions' => array('Ganho.conta_id' => $value['Conta']['id'],
+                                                   'Ganho.fonte_id IS NOT NULL'),
                              'recursive' => -1));
             $gasto = $this->Conta->Gasto->find('count',
-                       array('conditions' => array('Gasto.conta_id' => $value['Conta']['id']),
+                       array('conditions' => array('Gasto.conta_id' => $value['Conta']['id'],
+                                                   'Gasto.destino_id IS NOT NULL'),
                              'recursive' => -1));
 
             if($ganho || $gasto){
@@ -62,8 +66,18 @@ class ContasController extends AppController {
                 $contas[$key]['Conta']['delete'] = true;
             }
 
+            $total += $value['Conta']['saldo'];
         }
 
+        
+        if($total < 0){
+            $class = "negativo";
+        }else{
+            $class = "positivo";
+        }
+
+        $this->set('class', $class);
+        $this->set('total', $total);
         $this->set(compact('contas'));
 	}
 

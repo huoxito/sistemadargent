@@ -1027,6 +1027,19 @@ table tr td {
 
 /************* aparece na listagem de contasa ******************/
 
+.saldoGeral {
+    font-size: 14px;
+    margin: -10px 0 10px 20px;
+}
+
+.positivo {
+    color: #3C6800 ;
+}
+
+.negativo {
+    color: #E3290D;
+}
+
 .tableWraper {
     padding: 20px;
     background-color: #FFF;
