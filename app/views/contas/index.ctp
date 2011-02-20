@@ -34,7 +34,12 @@
     </div>
     
     <div class="tableWraper">
-            
+        
+        <p class="saldoGeral">
+            Saldo total 
+            R$ <span id="saldo-Total" class="<?= $class ?>"><?= $this->Valor->formata($total); ?></span>
+        </p>
+         
         <table cellpadding="0" cellspacing="0" class="tabelaListagem">
             <?php foreach ($contas as $conta): ?>
             <tr id="contaId<?= $conta['Conta']['id'];?>" class="registros">
@@ -42,7 +47,7 @@
                     <?= $conta['Conta']['nome']; ?>
                 </td>
                 <td id="contaSaldo<?= $conta['Conta']['id'] ?>">
-                    R$ <?= $conta['Conta']['saldo'] ?>
+                    R$ <?= $this->Valor->formata($conta['Conta']['saldo']); ?>
                 </td>
                 <td class="tipo">
                     <?= $conta['Conta']['tipo']; ?>
