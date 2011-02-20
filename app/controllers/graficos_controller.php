@@ -6,14 +6,18 @@ class GraficosController extends AppController{
     var $components = array('Data','PieChart','LineChart');
 
     function index(){
+        
+        $dataAtual = date('Y-m-d');
+        $ultimos30Dias = date('Y-m-d', mktime(0,0,0,date('m'),date('d')-30,date('Y')));
 
         $objDestinosValores = $objDestinos = $objFontesValores = $objFontes = null;
         $destinos = $this->Gasto->find('all',
                                 array('fields' => array('Destino.nome', 'SUM(Gasto.valor) AS total'),
                                         'conditions' =>
                                             array('Gasto.status' => 1,
-                                                    'Gasto.usuario_id' => $this->Auth->user('id'),
-                                                    'Gasto.destino_id IS NOT NULL'),
+                                                  'Gasto.usuario_id' => $this->Auth->user('id'),
+                                                  'Gasto.destino_id IS NOT NULL',
+                                                  'Gasto.datadabaixa BETWEEN ? AND ?' => array($dataAtual, $ultimos30Dias)),
                                         'order' => 'total DESC',
                                         'group' => array('Gasto.destino_id'),
                                         'limit' => '5'
@@ -40,8 +44,9 @@ class GraficosController extends AppController{
                                    array('Fonte.nome', 'SUM(Ganho.valor) AS total'),
                                            'conditions' =>
                                                array('Ganho.status' => 1,
-                                                       'Ganho.usuario_id' => $this->Auth->user('id'),
-                                                       'Ganho.fonte_id IS NOT NULL'), 
+                                                     'Ganho.usuario_id' => $this->Auth->user('id'),
+                                                     'Ganho.fonte_id IS NOT NULL', 
+                                                     'Ganho.datadabaixa BETWEEN ? AND ?' => array($dataAtual, $ultimos30Dias)),
                                            'order' => 'total DESC',
                                            'group' => array('Ganho.fonte_id'),
                                            'limit' => '5'
