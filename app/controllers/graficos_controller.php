@@ -7,9 +7,19 @@ class GraficosController extends AppController{
 
     function index(){
         
-        $dataAtual = date('Y-m-d');
-        $ultimos30Dias = date('Y-m-d', mktime(0,0,0,date('m'),date('d')-30,date('Y')));
-
+    }
+    
+   
+    function pies(){
+       
+       
+        if( !$this->params['isAjax'] ){
+            $this->cakeError('error404');
+        }
+        
+        $dataAtual = $this->params["url"]["inicio"];
+        $ultimos30Dias = $this->params["url"]["fim"];
+         
         $objDestinosValores = $objDestinos = $objFontesValores = $objFontes = null;
         $destinos = $this->Gasto->find('all',
                                 array('fields' => array('Destino.nome', 'SUM(Gasto.valor) AS total'),
@@ -37,7 +47,6 @@ class GraficosController extends AppController{
         $this->PieChart->Chart->setLegend(array($objDestinos));
         $this->PieChart->Chart->setColors(array("FF1515"));
         $pieGasto = $this->PieChart->Chart->getUrl();
-        $this->set('pieGasto', $pieGasto);
 
         $fontes = $this->Ganho->find('all',
                             array('fields' =>
@@ -63,8 +72,16 @@ class GraficosController extends AppController{
         $this->PieChart->Chart->setLegend(array($objFontes));
         $this->PieChart->Chart->setColors(array("00D500"));
         $pieGanho = $this->PieChart->Chart->getUrl();
-        $this->set('pieGanho', $pieGanho);
+       
+        $resposta = array(
+            'ganho' => '<img src="'.$pieGanho.'" alt="grafico ganhos" />',
+            'gasto' => '<img src="'.$pieGasto.'" alt="grafico gastos" />'
+        );
+        
+        echo json_encode($resposta);
+        $this->autoRender = false;            
     }
+
 
     function comparativo(){
 
