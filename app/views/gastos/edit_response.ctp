@@ -8,8 +8,8 @@
         <span class="categoriaListagem spansBlocks">
             <?= $categoria; ?>
         </span>
-        <span class="contaListagem">
-            <?= $registro['Conta']['tipo']; ?>
+        <span class="contalistagem">
+            <?= $registro['Conta']['nome']; ?>
         </span>
     </p>
     

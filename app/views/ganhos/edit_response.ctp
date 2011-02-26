@@ -2,14 +2,19 @@
     <?php //echo $this->element('sql_dump'); ?>
 
     <p class="agendamentoInfoLinha">
-        R$ <?php  echo $registro['Ganho']['valor']; ?>  reais com
-        <span class="agendamentoCategoria">
-        <?php echo $categoria; ?>
+        <span class="valor">
+            R$ <?= $registro['Ganho']['valor']; ?>
+        </span>    
+        <span class="categoriaListagem spansBlocks">
+            <?= $categoria; ?>
+        </span>
+        <span class="contalistagem">
+            <?= $registro['Conta']['nome']; ?>
         </span>
     </p>
     
     <?php   if(!empty($registro['Ganho']['observacoes'])){ ?>
-    <p class="agendamentoInfoLinha">
+    <p class="observacoesListagem">
         <?php echo $registro['Ganho']['observacoes']; ?>
     </p>
     <?php   }   ?>
@@ -36,7 +41,7 @@
         // <![CDATA[
         $(document).ready(function () {
             $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
-            $('.colorbox-edit').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
+            $('.colorbox-edit').colorbox({width:"800", height: "480", opacity: 0.5, iframe: true});
         });
         // ]]>
     </script>

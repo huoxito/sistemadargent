@@ -128,11 +128,37 @@ class Gasto extends AppModel {
             return false;
         }    
         
-        $valorAnterior = $this->Behaviors->Modifiable->monetary($this, $check['Gasto']['valor']);
-        $valor = $this->Behaviors->Modifiable->monetary($this, $input['Gasto']['valor']);
-        $diferenca = round($valorAnterior - $valor, 2);
+        $valorConsulta = $this->Behaviors->Modifiable->monetary($this, $check['Gasto']['valor']);
+        $valorForm = $this->Behaviors->Modifiable->monetary($this, $input['Gasto']['valor']);
         
-        if( $diferenca ){
+        if ( $input['Gasto']['conta_id'] != $check['Gasto']['conta_id'] ){
+            
+            // retiro o valor na conta que possui o registro 
+            $values = array('saldo' => 'saldo-' . $valorForm);
+            $conditions = array('Conta.usuario_id' => $check['Gasto']['usuario_id'],
+                                'Conta.id' => $input['Gasto']['conta_id']);
+
+            if( !$this->Conta->updateAll($values, $conditions) ){
+                $datasource->rollback($this);
+                return false;
+            }
+             
+            // recoloco o valor na conta que possuia o registro 
+            $values = array('saldo' => 'saldo+' . $valorConsulta);
+            $conditions = array('Conta.usuario_id' => $check['Gasto']['usuario_id'],
+                                'Conta.id' => $check['Gasto']['conta_id']);
+
+            if( $this->Conta->updateAll($values, $conditions) ){
+                $datasource->commit($this);
+                return true;
+            }else{
+                $datasource->rollback($this);
+                return false;
+            }
+             
+        }else{
+
+            $diferenca = round($valorConsulta - $valorForm, 2);
                         
             $values = array('saldo' => 'saldo+'.$diferenca);
             $conditions = array('Conta.usuario_id' => $check['Gasto']['usuario_id'],
@@ -145,9 +171,7 @@ class Gasto extends AppModel {
                 $datasource->rollback($this);
                 return false;
             }
-        }else{
-            $datasource->commit($this);
-            return true;
+
         }
     }    
     
