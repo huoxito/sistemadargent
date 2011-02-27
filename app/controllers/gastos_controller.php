@@ -244,7 +244,6 @@ class GastosController extends AppController {
                     unset($this->Gasto->validate['destino_id']);    
                 }     
 
-                $this->Gasto->id = $this->data['Gasto']['id'];
                 if ( $this->Gasto->editar($this->data, $chk) ) {
                     
                     if( isset($this->data['Destino']['nome']) ){

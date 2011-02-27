@@ -117,6 +117,65 @@ class Ganho extends AppModel {
         }
     }
     
+    
+    function editar($input, $check){
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $this->id = $input['Ganho']['id'];
+        if ( !$this->saveAll($input, array('atomic' => false)) ) {
+            $datasource->rollback($this);
+            return false;
+        }    
+
+        $valorConsulta = $this->Behaviors->Modifiable->monetary($this, $check['Ganho']['valor']);
+        $valorForm = $this->Behaviors->Modifiable->monetary($this, $input['Ganho']['valor']);
+       
+        if ( $input['Ganho']['conta_id'] != $check['Ganho']['conta_id'] ){
+            
+            // coloco o valor na conta que possui o registro 
+            $values = array('saldo' => 'saldo+' . $valorForm);
+            $conditions = array('Conta.usuario_id' => $check['Ganho']['usuario_id'],
+                                'Conta.id' => $input['Ganho']['conta_id']);
+
+            if( !$this->Conta->updateAll($values, $conditions) ){
+                $datasource->rollback($this);
+                return false;
+            }
+             
+            // diminuo o valor que possuia o registro 
+            $values = array('saldo' => 'saldo-' . $valorConsulta);
+            $conditions = array('Conta.usuario_id' => $check['Ganho']['usuario_id'],
+                                'Conta.id' => $check['Ganho']['conta_id']);
+
+            if( $this->Conta->updateAll($values, $conditions) ){
+                $datasource->commit($this);
+                return true;
+            }else{
+                $datasource->rollback($this);
+                return false;
+            }
+             
+        }else{ 
+        
+            $diferenca = round($valorConsulta - $valorForm, 2);
+            
+            $values = array('saldo' => 'saldo+'.$diferenca);
+            $conditions = array('Conta.usuario_id' => $check['Ganho']['usuario_id'],
+                                'Conta.id' => $input['Ganho']['conta_id']);
+            
+            if( $this->Conta->updateAll($values, $conditions) ){
+                $datasource->commit($this);
+                return true;
+            }else{
+                $datasource->rollback($this);
+                return false;
+            }
+        }
+    }    
+    
+     
     function excluir($id, $userId, $data){
 	
         $datasource = $this->getDataSource();
