@@ -3,7 +3,7 @@
 class GraficosController extends AppController{
 
     var $uses = array('Ganho', 'Gasto');
-    var $components = array('Data','PieChart','LineChart');
+    var $components = array('Data', 'Valor', 'PieChart', 'LineChart');
 
     function index(){
         
@@ -36,10 +36,11 @@ class GraficosController extends AppController{
         foreach($destinos as $destino){
 
             $objDestinosValores[] = $destino[0]['total'];
-            $objDestinos[] = $destino['Destino']['nome'];
+            $valorFormatado = $this->Valor->formata($destino[0]['total'], "humano");
+            $objDestinos[] = $destino['Destino']['nome'] . " R$ " . $valorFormatado;
             //$objDestinosCores[] = $cor;
         }
-
+ 
         # seto o tipo de chart e monto pie de gastos
         $this->PieChart->Chart->setProperty('cht', 'p');
         $this->PieChart->Chart->setDimensions(350,200);
@@ -63,7 +64,8 @@ class GraficosController extends AppController{
 
         foreach($fontes as $fonte){
             $objFontesValores[] = $fonte[0]['total'];
-            $objFontes[] = $fonte['Fonte']['nome'];
+            $valorFormatado = $this->Valor->formata($fonte[0]['total'], "humano");
+            $objFontes[] = $fonte['Fonte']['nome'] . " R$ " . $valorFormatado;
             //$objDestinosCores[] = $cor;
         }
         

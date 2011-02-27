@@ -71,10 +71,12 @@ $(document).ready(function () {
 
     $("#pieDataInicial").datepicker({
         dateFormat: "dd-mm-yy",
+        maxDate: "dd-mm-yy"
     });
     
     $("#pieDataFinal").datepicker({
         dateFormat: "dd-mm-yy",
+        maxDate: "dd-mm-yy"
     });
 
     $.ajax({
