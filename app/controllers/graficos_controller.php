@@ -17,8 +17,8 @@ class GraficosController extends AppController{
             $this->cakeError('error404');
         }
         
-        $dataAtual = $this->params["url"]["inicio"];
-        $ultimos30Dias = $this->params["url"]["fim"];
+        $inicial = $this->Data->formata($this->params["url"]["inicio"], 'diamesano'); 
+        $final = $this->Data->formata($this->params["url"]["fim"], 'diamesano');
          
         $objDestinosValores = $objDestinos = $objFontesValores = $objFontes = null;
         $destinos = $this->Gasto->find('all',
@@ -27,7 +27,7 @@ class GraficosController extends AppController{
                                             array('Gasto.status' => 1,
                                                   'Gasto.usuario_id' => $this->Auth->user('id'),
                                                   'Gasto.destino_id IS NOT NULL',
-                                                  'Gasto.datadabaixa BETWEEN ? AND ?' => array($dataAtual, $ultimos30Dias)),
+                                                  'Gasto.datadabaixa BETWEEN ? AND ?' => array($inicial, $final)),
                                         'order' => 'total DESC',
                                         'group' => array('Gasto.destino_id'),
                                         'limit' => '5'
@@ -55,7 +55,7 @@ class GraficosController extends AppController{
                                                array('Ganho.status' => 1,
                                                      'Ganho.usuario_id' => $this->Auth->user('id'),
                                                      'Ganho.fonte_id IS NOT NULL', 
-                                                     'Ganho.datadabaixa BETWEEN ? AND ?' => array($dataAtual, $ultimos30Dias)),
+                                                     'Ganho.datadabaixa BETWEEN ? AND ?' => array($inicial, $final)),
                                            'order' => 'total DESC',
                                            'group' => array('Ganho.fonte_id'),
                                            'limit' => '5'
@@ -66,18 +66,19 @@ class GraficosController extends AppController{
             $objFontes[] = $fonte['Fonte']['nome'];
             //$objDestinosCores[] = $cor;
         }
+        
         # limpo os dados já enviados da classe e monto a outra pie
         $this->PieChart->Chart->clearDataSets();
         $this->PieChart->Chart->addDataSet($objFontesValores);
         $this->PieChart->Chart->setLegend(array($objFontes));
         $this->PieChart->Chart->setColors(array("00D500"));
         $pieGanho = $this->PieChart->Chart->getUrl();
-       
-        $resposta = array(
-            'ganho' => '<img src="'.$pieGanho.'" alt="grafico ganhos" />',
-            'gasto' => '<img src="'.$pieGasto.'" alt="grafico gastos" />'
-        );
         
+        $resposta = array(
+            'ganho' => $pieGanho,
+            'gasto' => $pieGasto
+        );
+
         echo json_encode($resposta);
         $this->autoRender = false;            
     }

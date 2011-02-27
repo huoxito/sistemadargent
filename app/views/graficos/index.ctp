@@ -100,11 +100,11 @@ $(document).ready(function () {
             },
             success: function(result){
 
-                $('#pieGanho img, #pieGasto img').detach();
-                
                 var json = $.parseJSON(result); 
-                $('#pieGanho').html(json.ganho);
-                $('#pieGasto').html(json.gasto);
+                
+                $('#pieGanho img, #pieGasto img').detach();
+                $('#pieGanho').html('<img src="'+json.ganho+'" alt="gráfico faturamentos" />');
+                $('#pieGasto').html('<img src="'+json.gasto+'" alt="gráfico despesas" />');
             }
         });
     }
