@@ -83,26 +83,6 @@ class AppController extends Controller{
         }
     }
     
-/*
- * Retorno array pra um <select>
- */
-    function _listContas($object){
-    
-        return $object->find('list',
-                        array('conditions' =>
-                                array('usuario_id' => $this->user_id),
-                              'order' => 'Conta.id asc'));
-    }
-    
-/*
- * Imprimir array formatado
- */
-    function _pa($array){
-        echo '<pre>';
-        print_r($array);
-        echo '</pre>';
-    }
-    
 }
 
 ?>
