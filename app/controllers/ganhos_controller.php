@@ -241,32 +241,8 @@ class GanhosController extends AppController {
                     unset($this->Ganho->validate['fonte_id']);    
                 }     
                 
-                $datasource = $this->Ganho->getDataSource();
-                $datasource->begin($this);
-                
-                $this->Ganho->id = $this->data['Ganho']['id'];
-                if ( $this->Ganho->saveAll($this->data, array('atomic' => false)) ) {
-                    
-                    // checar se há neccessidade de um update na conta
-                    $valorAtual = $this->Ganho->Behaviors->Modifiable->monetary($this,$this->data['Ganho']['valor']);
-                    $valorAntigo = $this->Ganho->Behaviors->Modifiable->monetary($this,$chk['Ganho']['valor']);
-                    $diferenca = round($valorAtual-$valorAntigo,2);
-                    if($diferenca){
-                        
-                        $values = array('saldo' => 'saldo+'.$diferenca);
-                        $conditions = array('Conta.usuario_id' => $this->user_id,
-                                            'Conta.id' => $this->data['Ganho']['conta_id']);
-                        if( $this->Ganho->Conta->updateAll($values, $conditions) ){
-                            $datasource->commit($this);
-                        }else{
-                            $datasource->rollback($this);
-                            echo 'validacao'; exit;
-                        }
-
-                    }else{
-                        $datasource->commit($this);
-                    }
-                    
+                if ( $this->Ganho->editar($this->data, $chk) ){
+                                    
                     if( isset($this->data['Fonte']['nome']) ){
                         $this->Ganho->Fonte->id;
                     }else{
@@ -275,11 +251,10 @@ class GanhosController extends AppController {
                     
                     $categoria = $this->Ganho->Fonte->field('nome');
                     $ganho = $this->Ganho->find('first',
-                                array ('fields' => array('id','valor','observacoes'),
+                                array ('fields' => array('id','valor','observacoes','Conta.nome'),
                                        'conditions' =>
-                                        array('id' => $this->data['Ganho']['id']),
-                                       'recursive' => -1));
-                    
+                                        array('Ganho.id' => $this->data['Ganho']['id'])));
+                     
                     $this->set('registro',$ganho);
                     $this->set('categoria',$categoria);
                     
@@ -293,8 +268,6 @@ class GanhosController extends AppController {
                     $this->layout = 'ajax';
                         
                 }else{
-                    
-                    $datasource->rollback($this);
                     echo 'validacao'; exit;
                 }
             }else{

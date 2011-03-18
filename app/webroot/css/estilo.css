@@ -653,12 +653,23 @@ span.valor {
 }
 
 .graficosPizza {
-	height: auto;
-	overflow: hidden;
 	float:left;
 	width: 45%;
 	text-align: center;
 	padding: 10px;
+    font-size: 12px;
+    height: 230px;
+}
+
+#pieDataInicial, #pieDataFinal {
+    height: 17px;
+    width: 75px;
+}
+
+.filtrosPie {
+    color: #555555;
+    font-size: 15px;
+    margin: 30px 0 30px 0px;
 }
 
 .graficosPizza h2 {
@@ -675,6 +686,7 @@ span.valor {
     padding: 10px 0;
     color: #555555;
     font-size: 15px;
+    text-align: center;
 }
 
 .profile {
@@ -1026,6 +1038,19 @@ table tr td {
 }
 
 /************* aparece na listagem de contasa ******************/
+
+.saldoGeral {
+    font-size: 14px;
+    margin: -10px 0 10px 20px;
+}
+
+.positivo {
+    color: #3C6800 ;
+}
+
+.negativo {
+    color: #E3290D;
+}
 
 .tableWraper {
     padding: 20px;

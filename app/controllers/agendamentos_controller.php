@@ -135,7 +135,7 @@ class AgendamentosController extends AppController {
                                                               array('Frequencia.status' => 1),
                                                               'order' => 'nome ASC'));
         
-        $this->set('contas', $this->_listContas($this->Agendamento->Conta));
+        $this->set('contas', $this->Agendamento->Conta->listar($this->user_id));
         $this->set(compact('frequencias'));
         $this->render($_Model);
     }

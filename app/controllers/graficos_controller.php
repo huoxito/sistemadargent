@@ -3,17 +3,31 @@
 class GraficosController extends AppController{
 
     var $uses = array('Ganho', 'Gasto');
-    var $components = array('Data','PieChart','LineChart');
+    var $components = array('Data', 'Valor', 'PieChart', 'LineChart');
 
     function index(){
-
+        
+    }
+    
+   
+    function pies(){
+       
+       
+        if( !$this->params['isAjax'] ){
+            $this->cakeError('error404');
+        }
+        
+        $inicial = $this->Data->formata($this->params["url"]["inicio"], 'diamesano'); 
+        $final = $this->Data->formata($this->params["url"]["fim"], 'diamesano');
+         
         $objDestinosValores = $objDestinos = $objFontesValores = $objFontes = null;
         $destinos = $this->Gasto->find('all',
                                 array('fields' => array('Destino.nome', 'SUM(Gasto.valor) AS total'),
                                         'conditions' =>
                                             array('Gasto.status' => 1,
-                                                    'Gasto.usuario_id' => $this->Auth->user('id'),
-                                                    'Gasto.destino_id IS NOT NULL'),
+                                                  'Gasto.usuario_id' => $this->Auth->user('id'),
+                                                  'Gasto.destino_id IS NOT NULL',
+                                                  'Gasto.datadabaixa BETWEEN ? AND ?' => array($inicial, $final)),
                                         'order' => 'total DESC',
                                         'group' => array('Gasto.destino_id'),
                                         'limit' => '5'
@@ -22,10 +36,11 @@ class GraficosController extends AppController{
         foreach($destinos as $destino){
 
             $objDestinosValores[] = $destino[0]['total'];
-            $objDestinos[] = $destino['Destino']['nome'];
+            $valorFormatado = $this->Valor->formata($destino[0]['total'], "humano");
+            $objDestinos[] = $destino['Destino']['nome'] . " R$ " . $valorFormatado;
             //$objDestinosCores[] = $cor;
         }
-
+ 
         # seto o tipo de chart e monto pie de gastos
         $this->PieChart->Chart->setProperty('cht', 'p');
         $this->PieChart->Chart->setDimensions(350,200);
@@ -33,15 +48,15 @@ class GraficosController extends AppController{
         $this->PieChart->Chart->setLegend(array($objDestinos));
         $this->PieChart->Chart->setColors(array("FF1515"));
         $pieGasto = $this->PieChart->Chart->getUrl();
-        $this->set('pieGasto', $pieGasto);
 
         $fontes = $this->Ganho->find('all',
                             array('fields' =>
                                    array('Fonte.nome', 'SUM(Ganho.valor) AS total'),
                                            'conditions' =>
                                                array('Ganho.status' => 1,
-                                                       'Ganho.usuario_id' => $this->Auth->user('id'),
-                                                       'Ganho.fonte_id IS NOT NULL'), 
+                                                     'Ganho.usuario_id' => $this->Auth->user('id'),
+                                                     'Ganho.fonte_id IS NOT NULL', 
+                                                     'Ganho.datadabaixa BETWEEN ? AND ?' => array($inicial, $final)),
                                            'order' => 'total DESC',
                                            'group' => array('Ganho.fonte_id'),
                                            'limit' => '5'
@@ -49,17 +64,27 @@ class GraficosController extends AppController{
 
         foreach($fontes as $fonte){
             $objFontesValores[] = $fonte[0]['total'];
-            $objFontes[] = $fonte['Fonte']['nome'];
+            $valorFormatado = $this->Valor->formata($fonte[0]['total'], "humano");
+            $objFontes[] = $fonte['Fonte']['nome'] . " R$ " . $valorFormatado;
             //$objDestinosCores[] = $cor;
         }
+        
         # limpo os dados já enviados da classe e monto a outra pie
         $this->PieChart->Chart->clearDataSets();
         $this->PieChart->Chart->addDataSet($objFontesValores);
         $this->PieChart->Chart->setLegend(array($objFontes));
         $this->PieChart->Chart->setColors(array("00D500"));
         $pieGanho = $this->PieChart->Chart->getUrl();
-        $this->set('pieGanho', $pieGanho);
+        
+        $resposta = array(
+            'ganho' => $pieGanho,
+            'gasto' => $pieGasto
+        );
+
+        echo json_encode($resposta);
+        $this->autoRender = false;            
     }
+
 
     function comparativo(){
 
