@@ -8,7 +8,8 @@
     <?= $this->Form->create('Conta', array('default' => false)); ?>    
     <fieldset>
 
-        <?= $this->Form->input('valor'); ?>
+        <?= $this->Form->input('valor', 
+                        array('id' => 'valorMask')); ?>
             
         <div class="input text">
             <label>Conta de origem</label>

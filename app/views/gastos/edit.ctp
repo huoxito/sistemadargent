@@ -28,7 +28,8 @@
         </div>
         
         <?= $this->Form->input('conta_id'); ?>
-        <?= $this->Form->input('valor'); ?>
+        <?= $this->Form->input('valor', 
+                            array('id' => 'valorMask')); ?>
         <?= $this->Form->input('observacoes',
                             array('type' => 'textarea',
                                   'label' => 'Observações',

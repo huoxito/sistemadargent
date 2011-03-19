@@ -42,13 +42,9 @@ class Agendamento extends AppModel {
             'rule2' => array(
                 'rule' => 'notEmpty',
                 'message' => 'Digite um valor',
-                'last' => true,
                 'required' => true
             ),
-            'rule1' => array(
-                'rule' => array('money','left'),
-                'message' => 'Digite um valor válido (Ex: 220,00)'
-            ),
+            
         ),
         'datadevencimento' => array(
                 'rule' => array('date', 'dmy'),

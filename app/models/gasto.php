@@ -43,11 +43,6 @@ class Gasto extends AppModel {
             'vazio' => array(
                 'rule' => 'notEmpty',
                 'message' => 'Digite um valor (Ex: 220,00)',
-                'last' => true,
-            ),
-            'formato' => array(
-                'rule' => array('money','left'),
-                'message' => 'Digite um valor válido (Ex: 220,00)'
             ),
         ),
         'datadabaixa' => array(
