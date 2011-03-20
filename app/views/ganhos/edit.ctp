@@ -72,7 +72,7 @@
         var nome            = $('#FonteNome').val();
         var fonte_id        = $('#GanhoFonteId').val();
         var conta_id        = $('#GanhoContaId').val();
-        var valor           = $('#GanhoValor').val();
+        var valor           = $('#valorMask').val();
         var data            = $('#GanhoDatadabaixa').val();
         var obs             = $('#Observacoes').val();
         

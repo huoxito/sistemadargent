@@ -3,7 +3,7 @@
 
     <p class="agendamentoInfoLinha">
         <span class="valor">
-            R$ <?= $registro['Ganho']['valor']; ?>
+            <?= $registro['Ganho']['valor']; ?>
         </span>    
         <span class="categoriaListagem spansBlocks">
             <?= $categoria; ?>

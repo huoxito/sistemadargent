@@ -76,7 +76,7 @@
         var nome            = $('#DestinoNome').val();
         var destino_id      = $('#GastoDestinoId').val();
         var conta_id        = $('#GastoContaId').val();
-        var valor           = $('#GastoValor').val();
+        var valor           = $('#valorMask').val();
         var data            = $('#GastoDatadabaixa').val();
         var obs             = $('#Observacoes').val();
         

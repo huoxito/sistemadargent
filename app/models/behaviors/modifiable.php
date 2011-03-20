@@ -61,16 +61,16 @@ class ModifiableBehavior extends ModelBehavior {
 
     
     function afterFind(&$model,$results){
-
+        
         foreach ($results as $key => $row) {
           
-          if ( isset($results[$key][$model->alias]['valor']) ){
-            $results[$key][$model->alias]['valor'] = $this->formata($model, $results[$key][$model->alias]['valor'],'humano');
-          } elseif ( isset($results[$key][$model->alias]['saldo']) ) {
-                    $results[$key][$model->alias]['saldo'] = $this->formata($model, $results[$key][$model->alias]['saldo'],'humano');
-                }
+            if ( isset($results[$key][$model->alias]['valor']) ){
+                $results[$key][$model->alias]['valor'] = 'R$ ' . $this->formata($model, $results[$key][$model->alias]['valor'],'humano');
+            } elseif ( isset($results[$key][$model->alias]['saldo']) ) {
+                $results[$key][$model->alias]['saldo'] = 'R$ ' . $this->formata($model, $results[$key][$model->alias]['saldo'],'humano');
+            }
         }
-            return $results;
+        return $results;
     }
     
     function monetary(&$model,$str) {
