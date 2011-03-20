@@ -154,7 +154,10 @@ class Conta extends AppModel {
             }
         }
         
-        $valor = $this->Behaviors->Modifiable->monetary($this, $data['valor']);
+        $valor = substr($data['valor'], 2, strlen($data['valor']));
+
+        $valor = $this->Behaviors->Modifiable->monetary($this, $valor);
+        
         $this->Behaviors->detach('Modifiable');
         $saldo = $this->field('saldo', array('id' => $data['origem']));
         if($valor > $saldo){

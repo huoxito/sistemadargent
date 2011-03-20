@@ -44,7 +44,7 @@
         event.stopPropagation();
         
         var origem            = $('#ContaOrigem').val();
-        var valor             = $('#ContaValor').val();
+        var valor             = $('#valorMask').val();
         var destino           = $('#ContaDestino').val();
         
         $.ajax({
