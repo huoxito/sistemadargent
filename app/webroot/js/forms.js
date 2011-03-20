@@ -6,11 +6,16 @@
             allowNegative: true,
             decimal: ',',
             thousands: '.',
+            symbol: 'R$ ',
+            showSymbol: true,
+            symbolStay: true,
             defaultZero: true
         });
         
-        $('#ContaValor').maskMoney({
-            allowNegative: true,
+        $('#valorMask').maskMoney({
+            symbol: 'R$ ',
+            showSymbol: true,
+            symbolStay: true,
             decimal: ',',
             thousands: '.',
             defaultZero: true

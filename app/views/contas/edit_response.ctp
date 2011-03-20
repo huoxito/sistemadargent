@@ -5,7 +5,7 @@
     <?= $conta['Conta']['nome']; ?>
 </td>
 <td>
-    R$ <?= $conta['Conta']['saldo'] ?>
+    <?= $conta['Conta']['saldo'] ?>
 </td>
 <td class="tipo">
     <?= $conta['Conta']['tipo']; ?>

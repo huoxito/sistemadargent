@@ -21,6 +21,6 @@
 LIB=${0/%cake/}
 APP=`pwd`
 
-exec php -q ${LIB}cake.php -working "${APP}" "$@"
+exec php-cli -q ${LIB}cake.php -working "${APP}" "$@"
 
 exit;

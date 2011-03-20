@@ -8,62 +8,68 @@ class ModifiableBehavior extends ModelBehavior {
 	
 	# $config é o array passado dentro do model
     function setup(&$model, $config = array()) {
-		$this->settings[$model->alias] = array_merge($this->_settings, $config);
+		    $this->settings[$model->alias] = array_merge($this->_settings, $config);
     }
     
     
     function beforeValidate(&$model){
         
-        if( isset($model->data[$model->alias]['valor']) ){
-            $valor = (int)$model->data[$model->alias]['valor'];
-            if(empty($valor)){
-                $model->data[$model->alias]['valor'] = "";
-            }
+        if( isset($model->data[$model->alias]['saldo']) ){
+            
+            $saldo = $model->data[$model->alias]['saldo'];
+            $saldo = substr($saldo, 2, strlen($saldo));
+            
+            $model->data[$model->alias]['saldo'] = $this->formata($model, $saldo);
         }
+         
+        if( isset($model->data[$model->alias]['valor']) ){
+            
+            $valor = $model->data[$model->alias]['valor'];
+            $valor = substr($valor, 2, strlen($valor));
+            
+            if(empty($valor) || $valor == ' 0,00'){
+                $model->data[$model->alias]['valor'] = null;
+            }else{
+                $model->data[$model->alias]['valor'] = $this->formata($model, $valor);
+            }
+        } 
+        
         return true;
     }
     
-	function beforeSave(&$model){
+    function beforeSave(&$model){
 		
         App::import('Sanitize');
         
-		foreach($this->settings[$model->alias]['fields'] as $fieldName) {
+        foreach($this->settings[$model->alias]['fields'] as $fieldName) {
             
-            if ( $fieldName === 'nome' || $fieldName === 'observacoes' ){
-                Sanitize::html(&$model->data[$model->alias][$fieldName],array('remove'=>true));
-            }
-            
-            if( isset($model->data[$model->alias]['datadabaixa']) && $fieldName === 'datadabaixa' ){
-                $model->data[$model->alias]['datadabaixa'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadabaixa']);
-            }
-            
-            if( isset($model->data[$model->alias]['datadevencimento']) && $fieldName === 'datadevencimento' ){
-                $model->data[$model->alias]['datadevencimento'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadevencimento']);
-            }
-            
-            if( isset($model->data[$model->alias]['valor']) ){
-                $model->data[$model->alias]['valor'] = $this->monetary($model, $model->data[$model->alias]['valor']);
-            }
-            
-            if( isset($model->data[$model->alias]['saldo']) ){
-                $model->data[$model->alias]['saldo'] = $this->formata($model, $model->data[$model->alias]['saldo']);
-            }
-                  
-		}
+              if ( $fieldName === 'nome' || $fieldName === 'observacoes' ){
+                  Sanitize::html(&$model->data[$model->alias][$fieldName],array('remove'=>true));
+              }
+              
+              if( isset($model->data[$model->alias]['datadabaixa']) && $fieldName === 'datadabaixa' ){
+                  $model->data[$model->alias]['datadabaixa'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadabaixa']);
+              }
+              
+              if( isset($model->data[$model->alias]['datadevencimento']) && $fieldName === 'datadevencimento' ){
+                  $model->data[$model->alias]['datadevencimento'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadevencimento']);
+              }
+        }
+        
         return true;
     }
 
     
     function afterFind(&$model,$results){
-
-		foreach ($results as $key => $row) {
-			
-			if ( isset($results[$key][$model->alias]['valor']) ){
-				$results[$key][$model->alias]['valor'] = $this->formata($model, $results[$key][$model->alias]['valor'],'humano');
-			} elseif ( isset($results[$key][$model->alias]['saldo']) ) {
-                $results[$key][$model->alias]['saldo'] = $this->formata($model, $results[$key][$model->alias]['saldo'],'humano');
+        
+        foreach ($results as $key => $row) {
+          
+            if ( isset($results[$key][$model->alias]['valor']) ){
+                $results[$key][$model->alias]['valor'] = 'R$ ' . $this->formata($model, $results[$key][$model->alias]['valor'],'humano');
+            } elseif ( isset($results[$key][$model->alias]['saldo']) ) {
+                $results[$key][$model->alias]['saldo'] = 'R$ ' . $this->formata($model, $results[$key][$model->alias]['saldo'],'humano');
             }
-		}
+        }
         return $results;
     }
     
@@ -72,14 +78,15 @@ class ModifiableBehavior extends ModelBehavior {
         return preg_replace('#[^0-9]#', '', $str[0]) . (!empty($str[1]) ? '.' . $str[1] : '');
     }
 	
-	function formata(&$model,$valor, $tipo = 'banco'){
+    function formata(&$model,$valor, $tipo = 'banco'){
             
         if($tipo === 'banco'){
+            
             $valor = trim($valor);
             $valor = str_replace(",","+",$valor);
             $valor = str_replace(".","",$valor);
-            $valor = str_replace("+",".",$valor);
-            $valor = (float) $valor;
+            $valor = (float)str_replace("+",".",$valor);
+            
             return $valor;
         }else{
             $valor = number_format($valor,2,",",".");	

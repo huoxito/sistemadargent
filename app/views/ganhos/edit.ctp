@@ -26,7 +26,8 @@
             </a>
         </div>
         <?= $this->Form->input('conta_id'); ?>
-        <?= $this->Form->input('valor'); ?>
+        <?= $this->Form->input('valor', 
+                            array('id' => 'valorMask')); ?>
         <?= $this->Form->input('observacoes',
                             array('type' => 'textarea',
                                   'label' => 'Observações',
@@ -71,7 +72,7 @@
         var nome            = $('#FonteNome').val();
         var fonte_id        = $('#GanhoFonteId').val();
         var conta_id        = $('#GanhoContaId').val();
-        var valor           = $('#GanhoValor').val();
+        var valor           = $('#valorMask').val();
         var data            = $('#GanhoDatadabaixa').val();
         var obs             = $('#Observacoes').val();
         
