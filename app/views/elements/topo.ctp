@@ -54,20 +54,26 @@
         
         <?php $saldos = $this->requestAction('contas/saldo'); ?>
         <div class="labelSaldoTopoBox">
-            <p>
-                <span class="labelSaldoTopo">Faturamento:</span>
-                <span class="valorNoTopo">
-                    R$ <?= $this->Valor->formata($saldos['ganhos']) ?>
-                </span>
-            </p>
-            <p>
-                <span class="labelSaldoTopo">Despesa:</span>
-                <span class="valorNoTopo">
-                    R$ <?= $this->Valor->formata($saldos['gastos']) ?>
-                </span>
-            </p>
+            <table id="tabela_topo_mes" border="0">
+                <tr>
+                    <td class="">
+                        <span class="label">Faturamentos</span> 
+                        <span class="value">
+                            R$ <?= $this->Valor->formata($saldos['ganhos']) ?>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">
+                        <span class="label">Despesas</span>
+                        <span class="value">
+                            R$ <?= $this->Valor->formata($saldos['gastos']) ?>
+                        </span> 
+                    </td>
+                </tr>
+            </table>
         </div>
-        <div class="labelSaldoTopoBox">
+        <div class="caixaSaldo">
             <span class="labelSaldoTopo saldoTopo">Saldo no mês</span>
             <span class="valorSaldoNoTopo">
                 <span class="dollarTopo">R$</span>
