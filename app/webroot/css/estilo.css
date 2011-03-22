@@ -23,7 +23,7 @@ html {
 	height:auto;
 	overflow: hidden;
 	padding:10px 20px;
-	background-image:url(../img/bg-topo.jpg);
+    background-color: #9BD252;
 }
 
 .cont-topo {
@@ -48,9 +48,59 @@ html {
 
 #UserInfoBox {
 	float:right;
-	min-width:230px;
+	width:230px;
 	height:auto;
 	overflow: hidden;
+}
+
+#tabela_topo_mes {
+   background: inherit; 
+   color: inherit;
+   border: none;
+   font-size: 100%;
+   margin: 0 0 0 6px;
+}
+
+#tabela_topo_mes td {
+    border: none;
+    padding: 0 0 5px;
+}
+
+#tabela_topo_mes td .label {
+	color: #467F00;
+    display: block;
+}
+
+.saldoTopo {
+    color: #FFF;
+    font-weight: normal;
+}
+
+#tabela_topo_mes td .value {
+	color: #284A00;
+}
+
+.caixaSaldo {
+    margin: 28px 0 0;
+}
+
+
+.labelSaldoTopoBox, .caixaSaldo {
+	font-size:13px;
+	font-weight: bold;
+	float:left;
+	padding: 5px 15px 0 0;
+}
+
+.dollarTopo{
+	font-size: 14px !important;
+}
+.valorSaldoNoTopo {
+    font-size: 120%;
+	clear: both;
+	display: block;
+	color: #284A00;
+	padding: 3px 0 0;
 }
 
 .conteudo-total {
@@ -152,39 +202,7 @@ div.form, div.index, div.view {
 	margin-top:4px;
 }
 
-.labelSaldoTopoBox {
-	font-size:13px;
-	font-weight: bold;
-	float:left;
-	padding: 5px 33px 0 0;
-}
-.labelSaldoTopo {
-	color: #467F00;
-	display: block;
-	padding: 10px 0 0;
-	width: 110px;
-	text-align: right;
-	float: left;
-}
-.saldoTopo {
-	text-align: left !important;
-}
-.valorNoTopo {
-	float: left;
-	padding: 10px 0 0 5px;
-	font-size:14px;
-	color: #284A00;
-}
-.dollarTopo{
-	font-size: 14px !important;
-}
-.valorSaldoNoTopo {
-	clear: both;
-	display: block;
-	color: #284A00;
-	font-size:23px;
-	padding: 3px 0 0;
-}
+
 .minhaconta {
 	float:right;
 	width:101px;
