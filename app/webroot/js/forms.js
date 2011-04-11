@@ -1,49 +1,48 @@
                 
-    // <![CDATA[
-    $(document).ready(function () {
+// <![CDATA[
+$(document).ready(function () {
         
-        $('#ContaSaldo').maskMoney({
-            allowNegative: true,
-            decimal: ',',
-            thousands: '.',
-            symbol: 'R$ ',
-            showSymbol: true,
-            symbolStay: true,
-            defaultZero: true
-        });
-        
-        $('#valorMask').maskMoney({
-            symbol: 'R$ ',
-            showSymbol: true,
-            symbolStay: true,
-            decimal: ',',
-            thousands: '.',
-            defaultZero: true
-        });
+    $('#ContaSaldo').maskMoney({
+        allowNegative: true,
+        decimal: ',',
+        thousands: '.',
+        symbol: 'R$ ',
+        showSymbol: true,
+        symbolStay: true,
+        defaultZero: true
+    });
+    
+    $('#valorMask').maskMoney({
+        symbol: 'R$ ',
+        showSymbol: true,
+        symbolStay: true,
+        decimal: ',',
+        thousands: '.',
+        defaultZero: true
+    });
 
-        $.ajaxSetup({
-            type: "GET",
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            cache: false
-        });
+    $.ajaxSetup({
+        type: "GET",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        cache: false
+    });
+    
+    $.datepicker.setDefaults({
+        dateFormat: 'dd-mm-yy',
+        dayNamesMin: ['Dom', 'Sex', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']});
+    
+    $('.dataField').datepicker({
+                maxDate: 'd-m-y'
+            });
+    
+    $('.dateFieldAhead').datepicker({
+                minDate: 'd-m-y'
+            });
         
-        $.datepicker.setDefaults({
-            dateFormat: 'dd-mm-yy',
-            dayNamesMin: ['Dom', 'Sex', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']});
-        
-        $('.dataField').datepicker({
-                    maxDate: 'd-m-y'
-                });
-        
-        $('.dateFieldAhead').datepicker({
-                    minDate: 'd-m-y'
-                });
-        
-    });  
-    // ]]>
+    
 
     $('#AgendamentoConfig0').click(function() {           
         if($(this).is(':checked'))  {
@@ -68,120 +67,45 @@
         }
     }
 
-    var options3 = {
-                    'maxCharacterSize': 200,
-                    'originalStyle': 'originalTextareaInfo',
-                    'warningStyle' : 'warningTextareaInfo',
-                    'warningNumber': 40,
-                    'displayFormat' : '#left / #max'
-    };
-    
-    $('#Observacoes').textareaCount(options3, function(data){
-        var result = 'Characters Input: ' + data.input + '<br />';
-        result += 'Words Input: ' + data.words + '<br />';
-        result += 'Left Characters: ' + data.left + '<br />';
-        result += 'Characters Limitation: ' + data.max + '<br />';
-        $('#textareaCallBack').html(result);
-    });
-    
-    function insereInput(name){
-        
-        $('.select_categoria').fadeOut('fast',function(){
-                $('#select_categoria a').remove();
-                $('#select_categoria').append('<input type="text" maxlength="30" name="'+name+'" />');
-                $('#select_categoria').append('<a href="javascript:;" class="btnadd" title="cadastrar categoria" onclick="insereSelect();">RETORNAR A SELEÇÃO</a>');    
-            });
-        
-    }
-    
-    function insereSelect(name){
-        
-        $('div.select input').fadeOut('fast',function(){
-            $('div.select input').remove();
-            $('div.select a').remove();
-            $('div.select select').show();
-            $('#select_categoria').append('<a href="javascript:;" class="btnadd" title="cadastrar" onclick="insereInput();">INSERIR NOVA CATEGORIA</a>');    
-        });
-    }
-    
-    var insereSelectFontes = function(){
+    var insereSelectCategorias = function(){
         $.ajax({
-            url: urlInsereSelect,
+            url: '/moves/insereSelect',
             beforeSend: function(){
                 $('#inputCategoria img').detach();
-                $('#inputCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
+                $('#inputCategoria').append(' <img src="/img/ajax-loader-p.gif" />');
             },
             success: function(result){
                 $('#inputCategoria').fadeOut('fast',function(){
                     $('#inputCategoria').remove();
-                    $('.inputsRight').prepend(result);
+                    $('#categorias_').prepend(result);
                 });
             }
         });
-        $('#insereSelectFontes').die('click');
-        $('#insereInputFontes').live('click', insereInputFontes);
+        $('#insereSelect').die('click');
+        $('#insereInputCategorias').live('click', insereInputCategorias);
         return false;
     };
     
-    var insereInputFontes = function(){
+    var insereInputCategorias = function(){
         $.ajax({
-            url: urlInsereInput,
+            url: '/moves/insereInput',
             beforeSend: function(){
                 $('#selectCategoria img').detach();
-                $('#selectCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
+                $('#selectCategoria').append(' <img src="/img/ajax-loader-p.gif" />');
             },
             success: function(result){    
                 $('#selectCategoria').remove();
-                $('.inputsRight').prepend(result);
+                $('#categorias_').prepend(result);
             }
         });
-        $('#insereInputFontes').die('click');
-        $('#insereSelectFontes').live('click', insereSelectFontes);
+        $('#insereInputCategorias').die('click');
+        $('#insereSelectCategorias').live('click', insereSelectCategorias);
         return false;
     };
     
-    $('#insereSelectFontes').live('click', insereSelectFontes);
-    $('#insereInputFontes').live('click', insereInputFontes);
-    
-    var insereSelectDestinos = function(){
-        $.ajax({
-            url: urlInsereSelect,
-            beforeSend: function(){
-                $('#inputCategoria img').detach();
-                $('#inputCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
-            },
-            success: function(result){
-                $('#inputCategoria').fadeOut('fast',function(){
-                    $('#inputCategoria').remove();
-                    $('.inputsRight').prepend(result);
-                });
-            }
-        });
-        $('#insereSelectDestinos').die('click');
-        $('#insereInputDestinos').live('click', insereInputDestinos);
-        return false;
-    };
-    
-    var insereInputDestinos = function(){
-        $.ajax({
-            url: urlInsereInput,
-            beforeSend: function(){
-                $('#selectCategoria img').detach();
-                $('#selectCategoria').append(' <img src="../img/ajax-loader-p.gif" />');
-            },
-            success: function(result){    
-                $('#selectCategoria').remove();
-                $('.inputsRight').prepend(result);
-            }
-        });
-        $('#insereInputDestinos').die('click');
-        $('#insereSelectDestinos').live('click', insereSelectDestinos);
-        return false;
-    };
-    
-    $('#insereSelectDestinos').live('click', insereSelectDestinos);
-    $('#insereInputDestinos').live('click', insereInputDestinos);
+    $('#insereSelectCategorias').live('click', insereSelectCategorias);
+    $('#insereInputCategorias').live('click', insereInputCategorias);
     
     
-    
-        
+});  
+    // ]]>

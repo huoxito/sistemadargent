@@ -73,6 +73,13 @@ class Conta extends AppModel {
 			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
+		),
+        'Move' => array(
+			'className' => 'Move',
+			'foreignKey' => 'conta_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
 		)
 	);
     

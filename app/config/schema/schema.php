@@ -1,5 +1,5 @@
 <?php 
-/* App schema generated on: 2011-02-01 00:32:38 : 1296527558*/
+/* App schema generated on: 2011-04-11 15:22:35 : 1302546155*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -24,6 +24,7 @@ class AppSchema extends CakeSchema {
 	var $agendamentos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'usuario_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'conta_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 10, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'frequencia_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'fonte_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
@@ -35,7 +36,6 @@ class AppSchema extends CakeSchema {
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
-		'conta_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'frequencia_id' => array('column' => 'frequencia_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -105,6 +105,7 @@ class AppSchema extends CakeSchema {
 	var $ganhos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'usuario_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
+		'conta_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'agendamento_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'fonte_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'valor' => array('type' => 'float', 'null' => true, 'default' => NULL),
@@ -114,13 +115,13 @@ class AppSchema extends CakeSchema {
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
-		'conta_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'fonte_id' => array('column' => 'fonte_id', 'unique' => 0), 'agendamento_id' => array('column' => 'agendamento_id', 'unique' => 0), 'usuario_id' => array('column' => 'usuario_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	var $gastos = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'usuario_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
+		'conta_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'agendamento_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'destino_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'valor' => array('type' => 'float', 'null' => true, 'default' => NULL),
@@ -130,7 +131,6 @@ class AppSchema extends CakeSchema {
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1'),
-		'conta_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'destino_id' => array('column' => 'destino_id', 'unique' => 0), 'agendamento_id' => array('column' => 'agendamento_id', 'unique' => 0), 'usuario_id' => array('column' => 'usuario_id', 'unique' => 0)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
