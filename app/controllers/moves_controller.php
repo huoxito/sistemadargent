@@ -9,7 +9,16 @@ class MovesController extends AppController {
     function index(){
         
         $this->helpers[] = 'Time';
-        $this->set('moves', $this->paginate('Move'));
+        
+        $moves = $this->Move->find('all', 
+                        array('conditions' => 
+                                array('MONTH(Move.data)' => date('m'),
+                                      'YEAR(Move.data)' => date('Y'),
+                                      'Move.usuario_id' => $this->user_id),
+                              'order' => 'Move.data DESC'));
+
+        
+        $this->set('moves', $moves);
     }
     
     
@@ -35,7 +44,7 @@ class MovesController extends AppController {
             //if(1 == 1){
             if($this->Categoria->save($categoria, false)){
                 
-                echo 'Categoria ' . $categoria['Categoria']['nome'] . ' migrada <hr />';
+                echo 'Fonte ' . $categoria['Categoria']['nome'] . ' migrada para as categorias<hr />';
                 
                 $this->Ganho->Behaviors->detach('Modifiable');
                 $ganhos = $this->Ganho->find('all', 
@@ -46,7 +55,8 @@ class MovesController extends AppController {
                     $registro['Move'] = $ganho['Ganho']; 
                     $registro['Move']['categoria_id'] = $this->Categoria->id;
                     $registro['Move']['tipo'] = 'Faturamento';
-                    
+                    $registro['Move']['obs'] = $ganho['Ganho']['observacoes'];
+
                     if(!empty($ganho['Ganho']['datadabaixa'])){
                         $registro['Move']['data'] = $ganho['Ganho']['datadabaixa'];
                     }else{
@@ -82,7 +92,7 @@ class MovesController extends AppController {
             //if(1 == 1){
             if($this->Categoria->save($categoria, false)){
                 
-                echo 'Categoria ' . $categoria['Categoria']['nome'] . ' migrada <hr />';
+                echo 'Destino ' . $categoria['Categoria']['nome'] . ' migrada para as categorias<hr />';
                 
                 $this->Gasto->Behaviors->detach('Modifiable');
                 $gastos = $this->Gasto->find('all', 
@@ -93,7 +103,8 @@ class MovesController extends AppController {
                     $registro['Move'] = $gasto['Gasto']; 
                     $registro['Move']['categoria_id'] = $this->Categoria->id;
                     $registro['Move']['tipo'] = 'Despesa';
-                    
+                    $registro['Move']['obs'] = $gasto['Gasto']['observacoes'];
+
                     if(!empty($gasto['Gasto']['datadabaixa'])){
                         $registro['Move']['data'] = $gasto['Gasto']['datadabaixa'];
                     }else{
