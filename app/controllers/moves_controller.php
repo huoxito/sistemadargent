@@ -12,6 +12,32 @@ class MovesController extends AppController {
         $this->set('moves', $this->paginate('Move'));
     }
     
+    
+    function migracao(){
+        
+        $this->loadModel('Ganho'); 
+        $this->loadModel('Fonte'); 
+        $this->loadModel('Gasto'); 
+        $this->loadModel('Destino'); 
+        $this->loadModel('Categoria'); 
+        
+        $this->Ganho->Behaviors->detach('Modifiable');
+        $ganhos = $this->Ganho->find('all');
+        foreach($ganhos as $key => $item){
+            
+        }
+        
+        $this->Fonte->recursive = -1; 
+        $fontes = $this->Fonte->find('all');
+        debug($fontes);
+        foreach($fontes as $key => $item){
+            
+        }
+    
+        $this->autoRender = false;
+    }        
+
+
 
     function add(){
         
