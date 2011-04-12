@@ -16,6 +16,7 @@
         echo $this->Html->script('jquery.colorbox-min');
         echo $this->Html->script('jquery.ui.core');
         echo $this->Html->script('ui.datepicker');
+        echo $this->Html->script('forms');
 		echo $scripts_for_layout;
 	?>
     <?= $this->Html->script('jquery.maskMoney'); ?>
