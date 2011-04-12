@@ -7,7 +7,8 @@ class MovesController extends AppController {
     var $name = "Moves";
 
     function index(){
-
+        
+        $this->helpers[] = 'Time';
         $this->set('moves', $this->paginate('Move'));
     }
     

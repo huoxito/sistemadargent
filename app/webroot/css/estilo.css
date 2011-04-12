@@ -178,7 +178,7 @@ div.form, div.index, div.view {
 
 #menuLateral a {
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:13px;
+	font-size:12px;
 	color:#000;
 	text-decoration:none;
 	margin-left:5px;
@@ -568,9 +568,8 @@ div.form, div.index, div.view {
 	text-align: left;
 	min-height:20px;
 	padding:12px 0 10px 10px;
-	position:relative;
 	color: #555;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .borda-inferior {

@@ -98,5 +98,24 @@ class Move extends AppModel {
         }
     }
 
+    
+    function afterFind($results){
+        
+        foreach($results as $key => $result){
+        
+            if(isset($result['Move'])){ 
+
+                if($result['Move']['tipo'] == 'Despesa'){
+                     $results[$key]['Move']['tipo'] = '+';
+                     $results[$key]['Move']['color'] = 'positivo';
+                }else{
+                     $results[$key]['Move']['tipo'] = '-';
+                     $results[$key]['Move']['color'] = 'negativo';
+                }
+            }
+        } 
+        return $results;
+    }
+
 
 }
