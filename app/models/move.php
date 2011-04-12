@@ -31,13 +31,13 @@ class Move extends AppModel {
     var $validate = array(
         'tipo' => array(
             'rule' => array('inList', array('Faturamento', 'Despesa')),
-            'message' => 'Escolha o tipo',
+            'message' => 'Campo obrigatório',
             'required' => true
         ),
         'categoria_id' => array(
             'rule' => 'notEmpty',
             'required' => false,
-            'message' => 'Selecione uma categoria',
+            'message' => 'Campo obrigatório',
             'allowEmpty' => false,
         ),
         'conta_id' => array(
@@ -49,13 +49,13 @@ class Move extends AppModel {
         'valor' => array(
             'vazio' => array(
                 'rule' => 'notEmpty',
-                'message' => 'Digite um valor (Ex: 220,00)',
+                'message' => 'Insira um valor (Ex: 220,00)',
             ),
         ),
         'data' => array(
                 'rule' => array('date', 'dmy'),
                 'required' => false,
-                'message' => 'Digite uma data válida',
+                'message' => 'Insira uma data válida',
                 'allowEmpty' => false,
         ),
         'obs' => array(
@@ -81,7 +81,14 @@ class Move extends AppModel {
         $valor = $this->Behaviors->Modifiable->monetary($this, $input['Move']['valor']);
         $conditions = array('Conta.usuario_id' => $input['Move']['usuario_id'],
                             'Conta.id' => $input['Move']['conta_id']);
-        $values = array('saldo' => 'saldo+'.$valor);
+        
+        if($input['Move']['tipo'] == 'Faturamento'){
+            $sinal = '+';
+        }else{
+            $sinal = '-';
+        }
+        
+        $values = array('saldo' => 'saldo' . $sinal . $valor);
         if( $this->Conta->updateAll($values, $conditions) ){
             $datasource->commit($this);
             return true;

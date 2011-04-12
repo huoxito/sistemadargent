@@ -2,18 +2,8 @@
     <div class="moves form">
         
         <div id="contentHeader">
-            <h1>Movimentações</h1>
+            <h1>Cadastro de Movimentações</h1>
         </div>
-        
-        <div class="balancoBotoesWraper">
-            <div class="balancoBotoes">
-                <p>
-                    Cadastro de movimentações
-                </p>
-            </div>
-        </div>
-        
-        <?= $this->Session->flash(); ?>
         
         <div class="formWraper formBox">
                  
@@ -23,8 +13,8 @@
                                     
             <fieldset>
                                
-                <div class="input">
-                    <label>Tipo: </label>
+                <div class="input required">
+                    <label>Tipo</label>
                     <?php
                         $options = array('Faturamento'=> ' Faturamento ', 'Despesa'=>' Despesa ');
                         $attributes = array('legend'=> false,
@@ -32,25 +22,30 @@
                                             'label' => false);
                         echo $this->Form->radio('tipo',$options,$attributes);   
                     ?>
-                </div>
+                    <?php if (isset($this->validationErrors['Move']['tipo'])){ ?>
+                        <span class="error-message">
+                            <?= $this->validationErrors['Move']['tipo'] ?>
+                        </span>
+                    <?php } ?>
+            </div>
+            
+            <div id="categorias_">
+             
+                <?php if(!array_key_exists('Categoria',(array)$this->data)){ ?>
                 
-                <div id="categorias_">
-                 
-                    <?php if(!array_key_exists('Categoria',(array)$this->data)){ ?>
-                    
-                    <div id="selectCategoria" class="input text required">
-                        <?= $this->Form->input('categoria_id',
-                                            array('empty' => 'Escolha uma categoria',
-                                                  'div' => false,
-                                                  'error' => false)); ?>
-                        <a href="#" class="btnadd" title="inserir" id="insereInputCategorias">
-                            INSERIR NOVA CATEGORIA
-                        </a>
-                        <?php if (isset($this->validationErrors['Move']['categoria_id'])){ ?>
-                            <span class="error-message">
-                                <?= $this->validationErrors['Move']['categoria_id'] ?>
-                            </span>
-                        <?php } ?>
+                <div id="selectCategoria" class="input text required">
+                    <?= $this->Form->input('categoria_id',
+                                        array('empty' => 'Escolha uma categoria',
+                                              'div' => false,
+                                              'error' => false)); ?>
+                    <a href="#" class="btnadd" title="inserir" id="insereInputCategorias">
+                        INSERIR NOVA CATEGORIA
+                    </a>
+                    <?php if (isset($this->validationErrors['Move']['categoria_id'])){ ?>
+                        <span class="error-message">
+                            <?= $this->validationErrors['Move']['categoria_id'] ?>
+                        </span>
+                    <?php } ?>
                     </div>
                     
                     <?php }else{ ?>
@@ -61,7 +56,7 @@
                                                   'div' => false,
                                                   'error' => false)); ?>
                         <a href="#" title="selecionar" class="btnadd" id="insereSelectCategorias">
-                            SELECIONAR UMA Categoria
+                            SELECIONAR UMA CATEGORIA
                         </a>
                         <?php if (isset($this->validationErrors['Categoria']['nome'])){ ?>
                             <span class="error-message">

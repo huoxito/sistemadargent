@@ -43,16 +43,12 @@ class ModifiableBehavior extends ModelBehavior {
         
         foreach($this->settings[$model->alias]['fields'] as $fieldName) {
             
-              if ( $fieldName === 'nome' || $fieldName === 'observacoes' ){
+              if ( $fieldName === 'nome' || $fieldName === 'obs' ){
                   Sanitize::html(&$model->data[$model->alias][$fieldName],array('remove'=>true));
               }
               
-              if( isset($model->data[$model->alias]['datadabaixa']) && $fieldName === 'datadabaixa' ){
-                  $model->data[$model->alias]['datadabaixa'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadabaixa']);
-              }
-              
-              if( isset($model->data[$model->alias]['datadevencimento']) && $fieldName === 'datadevencimento' ){
-                  $model->data[$model->alias]['datadevencimento'] = $this->converteParaMySQL($model, $model->data[$model->alias]['datadevencimento']);
+              if( isset($model->data[$model->alias]['data']) && $fieldName === 'data' ){
+                  $model->data[$model->alias]['data'] = $this->converteParaMySQL($model, $model->data[$model->alias]['data']);
               }
         }
         

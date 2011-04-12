@@ -66,15 +66,16 @@ $(document).ready(function () {
             $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
         }
     }
-
+    
+    $('#MoveData').datepicker({ maxDate: 'd-m-y' });
+    $('#MoveData').datepicker('setDate', new Date()); 
+    
     var insereSelectCategorias = function(){
         $.ajax({
             url: '/moves/insereSelect',
             beforeSend: function(){
                 $('#inputCategoria img').detach();
-                $('#inputCategoria').append(' <img src="/img/ajax-loader-p.gif" />');
-            },
-            success: function(result){
+                $('#inputCategoria').append(' <img src="/img/ajax-loader-p.gif" />'); }, success: function(result){
                 $('#inputCategoria').fadeOut('fast',function(){
                     $('#inputCategoria').remove();
                     $('#categorias_').prepend(result);

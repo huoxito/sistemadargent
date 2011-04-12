@@ -33,14 +33,13 @@ class MovesController extends AppController {
                 }
                 
             }else{
-                
                 $errors = $this->validateErrors($this->Move->Categoria,$this->Move);
-                $this->Session->setFlash('Preencha os campos obrigatórios corretamente.', 'flash_error');
             }    
         }
        
         $categorias = $this->Move->Categoria->listar($this->user_id);
         $this->set(compact('categorias'));
+        
         $contas = $this->Move->Conta->listar($this->user_id);
         $this->set(compact('contas'));
     }
