@@ -105,7 +105,7 @@ class Move extends AppModel {
         
             if(isset($result['Move'])){ 
 
-                if($result['Move']['tipo'] == 'Despesa'){
+                if($result['Move']['tipo'] == 'Faturamento'){
                      $results[$key]['Move']['tipo'] = '+';
                      $results[$key]['Move']['color'] = 'positivo';
                 }else{
