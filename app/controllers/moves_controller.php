@@ -5,7 +5,7 @@ class MovesController extends AppController {
 
 
     var $name = "Moves";
-    var $components = array('Data');
+    var $components = array('Data', 'Valor');
 
     function index(){
         
@@ -38,7 +38,24 @@ class MovesController extends AppController {
                                       'YEAR(Move.data)' => $ano,
                                       'Move.usuario_id' => $this->user_id),
                               'order' => 'Move.data DESC'));
+        $this->set('numero', count($moves));
         $this->set('moves', $moves);
+        
+        $despesas = $this->Move->despesasNoMes($mes, $ano, $this->user_id);
+        $faturamentos = $this->Move->faturamentosNoMes($mes, $ano, $this->user_id);
+        $saldo = $faturamentos - $despesas;
+        
+        $this->set('despesas', $this->Valor->formata($despesas,'humano'));
+        $this->set('faturamentos', $this->Valor->formata($faturamentos, 'humano'));
+        $this->set('saldo', $this->Valor->formata($saldo, 'humano'));
+        
+        if($saldo > 0){
+            $class = "positivo";
+        }else{
+            $class = "negativo";
+        }
+        $this->set('classSaldo', $class);
+
         $this->layout = 'ajax';
     }
     

@@ -117,5 +117,45 @@ class Move extends AppModel {
         return $results;
     }
 
+    
+    function despesasNoMes($mes, $ano, $user_id){
+        
+        $despesas = Cache::read('despesas_'.$mes.'_'.$ano.'_'.$user_id);
+        if($despesas !== false){
+            return $despesas;
+        }
+         
+        $result = $this->find('all',
+                        array('fields' => array('SUM(Move.valor) AS total'),
+                              'conditions' =>
+                                array('Move.status' => 1,
+                                      'Move.usuario_id' => $user_id,
+                                      'Move.tipo' => 'Despesa',
+                                      'MONTH(Move.data)' => $mes,
+                                      'YEAR(Move.data)' => $ano)));        
+        $despesas = $result[0][0]['total'];
+        Cache::write('despesas_'.$mes.'_'.$ano.'_'.$user_id, $despesas);
+        return $despesas; 
+    }
+    
+    function faturamentosNoMes($mes, $ano, $user_id){
+        
+        $faturamentos = Cache::read('faturamentos_'.$mes.'_'.$ano.'_'.$user_id);
+        if($faturamentos  !== false){
+            return $faturamentos;
+        }
+         
+        $result = $this->find('all',
+                        array('fields' => array('SUM(Move.valor) AS total'),
+                              'conditions' =>
+                                array('Move.status' => 1,
+                                      'Move.usuario_id' => $user_id,
+                                      'Move.tipo' => 'Faturamento',
+                                      'MONTH(Move.data)' => $mes,
+                                      'YEAR(Move.data)' => $ano)));        
+        $faturamentos = $result[0][0]['total'];
+        Cache::write('faturamentos_'.$mes.'_'.$ano.'_'.$user_id, $faturamentos);
+        return $faturamentos; 
+    }
 
 }

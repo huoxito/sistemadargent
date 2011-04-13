@@ -1,5 +1,8 @@
 
-            <p class="saldoGeral">
+            <p class="info-tabela">
+                Despesas <span class="negativo">R$ <?= $despesas ?></span>
+                Faturamentos R$ <span class="positivo"><?= $faturamentos ?></span> 
+                Saldo R$ <span class="<?= $classSaldo ?>"><?= $saldo ?></span>
             </p>
              
             <table cellpadding="0" cellspacing="0" class="tabelaListagem">
@@ -41,3 +44,4 @@
                 </tr>
                 <?php endforeach; ?>
             </table>
+            <?= $this->element('sql_dump'); ?>
