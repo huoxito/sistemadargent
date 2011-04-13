@@ -16,8 +16,6 @@ class MovesController extends AppController {
                                       'YEAR(Move.data)' => date('Y'),
                                       'Move.usuario_id' => $this->user_id),
                               'order' => 'Move.data DESC'));
-
-        
         $this->set('moves', $moves);
     }
     
@@ -41,7 +39,6 @@ class MovesController extends AppController {
             $categoria['Categoria'] = $fonte['Fonte'];
             
             $this->Categoria->create();
-            //if(1 == 1){
             if($this->Categoria->save($categoria, false)){
                 
                 echo 'Fonte ' . $categoria['Categoria']['nome'] . ' migrada para as categorias<hr />';
@@ -65,7 +62,6 @@ class MovesController extends AppController {
                     
                      
                     $this->Move->create(); 
-                    //if(1 == 1){
                     if($this->Move->save($registro, false)){
                         echo 'Ganho migrado com sucesso.<hr />';        
                     }else{
@@ -89,7 +85,6 @@ class MovesController extends AppController {
             $categoria['Categoria'] = $destino['Destino'];
             
             $this->Categoria->create();
-            //if(1 == 1){
             if($this->Categoria->save($categoria, false)){
                 
                 echo 'Destino ' . $categoria['Categoria']['nome'] . ' migrada para as categorias<hr />';
@@ -112,7 +107,6 @@ class MovesController extends AppController {
                     }
 
                     $this->Move->create(); 
-                    //if(1 == 1){
                     if($this->Move->save($registro, false)){
                         echo 'Gasto migrado com sucesso.<hr />';        
                     }else{
