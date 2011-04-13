@@ -21,9 +21,9 @@
                 
                 <div class="titulos">
                     <h2>
-                        <a href="#" class="prev-month" title="anterior" id="03-2011"><img src="/img/previous.png" alt="anterior" /></a>  
+                        <a href="#" class="prev-month" title="anterior" id="<?= $anterior ?>"><img src="/img/previous.png" alt="anterior" /></a>  
                         <span id="mes-movimentacoes"><?= $mes ?></span>
-                        <a href="#" title="próximo" class="next-month" id="05-2011"><img src="/img/next.png" alt="próximo" /></a>  
+                        <a href="#" title="próximo" class="next-month" id="<?= $proximo ?>"><img src="/img/next.png" alt="próximo" /></a>  
                     </h2>
                 </div>
                 
@@ -34,9 +34,7 @@
         <?php   echo $this->Session->flash(); ?>
         
         <div id="table-wrapper">
-        
-            
-        
+            <!-- conteudo carregado com ajax -->        
         </div>
         
     </div>
