@@ -107,6 +107,40 @@ $(document).ready(function () {
     $('#insereSelectCategorias').live('click', insereSelectCategorias);
     $('#insereInputCategorias').live('click', insereInputCategorias);
     
+    var m_names = new Array("Janeiro", "Fevereiro", "Março", 
+        "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", 
+        "Outubro", "Novembro", "Dezembro"
+    );
     
+    function padLeft(nr, n, str){
+        return Array(n-String(nr).length+1).join(str||'0')+nr;
+    }
+
+    $('.next-month, .prev-month').click(function(){
+        
+        var next = $(this).attr('id');  
+        var dataobj = next.split('-');        
+        var mes = dataobj[0];
+        var ano = dataobj[1];
+
+        if(mes <= 9 && mes.length > 1){
+            mes = mes.substr(1);
+        }
+        
+        mes = parseInt(mes);
+
+        var d = new Date(ano, mes);
+        var proximo = padLeft(d.getMonth()+1,2)+'-'+d.getFullYear(); 
+
+        d.setFullYear(ano, mes-2);
+        var anterior = padLeft(d.getMonth()+1,2)+'-'+d.getFullYear(); 
+
+        $('.next-month').attr('id', proximo);
+        $('.prev-month').attr('id', anterior);
+        $('#mes-movimentacoes').html(m_names[mes-1]+'<br />'+ano);
+        
+        return false;
+    });
+     
 });  
     // ]]>

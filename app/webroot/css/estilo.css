@@ -5,7 +5,7 @@ http://developer.yahoo.com/yui/license.html
 version: 3.2.0
 build: 2676
 */
-html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
 
 *
 {
@@ -476,9 +476,22 @@ div.form, div.index, div.view {
 .titulos {
 	float:left;
 	width:112px;
-	height:24px;
-	text-align:center;
 	border-right:1px solid #d7f4b1;
+}
+
+.titulos span {
+    float: left;
+    text-align: center;
+    display: block;
+    width: 150px;
+}
+
+.titulos .prev-month {
+    float: left;
+}
+
+.titulos .next-month {
+    float: right;
 }
 
 .titulos h2 {
@@ -486,16 +499,9 @@ div.form, div.index, div.view {
 	font-size:13px;
 	color:#3c6800;
 	margin:0;
+    text-transform: uppercase;
+    width: 215px;
 	font-weight: bold;
-}
-
-.titulos span {
-	display: block;
-	font-weight: normal;
-	font-family:Myriad Pro;
-	font-size:9px;
-	margin:0 20px 0 0;
-	text-align:right;
 }
 
 #mesesRelatorio li{
@@ -1028,13 +1034,13 @@ table {
 	color: #333;
 	margin-bottom: 10px;
 	width: 100%;
-	font-size:14px;
 }
 th {
 	border:0;
 	border-bottom:2px solid #555;
-	text-align: left;
 	padding:4px;
+    font-size: 12px;
+    font-weight: bold;
 }
 th a {
 	display: block;
@@ -1075,7 +1081,6 @@ table tr td {
 }
 
 .tabelaListagem {
-    border-top: 1px solid #E9E9E9;
 }
 
 .tabelaListagem tr {
@@ -1091,7 +1096,7 @@ table tr td {
 }
 
 .tabelaListagem td, .tabelaListagem th {
-	padding: 10px;
+	padding: 10px 10px 5px;
     border: none;
 }
 

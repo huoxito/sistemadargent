@@ -20,7 +20,11 @@
             <div id="relatorioRapido">
                 
                 <div class="titulos">
-                    <h2>Relatórios <span>RÁPIDOS</span> </h2>
+                    <h2>
+                        <a href="#" class="prev-month" title="anterior" id="03-2011"><img src="/img/previous.png" alt="anterior" /></a>  
+                        <span id="mes-movimentacoes">ABRIL</span>
+                        <a href="#" title="próximo" class="next-month" id="05-2011"><img src="/img/next.png" alt="próximo" /></a>  
+                    </h2>
                 </div>
                 
             </div>
@@ -35,12 +39,20 @@
             </p>
              
             <table cellpadding="0" cellspacing="0" class="tabelaListagem">
+                <tr>
+                    <th align="center">Data</th>
+                    <th align="left">Tipo</th>
+                    <th align="left">Valor</th>
+                    <th align="left">Categoria</th>
+                    <th align="left">Obs.</th>
+                    <th align="center">Ações</th>
+                </tr>
                 <?php foreach ($moves as $move): ?>
                 <tr id="moveId<?= $move['Move']['id'];?>" class="registros">
-                    <td width="80">
+                    <td align="center" width="80">
                         <?= $this->Time->format('d-m-Y', $move['Move']['data']); ?>
                     </td>
-                    <td width="20" class="<?= $move['Move']['color']; ?>">
+                    <td align="center" width="20" class="<?= $move['Move']['color']; ?>">
                         <b><?= $move['Move']['tipo']; ?></b>
                     </td>
                     <td class="<?= $move['Move']['color']; ?>" width="100">
