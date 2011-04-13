@@ -5,21 +5,38 @@ class MovesController extends AppController {
 
 
     var $name = "Moves";
+    var $components = array('Data');
 
     function index(){
         
         $this->helpers[] = 'Time';
         
-        $moves = $this->Move->find('all', 
-                        array('conditions' => 
-                                array('MONTH(Move.data)' => date('m'),
-                                      'YEAR(Move.data)' => date('Y'),
-                                      'Move.usuario_id' => $this->user_id),
-                              'order' => 'Move.data DESC'));
-        $this->set('moves', $moves);
+        $mes = $this->Data->retornaNomeDoMes((int)date('m')) . '<br />' . date('Y');
+        $this->set('mes', $mes); 
     }
     
     
+    function dados(){
+        
+        $mes = $this->params['url']['mes'];
+        $ano = $this->params['url']['ano'];
+        
+        if(!@checkdate($mes,1,$ano)){
+            $mes = date('m');
+            $ano = date('Y');
+        }
+
+        $moves = $this->Move->find('all', 
+                        array('conditions' => 
+                                array('MONTH(Move.data)' => $mes,
+                                      'YEAR(Move.data)' => $ano,
+                                      'Move.usuario_id' => $this->user_id),
+                              'order' => 'Move.data DESC'));
+        $this->set('moves', $moves);
+        $this->layout = 'ajax';
+    }
+    
+     
     function migracao(){
         
         $this->loadModel('Ganho'); 

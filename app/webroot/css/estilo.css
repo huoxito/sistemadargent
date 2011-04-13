@@ -1075,9 +1075,14 @@ table tr td {
     color: #E3290D;
 }
 
-.tableWraper {
-    padding: 20px;
+#table-wrapper {
+    padding: 20px 10px;
     background-color: #FFF;
+}
+
+#table-wrapper #loading {
+    margin: 100px 0 100px 150px;
+    text-align: center;
 }
 
 .tabelaListagem {

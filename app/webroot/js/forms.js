@@ -1,7 +1,13 @@
                 
 // <![CDATA[
 $(document).ready(function () {
-        
+    
+    $(".registros").mouseover(function() {
+        $(this).css("background-color",'#F2FFE3');
+    }).mouseout(function(){
+        $(this).css("background-color",'#FFF');
+    });
+    
     $('#ContaSaldo').maskMoney({
         allowNegative: true,
         decimal: ',',
@@ -139,8 +145,29 @@ $(document).ready(function () {
         $('.prev-month').attr('id', anterior);
         $('#mes-movimentacoes').html(m_names[mes-1]+'<br />'+ano);
         
+        movimentacoes(mes, ano);
+         
         return false;
     });
+    
+    function movimentacoes(mes, ano){
+
+        $.ajax({
+            
+            url: '/moves/dados', 
+            data: ({ mes: mes, ano: ano }),
+            beforeSend: function(){
+                $('#table-wrapper').html('<img src="/img/loading.gif" alt="... carregando dados ..." id="loading" />');
+            },
+            success: function(result){
+                
+                $('#table-wrapper img').detach();
+                $('#table-wrapper').html(result);
+            }
+        });
+    }
+    
+    movimentacoes(null, null);
      
 });  
     // ]]>
