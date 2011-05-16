@@ -50,31 +50,22 @@ $(document).ready(function () {
         
     
 
-    $('#AgendamentoConfig0').click(function() {           
+    $('#MoveConfig0').click(function() {           
         if($(this).is(':checked'))  {
-            $('#AgendamentoFrequenciaId').attr('disabled','disabled');
-            $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
+            $('#frequencia-a').attr('disabled','disabled');
+            $('#numparcelas').attr('disabled','disabled');
         }else{
             
         } 
     });
     
-    $('#AgendamentoConfig1').click(function() {           
+    $('#MoveConfig1').click(function() {           
         if($(this).is(':checked'))  {
-            $('#AgendamentoFrequenciaId').removeAttr('disabled');
-            $('#AgendamentoNumdeparcelas').removeAttr('disabled');
+            $('#frequencia-a').removeAttr('disabled');
+            $('#numparcelas').removeAttr('disabled');
         } 
     });
     
-    function disableOrNotInputs(value){
-        if(value == 0){
-            $('#AgendamentoFrequenciaId').attr('disabled','disabled');
-            $('#AgendamentoNumdeparcelas').attr('disabled','disabled');
-        }
-    }
-    
-    $('#MoveData').datepicker({ maxDate: 'd-m-y' });
-    $('#MoveData').datepicker('setDate', new Date()); 
     
     var insereSelectCategorias = function(){
         $.ajax({
@@ -150,6 +141,10 @@ $(document).ready(function () {
         return false;
     });
     
+    
+    
+});  
+    
     function movimentacoes(mes, ano){
 
         $.ajax({
@@ -167,6 +162,11 @@ $(document).ready(function () {
         });
     }
     
-     
-});  
-    // ]]>
+    function disableOrNotInputs(value){
+        if(value == 0){
+            $('#frequencia-a').attr('disabled','disabled');
+            $('#numparcelas').attr('disabled','disabled');
+        }
+    }
+
+// ]]>

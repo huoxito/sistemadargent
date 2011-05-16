@@ -192,7 +192,11 @@ class MovesController extends AppController {
                 $errors = $this->validateErrors($this->Move->Categoria,$this->Move);
             }    
         }
-       
+        
+        if(!isset($this->data['Move']['config'])){
+            $this->data['Move']['config'] = 0;
+        }
+         
         $categorias = $this->Move->Categoria->listar($this->user_id);
         $this->set(compact('categorias'));
         

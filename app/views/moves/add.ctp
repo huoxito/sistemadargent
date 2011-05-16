@@ -1,4 +1,3 @@
- 
     <div class="moves form">
         
         <div id="contentHeader">
@@ -78,7 +77,7 @@
                 
                 <div class="input">
                 <?php
-                    $options = array('0'=>' Apenas um registro ', '1'=>' Parcelar ',);
+                    $options = array('0'=>' Apenas um registro ', '1'=>' Parcelar ');
                     $attributes = array('legend'=> false,
                                         'class' => 'config',
                                         'label' => false,
@@ -91,13 +90,15 @@
                     <?= $this->Form->input('frequencia_id',
                                             array('label' => 'Frequência',
                                                   'empty' => 'Frequência',
-                                                  'div' => false)); ?>
+                                                  'div' => false,
+                                                  'id' => 'frequencia-a')); ?>
                 </div>
                 
                 <div class="leftInput">    
                     <?= $this->Form->input('numdeparcelas',
                                             array('label' => 'Número de parcelas',
-                                                  'div' => false)); ?>
+                                                  'div' => false,
+                                                  'id' => 'numparcelas')); ?>
                 </div>
 
                 <div class="submit">
@@ -112,6 +113,9 @@
 
     </div>
     
-    <script type="text/javascript">  
-        disableOrNotInputs($(':radio:checked').val());
-    </script>
+<script type="text/javascript">  
+    disableOrNotInputs($('input:radio:checked').val());
+</script>
+
+
+
