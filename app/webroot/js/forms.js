@@ -167,7 +167,6 @@ $(document).ready(function () {
         });
     }
     
-    movimentacoes(null, null);
      
 });  
     // ]]>

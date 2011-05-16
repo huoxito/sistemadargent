@@ -76,6 +76,30 @@
                 <?= $this->Form->input('obs',
                                         array('label' => 'Observações')); ?>
                 
+                <div class="input">
+                <?php
+                    $options = array('0'=>' Apenas um registro ', '1'=>' Parcelar ',);
+                    $attributes = array('legend'=> false,
+                                        'class' => 'config',
+                                        'label' => false,
+                                        'onchange' => 'disableOrNotInputs(this.value);');
+                    echo $this->Form->radio('config',$options,$attributes);   
+                ?>
+                </div>
+                
+                <div class="leftInput">
+                    <?= $this->Form->input('frequencia_id',
+                                            array('label' => 'Frequência',
+                                                  'empty' => 'Frequência',
+                                                  'div' => false)); ?>
+                </div>
+                
+                <div class="leftInput">    
+                    <?= $this->Form->input('numdeparcelas',
+                                            array('label' => 'Número de parcelas',
+                                                  'div' => false)); ?>
+                </div>
+
                 <div class="submit">
                     <input type="submit" value="Inserir">
                     <?php echo $this->Form->checkbox('keepon'); ?>
@@ -88,3 +112,6 @@
 
     </div>
     
+    <script type="text/javascript">  
+        disableOrNotInputs($(':radio:checked').val());
+    </script>
