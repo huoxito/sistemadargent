@@ -23,25 +23,10 @@
             <?= $this->Html->image('moedas.jpg',
                                     array('width' => '24',
                                           'height' => '18'));   ?>
-            <?= $this->Html->link(__('Faturamentos', true), array('controller' => 'ganhos', 'action' => 'index')); ?>
+            <?= $this->Html->link(__('Movimentações', true), array('controller' => 'moves', 'action' => 'index')); ?>
         </li>
         <li class="subitem">
-            <?= $this->Html->link(__('Fontes', true), array('controller' => 'fontes', 'action' => 'index')); ?>
-        </li>
-        <li style="border-bottom:none;">
-            <?= $this->Html->image('despesas.jpg',
-                                    array('width' => '24',
-                                          'height' => '18'));   ?>
-            <?= $this->Html->link(__('Despesas', true), array('controller' => 'gastos', 'action' => 'index')); ?>
-        </li>
-        <li class="subitem">
-            <?= $this->Html->link(__('Destinos', true), array('controller' => 'destinos', 'action' => 'index')); ?>
-        </li>
-        <li>
-            <?= $this->Html->image('calendario.jpg',
-                                    array('width' => '20',
-                                          'height' => '19'));   ?>
-            <?= $this->Html->link(__('Agendamentos', true), array('controller' => 'agendamentos', 'action' => 'index')); ?>
+            <?= $this->Html->link(__('Categorias', true), array('controller' => 'categorias', 'action' => 'index')); ?>
         </li>
         <li>
             <?= $this->Html->image('contas.png',
