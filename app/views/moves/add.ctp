@@ -71,7 +71,9 @@
                 <?= $this->Form->input('conta_id'); ?>
                 <?= $this->Form->input('valor',
                                     array('id' => 'valorMask'));  ?>
-                <?= $this->Form->input('data', array('type' => 'text'));  ?>
+                <?= $this->Form->input('data', 
+                                    array('type' => 'text',
+                                          'id' => 'data-calendario'));  ?>
                 <?= $this->Form->input('obs',
                                         array('label' => 'Observações')); ?>
                 

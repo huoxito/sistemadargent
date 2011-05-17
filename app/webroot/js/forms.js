@@ -40,16 +40,12 @@ $(document).ready(function () {
         monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
         dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']});
     
-    $('.dataField').datepicker({
-                maxDate: 'd-m-y'
-            });
-    
-    $('.dateFieldAhead').datepicker({
-                minDate: 'd-m-y'
-            });
-        
-    
+    $('#data-calendario').datepicker({
+        maxDate: 'd-m-y',
+    });
 
+    $('#data-calendario').datepicker('setDate', new Date());
+    
     $('#MoveConfig0').click(function() {           
         if($(this).is(':checked'))  {
             $('#frequencia-a').attr('disabled','disabled');
