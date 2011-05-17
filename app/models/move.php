@@ -69,15 +69,30 @@ class Move extends AppModel {
 
     function adicionar($input){
         
+        $data_atual = date('d-m-Y');
+        // true se data for maior que a atual
+        $baixa = $this->comparaDatas($input['Move']['data'], $data_atual);
+
         $datasource = $this->getDataSource();
         $datasource->begin($this);
         
+        if($baixa){
+            $input['Move']['status'] = 0;
+        }else{
+            $input['Move']['status'] = 1;
+        }
+
         $this->create();
         if ( !$this->saveAll($input, array('atomic' => false)) ) {
             $datasource->rollback($this);
             return false;
         }
         
+        if($baixa){
+            $datasource->commit($this);
+            return true;
+        }
+          
         $valor = $this->Behaviors->Modifiable->monetary($this, $input['Move']['valor']);
         $conditions = array('Conta.usuario_id' => $input['Move']['usuario_id'],
                             'Conta.id' => $input['Move']['conta_id']);
@@ -88,7 +103,11 @@ class Move extends AppModel {
             $sinal = '-';
         }
         
-        $values = array('saldo' => 'saldo' . $sinal . $valor);
+        $values = array(
+            'saldo' => 'saldo' . $sinal . $valor,
+            'modified' => '"'.date('Y-m-d H:i:s').'"'
+        );
+
         if( $this->Conta->updateAll($values, $conditions) ){
             $datasource->commit($this);
             return true;
@@ -156,6 +175,27 @@ class Move extends AppModel {
         $faturamentos = $result[0][0]['total'];
         Cache::write('faturamentos_'.$mes.'_'.$ano.'_'.$user_id, $faturamentos);
         return $faturamentos; 
+    }
+    
+
+
+    # nosso formato , retorno false se data2 for maior que data1
+    function comparaDatas($data1, $data2)																
+	{																									
+		
+        list($dia1,$mes1,$ano1) = explode('-',$data1);																	
+		list($dia2,$mes2,$ano2) = explode('-',$data2);																			
+		
+        $timestamp1 = mktime(0,0,0,$mes1,$dia1,$ano1);					
+		$timestamp2 = mktime(0,0,0,$mes2,$dia2,$ano2);									
+		
+        if ($timestamp1 === $timestamp2){																	
+            return true;																				
+        }else if($timestamp1 > $timestamp2){			
+            return true;	
+        }else{
+            return false;	
+        }
     }
 
 }

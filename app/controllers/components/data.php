@@ -148,24 +148,7 @@ class DataComponent extends Object {
         return $dataFormatada;
 	}
     
-    # nosso formato , retorno false se data2 for maior que data1
-    function comparaDatas($data1, $data2)																
-	{																									
-		
-        list($dia1,$mes1,$ano1) = explode('-',$data1);																	
-		list($dia2,$mes2,$ano2) = explode('-',$data2);																			
-		
-        $timestamp1 = mktime(0,0,0,$mes1,$dia1,$ano1);					
-		$timestamp2 = mktime(0,0,0,$mes2,$dia2,$ano2);									
-		
-        if ($timestamp1 === $timestamp2){																	
-            return true;																				
-        }else if($timestamp1 > $timestamp2){			
-            return true;	
-        }else{
-            return false;	
-        }
-    }
+    
     
 }
 

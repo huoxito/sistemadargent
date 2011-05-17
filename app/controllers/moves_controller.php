@@ -181,6 +181,10 @@ class MovesController extends AppController {
             $this->data['Move']['usuario_id'] = $this->user_id;
             if ( $this->Move->adicionar($this->data) ) {
                 
+                if( isset($this->data['Categoria']['nome']) ){
+                    //$this->data['Move']['categoria_id'] = $this->Move->$_Categoria->id;
+                }
+                                
                 $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 if(!$this->data['Move']['keepon']){
                     $this->redirect(array('action'=>'index'));  
@@ -204,6 +208,60 @@ class MovesController extends AppController {
         $this->set(compact('contas'));
     }
     
+    function _agendarParcelas($id,$registro){
+        
+        if ( !isset($id) || !isset($registro)){
+                $this->cakeError('error404');
+        }
+        
+        list($dia,$mes,$ano) = explode('-',$registro['Move']['data']);              
+        
+        for($i=0; $i < $registro['Move']['numdeparcelas']; $i++){
+            
+            if( $dia > $this->Data->retornaUltimoDiaDoMes($mes,$ano) ){
+                $dia = $this->Data->retornaUltimoDiaDoMes($mes,$ano);  
+            }else{
+                $dia = $dia;
+            }
+            
+            $dataDeEntrada = date('d-m-Y', mktime(0,0,0,$mes,$dia,$ano));
+            
+            if ( $registro['Move']['frequencia_id'] == 1 ){
+                $mes = $mes + 1;
+            }elseif ( $registro['Move']['frequencia_id'] == 2 ){
+                $mes = $mes + 2;       
+            }elseif ( $registro['Move']['frequencia_id'] == 3 ){
+                $mes = $mes + 3;
+            }elseif ( $registro['Move']['frequencia_id'] == 6 ){
+                $mes = $mes + 6;
+            }elseif ( $registro['Move']['frequencia_id'] == 12 ){
+                $mes = $mes + 12;   
+            }else{
+                $this->Session->setFlash(__('Frequência desconhecida', true));
+                $this->redirect(array('action' => 'index'));
+            }
+
+            $registro['Move'] = array('usuario_id' => $this->Auth->user('id'),
+                                       'Move_id' => $id,
+                                       $_parentKey => $registro['Move'][$_parentKey],
+                                       'conta_id' => $registro['Move']['conta_id'],
+                                       'valor' => $registro['Move']['valor'],
+                                       'datadevencimento' => $dataDeEntrada,
+                                       'observacoes' => $registro['Move']['observacoes'],
+                                       'status' => 0);
+            
+            $this->Move->create();  
+            if($this->Move->save($registro, true)){
+                //yeah !!!
+            }else{
+                $error = $this->validateErrors($this->$_Model);
+                $this->log($error,'erro no parcelamento');
+                $this->Session->setFlash('Ocorreu um erro inesperado, por favor informe o administrador', 'flash_error');
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+    }
+     
     function insereInput(){
         $this->layout = 'ajax';
     }

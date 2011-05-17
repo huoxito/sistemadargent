@@ -41,7 +41,6 @@ $(document).ready(function () {
         dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']});
     
     $('#data-calendario').datepicker({
-        maxDate: 'd-m-y',
     });
 
     $('#data-calendario').datepicker('setDate', new Date());
