@@ -70,13 +70,13 @@ class Move extends AppModel {
     function adicionar($input){
         
         $data_atual = date('d-m-Y');
-        // true se data for maior que a atual
-        $baixa = $this->comparaDatas($input['Move']['data'], $data_atual);
+        // false se data for maior que a atual
+        $dar_baixa = $this->comparaDatas($input['Move']['data'], $data_atual);
 
         $datasource = $this->getDataSource();
         $datasource->begin($this);
         
-        if($baixa){
+        if(!$dar_baixa){
             $input['Move']['status'] = 0;
         }else{
             $input['Move']['status'] = 1;
@@ -88,33 +88,84 @@ class Move extends AppModel {
             return false;
         }
         
-        if($baixa){
-            $datasource->commit($this);
-            return true;
+        $parent_key = $this->id;
+        if( isset($input['Categoria']['nome']) ){
+            $input['Move']['categoria_id'] = $this->Categoria->id;
         }
-          
-        $valor = $this->Behaviors->Modifiable->monetary($this, $input['Move']['valor']);
-        $conditions = array('Conta.usuario_id' => $input['Move']['usuario_id'],
-                            'Conta.id' => $input['Move']['conta_id']);
-        
-        if($input['Move']['tipo'] == 'Faturamento'){
-            $sinal = '+';
-        }else{
-            $sinal = '-';
-        }
-        
-        $values = array(
-            'saldo' => 'saldo' . $sinal . $valor,
-            'modified' => '"'.date('Y-m-d H:i:s').'"'
-        );
+         
+        if($dar_baixa){
+            
+            $valor = $this->Behaviors->Modifiable->monetary($this, $input['Move']['valor']);
+            $conditions = array('Conta.usuario_id' => $input['Move']['usuario_id'],
+                                'Conta.id' => $input['Move']['conta_id']);
+            
+            if($input['Move']['tipo'] == 'Faturamento'){
+                $sinal = '+';
+            }else{
+                $sinal = '-';
+            }
+            
+            $values = array(
+                'saldo' => 'saldo' . $sinal . $valor,
+                'modified' => '"'.date('Y-m-d H:i:s').'"'
+            );
 
-        if( $this->Conta->updateAll($values, $conditions) ){
-            $datasource->commit($this);
-            return true;
-        }else{
-            $datasource->rollback($this);
-            return false;
+            if( !$this->Conta->updateAll($values, $conditions) ){
+                $datasource->rollback($this);
+                return false;
+            }        
         }
+
+        if($input['Move']['config']){
+            
+            list($dia,$mes,$ano) = explode('-',$input['Move']['data']);              
+            $frequencia = $input['Move']['frequencia'];
+             
+            for($i=0; $i < $input['Move']['numdeparcelas']; $i++){
+                
+                if ( $frequencia == 'mensal' ){
+                    $mes = $mes + 1;
+                }elseif ( $frequencia == 'bimestral' ){
+                    $mes = $mes + 2;       
+                }elseif ( $frequencia == 'trimestral' ){
+                    $mes = $mes + 3;
+                }elseif ( $frequencia == 'semestral' ){
+                    $mes = $mes + 6;
+                }elseif ( $frequencia == 'anual' ){
+                    $mes = $mes + 12;     
+                }else{
+                    $datasource->rollback($this);
+                    return false;
+                }
+                
+                $ultimoDiaDoMes = date('d', mktime(0, 0, 0, $mes+1, 0, $ano)); 
+                 
+                if( $dia > $ultimoDiaDoMes ){
+                    $dia = $ultimoDiaDoMes;  
+                }else{
+                    $dia = $dia;
+                }
+                
+                $dataDeEntrada = date('d-m-Y', mktime(0,0,0,$mes,$dia,$ano));
+                
+                $proximos = array(
+                    'status' => 0,
+                    'data' => $dataDeEntrada,
+                    'parent_key' => $parent_key
+                );
+                
+                $input['Move'] = array_merge($input['Move'], $proximos);
+                 
+                $this->create();  
+                if(!$this->save($input, true)){
+                    $datasource->rollback($this);
+                    return false;
+                }
+            }
+        }
+    
+        $datasource->commit($this);
+        return true;
     }
 
     
@@ -179,7 +230,7 @@ class Move extends AppModel {
     
 
 
-    # nosso formato , retorno false se data2 for maior que data1
+    # nosso formato , retorno false se data1 for maior que data2
     function comparaDatas($data1, $data2)																
 	{																									
 		
@@ -192,9 +243,9 @@ class Move extends AppModel {
         if ($timestamp1 === $timestamp2){																	
             return true;																				
         }else if($timestamp1 > $timestamp2){			
-            return true;	
-        }else{
             return false;	
+        }else{
+            return true;	
         }
     }
 

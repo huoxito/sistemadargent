@@ -89,11 +89,14 @@
                 </div>
                 
                 <div class="leftInput">
-                    <?= $this->Form->input('frequencia_id',
-                                            array('label' => 'Frequência',
-                                                  'empty' => 'Frequência',
-                                                  'div' => false,
-                                                  'id' => 'frequencia-a')); ?>
+                    <?php
+                         $options = array(
+                            'mensal' => 'mensal', 'bimestral' => 'bimestral', 'trimestral' => 'trimestral',
+                            'semestral' => 'semestral', 'anual' => 'anual'
+                         );
+                         echo $this->Form->select('frequencia', $options, null, 
+                                                array('empty' => false, 'id' => 'frequencia-a'));
+                    ?>
                 </div>
                 
                 <div class="leftInput">    

@@ -180,10 +180,6 @@ class MovesController extends AppController {
 
             $this->data['Move']['usuario_id'] = $this->user_id;
             if ( $this->Move->adicionar($this->data) ) {
-                
-                if( isset($this->data['Categoria']['nome']) ){
-                    //$this->data['Move']['categoria_id'] = $this->Move->$_Categoria->id;
-                }
                                 
                 $this->Session->setFlash('Registro salvo com sucesso!','flash_success');
                 if(!$this->data['Move']['keepon']){
@@ -193,6 +189,7 @@ class MovesController extends AppController {
                 }
                 
             }else{
+                $this->Session->setFlash('Confira os dados que você inseriu novamente','flash_error');
                 $errors = $this->validateErrors($this->Move->Categoria,$this->Move);
             }    
         }
