@@ -20,7 +20,7 @@
             <?= $this->Time->format('d-m-Y', $move['Move']['data']); ?>
         </td>
         <td align="center" width="20" class="<?= $move['Move']['color']; ?>">
-            <b><?= $move['Move']['tipo']; ?></b>
+            <b><?= $move['Move']['sinal']; ?></b>
         </td>
         <td class="<?= $move['Move']['color']; ?>" width="100">
             <?= $move['Move']['valor']; ?>
