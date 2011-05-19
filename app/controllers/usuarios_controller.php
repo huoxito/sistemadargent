@@ -205,7 +205,7 @@ class UsuariosController extends AppController {
         if($this->Auth->user('login') === 'godfather'){
             $this->redirect(array('controller' => 'usuarios','action'=>'index'));
         }else{
-            $this->redirect(array('controller' => 'homes','action'=>'index'));
+            $this->redirect(array('controller' => 'moves','action'=>'index'));
         }
     }
 
