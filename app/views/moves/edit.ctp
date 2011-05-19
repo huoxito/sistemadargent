@@ -76,6 +76,7 @@
 
             <div class="submit">
                 <input type="submit" value="Salvar">
+                <span class="ajax_error_response"></span>
             </div>
             
         </fieldset>

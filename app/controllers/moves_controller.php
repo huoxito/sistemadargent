@@ -217,7 +217,25 @@ class MovesController extends AppController {
         
         $this->layout = "colorbox"; 
     }
-     
+    
+    function editResponse(){
+
+        
+        if( $this->params['isAjax'] ){
+            
+            $this->data = array_merge($this->params['url']);
+            
+            $this->Move->editar($this->data, $this->user_id){
+
+            }else{
+
+            }
+             
+            $this->layout = 'ajax';        
+        }
+    }
+        
+         
     function insereInput(){
         $this->layout = 'ajax';
     }

@@ -169,6 +169,96 @@ class Move extends AppModel {
     }
 
     
+    function editar($input, $usuario_id){
+        
+        $chk = $this->find('first', array(
+                    'conditions' array('Move.id' => $input['Move']['id']),
+                    'fields' => array('Move.conta_id', 'Move.valor', 'tipo')
+                ); 
+        
+        if($chk['Move'[]['usuario_id'] != $usuario_id){
+            return false;
+        }
+        
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $this->id = $input['Move']['id'];
+        if ( !$this->saveAll($input, array('atomic' => false)) ) {
+            $datasource->rollback($this);
+            return false;
+        }
+        
+        $valorConsulta = $this->Behaviors->Modifiable->monetary($this, $chk['Move']['valor']);
+        $valorForm = $this->Behaviors->Modifiable->monetary($this, $input['Move']['valor']); 
+        
+        if($input['Move']['tipo'] == 'Faturamento'){
+            $sinal_tipo = '+';
+        }else{
+            $sinal_tipo = '-';
+        }
+        
+        /* se muda o tipo corrijo valor na conta de origem */ 
+        if($input['Move']['tipo'] != $chk['Move']['tipo']){
+            
+            $values = array(
+                'saldo' => 'saldo' . $sinal_tipo . $valorConsulta
+            );
+            $conditions = array(
+                'Conta.usuario_id' => $usuario_id,
+                'Conta.id' => $chk['Move']['conta_id']
+            );
+            if( !$this->Conta->updateAll($values, $conditions) ){
+                $datasource->rollback($this);
+                return false;
+            } 
+        }
+        
+
+        if ( $input['Move']['conta_id'] != $chk['Move']['conta_id'] ){
+            
+            $values = array('saldo' => 'saldo+' . $valorForm);
+            $conditions = array('Conta.usuario_id' => $check['Move']['usuario_id'],
+                                'Conta.id' => $input['Move']['conta_id']);
+
+            if( !$this->Conta->updateAll($values, $conditions) ){
+                $datasource->rollback($this);
+                return false;
+            }
+             
+            // diminuo o valor que possuia o registro 
+            $values = array('saldo' => 'saldo-' . $valorConsulta);
+            $conditions = array('Conta.usuario_id' => $check['Move']['usuario_id'],
+                                'Conta.id' => $check['Move']['conta_id']);
+
+            if( $this->Conta->updateAll($values, $conditions) ){
+                $datasource->commit($this);
+                return true;
+            }else{
+                $datasource->rollback($this);
+                return false;
+            }
+             
+        }else{ 
+        
+            $diferenca = round($valorConsulta - $valorForm, 2);
+            
+            $values = array('saldo' => 'saldo+'.$diferenca);
+            $conditions = array('Conta.usuario_id' => $check['Move']['usuario_id'],
+                                'Conta.id' => $input['Move']['conta_id']);
+            
+            if( $this->Conta->updateAll($values, $conditions) ){
+                $datasource->commit($this);
+                return true;
+            }else{
+                $datasource->rollback($this);
+                return false;
+            }
+        } 
+    
+    }
+    
+     
     function afterFind($results){
         
         foreach($results as $key => $result){
