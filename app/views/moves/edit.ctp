@@ -75,9 +75,7 @@
                                     array('label' => 'Observações')); ?>
 
             <div class="submit">
-                <input type="submit" value="Inserir">
-                <?php echo $this->Form->checkbox('keepon'); ?>
-                <span class="label">Continuar inserindo registros</span>
+                <input type="submit" value="Salvar">
             </div>
             
         </fieldset>

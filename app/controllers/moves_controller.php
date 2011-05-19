@@ -205,9 +205,17 @@ class MovesController extends AppController {
         $this->set(compact('contas'));
     }
     
-    function edit(){
-       
-       $this->layout = "colorbox"; 
+    function edit($id){
+        
+        $this->data = $this->Move->read(null, $id);
+
+        $categorias = $this->Move->Categoria->listar($this->user_id);
+        $this->set(compact('categorias')); 
+        
+        $contas = $this->Move->Conta->listar($this->user_id);
+        $this->set(compact('contas'));
+        
+        $this->layout = "colorbox"; 
     }
      
     function insereInput(){
