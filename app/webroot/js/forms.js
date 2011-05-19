@@ -136,8 +136,6 @@ $(document).ready(function () {
         return false;
     });
     
-    
-    
 });  
     
     function movimentacoes(mes, ano){
