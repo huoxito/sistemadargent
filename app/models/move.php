@@ -172,11 +172,11 @@ class Move extends AppModel {
     function editar($input, $usuario_id){
         
         $chk = $this->find('first', array(
-                    'conditions' array('Move.id' => $input['Move']['id']),
-                    'fields' => array('Move.conta_id', 'Move.valor', 'tipo')
-                ); 
+                    'conditions' => array('Move.id' => $input['Move']['id']),
+                    'fields' => array('Move.conta_id', 'Move.valor', 'tipo', 'Move.usuario_id')
+                )); 
         
-        if($chk['Move'[]['usuario_id'] != $usuario_id){
+        if($chk['Move']['usuario_id'] != $usuario_id){
             return false;
         }
         
@@ -194,11 +194,13 @@ class Move extends AppModel {
         
         if($input['Move']['tipo'] == 'Faturamento'){
             $sinal_tipo = '+';
+            $sinal_conta_origem = '-';
         }else{
             $sinal_tipo = '-';
+            $sinal_conta_origem = '+';
         }
         
-        /* se muda o tipo corrijo valor na conta de origem */ 
+        /* correcao na conta de origem */ 
         if($input['Move']['tipo'] != $chk['Move']['tipo']){
             
             $values = array(
@@ -214,48 +216,60 @@ class Move extends AppModel {
             } 
         }
         
-
         if ( $input['Move']['conta_id'] != $chk['Move']['conta_id'] ){
             
-            $values = array('saldo' => 'saldo+' . $valorForm);
-            $conditions = array('Conta.usuario_id' => $check['Move']['usuario_id'],
-                                'Conta.id' => $input['Move']['conta_id']);
+            if($input['Move']['tipo'] == $chk['Move']['tipo']){
+                /* correção na conta de origem */ 
+                $values = array(
+                    'saldo' => 'saldo' . $sinal_conta_origem . $valorConsulta 
+                );
+                $conditions = array(
+                    'Conta.usuario_id' => $usuario_id,
+                    'Conta.id' => $chk['Move']['conta_id']
+                );
+                if( !$this->Conta->updateAll($values, $conditions) ){
+                    $datasource->rollback($this);
+                    return false;
+                }
+            }  
 
+            /* correção na conta atual */
+            $values = array(
+                'saldo' => 'saldo' . $sinal_tipo . $valorForm 
+            );
+            $conditions = array(
+                'Conta.usuario_id' => $usuario_id,
+                'Conta.id' => $input['Move']['conta_id']
+            );
             if( !$this->Conta->updateAll($values, $conditions) ){
                 $datasource->rollback($this);
                 return false;
             }
              
-            // diminuo o valor que possuia o registro 
-            $values = array('saldo' => 'saldo-' . $valorConsulta);
-            $conditions = array('Conta.usuario_id' => $check['Move']['usuario_id'],
-                                'Conta.id' => $check['Move']['conta_id']);
-
-            if( $this->Conta->updateAll($values, $conditions) ){
-                $datasource->commit($this);
-                return true;
-            }else{
-                $datasource->rollback($this);
-                return false;
-            }
-             
         }else{ 
-        
-            $diferenca = round($valorConsulta - $valorForm, 2);
             
-            $values = array('saldo' => 'saldo+'.$diferenca);
-            $conditions = array('Conta.usuario_id' => $check['Move']['usuario_id'],
-                                'Conta.id' => $input['Move']['conta_id']);
-            
-            if( $this->Conta->updateAll($values, $conditions) ){
-                $datasource->commit($this);
-                return true;
+            /* correção na conta - muda de acordo com dados da operação */ 
+            if($input['Move']['tipo'] != $chk['Move']['tipo']){
+                $diferenca = $valorForm;
             }else{
+                $diferenca = round($valorForm - $valorConsulta, 2);
+            }
+            
+            $values = array(
+                'saldo' => 'saldo' . $sinal_tipo . $diferenca
+            );
+            $conditions = array(
+                'Conta.usuario_id' => $usuario_id,
+                'Conta.id' => $input['Move']['conta_id']
+            );
+            if( !$this->Conta->updateAll($values, $conditions) ){
                 $datasource->rollback($this);
                 return false;
             }
         } 
-    
+        
+        $datasource->commit($this);
+        return true; 
     }
     
      
