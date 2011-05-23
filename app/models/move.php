@@ -180,6 +180,8 @@ class Move extends AppModel {
             return false;
         }
         
+        $input['Move']['usuario_id'] = $usuario_id;
+         
         $datasource = $this->getDataSource();
         $datasource->begin($this);
         
@@ -293,7 +295,7 @@ class Move extends AppModel {
     
     function afterSave($created){
         
-        if(isset($this->data['Move']['status']) && $this->data['Move']['status'] == 1){
+        if((isset($this->data['Move']['status']) && $this->data['Move']['status'] == 1) || !$created){
             
             list($ano, $mes, $dia) = explode('-', $this->data['Move']['data']);
             $user_id = $this->data['Move']['usuario_id'];
@@ -301,8 +303,6 @@ class Move extends AppModel {
             $this->cacheDadosNoMes('Faturamento', $mes, $ano, $user_id);    
             $this->cacheDadosNoMes('Despesa', $mes, $ano, $user_id);    
         }
-         
-        return true;
     }
     
     
