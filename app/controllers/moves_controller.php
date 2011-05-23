@@ -225,12 +225,12 @@ class MovesController extends AppController {
             
             $this->data = array_merge($this->params['url']);
             
-            $this->Move->editar($this->data, $this->user_id){
-
-            }else{
-
-            }
-             
+            $result = $this->Move->editar($this->data, $this->user_id);           
+            $resposta = array(
+                'result' => $result,
+            );
+            
+            $this->set('resposta', json_encode($result));  
             $this->layout = 'ajax';        
         }
     }

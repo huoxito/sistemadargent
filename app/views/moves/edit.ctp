@@ -4,7 +4,8 @@
     <div class="formWraper formBox">
                  
         <?= $this->Form->create('Move',
-                        array('inputDefaults' =>
+                        array('default' => false,
+                              'inputDefaults' =>
                                 array('error' => array('wrap' => 'span')))); ?>
                                 
         <fieldset>
@@ -18,53 +19,16 @@
                                         'label' => false);
                     echo $this->Form->radio('tipo',$options,$attributes);   
                 ?>
-                <?php if (isset($this->validationErrors['Move']['tipo'])){ ?>
-                    <span class="error-message">
-                        <?= $this->validationErrors['Move']['tipo'] ?>
-                    </span>
-                <?php } ?>
-        </div>
+            </div>
         
-        <div id="categorias_">
-         
-            <?php if(!array_key_exists('Categoria',(array)$this->data)){ ?>
-            
             <div id="selectCategoria" class="input text required">
                 <?= $this->Form->input('categoria_id',
                                     array('empty' => 'Escolha uma categoria',
                                           'div' => false,
                                           'error' => false)); ?>
-                <a href="#" class="btnadd" title="inserir" id="insereInputCategorias">
-                    INSERIR NOVA CATEGORIA
-                </a>
-                <?php if (isset($this->validationErrors['Move']['categoria_id'])){ ?>
-                    <span class="error-message">
-                        <?= $this->validationErrors['Move']['categoria_id'] ?>
-                    </span>
-                <?php } ?>
-                </div>
-                
-                <?php }else{ ?>
-                
-                <div id="inputCategoria" class="input text required">
-                    <?= $this->Form->input('Categoria.nome',
-                                        array('label' => 'Categoria',
-                                              'div' => false,
-                                              'error' => false)); ?>
-                    <a href="#" title="selecionar" class="btnadd" id="insereSelectCategorias">
-                        SELECIONAR UMA CATEGORIA
-                    </a>
-                    <?php if (isset($this->validationErrors['Categoria']['nome'])){ ?>
-                        <span class="error-message">
-                            <?= $this->validationErrors['Categoria']['nome'] ?>
-                        </span>
-                    <?php } ?>
-                </div>
-                
-                <?php } ?>
-            
             </div>
              
+            <?= $this->Form->input('id'); ?>
             <?= $this->Form->input('conta_id'); ?>
             <?= $this->Form->input('valor',
                                 array('id' => 'valorMask'));  ?>
@@ -75,7 +39,7 @@
                                     array('label' => 'Observações')); ?>
 
             <div class="submit">
-                <input type="submit" value="Salvar">
+                <input type="submit" value="Salvar" id="submitAjax">
                 <span class="ajax_error_response"></span>
             </div>
             
@@ -84,4 +48,36 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    // <![CDATA[
+    $("#submitAjax").click(function(){
+        
+        var id              = $('#MoveId').val();
+        var tipo            = $('input:radio:checked').val();;      
+        var categoria       = $('#MoveCategoriaId').val();
+        var conta           = $('#MoveContaId').val();
+        var valor           = $('#valorMask').val();
+        var data            = $('#data-calendario').val();
+        var obs             = $('#MoveObs').val();
+        
+        $.ajax({
+            
+            url: '/moves/editResponse',
+            data: ({ Move: 
+                        { id: id, categoria_id: categoria, valor: valor,
+                            data: data, obs: obs, tipo: tipo, conta_id: conta }
+            }),
+            beforeSend: function(){
+                $('.submit img').remove();
+                $('.submit span').html('');
+                $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
+            },
+            success: function(result){
+                
+                $('.formBox').after(result);            
+            }
+        });
 
+    });        
+    // ]]>
+</script>
