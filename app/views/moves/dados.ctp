@@ -70,6 +70,7 @@
         $('.confirmar-move').click(function(){
         
             var id = $(this).attr("id");
+            $(this).detach();
             $.ajax({
                 url: '/moves/confirmar', 
                 data: ({ id: id }),
@@ -81,8 +82,7 @@
                     var json = $.parseJSON(result);
                     if(json.result){
                         $('.info-tabela').html(json.saldos);
-                        $('#MoveId'+json.id).css('background-color', '#FFF');
-                        $(this).detach();
+                        $('#moveId'+json.id).css({'background-color': '#FFF'});
                     }else{
                         alert('Ocorreu um erro ..');
                     }
