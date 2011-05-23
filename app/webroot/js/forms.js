@@ -120,6 +120,7 @@ $(document).ready(function () {
         }
         
         mes = parseInt(mes);
+        mes = padLeft(mes,2);
 
         var d = new Date(ano, mes);
         var proximo = padLeft(d.getMonth()+1,2)+'-'+d.getFullYear(); 
