@@ -15,7 +15,7 @@
         <th align="center">Ações</th>
     </tr>
     <?php foreach ($moves as $move): ?>
-    <tr id="moveId<?= $move['Move']['id'];?>" class="registros">
+    <tr id="moveId<?= $move['Move']['id'];?>" class="registros<?= $move['Move']['class-status']; ?>">
         <td align="center" width="80">
             <?= $this->Time->format('d-m-Y', $move['Move']['data']); ?>
         </td>

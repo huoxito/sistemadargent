@@ -288,6 +288,12 @@ class Move extends AppModel {
                      $results[$key]['Move']['sinal'] = '-';
                      $results[$key]['Move']['color'] = 'negativo';
                 }
+
+                if($result['Move']['status'] == 0){
+                     $results[$key]['Move']['class-status'] = ' pendente';
+                }else{
+                     $results[$key]['Move']['class-status'] = '';
+                }
             }
         } 
         return $results;
