@@ -10,6 +10,7 @@
         <th align="center">Data</th>
         <th align="left">Tipo</th>
         <th align="left">Valor</th>
+        <th align="left">Conta</th>
         <th align="left">Categoria</th>
         <th align="left">Obs.</th>
         <th align="center">Ações</th>
@@ -24,6 +25,9 @@
         </td>
         <td class="<?= $move['Move']['color']; ?>" width="100">
             <?= $move['Move']['valor']; ?>
+        </td>
+        <td class="" width="100">
+            <?= $move['Conta']['nome']; ?>
         </td>
         <td width="150">
             <?= $move['Categoria']['nome']; ?>
