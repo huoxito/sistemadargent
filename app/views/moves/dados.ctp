@@ -49,7 +49,8 @@
                 if($move['Move']['status'] == 0){
                     echo  $this->Html->link('CONFIRMAR',
                                     array('action' => 'confirmar', $move['Move']['id']),
-                                    array('class' => 'btnexcluir',
+                                    array('id' => 'move-'.$move['Move']['id'].'-'.$mes.'-'.$ano,
+                                          'class' => 'btnexcluir confirmar-move',
                                           'title' => 'Editar move')); 
                 }
             ?>
@@ -62,8 +63,34 @@
 <script type="text/javascript">
     // <![CDATA[
     $(document).ready(function () {
+        
         $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
         $('.colorbox-edit').colorbox({width:"800", height: "580", opacity: 0.5, iframe: true});
+        
+        $('.confirmar-move').click(function(){
+        
+            var id = $(this).attr("id");
+            $.ajax({
+                url: '/moves/confirmar', 
+                data: ({ id: id }),
+                beforeSend: function(){
+                    $(this).before('<img src="/img/ajax-loader.gif" alt="... carregando dados ..." id="loading" />');
+                },
+                success: function(result){
+                    
+                    var json = $.parseJSON(result);
+                    if(json.result){
+                        $('.info-tabela').html(json.saldos);
+                        $('#MoveId'+json.id).css('background-color', '#FFF');
+                        $(this).detach();
+                    }else{
+                        alert('Ocorreu um erro ..');
+                    }
+                }
+            }); 
+            
+            return false;   
+        });
     });
     // ]]>
 </script>

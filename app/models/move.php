@@ -277,6 +277,56 @@ class Move extends AppModel {
         return true; 
     }
     
+    function confirmar($id, $usuario_id){
+        
+        $this->Behaviors->detach('Modifiable'); 
+        $chk = $this->find('first', array(
+                    'conditions' => array('Move.id' => $id),
+                    'fields' => array(
+                            'Move.data', 'Move.usuario_id','Move.valor', 'Move.status', 'Move.tipo',
+                            'Move.conta_id'
+                    )
+                ));
+
+        if($chk['Move']['usuario_id'] != $usuario_id){
+            return false;
+        }        
+        
+        $input = $chk;
+        $input['Move']['status'] = 1;
+         
+        $datasource = $this->getDataSource();
+        $datasource->begin($this);
+        
+        $this->id = $id;
+        if( !$this->save($input, false) ){
+            $datasource->rollback($this);
+            return false;    
+        }
+        
+        if($chk['Move']['tipo'] == 'Faturamento'){
+            $sinal_tipo = '+';
+        }else{
+            $sinal_tipo = '-';
+        }
+        
+        $valor = $chk['Move']['valor'];
+        $values = array(
+            'saldo' => 'saldo' . $sinal_tipo . $valor,
+            'modified' => '\'' . date('Y-m-d H:i:s') . '\''
+        );
+        $conditions = array(
+            'Conta.usuario_id' => $usuario_id,
+            'Conta.id' => $chk['Move']['conta_id']
+        );
+        if( !$this->Conta->updateAll($values, $conditions) ){
+            $datasource->rollback($this);
+            return false;
+        }  
+        
+        $datasource->commit($this);
+        return true;
+    }
      
     function afterFind($results){
         
