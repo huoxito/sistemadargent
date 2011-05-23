@@ -32,6 +32,7 @@
             <?= $move['Move']['obs']; ?>
         </td>
         <td class="actions">
+            
             <?= $this->Html->link('EDITAR',
                         array('action' => 'edit', $move['Move']['id']),
                         array('class' => 'colorbox-edit btneditar',
@@ -40,6 +41,14 @@
                             array('action' => 'delete', $move['Move']['id']),
                             array('class' => 'colorbox-delete btnexcluir',
                                   'title' => 'Excluir move')); ?>
+            <?php
+                if($move['Move']['status'] == 0){
+                    echo  $this->Html->link('CONFIRMAR',
+                                    array('action' => 'confirmar', $move['Move']['id']),
+                                    array('class' => 'btnexcluir',
+                                          'title' => 'Editar move')); 
+                }
+            ?>
         </td>
     </tr>
     <?php endforeach; ?>

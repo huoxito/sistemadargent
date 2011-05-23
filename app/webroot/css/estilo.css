@@ -878,7 +878,7 @@ label
 	padding-right:10px;
 	font-size:11px;
 	margin:0 5px;
-	float: left;
+	float: right;
 }
 
 span .right {
@@ -900,7 +900,7 @@ span .right {
 	padding-right:10px;
 	font-size:11px;
 	margin:0 5px;
-	float: left;
+	float: right;
 }
 .btnexcluir:hover
 {
@@ -1097,7 +1097,7 @@ table tr td {
 }
 
 .tabelaListagem td.actions, .tabelaListagem td.tipo {
-    width: 150px;
+    width: 250px;
 }
 
 .tabelaListagem td, .tabelaListagem th {
