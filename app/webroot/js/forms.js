@@ -149,8 +149,8 @@ $(document).ready(function () {
             },
             success: function(result){
                 
-                $('#table-wrapper img').detach();
-                $('#table-wrapper').html(result);
+                parent.$('#table-wrapper img').detach();
+                parent.$('#table-wrapper').html(result);
             }
         });
     }

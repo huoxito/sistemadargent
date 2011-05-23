@@ -226,11 +226,15 @@ class MovesController extends AppController {
             $this->data = array_merge($this->params['url']);
             
             $result = $this->Move->editar($this->data, $this->user_id);           
+            
+            list($dia, $mes, $ano) = explode('-', $this->data['Move']['data']);
             $resposta = array(
                 'result' => $result,
+                'mes' => $mes,
+                'ano' => $ano
             );
             
-            $this->set('resposta', json_encode($result));  
+            $this->set('resposta', json_encode($resposta));  
             $this->layout = 'ajax';        
         }
     }
