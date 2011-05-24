@@ -119,7 +119,10 @@
     </div>
     
 <script type="text/javascript">  
+$(document).ready(function () {
     disableOrNotInputs($('input:radio:checked').val());
+    $('#data-calendario').datepicker('setDate', new Date());
+});
 </script>
 
 

@@ -43,7 +43,6 @@ $(document).ready(function () {
     $('#data-calendario').datepicker({
     });
 
-    $('#data-calendario').datepicker('setDate', new Date());
     
     $('#MoveConfig0').click(function() {           
         if($(this).is(':checked'))  {

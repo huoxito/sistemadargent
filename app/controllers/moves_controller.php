@@ -211,6 +211,7 @@ class MovesController extends AppController {
     function edit($id){
         
         $this->data = $this->Move->read(null, $id);
+        $this->data['Move']['data'] = $this->Data->formata($this->data['Move']['data'], 'diamesano');
 
         $categorias = $this->Move->Categoria->listar($this->user_id);
         $this->set(compact('categorias')); 
