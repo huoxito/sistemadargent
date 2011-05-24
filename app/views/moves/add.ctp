@@ -101,7 +101,7 @@
                 
                 <div class="leftInput">    
                     <?= $this->Form->input('numdeparcelas',
-                                            array('label' => 'Número de parcelas',
+                                            array('label' => 'Em 1 + ',
                                                   'div' => false,
                                                   'id' => 'numparcelas')); ?>
                 </div>
