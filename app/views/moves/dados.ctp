@@ -36,15 +36,14 @@
             <?= $move['Move']['obs']; ?>
         </td>
         <td class="actions">
-            
-            <?= $this->Html->link('EDITAR',
-                        array('action' => 'edit', $move['Move']['id']),
-                        array('class' => 'colorbox-edit btneditar',
-                              'title' => 'Editar move')); ?> 
             <?= $this->Html->link('DELETE', 
                             array('action' => 'delete', $move['Move']['id']),
                             array('class' => 'colorbox-delete btnexcluir',
                                   'title' => 'Excluir move')); ?>
+            <?= $this->Html->link('EDITAR',
+                        array('action' => 'edit', $move['Move']['id']),
+                        array('class' => 'colorbox-edit btneditar',
+                              'title' => 'Editar move')); ?> 
             <?php
                 if($move['Move']['status'] == 0){
                     echo  $this->Html->link('CONFIRMAR',
