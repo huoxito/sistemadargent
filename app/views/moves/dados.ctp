@@ -42,15 +42,15 @@
                                   'title' => 'Excluir move')); ?>
             <?= $this->Html->link('EDITAR',
                         array('action' => 'edit', $move['Move']['id']),
-                        array('class' => 'colorbox-edit btneditar',
-                              'title' => 'Editar move')); ?> 
+                        array('class' => 'editar-move btneditar',
+                              'title' => 'Editar movimentação')); ?> 
             <?php
                 if($move['Move']['status'] == 0){
                     echo  $this->Html->link('CONFIRMAR',
                                     array('action' => 'confirmar', $move['Move']['id']),
                                     array('id' => 'move-'.$move['Move']['id'].'-'.$mes.'-'.$ano,
                                           'class' => 'btnexcluir confirmar-move',
-                                          'title' => 'Editar move')); 
+                                          'title' => 'Confirmar'));
                 }
             ?>
         </td>
@@ -63,9 +63,17 @@
     // <![CDATA[
     $(document).ready(function () {
         
-        $('.colorbox-delete').colorbox({width:"500", height: '220', opacity: 0.5, iframe: true});
-        $('.colorbox-edit').colorbox({width:"800", height: "580", opacity: 0.5, iframe: true});
-        
+        $("a.editar-move").fancybox({
+            'transitionIn'  :   'none',
+            'transitionOut' :   'none',
+            'width'         :   500,
+            'height'        :   500,
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false,
+            'type'          :   'iframe' 
+        });  
+
         $('.confirmar-move').click(function(){
         
             var id = $(this).attr("id");

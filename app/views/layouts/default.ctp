@@ -7,19 +7,28 @@
 		<?php echo $title_for_layout; ?>
 	</title>
 	
-	<?php
-		echo $this->Html->meta('icon');
-        echo $this->Html->css('estilo');
-        echo $this->Html->css('colorbox');
-        echo $this->Html->css('jquery-ui-1.8rc3.custom');
-        echo $this->Html->script('jquery-1.4.2.min');
-        echo $this->Html->script('jquery.colorbox-min');
-        echo $this->Html->script('jquery.ui.core');
-        echo $this->Html->script('ui.datepicker');
-        echo $this->Html->script('forms');
-		echo $scripts_for_layout;
-	?>
+    <?php echo $this->Html->meta('icon'); ?>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>	
+    <script>
+        !window.jQuery && document.write('<script src="/js/jquery-1.4.2.min.js"><\/script>');
+    </script>
+
+    <?php echo $this->Html->css('estilo'); ?>
+    
+    <?php echo $this->Html->css('jquery-ui-1.8rc3.custom'); ?>
+    <?php echo $this->Html->script('jquery.ui.core'); ?>
+    <?php echo $this->Html->script('ui.datepicker'); ?>
+    
+    <?php echo $this->Html->script('fancybox/jquery.mousewheel-3.0.4.pack'); ?>
+    <?php echo $this->Html->script('fancybox/jquery.fancybox-1.3.4.pack'); ?>
+    <?php echo $this->Html->css('jquery.fancybox-1.3.4');?>
+    
+    <?php echo $this->Html->script('forms'); ?>
+    <?php echo $scripts_for_layout; ?>
+
     <?= $this->Html->script('jquery.maskMoney'); ?>
+
 </head>
 <body>
 	<div id="container">
