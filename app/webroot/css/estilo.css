@@ -14,6 +14,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 body
 {
 	font-family:Arial, Helvetica, sans-serif !important;
+    font-size: 12px;
 }
 html {
 	background-color:#f3f3f3;
@@ -1178,7 +1179,6 @@ table tr td {
 }
 .formBox {
 	padding: 20px 20px 0;
-	font-size: 14px;
 }
 
 .formBox div.submit {
