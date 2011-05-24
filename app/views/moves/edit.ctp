@@ -70,16 +70,19 @@
             beforeSend: function(){
                 $('.submit img').remove();
                 $('.submit span').html('');
-                $('.submit').append('/img/ajax-loader-p.gif');
+                $('.submit').append('<img src="/img/ajax-loader-p.gif" alt="enviando dados ..." />');
             },
             success: function(result){
                 var json = $.parseJSON(result);
-                
+                $('.submit img').detach();
+
                 if(json.result){
+                    $('.ajax_error_response').html('carregando ...');
                     movimentacoes(json.mes, json.ano);
+                    var t=setTimeout("parent.$.fancybox.close()",400);
+                }else{
+                    $('.ajax_error_response').html('Confira os dados e tente novamente');
                 }
-                
-                $('.formBox').after(result);            
             }
         });
 
