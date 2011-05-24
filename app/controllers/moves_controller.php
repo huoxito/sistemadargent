@@ -31,6 +31,9 @@ class MovesController extends AppController {
             $mes = date('m');
             $ano = date('Y');
         }
+        
+        $this->set('mes', $mes);
+        $this->set('ano', $ano);
 
         $moves = $this->Move->find('all', 
                         array('conditions' => 
@@ -226,15 +229,47 @@ class MovesController extends AppController {
             $this->data = array_merge($this->params['url']);
             
             $result = $this->Move->editar($this->data, $this->user_id);           
+            
+            list($dia, $mes, $ano) = explode('-', $this->data['Move']['data']);
             $resposta = array(
                 'result' => $result,
+                'mes' => $mes,
+                'ano' => $ano
             );
             
-            $this->set('resposta', json_encode($result));  
+            $this->set('resposta', json_encode($resposta));  
             $this->layout = 'ajax';        
         }
     }
         
+    
+    function confirmar(){
+        
+        list($move, $id, $mes, $ano) = explode('-', $this->params['url']['id']);
+        $result = $this->Move->confirmar($id, $this->user_id);
+        
+        
+        $despesas = $this->Move->despesasNoMes($mes, $ano, $this->user_id);
+        $faturamentos = $this->Move->faturamentosNoMes($mes, $ano, $this->user_id);
+        $saldo = $faturamentos - $despesas;
+        
+        $this->set('despesas', $this->Valor->formata($despesas,'humano'));
+        $this->set('faturamentos', $this->Valor->formata($faturamentos, 'humano'));
+        $this->set('saldo', $this->Valor->formata($saldo, 'humano'));
+        
+        if($saldo > 0){
+            $class = "positivo";
+        }else{
+            $class = "negativo";
+        }
+        
+        $this->set('classSaldo', $class);
+        
+        $this->set('result', $result);
+        $this->set('id', $id);
+    
+        $this->layout = 'ajax';      
+    }
          
     function insereInput(){
         $this->layout = 'ajax';

@@ -70,9 +70,14 @@
             beforeSend: function(){
                 $('.submit img').remove();
                 $('.submit span').html('');
-                $('.submit').append('<?= $this->Html->image('ajax-loader-p.gif'); ?>');
+                $('.submit').append('/img/ajax-loader-p.gif');
             },
             success: function(result){
+                var json = $.parseJSON(result);
+                
+                if(json.result){
+                    movimentacoes(json.mes, json.ano);
+                }
                 
                 $('.formBox').after(result);            
             }

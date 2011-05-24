@@ -120,6 +120,7 @@ $(document).ready(function () {
         }
         
         mes = parseInt(mes);
+        mes = padLeft(mes,2);
 
         var d = new Date(ano, mes);
         var proximo = padLeft(d.getMonth()+1,2)+'-'+d.getFullYear(); 
@@ -149,8 +150,8 @@ $(document).ready(function () {
             },
             success: function(result){
                 
-                $('#table-wrapper img').detach();
-                $('#table-wrapper').html(result);
+                parent.$('#table-wrapper img').detach();
+                parent.$('#table-wrapper').html(result);
             }
         });
     }
