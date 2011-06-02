@@ -17,7 +17,7 @@ class UsuariosController extends AppController {
     function cadastro() {
 
         if($this->Auth->user()){
-            $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+            $this->redirect(array('controller' => 'moves', 'action'=>'index'));
         }
 
         if (!empty($this->data)) {
@@ -42,7 +42,7 @@ class UsuariosController extends AppController {
                         'Bem vindo ! Navegue no menu lateral para conhecer o sistema e começar a inserir os dados',
                         'flash_success'
                     );
-                    $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+                    $this->redirect(array('controller' => 'moves', 'action'=>'index'));
                 }else{
                     $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
                 }
@@ -58,7 +58,7 @@ class UsuariosController extends AppController {
     function enviarSenha(){
 
         if($this->Auth->user()){
-            $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+            $this->redirect(array('controller' => 'moves', 'action'=>'index'));
         }
 
         if (!empty($this->data)) {
@@ -103,7 +103,7 @@ class UsuariosController extends AppController {
     function confirmarNovaSenha($hash){
 
         if($this->Auth->user()){
-            $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+            $this->redirect(array('controller' => 'moves', 'action'=>'index'));
         }
 
         $info = $this->Usuario->findByHash($hash);
@@ -188,7 +188,7 @@ class UsuariosController extends AppController {
     function login(){
 
         if($this->Auth->user()){
-            $this->redirect(array('controller' => 'homes', 'action'=>'index'));
+            $this->redirect(array('controller' => 'moves', 'action'=>'index'));
         }
 
         $this->layout = 'home';
