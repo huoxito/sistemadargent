@@ -692,7 +692,6 @@ span.valor {
 
 .filtrosPie {
     color: #555555;
-    font-size: 15px;
     margin: 30px 0 30px 0px;
 }
 
@@ -709,7 +708,6 @@ span.valor {
 .graphHeaders {
     padding: 10px 0;
     color: #555555;
-    font-size: 15px;
     text-align: center;
 }
 
