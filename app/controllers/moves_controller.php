@@ -243,7 +243,24 @@ class MovesController extends AppController {
         }
     }
         
-    
+    function delete($id = null){
+        
+        if( $this->params['isAjax'] ){
+            
+            $id = $this->params['url']['id'];
+            $result = $this->Move->excluir($id, $this->user_id);           
+
+            $this->set('resposta', json_encode($result));  
+            $this->autoRender = false;        
+
+        }else{
+            $this->helpers[] = 'Time';
+            $this->data = $this->Move->read(null,$id);
+            $this->layout = 'colorbox';   
+        }
+
+    }
+     
     function confirmar(){
         
         list($move, $id, $mes, $ano) = explode('-', $this->params['url']['id']);

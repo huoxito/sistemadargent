@@ -36,10 +36,10 @@
             <?= $move['Move']['obs']; ?>
         </td>
         <td class="actions">
-            <?= $this->Html->link('DELETE', 
+            <?= $this->Html->link('EXCLUIR', 
                             array('action' => 'delete', $move['Move']['id']),
-                            array('class' => 'colorbox-delete btnexcluir',
-                                  'title' => 'Excluir move')); ?>
+                            array('class' => 'excluir-move btnexcluir',
+                                  'title' => 'Excluir movimentação')); ?>
             <?= $this->Html->link('EDITAR',
                         array('action' => 'edit', $move['Move']['id']),
                         array('class' => 'editar-move btneditar',
@@ -73,6 +73,17 @@
             'overlayShow'   :   false,
             'type'          :   'iframe' 
         });  
+
+        $("a.excluir-move").fancybox({
+            'transitionIn'  :   'none',
+            'transitionOut' :   'none',
+            'width'         :   500,
+            'height'        :   150,
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false,
+            'type'          :   'iframe' 
+        });
 
         $('.confirmar-move').click(function(){
         
