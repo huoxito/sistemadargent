@@ -56,7 +56,7 @@
                     $('.ajax_error_response').html('Nome e Tipo são campos obrigatórios ...');
                 }else {
                     parent.$('.tabelaListagem tbody').prepend(result);
-                    var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
+                    var t=setTimeout("parent.jQuery.fancybox.close()",100);
                 }
             }
         });

@@ -62,10 +62,10 @@
                 if(json.erro){
                     $('.ajax_error_response').html(json.erro);
                 }else{
-                    parent.$('#contaSaldo' + origem ).html('R$ ' + json.origem);
-                    parent.$('#contaSaldo' + destino ).html('R$ ' + json.destino);
+                    parent.$('#contaSaldo' + origem ).html('' + json.origem);
+                    parent.$('#contaSaldo' + destino ).html('' + json.destino);
                     parent.$('.flash_success').html(json.message);
-                    parent.jQuery.fn.colorbox.close();
+                    parent.jQuery.fancybox.close();
                 }
 
             }

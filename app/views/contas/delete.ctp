@@ -31,7 +31,7 @@
                 success: function(result){
                 
                     if( result == 'deleted' ){                                
-                        var t=setTimeout("parent.$('#contaId" + id + "').fadeOut(); parent.jQuery.fn.colorbox.close(); ",500);
+                        var t=setTimeout("parent.$('#contaId" + id + "').fadeOut(); parent.jQuery.fancybox.close(); ",500);
                     }else{
                         $('.submit img').fadeOut('fast', function(){
                             $('.submit').append('Registro inválido')

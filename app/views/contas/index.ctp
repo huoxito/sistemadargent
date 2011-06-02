@@ -17,30 +17,33 @@
                 <?php echo $this->Html->link('TRANSFERÊNCIAS',
                                     array('controller' => 'contas',
                                           'action' => 'transfer'),
-                                    array('class' => 'colorbox-add btnadd')); ?>
+                                    array('class' => 'transfer-conta btnadd')); ?>
             </div> 
             <div class="headeraddlinks">
                 <?php echo $this->Html->link('CRIAR UMA NOVA CONTA',
                                     array('controller' => 'contas',
                                           'action' => 'add'),
-                                    array('class' => 'colorbox-add btnadd')); ?>
+                                    array('class' => 'add-conta btnadd',
+                                          'title' => 'Criar uma nova conta')); ?>
             </div>
         </div>
         
     </div>
-   
-    <div class="flash flash_success">
-        <?php   echo $this->Session->flash(); ?>
-    </div>
     
-    <div class="tableWraper">
+    <div id="table-wrapper">
         
-        <p class="saldoGeral">
+        <p class="info-tabela">
             Saldo total 
             R$ <span id="saldo-Total" class="<?= $class ?>"><?= $this->Valor->formata($total); ?></span>
         </p>
          
         <table cellpadding="0" cellspacing="0" class="tabelaListagem">
+            <tr>
+                <th align="left">Nome</th>
+                <th align="left">Saldo</th>
+                <th align="left">Tipo</th>
+                <th align="center">Ações</th>
+            </tr>
             <?php foreach ($contas as $conta): ?>
             <tr id="contaId<?= $conta['Conta']['id'];?>" class="registros">
                 <td>
@@ -53,18 +56,18 @@
                     <?= $conta['Conta']['tipo']; ?>
                 </td>
                 <td class="actions">
-                    <?= $this->Html->link('EDITAR',
-                                array('action' => 'edit', $conta['Conta']['id']),
-                                array('class' => 'colorbox-edit btneditar',
-                                      'title' => 'Editar Conta')); ?> 
                     <?php 
                     if($conta['Conta']['delete']){ 
                         echo $this->Html->link('DELETE', 
                                     array('action' => 'delete', $conta['Conta']['id']),
-                                    array('class' => 'colorbox-delete btnexcluir',
+                                    array('class' => 'delete-conta btnexcluir',
                                           'title' => 'Excluir Conta')); 
                     }
                     ?>
+                    <?= $this->Html->link('EDITAR',
+                                array('action' => 'edit', $conta['Conta']['id']),
+                                array('class' => 'edit-conta btneditar',
+                                      'title' => 'Editar Conta')); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -78,8 +81,28 @@
     
     $(document).ready(function () {
         
-        $('.colorbox-delete').colorbox({width:"500", height: '180', opacity: 0.5, iframe: true});
-        $('.colorbox-edit, .colorbox-add').colorbox({width:"800", height: "420", opacity: 0.5, iframe: true});
+        $("a.edit-conta, a.transfer-conta, a.add-conta").fancybox({
+            'transitionIn'  :   'none',
+            'transitionOut' :   'none',
+            'width'         :   500,
+            'height'        :   340,
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false,
+            'type'          :   'iframe' 
+        });
+        
+        $("a.delete-conta").fancybox({
+            'transitionIn'  :   'none',
+            'transitionOut' :   'none',
+            'width'         :   500,
+            'height'        :   130,
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false,
+            'type'          :   'iframe' 
+        });
+        
     });
 
 </script>

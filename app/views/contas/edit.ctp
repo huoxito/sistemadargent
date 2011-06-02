@@ -58,7 +58,7 @@
                     $('.ajax_error_response').html('Preencha todos os campos obrigatórios corretamente');
                 }else {
                     parent.$('#contaId' + id).html(result);
-                    var t=setTimeout("parent.jQuery.fn.colorbox.close()",100);
+                    var t=setTimeout("parent.jQuery.fancybox.close()",100);
                 }
             }
         });
