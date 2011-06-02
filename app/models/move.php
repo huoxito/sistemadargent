@@ -352,28 +352,30 @@ class Move extends AppModel {
             return false;    
         }
         
-        if($chk['Move']['tipo'] == 'Faturamento'){
-            $sinal_tipo = '-';
-        }else{
-            $sinal_tipo = '+';
+        if($chk['Move']['status'] == 1){
+
+            if($chk['Move']['tipo'] == 'Faturamento'){
+                $sinal_tipo = '-';
+            }else{
+                $sinal_tipo = '+';
+            }
+            
+            $values = array(
+                'saldo' => 'saldo' . $sinal_tipo . $chk['Move']['valor'],
+                'modified' => '\'' . date('Y-m-d H:i:s') . '\''
+            );
+            $conditions = array(
+                'Conta.usuario_id' => $usuario_id,
+                'Conta.id' => $chk['Move']['conta_id']
+            );
+            if( !$this->Conta->updateAll($values, $conditions) ){
+                $datasource->rollback($this);
+                return false;
+            }  
         }
-        
-        $values = array(
-            'saldo' => 'saldo' . $sinal_tipo . $chk['Move']['valor'],
-            'modified' => '\'' . date('Y-m-d H:i:s') . '\''
-        );
-        $conditions = array(
-            'Conta.usuario_id' => $usuario_id,
-            'Conta.id' => $chk['Move']['conta_id']
-        );
-        if( !$this->Conta->updateAll($values, $conditions) ){
-            $datasource->rollback($this);
-            return false;
-        }  
-        
+
         $datasource->commit($this);
         return true; 
-         
     }
 
      
