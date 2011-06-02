@@ -39,6 +39,7 @@
                 if(result){                                
                     var t=setTimeout("parent.$('#moveId" + id + "').fadeOut(); parent.jQuery.fancybox.close(); ",300);
                 }else{
+                    $('.submit img').detach();
                     $('.ajax_error_response').html('Registro não pode ser excluído ...');
                 }
             }

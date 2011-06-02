@@ -250,9 +250,9 @@ class MovesController extends AppController {
             $id = $this->params['url']['id'];
             $result = $this->Move->excluir($id, $this->user_id);           
 
-            $this->set('resposta', json_encode($result));  
-            $this->autoRender = false;        
-
+            $this->set('result', json_encode($result));  
+            $this->render('delete_response');        
+            $this->layout = 'ajax';
         }else{
             $this->helpers[] = 'Time';
             $this->data = $this->Move->read(null,$id);

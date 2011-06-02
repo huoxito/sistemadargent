@@ -380,22 +380,19 @@ class Move extends AppModel {
     function afterFind($results){
         
         foreach($results as $key => $result){
-        
-            if(isset($result['Move'])){ 
 
-                if($result['Move']['tipo'] == 'Faturamento'){
-                     $results[$key]['Move']['sinal'] = '+';
-                     $results[$key]['Move']['color'] = 'positivo';
-                }else{
-                     $results[$key]['Move']['sinal'] = '-';
-                     $results[$key]['Move']['color'] = 'negativo';
-                }
+            if(isset($result['Move']['tipo']) && $result['Move']['tipo'] == 'Faturamento'){
+                 $results[$key]['Move']['sinal'] = '+';
+                 $results[$key]['Move']['color'] = 'positivo';
+            }else{
+                 $results[$key]['Move']['sinal'] = '-';
+                 $results[$key]['Move']['color'] = 'negativo';
+            }
 
-                if($result['Move']['status'] == 0){
-                     $results[$key]['Move']['class-status'] = ' pendente';
-                }else{
-                     $results[$key]['Move']['class-status'] = '';
-                }
+            if(isset($result['Move']['status']) && $result['Move']['status'] == 0){
+                 $results[$key]['Move']['class-status'] = ' pendente';
+            }else{
+                 $results[$key]['Move']['class-status'] = '';
             }
         } 
         return $results;
