@@ -2,7 +2,7 @@
 
 class GraficosController extends AppController{
 
-    var $uses = array('Ganho', 'Gasto');
+    var $uses = array('Move');
     var $components = array('Data', 'Valor', 'PieChart', 'LineChart');
 
     function index(){
@@ -21,15 +21,15 @@ class GraficosController extends AppController{
         $final = $this->Data->formata($this->params["url"]["fim"], 'diamesano');
          
         $objDestinosValores = $objDestinos = $objFontesValores = $objFontes = null;
-        $destinos = $this->Gasto->find('all',
-                                array('fields' => array('Destino.nome', 'SUM(Gasto.valor) AS total'),
+        $destinos = $this->Move->find('all',
+                                array('fields' => array('Categoria.nome', 'SUM(Move.valor) AS total'),
                                         'conditions' =>
-                                            array('Gasto.status' => 1,
-                                                  'Gasto.usuario_id' => $this->Auth->user('id'),
-                                                  'Gasto.destino_id IS NOT NULL',
-                                                  'Gasto.datadabaixa BETWEEN ? AND ?' => array($inicial, $final)),
+                                            array('Move.status' => 1,
+                                                  'Move.usuario_id' => $this->user_id,
+                                                  'Move.tipo' => 'Despesa',
+                                                  'Move.data BETWEEN ? AND ?' => array($inicial, $final)),
                                         'order' => 'total DESC',
-                                        'group' => array('Gasto.destino_id'),
+                                        'group' => array('Move.categoria_id'),
                                         'limit' => '5'
                                 ));
 
@@ -37,7 +37,7 @@ class GraficosController extends AppController{
 
             $objDestinosValores[] = $destino[0]['total'];
             $valorFormatado = $this->Valor->formata($destino[0]['total'], "humano");
-            $objDestinos[] = $destino['Destino']['nome'] . " R$ " . $valorFormatado;
+            $objDestinos[] = $destino['Categoria']['nome'] . " R$ " . $valorFormatado;
             //$objDestinosCores[] = $cor;
         }
  
@@ -49,23 +49,23 @@ class GraficosController extends AppController{
         $this->PieChart->Chart->setColors(array("FF1515"));
         $pieGasto = $this->PieChart->Chart->getUrl();
 
-        $fontes = $this->Ganho->find('all',
+        $fontes = $this->Move->find('all',
                             array('fields' =>
-                                   array('Fonte.nome', 'SUM(Ganho.valor) AS total'),
+                                   array('Categoria.nome', 'SUM(Move.valor) AS total'),
                                            'conditions' =>
-                                               array('Ganho.status' => 1,
-                                                     'Ganho.usuario_id' => $this->Auth->user('id'),
-                                                     'Ganho.fonte_id IS NOT NULL', 
-                                                     'Ganho.datadabaixa BETWEEN ? AND ?' => array($inicial, $final)),
+                                               array('Move.status' => 1,
+                                                     'Move.usuario_id' => $this->user_id,
+                                                      'Move.tipo' => 'Faturamento',
+                                                     'Move.data BETWEEN ? AND ?' => array($inicial, $final)),
                                            'order' => 'total DESC',
-                                           'group' => array('Ganho.fonte_id'),
+                                           'group' => array('Move.categoria_id'),
                                            'limit' => '5'
                                ));
 
         foreach($fontes as $fonte){
             $objFontesValores[] = $fonte[0]['total'];
             $valorFormatado = $this->Valor->formata($fonte[0]['total'], "humano");
-            $objFontes[] = $fonte['Fonte']['nome'] . " R$ " . $valorFormatado;
+            $objFontes[] = $fonte['Categoria']['nome'] . " R$ " . $valorFormatado;
             //$objDestinosCores[] = $cor;
         }
         
@@ -91,33 +91,35 @@ class GraficosController extends AppController{
         $mes = date('m');
         $ano = date('Y');
 
-        for($i=0;$i<6;$i++){
+        for($i=0;$i<12;$i++){
 
             list($mes,$ano) = explode('-',date('m-Y',mktime(0,0,0,$mes,1,$ano)));
 
             # aproveito pra jogar no array o nome dos meses
             $meses[] = $this->Data->retornaNomeDoMes((int)$mes);
 
-            $this->Ganho->recursive = -1;
-            $ganhos[] = $this->Ganho->find('all',
-                                            array('fields' => array('SUM(Ganho.valor) AS total,
-                                                                    MONTH(datadabaixa) AS mes'),
+            $this->Move->recursive = -1;
+            $ganhos[] = $this->Move->find('all',
+                                            array('fields' => array('SUM(Move.valor) AS total,
+                                                                    MONTH(data) AS mes'),
                                                     'conditions' =>
-                                                        array('Ganho.status' => 1,
-                                                                'Ganho.usuario_id' => $this->Auth->user('id'),
-                                                                'MONTH(Ganho.datadabaixa)' => $mes,
-                                                                'YEAR(Ganho.datadabaixa)' => $ano,
+                                                        array('Move.status' => 1,
+                                                                'Move.usuario_id' => $this->user_id,
+                                                                'Move.tipo' => 'Faturamento',
+                                                                'MONTH(Move.data)' => $mes,
+                                                                'YEAR(Move.data)' => $ano,
                                                             ),
                                                     ));
-            $this->Gasto->recursive = -1;
-            $gastos[] = $this->Gasto->find('all',
-                                            array('fields' => array('SUM(Gasto.valor) AS total,
-                                                                    MONTH(datadabaixa) AS mes'),
+            $this->Move->recursive = -1;
+            $gastos[] = $this->Move->find('all',
+                                            array('fields' => array('SUM(Move.valor) AS total,
+                                                                    MONTH(data) AS mes'),
                                                     'conditions' =>
-                                                        array('Gasto.status' => 1,
-                                                                'Gasto.usuario_id' => $this->Auth->user('id'),
-                                                                'MONTH(Gasto.datadabaixa)' => $mes,
-                                                                'YEAR(Gasto.datadabaixa)' => $ano,
+                                                        array('Move.status' => 1,
+                                                                'Move.usuario_id' => $this->user_id,
+                                                                'Move.tipo' => 'Despesa',
+                                                                'MONTH(Move.data)' => $mes,
+                                                                'YEAR(Move.data)' => $ano,
                                                             ),
                                                     ));
             $mes--;
