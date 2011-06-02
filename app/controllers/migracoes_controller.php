@@ -2,18 +2,19 @@
 
 /* classe temporaria para executar migração de dados na mudança 
  da arquitetura do bando de dados do sistema */ 
-class Migracoes extends AppController {
+class MigracoesController extends AppController {
 
     var $uses = ''; 
     var $name = 'Migracoes';
 
-    function migracao(){
+    function newbranchmigration(){
         
         $this->loadModel('Ganho'); 
         $this->loadModel('Fonte'); 
         $this->loadModel('Gasto'); 
         $this->loadModel('Destino'); 
         $this->loadModel('Categoria'); 
+        $this->loadModel('Move'); 
         
         
         $this->Move->Behaviors->detach('Modifiable');
