@@ -48,12 +48,8 @@
 		</div>
 
         <div id="footer">
-        
-            <a href="#">Ajuda</a> / 
-            <a href="#">Quem somos</a> / 
-            <a href="#">Fale conosco</a>
-            
-            <p>Copyright © 2010 <b><a href="#">Dargent controle financeiro</a></b>. Todos os direitos reservados</p>
+                    
+            <p>Copyright © <?= date('Y'); ?> <b>Dargent controle financeiro</b>. Todos os direitos reservados</p>
             
         </div>
 

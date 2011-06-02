@@ -9,23 +9,17 @@
         <li>
             <?= $this->Html->link(__('Usuários', true), array('controller' => 'usuarios', 'action' => 'index')); ?>
         </li>
-        <li>
-            <?= $this->Html->link(__('Sugestões', true), array('controller' => 'sugestoes', 'action' => 'index')); ?>
-        </li>
         <?php }else{ ?>
-        <li>
-            <?= $this->Html->image('casinha.jpg',
-                                    array('width' => '18',
-                                          'height' => '17'));   ?>
-            <?= $this->Html->link(__('Painel', true), array('controller' => 'homes','action' => '/')); ?>
-        </li>
-        <li style="border-bottom:none;">
+        <li style="">
             <?= $this->Html->image('moedas.jpg',
                                     array('width' => '24',
                                           'height' => '18'));   ?>
             <?= $this->Html->link(__('Movimentações', true), array('controller' => 'moves', 'action' => 'index')); ?>
         </li>
-        <li class="subitem">
+        <li class="">
+            <?= $this->Html->image('moedas.jpg',
+                                    array('width' => '24',
+                                          'height' => '18'));   ?>
             <?= $this->Html->link(__('Categorias', true), array('controller' => 'categorias', 'action' => 'index')); ?>
         </li>
         <li>
@@ -39,12 +33,6 @@
                                     array('width' => '18',
                                           'height' => '16'));   ?>
             <?= $this->Html->link(__('Gráficos', true), array('controller' => 'graficos')); ?>
-        </li>
-        <li>
-            <?= $this->Html->image('cash_register.png',
-                                    array('width' => '18',
-                                          'height' => '16'));   ?>
-            <?= $this->Html->link('Últimas interações', array('controller' => 'homes', 'action' => 'ultimasInteracoes')); ?>
         </li>
         <?php } ?>
     </ul>
