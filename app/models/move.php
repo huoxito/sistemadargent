@@ -63,7 +63,18 @@ class Move extends AppModel {
                 'message' => false,
                 'required' => false,
                 'allowEmpty' => true,
-        )  
+        ),
+        'numdeparcelas' => array(
+            'rule1' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Insira um número',
+                'last' => true
+            ),
+            'rule2' => array(
+                'rule' => 'numeroDeParcelas',
+                'message' => 'No máximo 60 parcelas ...'
+            ),
+        ),  
     );
     
 
@@ -472,6 +483,16 @@ class Move extends AppModel {
             return false;	
         }else{
             return true;	
+        }
+    }
+    
+    function numeroDeParcelas(){
+            
+        $numero = (int) $this->data['Move']['numdeparcelas'];
+        if( $numero < 1 || $numero > 99 ){
+            return false;
+        }else{
+            return true;
         }
     }
 
