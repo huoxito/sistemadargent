@@ -372,6 +372,11 @@ class Move extends AppModel {
                 $datasource->rollback($this);
                 return false;
             }  
+            
+            /* renovo valores para tirar saldo do mês do registro excluído */
+            list($ano, $mes, $dia) = explode('-', $chk['Move']['data']);
+            $this->cacheDadosNoMes('Faturamento', $mes, $ano, $usuario_id);    
+            $this->cacheDadosNoMes('Despesa', $mes, $ano, $usuario_id);
         }
 
         $datasource->commit($this);

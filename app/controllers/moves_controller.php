@@ -251,8 +251,29 @@ class MovesController extends AppController {
             $result = $this->Move->excluir($id, $this->user_id);           
 
             $this->set('result', json_encode($result));  
+            
+            $data = $this->params['url']['data'];
+            list($ano, $mes, $dia) = explode('-', $data);
+            
+            $despesas = $this->Move->despesasNoMes($mes, $ano, $this->user_id);
+            $faturamentos = $this->Move->faturamentosNoMes($mes, $ano, $this->user_id);
+            $saldo = $faturamentos - $despesas;
+            
+            $this->set('despesas', $this->Valor->formata($despesas,'humano'));
+            $this->set('faturamentos', $this->Valor->formata($faturamentos, 'humano'));
+            $this->set('saldo', $this->Valor->formata($saldo, 'humano'));
+            
+            if($saldo > 0){
+                $class = "positivo";
+            }else{
+                $class = "negativo";
+            }
+            
+            $this->set('classSaldo', $class);
+
             $this->render('delete_response');        
             $this->layout = 'ajax';
+
         }else{
             $this->helpers[] = 'Time';
             $this->data = $this->Move->read(null,$id);
