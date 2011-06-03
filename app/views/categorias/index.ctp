@@ -20,15 +20,15 @@
                 <th align="center" width="80">Ações</th>
             </tr>
             <?php foreach ($categorias as $categoria): ?>
-            <tr id="categoriaId<?= $categoria['Categoria']['id'];?>" class="registros">
-                <td align="left">
+            <tr class="registros">
+                <td id="categoriaId<?= $categoria['Categoria']['id'];?>" align="left">
                     <?= $categoria['Categoria']['nome']; ?>
                 </td>
                 <td class="actions" style="width: 150px;">
                     <?= $this->Html->link('EDITAR',
                                 array('action' => 'edit', $categoria['Categoria']['id']),
-                                array('class' => 'editar-move btneditar',
-                                      'title' => 'Editar movimentação')); ?> 
+                                array('class' => 'editar-categoria btneditar',
+                                      'title' => 'Editar categoria')); ?> 
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -39,5 +39,17 @@
 </div>
         
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        
+        $("a.editar-categoria").fancybox({
+            'transitionIn'  :   'none',
+            'transitionOut' :   'none',
+            'width'         :   500,
+            'height'        :   150,
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false,
+            'type'          :   'iframe' 
+        });
+    });
 </script>
