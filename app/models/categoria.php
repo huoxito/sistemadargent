@@ -64,7 +64,7 @@ class Categoria extends AppModel {
         return $this->find('list',
                      array('conditions' => 
                                 array('Categoria.usuario_id' => $usuario_id),
-                           'order' => 'Categoria.id desc'));
+                           'order' => 'Categoria.nome asc'));
     }
 
 }
