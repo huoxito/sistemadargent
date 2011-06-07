@@ -1,22 +1,15 @@
 Dargent é um sistema simples de controle financeiro desenvolvido com o framework Cakephp (versão 1.3.4)
 
+Atualmente a aplicação está em transição. Reorganizei o bando de dados, diminui o número de tabelas e tentei enxugar o sistema o máximo possível. Haviam formulários demais sem necessidade alguma. Isso provocou mudanças no layout que aos poucos vou melhorando.
 
-O sistema é minha primeira experiência com cakephp, orientação a objetos e o padrão MVC. A idéia de compartilhar isso no github é ver se há outros desenvolvedores em cakephp dispostos a ajudar a construir / melhorar o sistema ou dar qualquer sugestão de como melhorá-lo.
+Você pode conferir o como o código funciona no endereço www.sistemadargent.com.br .
 
-
-v0.3
-
-Nessa primeira versão é possível inserir suas movimentações e as respectivas categorias, programar essas movimentações e vê-las em gráficos comparativos. O usuário pode ver apenas aquilo que insere.
-
-Há um nível para administradores que podem ver uma lista com os usuários cadastrados e algumas informações desses usuários como último login e número de acessos.
+Caso queira clonar e testar localmente há algumas migrations. Basta rodar o comando no terminal:
+    cake migration all
 
 
-Algumas caracteristicas que pretendo implementar em uma próxima versão:
+O que faz exatamente o sistema?
 
-* Permitir que o usuário possa excluir todas suas movimentações.
-* Permitir que o usuário possa excluir todas suas categorias e agendamentos.
-* Permitir que o usuário possa excluir sua conta no sistema.
-* Implementar sistema de contas. As contas terão saldo atual ao ser inseridas. Sempre que for inserida uma movimentação o usuário informa de qual ou pra qual conta é aquela movimentação.
-* Implementar sistema de metas. Usuário informa quanto pretende receber no mês / ano  e sistema o mantém informado sobre quanto falta para realizar essa meta.
-* Procurar uma biblioteca mais interativa de gráficos com o php.
-
+O usuário pode inserir o que seus faturamentos e suas despesas, também pode programá-las.
+Esses registros estão ligados a alguma conta. O saldo das contas mudam de acordo com os registro que o usuário for inserindo. 
+Há uma interface de gráficos e a principal onde pode-se ver as movimentações do mês e o saldo.
