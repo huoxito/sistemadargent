@@ -19,6 +19,7 @@ class MovesController extends AppController {
         
         $proximo = date('m-Y', mktime(0,0,0,date('m')+1,1,date('Y'))); 
         $this->set('proximo', $proximo);
+        $this->set('title_for_layout', 'Movimentações');
     }
     
     
