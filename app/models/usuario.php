@@ -9,48 +9,6 @@ class Usuario extends AppModel {
     
     
     var $hasMany = array(
-        'Ganho' => array(
-			'className' => 'Ganho',
-			'foreignKey' => 'usuario_id',
-			'dependent' => true,
-			'fields' => '',
-			'exclusive' => true,
-		),
-        'Fonte' => array(
-			'className' => 'Fonte',
-			'foreignKey' => 'usuario_id',
-			'dependent' => true,
-			'fields' => '',
-			'exclusive' => true,
-		),
-        'Gasto' => array(
-			'className' => 'Gasto',
-			'foreignKey' => 'usuario_id',
-			'dependent' => true,
-			'fields' => '',
-			'exclusive' => true,
-		),
-        'Destino' => array(
-			'className' => 'Destino',
-			'foreignKey' => 'usuario_id',
-			'dependent' => true,
-			'fields' => '',
-			'exclusive' => true,
-		),
-        'Agendamento' => array(
-			'className' => 'Agendamento',
-			'foreignKey' => 'usuario_id',
-			'dependent' => true,
-			'fields' => '',
-			'exclusive' => true, 
-		),
-        'Sugestao' => array(
-			'className' => 'Sugestao',
-			'foreignKey' => 'usuario_id',
-			'dependent' => true,
-			'fields' => '',
-			'exclusive' => true, 
-		),
         'Conta' => array(
 			'className' => 'Conta',
 			'foreignKey' => 'usuario_id',
