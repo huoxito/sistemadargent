@@ -79,7 +79,7 @@
                 if(json.result){
                     $('.ajax_error_response').html('carregando ...');
                     movimentacoes(json.mes, json.ano);
-                    var t=setTimeout("parent.$.fancybox.close()",400);
+                    var t=setTimeout("parent.$.fancybox.close()",800);
                 }else{
                     $('.ajax_error_response').html('Confira os dados e tente novamente');
                 }
