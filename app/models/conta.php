@@ -1,8 +1,8 @@
 <?php
 class Conta extends AppModel {
     
-	var $name = 'Conta';
-	var $displayField = 'nome';
+    var $name = 'Conta';
+    var $displayField = 'nome';
     var $actsAs = array(
         'Modifiable' => array(
 			'fields' => array('saldo')
@@ -10,11 +10,11 @@ class Conta extends AppModel {
     );
     
     var $validate = array(
-		'status' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
-			),
-		),
+        'status' => array(
+            'boolean' => array(
+                'rule' => array('boolean'),
+            ),
+        ),
         'nome' => array(
             'obrigatorio' => array(
                 'rule' => 'notempty',
@@ -43,45 +43,45 @@ class Conta extends AppModel {
         )
 	);
 
-	var $belongsTo = array(
-		'Usuario' => array(
-			'className' => 'Usuario',
-			'foreignKey' => 'usuario_id',
-			'conditions' => '',
-			'fields' => 'id, nome, login',
-		)
-	);
+    var $belongsTo = array(
+        'Usuario' => array(
+            'className' => 'Usuario',
+            'foreignKey' => 'usuario_id',
+            'conditions' => '',
+            'fields' => 'id, nome, login',
+        )
+    );
 
-	var $hasMany = array(
-		'Agendamento' => array(
-			'className' => 'Agendamento',
-			'foreignKey' => 'conta_id',
-			'dependent' => true,
-			'conditions' => '',
-			'fields' => '',
-		),
-		'Ganho' => array(
-			'className' => 'Ganho',
-			'foreignKey' => 'conta_id',
-			'dependent' => true,
-			'conditions' => '',
-			'fields' => '',
-		),
-		'Gasto' => array(
-			'className' => 'Gasto',
-			'foreignKey' => 'conta_id',
-			'dependent' => true,
-			'conditions' => '',
-			'fields' => '',
-		),
+    var $hasMany = array(
+        'Agendamento' => array(
+            'className' => 'Agendamento',
+            'foreignKey' => 'conta_id',
+            'dependent' => true,
+            'conditions' => '',
+            'fields' => '',
+        ),
+        'Ganho' => array(
+            'className' => 'Ganho',
+            'foreignKey' => 'conta_id',
+            'dependent' => true,
+            'conditions' => '',
+            'fields' => '',
+        ),
+        'Gasto' => array(
+            'className' => 'Gasto',
+            'foreignKey' => 'conta_id',
+            'dependent' => true,
+            'conditions' => '',
+            'fields' => '',
+        ),
         'Move' => array(
-			'className' => 'Move',
-			'foreignKey' => 'conta_id',
-			'dependent' => true,
-			'conditions' => '',
-			'fields' => '',
-		)
-	);
+            'className' => 'Move',
+            'foreignKey' => 'conta_id',
+            'dependent' => true,
+            'conditions' => '',
+            'fields' => '',
+        )
+    );
     
 
     function checkSaldo($check){
