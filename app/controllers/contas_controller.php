@@ -1,7 +1,7 @@
 <?php
 class ContasController extends AppController {
 
-	var $name = 'Contas';
+    var $name = 'Contas';
     var $components = array('Valor');
     var $helpers = array('Data');
     
@@ -41,11 +41,11 @@ class ContasController extends AppController {
         }
     }
     
-	function index() {
+    function index() {
         
-		$this->Conta->recursive = 0;
+        $this->Conta->recursive = 0;
         $this->Conta->Behaviors->detach('Modifiable');
-		$contas = $this->Conta->find('all',
+        $contas = $this->Conta->find('all',
                         array('conditions' => array('Conta.usuario_id' => $this->user_id)));
         
         $total = 0;
@@ -79,9 +79,9 @@ class ContasController extends AppController {
         $this->set('class', $class);
         $this->set('total', $total);
         $this->set(compact('contas'));
-	}
+    }
 
-	function add() {
+    function add() {
         
         if ( $this->params['isAjax'] ) {
             
@@ -120,9 +120,9 @@ class ContasController extends AppController {
         }else{
             $this->layout = 'colorbox';
         }
-	}
+    }
 
-	function edit($id = null) {
+    function edit($id = null) {
         
         if( $this->params['isAjax'] ){
         
@@ -160,11 +160,11 @@ class ContasController extends AppController {
             }
             $this->layout = 'colorbox';
         }
-	}
+    }
 
-	function delete($id = null) {
+    function delete($id = null) {
 
-		if( !$id && isset($this->params['url']['id']) ){
+        if( !$id && isset($this->params['url']['id']) ){
             $id = (int)$this->params['url']['id'];
         }
         
@@ -183,7 +183,7 @@ class ContasController extends AppController {
             $this->set('registro',$itens);    
             $this->layout = 'colorbox';
         }
-	}
+    }
 
     function transfer(){
         
