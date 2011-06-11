@@ -27,35 +27,9 @@ class AppController extends Controller{
         $this->set('godfather',$godfather);
     }   
     
-    function search(){
-            
-        // thanks to Christophe Cholot - http://www.formation-cakephp.com/30/pagination-avec-criteres-de-filtrage-complexes
-        // exclusion du 1er argument de $this->params['url'] (l'URL courante)
-        array_shift($this->params['url']);
-        $passedArgs = array();
-
-        // exclusion des données nulles
-        $criterias = array_filter(
-            $this->params['url'],
-            create_function(
-              '$item',
-              'return !empty($item);'
-            )
-        );
-       
-        // transformation des données au format du Paginator
-        foreach($criterias as $key => $value)
-        {
-            array_push($passedArgs, $key . ':' . urlencode($value));
-        }
-        
-        // redirect vers la Vue, en passant en argument les critères de recherche retenus.
-        $this->redirect('index/'.join('/', $passedArgs));
-    }
-    
     // thanks to http://nuts-and-bolts-of-cakephp.com/2009/04/30/give-all-of-your-error-messages-a-different-layout/
     function beforeRender () {
-            $this->_setErrorLayout();
+        $this->_setErrorLayout();
     }
     function _setErrorLayout() {
         if($this->name == 'CakeError') {
