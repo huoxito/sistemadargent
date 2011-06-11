@@ -18,7 +18,7 @@
         <div id="graficosWraper">
 
             <div id='graficoComparativo' style="height: auto: overflow: hidden; text-align: center; ">
-                <h2 class="graphHeaders">Comparativo nos últimos 7 meses</h2>
+                <h2 class="graphHeaders">Comparativo nos últimos 12 meses</h2>
                 <div id="graficoComparativoImg">
 
                 </div>
