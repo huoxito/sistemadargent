@@ -53,27 +53,6 @@ class Conta extends AppModel {
     );
 
     var $hasMany = array(
-        'Agendamento' => array(
-            'className' => 'Agendamento',
-            'foreignKey' => 'conta_id',
-            'dependent' => true,
-            'conditions' => '',
-            'fields' => '',
-        ),
-        'Ganho' => array(
-            'className' => 'Ganho',
-            'foreignKey' => 'conta_id',
-            'dependent' => true,
-            'conditions' => '',
-            'fields' => '',
-        ),
-        'Gasto' => array(
-            'className' => 'Gasto',
-            'foreignKey' => 'conta_id',
-            'dependent' => true,
-            'conditions' => '',
-            'fields' => '',
-        ),
         'Move' => array(
             'className' => 'Move',
             'foreignKey' => 'conta_id',

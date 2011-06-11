@@ -51,16 +51,12 @@ class ContasController extends AppController {
         $total = 0;
         foreach($contas as $key => $value){
             
-            $ganho = $this->Conta->Ganho->find('count',
-                       array('conditions' => array('Ganho.conta_id' => $value['Conta']['id'],
-                                                   'Ganho.fonte_id IS NOT NULL'),
-                             'recursive' => -1));
-            $gasto = $this->Conta->Gasto->find('count',
-                       array('conditions' => array('Gasto.conta_id' => $value['Conta']['id'],
-                                                   'Gasto.destino_id IS NOT NULL'),
+            $moves = $this->Conta->Move->find('count',
+                       array('conditions' => array('Move.conta_id' => $value['Conta']['id'],
+                                                   'Move.categoria_id IS NOT NULL'),
                              'recursive' => -1));
 
-            if($ganho || $gasto){
+            if($moves){
                 $contas[$key]['Conta']['delete'] = false;
             }else{
                 $contas[$key]['Conta']['delete'] = true;
