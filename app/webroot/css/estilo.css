@@ -414,15 +414,7 @@ div.form, div.index, div.view {
 	height:20px;
 	padding-left:10px;
 	}
-.balancoBotoes a {
-	color:#4b8300;
-	font-weight: bold;
-	text-decoration: none;
-}
 
-.balancoBotoes a:hover {
-	text-decoration: underline;
-}
 .balancoBotoes p {
 	float:left;
 	color:#4b8300;
@@ -841,7 +833,9 @@ label
 	margin-left: 20px;
 }
 
-.btnadd, .btnaddcategoria, .btneditar, .btnacoes, .btnexcluir, .btnsair, .btnminhaconta {
+/*** BUTTONS ***/
+
+.btnadd, .btnaddcategoria, .btneditar, .btnacoes, .btnexcluir, .btnsair, .btnminhaconta, .button {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-bottom:1px solid #666;
@@ -855,7 +849,6 @@ label
 	padding:2px;
 	padding-left:10px;
 	padding-right:10px;
-	font-size:11px;
 	color: #FFF !important;
 }
 .btnaddcategoria
@@ -887,6 +880,12 @@ span .right {
 .btneditar:hover, .btnacoes:hover
 {
 	background-color:#8FB9CF;
+	text-decoration:none;
+	color:#FFF;
+}
+.btnadd:hover
+{
+	background-color:#8FCFD9;
 	text-decoration:none;
 	color:#FFF;
 }
@@ -938,7 +937,6 @@ span .right {
 }
 
 fieldset {
-	border: 1px solid #ccc;
 	margin-bottom: 1em;
 	padding: 16px 20px;
 	-webkit-border-radius: 5px;

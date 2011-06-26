@@ -11,8 +11,11 @@
             
             <div class="balancoBotoes">
                 
-                <?= $this->Html->link('Inserir', array('action' => 'add')); ?>
-
+                <p>Registros pendentes não são contabilizados no saldo do mês.</p> 
+                <div class="headeraddlinks">
+                <?= $this->Html->link('INSERIR REGISTROS', 
+                            array('action' => 'add'), array('class' => 'btnadd')); ?>
+                </div>
             </div>
         
         </div>
