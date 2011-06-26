@@ -36,8 +36,8 @@
                     <?= $this->Form->input('categoria_id',
                                         array('empty' => 'Escolha uma categoria',
                                               'div' => false,
-                                              'error' => false)); ?>
-                    <a href="#" class="btnadd" title="inserir" id="insereInputCategorias">
+                                              'error' => false)) ?>
+                    <a href="#" class="btnadd" title="inserir" id="insereInputCategorias" onclick="insereInputCategorias(); return false;">
                         INSERIR NOVA CATEGORIA
                     </a>
                     <?php if (isset($this->validationErrors['Move']['categoria_id'])){ ?>
@@ -53,8 +53,8 @@
                         <?= $this->Form->input('Categoria.nome',
                                             array('label' => 'Categoria',
                                                   'div' => false,
-                                                  'error' => false)); ?>
-                        <a href="#" title="selecionar" class="btnadd" id="insereSelectCategorias">
+                                                  'error' => false)) ?>
+                        <a href="#" title="selecionar" class="btnadd" id="insereSelectCategorias" onclick="insereSelectCategorias(); return false;">
                             SELECIONAR UMA CATEGORIA
                         </a>
                         <?php if (isset($this->validationErrors['Categoria']['nome'])){ ?>
