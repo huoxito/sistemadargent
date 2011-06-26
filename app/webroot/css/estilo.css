@@ -206,44 +206,16 @@ div.form, div.index, div.view {
 
 .minhaconta {
 	float:right;
-	width:101px;
 	height:20px;
-	background-image:url(../img/minhaconta.jpg);
 	margin-left:5px;
 	text-align:center;
-	}
+}
 
 .sair{
 	float:right;
 	width:62px;
 	height:20px;
-	background-image:url(../img/sair.jpg);
 	text-align:center;
-	}
-
-.minhaconta a {
-	display: block;
-	text-decoration: none;
-	font-size:10px;
-	font-family:Arial, Helvetica, sans-serif;
-	color:#fff;
-	margin:4px 0 0 0 ;
-	}
-
-.minhaconta a:hover {
-	text-decoration: underline;
-}
-
-.sair a {
-	display: block;
-	font-size:10px;
-	font-family:Arial, Helvetica, sans-serif;
-	color:#fff;
-	text-decoration: none;
-	margin:4px 0 0 0 ;
-	}
-.sair a:hover {
-	text-decoration: underline;
 }
 
 .box-left {
@@ -835,7 +807,7 @@ label
 
 /*** BUTTONS ***/
 
-.btnadd, .btnaddcategoria, .btneditar, .btnacoes, .btnexcluir, .btnsair, .btnminhaconta, .button {
+.btnadd, .btnaddcategoria, .btneditar, .btnacoes, .btnexcluir, .btn-green, .button {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-bottom:1px solid #666;
@@ -906,28 +878,21 @@ span .right {
 	text-decoration:none;
 	color:#FFF;
 }
-.btnsair
+.btn-green
 {
 	background-color:#8AC142;
+	font-size:11px;
 	color:#FFF;
 	height:18px;
 	padding:2px;
-	padding-left:10px;
-	padding-right:10px;
-	font-size:11px;
+	padding-left:15px;
+	padding-right:15px;
 }
-
-.btnminhaconta
-{
-	background-color:#8AC142;
+.btn-green:hover {
+	background-color:#8ACD42;
+	text-decoration:none;
 	color:#FFF;
-	height:18px;
-	padding:2px;
-	padding-left:10px;
-	padding-right:10px;
-	font-size:11px;
 }
-
 .balancoBotoesWraper {
 	height: auto;
 	overflow: hidden;
