@@ -1,6 +1,6 @@
 <?php
     # variaveis de sessão do usuário
-    $usuarioLogado = $session->read('Auth.Usuario.nome');
+    $usuarioLogado = $session->read('Auth.Usuario.login');
 ?>  
 
     <?= $this->Html->image('logo.png',
@@ -20,7 +20,8 @@
                 <span class="minhaconta">
                     <?php echo $this->Html->link('MINHA CONTA',
                                                 array('controller' => '/',
-                                                      'action' => 'perfil'));  ?>
+                                                      'action' => 'perfil'),
+                                                array('class' => 'btn-green'));  ?>
                 </span>
                 
                 <span class="sair">
@@ -28,7 +29,8 @@
                                            array('controller' => 'usuarios',
                                                  'action' => 'logout'),
                                            array('alt'=> __('sair', true),
-                                                 'title'=> __('sair', true)));?>
+                                                 'title'=> __('sair', true),
+                                                 'class' => 'btn-green'));?>
                 </span> 
             
             </div>

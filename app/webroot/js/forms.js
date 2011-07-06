@@ -60,44 +60,6 @@ $(document).ready(function () {
         } 
     });
     
-    
-    var insereSelectCategorias = function(){
-        $.ajax({
-            url: '/moves/insereSelect',
-            beforeSend: function(){
-                $('#inputCategoria img').detach();
-                $('#inputCategoria').append(' <img src="/img/ajax-loader-p.gif" />'); }, success: function(result){
-                $('#inputCategoria').fadeOut('fast',function(){
-                    $('#inputCategoria').remove();
-                    $('#categorias_').prepend(result);
-                });
-            }
-        });
-        $('#insereSelect').die('click');
-        $('#insereInputCategorias').live('click', insereInputCategorias);
-        return false;
-    };
-    
-    var insereInputCategorias = function(){
-        $.ajax({
-            url: '/moves/insereInput',
-            beforeSend: function(){
-                $('#selectCategoria img').detach();
-                $('#selectCategoria').append(' <img src="/img/ajax-loader-p.gif" />');
-            },
-            success: function(result){    
-                $('#selectCategoria').remove();
-                $('#categorias_').prepend(result);
-            }
-        });
-        $('#insereInputCategorias').die('click');
-        $('#insereSelectCategorias').live('click', insereSelectCategorias);
-        return false;
-    };
-    
-    $('#insereSelectCategorias').live('click', insereSelectCategorias);
-    $('#insereInputCategorias').live('click', insereInputCategorias);
-    
     var m_names = new Array("Janeiro", "Fevereiro", "Março", 
         "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", 
         "Outubro", "Novembro", "Dezembro"
@@ -137,29 +99,60 @@ $(document).ready(function () {
     });
     
 });  
-    
-    function movimentacoes(mes, ano){
 
-        $.ajax({
-            
-            url: '/moves/dados', 
-            data: ({ mes: mes, ano: ano }),
-            beforeSend: function(){
-                $('#table-wrapper').html('<img src="/img/loading.gif" alt="... carregando dados ..." id="loading" />');
-            },
-            success: function(result){
-                
-                parent.$('#table-wrapper img').detach();
-                parent.$('#table-wrapper').html(result);
-            }
-        });
-    }
-    
-    function disableOrNotInputs(value){
-        if(value == 0){
-            $('#frequencia-a').attr('disabled','disabled');
-            $('#numparcelas').attr('disabled','disabled');
+
+function insereInputCategorias(){
+    $.ajax({
+        url: '/moves/insereInput',
+        beforeSend: function(){
+            $('#selectCategoria img').detach();
+            $('#selectCategoria').append(' <img src="/img/ajax-loader-p.gif" />');
+        },
+        success: function(result){    
+            $('#selectCategoria').remove();
+            $('#categorias_').prepend(result);
         }
+    });
+    return false;
+};
+
+function insereSelectCategorias(){
+    $.ajax({
+        url: '/moves/insereSelect',
+        beforeSend: function(){
+            $('#inputCategoria img').detach();
+            $('#inputCategoria').append(' <img src="/img/ajax-loader-p.gif" />'); 
+        }, 
+        success: function(result){
+            $('#inputCategoria').remove();
+            $('#categorias_').prepend(result);
+        }
+    });
+    return false;
+};
+    
+function movimentacoes(mes, ano){
+
+    $.ajax({
+        
+        url: '/moves/dados', 
+        data: ({ mes: mes, ano: ano }),
+        beforeSend: function(){
+            $('#table-wrapper').html('<img src="/img/loading.gif" alt="... carregando dados ..." id="loading" />');
+        },
+        success: function(result){
+            
+            parent.$('#table-wrapper img').detach();
+            parent.$('#table-wrapper').html(result);
+        }
+    });
+}
+
+function disableOrNotInputs(value){
+    if(value == 0){
+        $('#frequencia-a').attr('disabled','disabled');
+        $('#numparcelas').attr('disabled','disabled');
     }
+}
 
 // ]]>

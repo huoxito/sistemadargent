@@ -11,28 +11,16 @@
         </li>
         <?php }else{ ?>
         <li style="">
-            <?= $this->Html->image('moedas.jpg',
-                                    array('width' => '24',
-                                          'height' => '18'));   ?>
-            <?= $this->Html->link(__('Movimentações', true), array('controller' => 'moves', 'action' => 'index')); ?>
+            <?= $this->Html->link(__('MOVIMENTAÇÕES', true), array('controller' => 'moves', 'action' => 'index')); ?>
         </li>
         <li class="">
-            <?= $this->Html->image('moedas.jpg',
-                                    array('width' => '24',
-                                          'height' => '18'));   ?>
-            <?= $this->Html->link(__('Categorias', true), array('controller' => 'categorias', 'action' => 'index')); ?>
+            <?= $this->Html->link(__('CATEGORIAS', true), array('controller' => 'categorias', 'action' => 'index')); ?>
         </li>
         <li>
-            <?= $this->Html->image('contas.png',
-                                    array('width' => '16',
-                                          'height' => '16'));   ?>
-            <?= $this->Html->link(__('Contas', true), array('controller' => 'contas', 'action' => 'index')); ?>
+            <?= $this->Html->link(__('CONTAS', true), array('controller' => 'contas', 'action' => 'index')); ?>
         </li>
         <li>
-            <?= $this->Html->image('graficos.jpg',
-                                    array('width' => '18',
-                                          'height' => '16'));   ?>
-            <?= $this->Html->link(__('Gráficos', true), array('controller' => 'graficos')); ?>
+            <?= $this->Html->link(__('GRÁFICOS', true), array('controller' => 'graficos')); ?>
         </li>
         <?php } ?>
     </ul>
