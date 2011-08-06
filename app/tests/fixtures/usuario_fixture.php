@@ -19,6 +19,19 @@ class UsuarioFixture extends CakeTestFixture {
 			'modified' => '2011-01-31 23:22:27',
 			'status' => 1
 		),
+		array(
+			'id' => 2,
+			'nome' => 'Nada de novo',
+			'email' => '2mail@mail.com',
+			'login' => 'usuario2',
+			'password' => 'Lorem',
+			'ultimologin' => '2011-01-31 23:22:27',
+			'numdeacessos' => 1,
+			'hash' => 'Lorem ipsum dolor sit amet',
+			'created' => '2011-01-31 23:22:27',
+			'modified' => '2011-01-31 23:22:27',
+			'status' => 1
+		),
 	);
 }
 ?>

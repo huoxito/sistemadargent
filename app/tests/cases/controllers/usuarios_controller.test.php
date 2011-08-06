@@ -11,9 +11,7 @@ class TestUsuariosController extends UsuariosController {
 class UsuariosControllerTest extends CakeTestCase { 
     
     var $fixtures = array(
-        'app.usuario','app.ganho','app.gasto','app.fonte',
-        'app.destino','app.agendamento','app.sugestao','app.frequencia',
-        'app.conta'
+        'app.usuario', 'app.conta'
     );
     
     function startTest() {

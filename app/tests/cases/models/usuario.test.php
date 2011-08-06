@@ -5,18 +5,12 @@ App::import('Model', 'Usuario');
 class UsuarioTextCase extends CakeTestCase{
     
     var $fixtures = array(
-        'app.usuario','app.ganho','app.gasto','app.fonte',
-        'app.destino','app.agendamento','app.sugestao','app.frequencia',
-        'app.conta'
+        'app.usuario', 'app.conta'
     );
-
     
     function startTest(){
-        
-        App::import('Security');
         $this->Usuario =& ClassRegistry::init('Usuario');
     }
-
 
     function testInsert(){
         
