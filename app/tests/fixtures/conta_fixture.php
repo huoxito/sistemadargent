@@ -20,8 +20,28 @@ class ContaFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'usuario_id' => 1,
-			'nome' => 'Lorem ipsum dolor sit amet',
-			'saldo' => 1,
+			'nome' => 'Bolso',
+			'saldo' => 100,
+			'tipo' => 'Lorem ipsum dolor sit amet',
+			'created' => '2011-01-31 23:22:26',
+			'modified' => '2011-01-31 23:22:26',
+			'status' => 1
+		),
+		array(
+			'id' => 2,
+			'usuario_id' => 1,
+			'nome' => 'Colchao',
+			'saldo' => 200,
+			'tipo' => 'Lorem ipsum dolor sit amet',
+			'created' => '2011-01-31 23:22:26',
+			'modified' => '2011-01-31 23:22:26',
+			'status' => 1
+		),
+		array(
+			'id' => 3,
+			'usuario_id' => 1,
+			'nome' => 'Banco',
+			'saldo' => 19830670.00,
 			'tipo' => 'Lorem ipsum dolor sit amet',
 			'created' => '2011-01-31 23:22:26',
 			'modified' => '2011-01-31 23:22:26',
