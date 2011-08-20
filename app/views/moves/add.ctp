@@ -3,6 +3,14 @@
         <div id="contentHeader">
             <h1>Cadastro de Movimentações</h1>
         </div>
+        
+        <div id=subheader>
+            <div class=paddinglateral>
+            <?= $this->Html->link('voltar pra listagem',
+                        array('controller' => 'moves', 'action' => 'index'),
+                        array('class' => 'btnadd')); ?> 
+            </div>
+        </div>
 
         <?php echo $this->Session->flash(); ?>
         

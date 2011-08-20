@@ -264,7 +264,7 @@ div.form, div.index, div.view {
 	text-align:right;
 	}
 
-#contentHeader, .subheader {
+#contentHeader {
 	width:100%;
 	height:50px;
 	float:left;
@@ -273,7 +273,7 @@ div.form, div.index, div.view {
 	-moz-border-radius: 3px 3px 0px 0px;
 	-webkit-border-radius: 3px 3px 0px 0px;
 	}
-#contentHeader h1, div.subheader h2 {
+#contentHeader h1 {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:23px;
 	color:#fff;
@@ -893,7 +893,7 @@ span .right {
 	text-decoration:none;
 	color:#FFF;
 }
-.balancoBotoesWraper {
+.balancoBotoesWraper, #subheader {
 	height: auto;
 	overflow: hidden;
 	padding:10px 0;
@@ -973,10 +973,6 @@ p.warning {
 .respostaExcluir {
     color: #3075BA;
     padding: 10px 0 0;
-}
-
-div.subheader {
-	margin-top: 10px;
 }
 
 input.btnaddcategoria {
@@ -1280,6 +1276,13 @@ div.paging span a:hover {
 
 .pendente {
     background-color: #F3F3F3;
+}
+
+
+/**  gerais **/
+
+.paddinglateral {
+    padding: 0 10px;
 }
 
 
