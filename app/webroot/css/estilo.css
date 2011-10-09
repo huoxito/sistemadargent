@@ -37,9 +37,7 @@ html {
 #topo-right {
 	float:right;
 	min-width:493px;
-	height:77px;
-	margin-top:10px;
-	}
+}
 
 .vermais {
 	float:right;
@@ -195,12 +193,11 @@ div.form, div.index, div.view {
 
 #userNameTopo {
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:25px;
+	font-size:15px;
 	color:#fff;
 	font-weight:normal;
 	text-align: right;
-	margin-bottom:10px;
-	margin-top:4px;
+	margin-top:8px;
 }
 
 
@@ -1282,7 +1279,16 @@ div.paging span a:hover {
 /**  gerais **/
 
 .paddinglateral {
-    padding: 0 10px;
 }
 
+.my-account {
+    padding: 0 5px;
+    text-decoration: none;
+    color: blue;
+}
 
+.logout {
+    color: red;
+    text-decoration: none;
+    padding: 0 5px;
+}
