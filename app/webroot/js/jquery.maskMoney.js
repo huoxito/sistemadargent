@@ -1,7 +1,7 @@
 /*
-* @Copyright (c) 2010 Aurélio Saraiva, Diego Plentz
+* @Copyright (c) 2011 Aurélio Saraiva, Diego Plentz
 * @Page http://github.com/plentz/jquery-maskmoney
-* try at http://inoveideia.com.br/maskInputMoney/
+* try at http://plentz.org/maskmoney
 
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
@@ -25,21 +25,21 @@
 */
 
 /*
-* @Version: 0.9
-* @Release: 2011-01-10
+* @Version: 1.3
+* @Release: 2011-04-20
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
 		settings = $.extend({
-			symbol:'US$',
-			decimal:'.',
-			precision:2,
-			thousands:',',
-			allowZero:false,
-			allowNegative:false,
-			showSymbol:false,
-			symbolStay:false,
-			defaultZero:true
+			symbol: 'US$',
+			showSymbol: false,
+			symbolStay: false,
+			thousands: ',',
+			decimal: '.',
+			precision: 2,
+			defaultZero: true,
+			allowZero: false,
+			allowNegative: false
 		}, settings);
 
 		return this.each(function() {
@@ -49,6 +49,7 @@
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return false; //needed to handle an IE "special" event
+				if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
 				if (k<48||k>57) { // any key except the numbers 0-9
 					if (k==45) { // -(minus) key
@@ -58,7 +59,9 @@
 					if (k==43) { // +(plus) key
 						input.val(input.val().replace('-',''));
 						return false;
-					} else if (k==13) { // enter key
+					} else if (k==13||k==9) { // enter key or tab key
+						return true;
+					} else if (k==37||k==39) { // left arrow key or right arrow key
 						return true;
 					} else { // any other key with keycode less than 48 and greater than 57
 						preventDefault(e);
@@ -84,23 +87,21 @@
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return false; //needed to handle an IE "special" event
+				if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
 				var x = input.get(0);
 				var selection = input.getInputSelection(x);
 				var startPos = selection.start;
 				var endPos = selection.end;
-				
-				if (k==8) { // backspace key
-				preventDefault(e);
 
-					if(startPos == endPos)
-					{
+				if (k==8) { // backspace key
+					preventDefault(e);
+
+					if(startPos == endPos){
 						// Remove single character
 						x.value = x.value.substring(0, startPos - 1) + x.value.substring(endPos, x.value.length);
 						startPos = startPos - 1;
-					}
-					else
-					{
+					} else {
 						// Remove multiple characters
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
@@ -110,13 +111,10 @@
 					return true;
 				} else if (k==46||k==63272) { // delete key (with special case for safari)
 					preventDefault(e);
-					if(x.selectionStart == x.selectionEnd)
-					{
+					if(x.selectionStart == x.selectionEnd){
 						// Remove single character
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos + 1, x.value.length);
-					}
-					else
-					{
+					} else {
 						//Remove multiple characters
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
@@ -128,28 +126,33 @@
 			}
 
 			function focusEvent(e) {
-				if (input.val()==''&&settings.defaultZero) {
-					input.val(setSymbol(getDefaultMask()));
+				var mask = getDefaultMask();
+				if (input.val()==mask) {
+					input.val('');
+				} else if (input.val()==''&&settings.defaultZero) {
+					input.val(setSymbol(mask));
 				} else {
 					input.val(setSymbol(input.val()));
 				}
-                if (this.createTextRange) {
-                    var textRange = this.createTextRange();
-                    textRange.collapse(false); // set the cursor at the end of the input
-                    textRange.select();
-                }
+				if (this.createTextRange) {
+					var textRange = this.createTextRange();
+					textRange.collapse(false); // set the cursor at the end of the input
+					textRange.select();
+				}
 			}
 
 			function blurEvent(e) {
-                if ($.browser.msie) {
-                    keypressEvent(e);
-                }
+				if ($.browser.msie) {
+					keypressEvent(e);
+				}
 
-				if (input.val()==setSymbol(getDefaultMask())) {
+				if (input.val()==''||input.val()==setSymbol(getDefaultMask())||input.val()==settings.symbol) {
 					if(!settings.allowZero) input.val('');
+					else if (!settings.symbolStay) input.val(getDefaultMask());
+					else input.val(setSymbol(getDefaultMask()));
 				} else {
 					if (!settings.symbolStay) input.val(input.val().replace(settings.symbol,''));
-					else if (settings.symbolStay&&input.val()==settings.symbol) input.val('');
+					else if (settings.symbolStay&&input.val()==settings.symbol) input.val(setSymbol(getDefaultMask()));
 				}
 			}
 
@@ -190,7 +193,7 @@
 
 				for (var i = 0; i<len; i++) {
 					if ((v.charAt(i)!='0') && (v.charAt(i)!=settings.decimal)) break;
-                }
+				}
 
 				for (; i<len; i++) {
 					if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
@@ -200,15 +203,20 @@
 				n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
 				t = n.toFixed(settings.precision);
 
-                i = settings.precision == 0 ? 0 : 1;
+				i = settings.precision == 0 ? 0 : 1;
 				var p, d = (t=t.split('.'))[i].substr(0,settings.precision);
 				for (p = (t=t[0]).length; (p-=3)>=1;) {
 					t = t.substr(0,p)+settings.thousands+t.substr(p);
 				}
 
 				return (settings.precision>0)
-                    ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
-                    : setSymbol(neg+t);
+					? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+					: setSymbol(neg+t);
+			}
+
+			function mask() {
+				var value = input.val();
+				input.val(maskValue(value));
 			}
 
 			function getDefaultMask() {
@@ -236,22 +244,20 @@
 				}
 			}
 
-			input.bind('keypress',keypressEvent);
-			input.bind('keydown',keydownEvent);
-			input.bind('blur',blurEvent);
-			input.bind('focus',focusEvent);
+			input.bind('keypress.maskMoney',keypressEvent);
+			input.bind('keydown.maskMoney',keydownEvent);
+			input.bind('blur.maskMoney',blurEvent);
+			input.bind('focus.maskMoney',focusEvent);
+			input.bind('mask', mask);
 
 			input.one('unmaskMoney',function() {
-				input.unbind('focus',focusEvent);
-				input.unbind('blur',blurEvent);
-				input.unbind('keydown',keydownEvent);
-				input.unbind('keypress',keypressEvent);
+				input.unbind('.maskMoney');
 
 				if ($.browser.msie) {
-                    this.onpaste= null;
+					this.onpaste= null;
 				} else if ($.browser.mozilla) {
-                    this.removeEventListener('input',blurEvent,false);
-                }
+					this.removeEventListener('input',blurEvent,false);
+				}
 			});
 		});
 	}
@@ -259,7 +265,11 @@
 	$.fn.unmaskMoney=function() {
 		return this.trigger('unmaskMoney');
 	};
-	
+
+	$.fn.mask=function() {
+		return this.trigger('mask');
+	};
+
 	$.fn.setCursorPosition = function(pos) {
 		this.each(function(index, elem) {
 			if (elem.setSelectionRange) {
@@ -275,7 +285,7 @@
 		});
 		return this;
 	};
-	
+
 	$.fn.getInputSelection = function(el) {
 		var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange;
 
@@ -320,5 +330,4 @@
 			end: end
 		};
 	}
-	
 })(jQuery);
