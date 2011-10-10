@@ -814,6 +814,7 @@ input.btnaddcategoria {
 }
 
 input[type=text], input[type=password] {
+    border: 1px solid #EFEFEF;
 	padding: 5px;
 	width:210px;
 }

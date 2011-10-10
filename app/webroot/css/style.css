@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-body{ margin:0 auto; background:url(../img/bg_body.gif) top repeat-x #9bd252;}
+body{ font-family: "Times New Roman", Time, serif; font-size: 100%; margin:0 auto; background:url(../img/bg_body.gif) top repeat-x #9bd252;}
 
 #container{  margin:0 auto;}
 
@@ -24,13 +24,20 @@ img{  border:none;}
 
 #content { height: auto; overflow: hidden; margin: 20px auto 10px auto; width:960px;  }
 
-#user{ font-family:Arial, Helvetica, sans-serif; color:#666666; font-size:14px; /*background:url(../img/img_div.gif) top no-repeat;*/ padding-top:17px; /*border:1px solid #006;*/ float:right; width:480px;}
+.login label { display: inline !important; }
 
-h1{font-style:normal; font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; font-weight:normal; font-size:25px; color:#666666; }
+#user{ color:#666666; font-size:14px; /*background:url(../img/img_div.gif) top no-repeat;*/ padding-top:17px; /*border:1px solid #006;*/ float:right; width:480px;}
+
+h1{
+    font-style:normal; font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; 
+    font-weight:normal; 
+    font-size: 120%; 
+    color:#666666; 
+}
 
 #sobre p{ padding:0 80px 0 80px; text-align:center;}
 
-#footer{ font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; color:#FFF; font-size:11px; text-align:center; margin-top:50px; }
+#footer{ color:#FFF; font-size:11px; text-align:center; margin-top:50px; }
 
 #footer ul li{list-style:none; display:inline; padding-right:20px; }
 
@@ -40,23 +47,42 @@ h1{font-style:normal; font-family: "Times New Roman", Times, serif,  Arial, Helv
 
 #footer p{ text-align:center; float: inherit;}
 
-#c-cadastro {margin-left: 30px;}
+#infos {
+    border-right:1px solid #7cae3e; 
+    border-bottom:2px solid #7cae3e; 
+    padding:10px;
+    width:940px; 
+    overflow: auto;
+    background:#FFF; 
+    float:left; 
+    margin-right:14px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
 
-#c-vantagens {margin-left: 30px;}
+#about { 
+    width: 585px; 
+    float: left;
+    padding: 0 10px;
+}
+#form-cadastro { 
+    float: left; 
+    padding: 0 0 0 10px;
+}
+#form-cadastro h1 {
+    margin: 0 0 20px 0 !important;
+}
 
-#c-login {margin-left: 30px;}
+#infos h1 { 
+    margin: 0; 
+    padding: 5px; 
+    margin: 0 0 10px;
+}
 
-#c-vantagens, #c-cadastro, #c-login{/*text-shadow:#000 0px 1px;*/ border-right:1px solid #7cae3e; border-bottom:2px solid #7cae3e; padding:20px;}
+#infos ul li { list-style:none; margin-left:-40px; padding:0 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
 
-#c-vantagens, #c-cadastro { height:350px; width:216px; background:#FFF; float:left; margin-right:14px;}
-
-#c-login { height:350px; width:216px; background:#FFF; float:left; margin-right:1px;}
-
-#c-vantagens h1, #c-login h1, #c-cadastro h1 { border-bottom:1px solid #f0f0f0; padding-bottom: 25px;}
-
-#c-vantagens ul li{ list-style:none; margin-left:-40px; padding:0 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
-
-#c-cadastro p, #c-login p {list-style:none; padding:15px 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
+#infos p {list-style:none; padding:15px 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
 
 .definicao { padding: 0 !important;}
 
@@ -78,7 +104,9 @@ a.botao{
         padding: 20px;
 }
 
-
+label { display:block; color:#666; margin:5px 0; font-size: 90%; }
+.input { float:none !important; clear:both !important; margin-bottom:10px !important; }
+.error-message { font-size: 80%; display: block; color: #E3290D; margin: 5px; }
 
 a.botao:hover, input.botao-cadastro:hover{
     
@@ -95,7 +123,15 @@ a.botao:hover, input.botao-cadastro:hover{
 
 .senha a:hover{ margin-top: 1px; float:right; text-decoration:underline; color:#690;}
 
-.l-input, .l-nome, .l-senha{ -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; height:20px; width:150px; margin-bottom:10px; padding:5px;}
+.l-input, .l-nome, .l-senha{ 
+    -webkit-border-radius: 5px; 
+    -moz-border-radius: 5px; 
+    border: 1px solid #EFEFEF; 
+    border-radius: 5px; 
+    height:20px; 
+    width:150px; 
+    margin-bottom:10px; 
+    padding:5px;}
 
 .l-nome{ margin-right:5px; }
 
@@ -105,11 +141,12 @@ a.botao:hover, input.botao-cadastro:hover{
 
 #cadastro h1 { border-bottom:1px solid #efefef; }
 
-.l-input{   -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-            height:25px;
-            width:300px;
-            margin-bottom:10px;
-            padding:5px;
+.l-input{   
+    font-size: 90%;
+    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+    width:300px;
+    margin-bottom:10px;
+    padding:5px;
 }
 
 #form {	width: 100%; float: left; }
@@ -149,11 +186,9 @@ a.botao:hover, input.botao-cadastro:hover{
 
 input.botao-cadastro  {
     padding:10px;
-    margin-left: 95px;
+    margin: 0;
     background:#a3d953;
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    font-size:28px;
-    font-family:Arial, Helvetica, sans-serif;
     font-weight:bold;
     text-align:center;
     color:#FFF;

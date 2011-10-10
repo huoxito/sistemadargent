@@ -12,8 +12,6 @@
         echo $this->Html->script('jquery-1.4.2.min');
 		echo $scripts_for_layout;
 	?>
-    
-    <?php   $usuarioLogado = $session->read('Auth.Usuario.nome');   ?>
 
 </head>
 <body>
@@ -21,39 +19,29 @@
     <div id="container">
             <div id="header">
                 <div id="logo">
-                    <a href="<?php echo $this->Html->url('/'); ?>" title="home">
-                        <?php echo $this->Html->image('logo.gif',
-                                                array('width' => '321',
-                                                      'height' => '99',
-                                                      'alt' => 'dargent logo')); ?>
-                    </a>
+                    <?php echo $this->Html->image('logo.gif',
+                            array('width' => '321', 'height' => '99', 'alt' => 'dargent logo',
+                                  'url' => '/')); ?>
                 </div>
                 <div id="user">
-                    <h1>
-                        Minha Conta
-                        <?php   echo $this->Session->flash('auth'); ?>
-                    </h1>
+                    <h1> Minha Conta <?= $this->Session->flash('auth'); ?> </h1>
                     
-                    <?php   echo $form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
-                    <div class="login" style="margin: 0 20px 0 10px;">
-                        <?php echo $form->input('login',
-                                            array('class' => 'l-nome',
-                                                  'div' => false,
-                                                  'maxlength' => '20',
-                                                  'label' => 'Login: ')); ?>
-                    </div>
-                    
-                    <div class="login">
-                        <?php echo $form->input('password',
-                                            array('class' => 'l-senha',
-                                                  'div' => false,
-                                                  'maxlength' => '15',
-                                                  'label' => 'Senha: ')); ?>
+                    <?= $form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
+                        <div class="login" style="margin: 0 20px 0 10px;">
+                            <?php echo $form->input('login',
+                                array('class' => 'l-nome', 'div' => false, 'maxlength' => '20',
+                                      'label' => 'Login: ')); ?>
+                        </div>
                         
-                    </div>
-                    <?php echo $form->end(array('label' => 'Entrar',
-                                                'class' => 'botao-login',
-                                                'div' => false));  ?>
+                        <div class="login">
+                            <?php echo $form->input('password',
+                                    array('class' => 'l-senha', 'div' => false, 'maxlength' => '15',
+                                          'label' => 'Senha: ')); ?>
+                            
+                        </div>
+                    <?php echo $form->end(
+                        array('label' => 'Entrar', 'class' => 'botao-login', 'div' => false)
+                    );  ?>
                     
                     <p class="senha">
                         <?php   echo  $this->Html->link('Esqueceu sua senha?',
@@ -65,7 +53,7 @@
             </div>
     
         <div id="content">
-            <?php   echo $content_for_layout; ?> 
+            <?= $content_for_layout; ?> 
         </div>
         
     </div>
