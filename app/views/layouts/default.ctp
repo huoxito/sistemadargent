@@ -48,9 +48,7 @@
 		</div>
 
         <div id="footer">
-                    
             <p>Copyright © <?= date('Y'); ?> <b>Dargent controle financeiro</b>. Todos os direitos reservados</p>
-            
         </div>
 
 	</div>
