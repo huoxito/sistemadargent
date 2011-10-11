@@ -48,7 +48,7 @@ class Conta extends AppModel {
             'className' => 'Usuario',
             'foreignKey' => 'usuario_id',
             'conditions' => '',
-            'fields' => 'id, nome, login',
+            'fields' => 'id, nome',
         )
     );
 

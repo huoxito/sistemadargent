@@ -20,11 +20,9 @@ class Usuario extends AppModel {
     
     
     var $validate = array(
-                
         'nome' => array(
-                        'rule' => 'notEmpty',
-                        'message' => 'Campo obrigatório',
-                        'allowEmpty' => false
+            'rule' => 'notEmpty',
+            'message' => 'Campo obrigatório',
         ),
         'email' => array(
             'invalido' => array(
@@ -40,22 +38,6 @@ class Usuario extends AppModel {
                 'message' => 'Email já cadastrado'
             ),
         ),
-        
-        'login' => array(
-            'rule1' => array(
-                'rule' => 'notEmpty',
-                'required'  =>  false,
-                'message' => 'Campo obrigatório',
-                'last' => true,
-                'allowEmpty' => false),
-            'string' => array(
-                'rule' => 'checkLogin',
-                'message' => 'Apenas letras, números, hífen ou underline, sem espaços'),
-            'existe' => array(       
-                'rule' => 'isUnique',
-                'message' => 'Login já cadastrado, digite outro por favor'),
-        ),
-        
         'passwd' => array(
             'numero' => array(
                         'rule' => array('between', 5, 15),
@@ -68,7 +50,6 @@ class Usuario extends AppModel {
                             'allowEmpty' => false),
         
         ),
-        
         'passwd_current' => array(
             
             'rule1' => array(
@@ -82,7 +63,6 @@ class Usuario extends AppModel {
                 'message' => 'Senha incorreta'),
             
         ),
-    
         'passwd_confirm' => array(
             
             'match' => array(     
@@ -104,7 +84,7 @@ class Usuario extends AppModel {
         
         if(isset($this->data['Usuario']['login']) && $this->data['Usuario']['login'] === 'godfather'){
             return 'root';
-        }else if($this->id && !isset($this->data['Usuario']['created'])){
+        }else if($this->id && !isset($this->data['RegistrarUsuario']['created'])){
             $node = $this->node();
             return $node[1]['Aro']['alias'];
         }else{
@@ -114,30 +94,18 @@ class Usuario extends AppModel {
     
     function validatePasswdConfirm(){
         
-        if($this->data['Usuario']['passwd'] !== $this->data['Usuario']['passwd_confirm']){
+        if($this->data['RegistrarUsuario']['passwd'] !== $this->data['RegistrarUsuario']['passwd_confirm']){
             return false;
         }
-        return true;
-    }
-    
-    
-    function beforeValidate(){
-        
-        App::import('Sanitize');
-        if (isset($this->data['Usuario']['nome']))  
-        {  
-            Sanitize::html(&$this->data['Usuario']['nome'], array('remove' => true));  
-        }
-        
         return true;
     }
     
     function beforeSave()  
     {
         # THANKS TO http://lecterror.com/articles/view/manually-hashing-password-and-password-validation
-        if (isset($this->data['Usuario']['passwd']))  
+        if (isset($this->data['RegistrarUsuario']['passwd']))  
         {  
-            $this->data['Usuario']['password'] = Security::hash($this->data['Usuario']['passwd'], null, true);  
+            $this->data['RegistrarUsuario']['password'] = Security::hash($this->data['RegistrarUsuario']['passwd'], null, true);  
             unset($this->data['Usuario']['passwd']);  
         }
 
@@ -147,15 +115,6 @@ class Usuario extends AppModel {
         }
 
         return true;  
-    }
-    
-    function checkLogin(){
-        $login = Sanitize::paranoid(&$this->data['Usuario']['login'], array('-', '_'));  
-        if($login != trim($this->data['Usuario']['login'])){
-            return false;
-        }else{
-            return true;    
-        }
     }
     
     function confereSenha(){

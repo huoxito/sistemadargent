@@ -14,21 +14,27 @@ class UsuariosController extends AppController {
         $this->set('item',$itens);
     }
 
+/*
+ * Usa um model que apenas herda as funcionalidades do model Usuario
+ * Isso evita confusão ao validar os inputs nos form da index. Pois os
+ * dois usam o model Usuario.
+ *
+ */ 
     function cadastro() {
 
         if($this->Auth->user()){
             $this->redirect(array('controller' => 'moves', 'action'=>'index'));
         }
 
+        $this->loadModel('RegistrarUsuario');
         if (!empty($this->data)) {
 
-            $this->Usuario->create();
-            $this->Usuario->set(array('numdeacessos' => 1, 'ultimologin' => date('Y-m-d H:i:s')));
-            if ($this->Usuario->save($this->data)) {
+            $this->RegistrarUsuario->create();
+            $this->RegistrarUsuario->set(array('numdeacessos' => 1, 'ultimologin' => date('Y-m-d H:i:s')));
+            if ($this->RegistrarUsuario->save($this->data)) {
 
-                $data = array('login' => $this->data['Usuario']['login'],
-                              'password' => $this->Auth->password($this->data['Usuario']['passwd']));
-                if( $this->Auth->login($data) == 1 ){
+                $regNewId = $this->RegistrarUsuario->getLastInsertID();
+                if($this->Auth->login($this->Usuario->read(null,$regNewId))){
                     
                     $conta = array(
                         'usuario_id' => $this->Usuario->id,
@@ -36,7 +42,7 @@ class UsuariosController extends AppController {
                         'saldo' => '0',
                         'tipo' => 'cash'
                     );
-                    $this->Usuario->Conta->save($conta,false);
+                    $this->RegistrarUsuario->Conta->save($conta,false);
                     
                     $this->Session->setFlash(
                         'Bem vindo ! Navegue no menu lateral para conhecer o sistema e começar a inserir os dados',
@@ -44,15 +50,15 @@ class UsuariosController extends AppController {
                     );
                     $this->redirect(array('controller' => 'moves', 'action'=>'index'));
                 }else{
-                    $this->redirect(array('controller' => 'usuarios', 'action'=>'login'));
+                    $this->Session->setFlash('Falha ao logar usuário');
                 }
 
             } else {
                 $errors = $this->validateErrors($this->Usuario);
             }
         }
-
-        $this->layout = 'signup';
+        $this->layout = 'home';
+        $this->render('login');
     }
 
     function enviarSenha(){

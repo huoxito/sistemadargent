@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    
+
     <div id="container">
             <div id="header">
                 <div id="logo">
@@ -26,27 +26,21 @@
                 <div id="user">
                     <h1> Minha Conta <?= $this->Session->flash('auth'); ?> </h1>
                     
-                    <?= $form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
+                    <?= $this->Form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
                         <div class="login" style="margin: 0 20px 0 10px;">
-                            <?php echo $form->input('login',
-                                array('class' => 'l-nome', 'div' => false, 'maxlength' => '20',
-                                      'label' => 'Login: ')); ?>
+                            <?= $this->Form->input('email', 
+                                array('class' => 'l-nome', 'div' => false, 'error' => false, 'label' => 'Email: ')); ?>
                         </div>
                         
                         <div class="login">
-                            <?php echo $form->input('password',
-                                    array('class' => 'l-senha', 'div' => false, 'maxlength' => '15',
-                                          'label' => 'Senha: ')); ?>
-                            
+                            <?= $this->Form->input('password',
+                                array('class' => 'l-senha', 'div' => false, 'maxlength' => '15', 'label' => 'Senha: ')); ?>
                         </div>
-                    <?php echo $form->end(
-                        array('label' => 'Entrar', 'class' => 'botao-login', 'div' => false)
-                    );  ?>
-                    
+                    <?= $this->Form->end(array('label' => 'Entrar', 'class' => 'botao-login', 'div' => false));  ?>
+
                     <p class="senha">
-                        <?php   echo  $this->Html->link('Esqueceu sua senha?',
-                                            array('controller' => '/',
-                                                  'action' => 'enviarSenha'));  ?>
+                        <?= $this->Html->link('Esqueceu sua senha?',
+                                array('controller' => '/', 'action' => 'enviarSenha'));  ?>
                     </p>
                 </div>
         
@@ -73,7 +67,7 @@
     </div>
 </div>	
     
-<?php //echo $this->element('sql_dump'); ?>
+<?php echo $this->element('sql_dump'); ?>
 <?php echo $js->writeBuffer(); // Write cached scripts ?>
 
 </body>

@@ -19,8 +19,9 @@
         </div>
         <div id=form-cadastro>
             <h1>Cadastre-se</h1>
-            <?= $this->Form->create('Usuario', array('type' => 'file', 'url' => '/cadastro'));?>
+            <?= $this->Form->create('RegistrarUsuario', array('type' => 'file', 'url' => '/cadastro'));?>
 
+                <?= $this->Form->input('nome', array( 'class' => 'l-input')); ?>
                 <?= $this->Form->input('email', array( 'class' => 'l-input')); ?>
                 <?= $this->Form->input('passwd', array('label' => 'Senha', 'value' => '', 'class' => 'l-input')); ?>
                 <?= $this->Form->input('passwd_confirm', array('type' => 'password', 'value' => '', 'label' => 'Confirmar Senha',

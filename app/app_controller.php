@@ -10,7 +10,7 @@ class AppController extends Controller{
     
         $this->Auth->allow('cadastro', 'login','enviarSenha','confirmarNovaSenha');
         $this->Auth->userModel = 'Usuario';
-        $this->Auth->fields = array('username' => 'login', 'password' => 'password');
+        $this->Auth->fields = array('username' => 'email', 'password' => 'password');
         $this->Auth->userScope = array('Usuario.status' => 1);
         $this->Auth->loginError = "Login ou senha incorretos";
         $this->Auth->loginAction = array('admin' => false, 'controller' => 'usuarios', 'action' => 'login');
