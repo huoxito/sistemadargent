@@ -14,7 +14,7 @@
         !window.jQuery && document.write('<script src="/js/jquery-1.4.2.min.js"><\/script>');
     </script>
 
-	<?php echo $this->Html->css('estilo'); ?>
+	<?php echo $this->Html->css('hehehe'); ?>
     
     <?php echo $this->Html->css('jquery-ui-1.8rc3.custom'); ?>
     <?php echo $this->Html->script('jquery.ui.core'); ?>
