@@ -25,6 +25,7 @@ html {
 
 #header {
 	padding:10px 20px;
+    overflow: hidden;
 }
 
 #UserInfoBox {
@@ -112,7 +113,7 @@ div.form, div.index, div.view {
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 20px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #userNameTopo {
@@ -916,24 +917,8 @@ table tr td {
 
 }
 
-.agendamentoInfo {
-	padding: 0 5px;
-}
-.agendamentoCategoria{
-	color: #000;
-	text-transform: uppercase;
-}
-.agendamentoInfoLinha {
-	margin: 5px 0;
-}
-.agendamentoFrequencia, .agendamentoProxLancamento {
-	color: #000;
-}
 .Observacoes {
 	width: 70%;
-}
-.confirmaAgendamento {
-	float: none;
 }
 .datepickerWraper {
 	float: left;
@@ -1124,4 +1109,8 @@ div.paging span a:hover {
 
 .my-account:hover, .logout:hover {
     text-decoration: underline;
+}
+
+.paddinglateral {
+    padding: 0 10px;
 }

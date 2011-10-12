@@ -37,10 +37,6 @@
                         <?php   echo $session->read('Auth.Usuario.email'); ?>
                     </div>
                                          
-                    <span class="userInfoLabel">                     
-                        Login
-                    </span>
-                    
                     <p class="profile">
                         <?php   echo $session->read('Auth.Usuario.login'); ?>
                     </p>
@@ -91,8 +87,15 @@
     <script type="text/javascript">
         
         // <![CDATA[
-        $(document).ready(function () {
-            $('.colorbox-excluir').colorbox({width:"600", height:"220", opacity: 0.5, iframe: true});
+        $(".colorbox-excluir").fancybox({
+            'transitionIn'  :   'none',
+            'transitionOut' :   'none',
+            'width'         :   600,
+            'height'        :   150,
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false,
+            'type'          :   'iframe' 
         });
 
         function insereInput(campo,value){

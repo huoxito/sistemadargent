@@ -290,6 +290,7 @@ class UsuariosController extends AppController {
             if($result){
                 echo json_encode($result); 
                 $this->Auth->logout();
+                $this->Session->setFlash('Conta excluída com sucesso.');
             }
             //$this->layout = 'ajax';
             $this->autoRender = false; 

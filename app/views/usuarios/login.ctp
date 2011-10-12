@@ -13,7 +13,8 @@
             </p>
             <p>
                 Não há um termo de compromisso para usar o sistema. Não há publicidade na
-                aplicação. Não há assinaturas. Use como desejar.
+                aplicação. Não há assinaturas. Use como desejar. É possível excluir sua conta
+                e os dados que você inseriu a qualquer momento.
             </p>
             <p>
                 Cada usuário tem acesso apenas a suas movimentações.

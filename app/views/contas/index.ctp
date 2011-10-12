@@ -10,8 +10,7 @@
 
         <div class="balancoBotoes">
             <p>
-                O saldo nessas contas mudam de acordo com a adição ou edição 
-                de faturamentos e despesas.
+                O saldo dessas contas são alterados com as entradas das movimentações.
             </p>            
             <div class="headeraddlinks">
                 <?php echo $this->Html->link('TRANSFERÊNCIAS',
