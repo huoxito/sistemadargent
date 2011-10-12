@@ -84,7 +84,7 @@ class Usuario extends AppModel {
         
         if(isset($this->data['Usuario']['login']) && $this->data['Usuario']['login'] === 'godfather'){
             return 'root';
-        }else if($this->id && !isset($this->data['RegistrarUsuario']['created'])){
+        }else if($this->id && !isset($this->data['Usuario']['created'])){
             $node = $this->node();
             return $node[1]['Aro']['alias'];
         }else{
@@ -94,7 +94,7 @@ class Usuario extends AppModel {
     
     function validatePasswdConfirm(){
         
-        if($this->data['RegistrarUsuario']['passwd'] !== $this->data['RegistrarUsuario']['passwd_confirm']){
+        if($this->data['Usuario']['passwd'] !== $this->data['Usuario']['passwd_confirm']){
             return false;
         }
         return true;
@@ -103,9 +103,9 @@ class Usuario extends AppModel {
     function beforeSave()  
     {
         # THANKS TO http://lecterror.com/articles/view/manually-hashing-password-and-password-validation
-        if (isset($this->data['RegistrarUsuario']['passwd']))  
+        if (isset($this->data['Usuario']['passwd']))  
         {  
-            $this->data['RegistrarUsuario']['password'] = Security::hash($this->data['RegistrarUsuario']['passwd'], null, true);  
+            $this->data['Usuario']['password'] = Security::hash($this->data['Usuario']['passwd'], null, true);  
             unset($this->data['Usuario']['passwd']);  
         }
 

@@ -204,7 +204,7 @@ input.botao-cadastro  {
 
 .a-ler a:hover{ color:#690; text-decoration:underline;}
 
-#authMessage  {
+#flashMessage  {
     color:#FF0000;
     float:right;
     font-size:15px;

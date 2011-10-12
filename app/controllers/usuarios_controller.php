@@ -14,26 +14,20 @@ class UsuariosController extends AppController {
         $this->set('item',$itens);
     }
 
-/*
- * Usa um model que apenas herda as funcionalidades do model Usuario
- * Isso evita confusão ao validar os inputs nos form da index. Pois os
- * dois usam o model Usuario.
- *
- */ 
     function cadastro() {
 
         if($this->Auth->user()){
             $this->redirect(array('controller' => 'moves', 'action'=>'index'));
         }
 
-        $this->loadModel('RegistrarUsuario');
+        $this->loadModel('Usuario');
         if (!empty($this->data)) {
 
-            $this->RegistrarUsuario->create();
-            $this->RegistrarUsuario->set(array('numdeacessos' => 1, 'ultimologin' => date('Y-m-d H:i:s')));
-            if ($this->RegistrarUsuario->save($this->data)) {
+            $this->Usuario->create();
+            $this->Usuario->set(array('numdeacessos' => 1, 'ultimologin' => date('Y-m-d H:i:s')));
+            if ($this->Usuario->save($this->data)) {
 
-                $regNewId = $this->RegistrarUsuario->getLastInsertID();
+                $regNewId = $this->Usuario->getLastInsertID();
                 if($this->Auth->login($this->Usuario->read(null,$regNewId))){
                     
                     $conta = array(
@@ -42,7 +36,7 @@ class UsuariosController extends AppController {
                         'saldo' => '0',
                         'tipo' => 'cash'
                     );
-                    $this->RegistrarUsuario->Conta->save($conta,false);
+                    $this->Usuario->Conta->save($conta,false);
                     
                     $this->Session->setFlash(
                         'Bem vindo ! Navegue no menu lateral para conhecer o sistema e começar a inserir os dados',
@@ -190,34 +184,36 @@ class UsuariosController extends AppController {
             }
         }
     }
+/*
+ * Logo usuário manualmente. Isso evita confusão entre os forms na home.
+ */
+    function signin(){
 
-    function login(){
+        if($this->data){
+            $data = array(
+                'email' => $this->data["Usuario"]["username"], 
+                'password' => $this->Auth->password($this->data["Usuario"]["password"])
+            );
+            if($this->Auth->login($data)){
+                $dados = array('numdeacessos' => 'numdeacessos+1', 'ultimologin' => '\''.date('Y-m-d H:i:s').'\'');
+                $this->Usuario->updateAll($dados, array('Usuario.id' => $this->Auth->user('id')));
+            }else{
+                $this->Session->setFlash('Email ou senha inválidos');
+            }
+        }
 
         if($this->Auth->user()){
             $this->redirect(array('controller' => 'moves', 'action'=>'index'));
         }
 
         $this->layout = 'home';
+        $this->render('login');
         $this->set('title_for_layout', 'Login');
     }
 
-
-    function afterLogin(){
-
-        $dados = array('numdeacessos' => 'numdeacessos+1',
-                        'ultimologin' => '\''.date('Y-m-d H:i:s').'\'');
-
-        $this->Usuario->updateAll($dados, array('Usuario.id' => $this->Auth->user('id')));
-        if($this->Auth->user('login') === 'godfather'){
-            $this->redirect(array('controller' => 'usuarios','action'=>'index'));
-        }else{
-            $this->redirect(array('controller' => 'moves','action'=>'index'));
-        }
-    }
-
-
     function logout(){
-        $this->redirect($this->Auth->logout());
+        $this->Auth->logout();
+        $this->redirect(array('action' => 'signin'));
     }
 
 

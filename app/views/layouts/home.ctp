@@ -24,11 +24,11 @@
                                   'url' => '/')); ?>
                 </div>
                 <div id="user">
-                    <h1> Minha Conta <?= $this->Session->flash('auth'); ?> </h1>
+                    <h1> Minha Conta <?= $this->Session->flash(); ?> </h1>
                     
-                    <?= $this->Form->create('Usuario', array('controller' => '/', 'action' => 'login'));    ?>
+                    <?= $this->Form->create('Usuario', array('controller' => '/', 'action' => 'signin'));    ?>
                         <div class="login" style="margin: 0 20px 0 10px;">
-                            <?= $this->Form->input('email', 
+                            <?= $this->Form->input('username', 
                                 array('class' => 'l-nome', 'div' => false, 'error' => false, 'label' => 'Email: ')); ?>
                         </div>
                         

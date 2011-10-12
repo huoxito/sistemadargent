@@ -8,13 +8,12 @@ class AppController extends Controller{
     function beforeFilter(){
         parent::beforeFilter();
     
-        $this->Auth->allow('cadastro', 'login','enviarSenha','confirmarNovaSenha');
+        $this->Auth->allow('cadastro', 'signin','enviarSenha','confirmarNovaSenha');
         $this->Auth->userModel = 'Usuario';
         $this->Auth->fields = array('username' => 'email', 'password' => 'password');
         $this->Auth->userScope = array('Usuario.status' => 1);
         $this->Auth->loginError = "Login ou senha incorretos";
         $this->Auth->loginAction = array('admin' => false, 'controller' => 'usuarios', 'action' => 'login');
-        $this->Auth->loginRedirect = array('controller' => 'usuarios', 'action' => 'afterLogin');
         $this->Auth->authError = "Log in para entrar no sistema";
         
         $this->user_id = $this->Auth->user('id');
