@@ -8,7 +8,7 @@
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-        echo $this->Html->css('style');
+        echo $this->Html->css('uhuhuh');
         echo $this->Html->script('jquery-1.4.2.min');
 		echo $scripts_for_layout;
 	?>
