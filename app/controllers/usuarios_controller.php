@@ -215,7 +215,14 @@ class UsuariosController extends AppController {
         $this->Auth->logout();
         $this->redirect(array('action' => 'signin'));
     }
-
+/*
+ * Adiciono esse método para evitar erro se o usuário tentar entrar diretamente
+ * em uma url do sistema sem estar logado. Ele será redirecionado para esse método
+ * mas a login de fato ocorrerá no método signin
+ */
+    function login(){
+        $this->layout = "home";
+    }
 
     function delete($id = null) {
 
