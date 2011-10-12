@@ -17,6 +17,7 @@
 <body>
 
     <div id="container">
+        <div class=wrapper>
             <div id="header">
                 <div id="logo">
                     <?php echo $this->Html->image('logo.gif',
@@ -29,12 +30,12 @@
                     <?= $this->Form->create('Usuario', array('controller' => '/', 'action' => 'signin'));    ?>
                         <div class="login" style="margin: 0 20px 0 10px;">
                             <?= $this->Form->input('username', 
-                                array('class' => 'l-nome', 'div' => false, 'error' => false, 'label' => 'Email: ')); ?>
+                                array('class' => 'l-nome', 'div' => false, 'error' => false, 'label' => 'Email ')); ?>
                         </div>
                         
                         <div class="login">
                             <?= $this->Form->input('password',
-                                array('class' => 'l-senha', 'div' => false, 'maxlength' => '15', 'label' => 'Senha: ')); ?>
+                                array('class' => 'l-senha', 'div' => false, 'maxlength' => '15', 'label' => 'Senha ')); ?>
                         </div>
                     <?= $this->Form->end(array('label' => 'Entrar', 'class' => 'botao-login', 'div' => false));  ?>
 
@@ -45,6 +46,7 @@
                 </div>
         
             </div>
+        </div>
     
         <div id="content">
             <?= $content_for_layout; ?> 
@@ -53,17 +55,10 @@
     </div>
     
     <div id="footer">
-        <div id="menu_footer">
-            <ul class="m-footer">
-				<li></li>
-                <li><a href="#">Quem Somos</a></li>
-            	<li>|</li>
-    			<li><a href="#">Ajuda</a></li>
-                <li>|</li>
-                <li><a href="#">Fale conosco</a></li>
-            </ul>
-        </div>
-  		<p>Copyright © 2010 Dargent controle financeiro. Todos os direitos reservados</p>
+  		<p>
+            Copyright © <?= date('Y'); ?> Dargent controle financeiro. 
+            Powered by <a href="http://cakephp.org/" title="cakephp">Cakephp</a>
+        </p>
     </div>
 </div>	
     

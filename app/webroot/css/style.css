@@ -1,20 +1,32 @@
 @charset "utf-8";
 /* CSS Document */
 
-body{ font-family: "Times New Roman", Time, serif; font-size: 100%; margin:0 auto; background:url(../img/bg_body.gif) top repeat-x #9bd252;}
+body{ 
+    font-family: "Times New Roman", Time, serif; 
+    font-size: 100%; 
+    margin:0 auto; 
+    background: #9bd252;
+}
+
+a { color: #666; }
+a:hover { text-decoration: none; }
 
 #container{  margin:0 auto;}
 
-#header{ /*border:1px solid #000;*/
-    
-    height:180px;
-    margin:10px auto 0;
+#header{ 
+    height:170px;
+    margin: 0 auto;
     overflow:hidden;
     width:960px;
 
 }
 
-#header h1{ font-size:20px; margin-bottom:15px; margin-left: 10px;}
+.wrapper {
+    border-top: 10px solid #F3F3F3;
+    background: #FFF;
+}
+
+#header h1{ font-size: 120%; margin-bottom:15px; margin-left: 10px;}
 
 .log{ font-size:13px;}
 
@@ -22,22 +34,22 @@ body{ font-family: "Times New Roman", Time, serif; font-size: 100%; margin:0 aut
 
 img{  border:none;}
 
-#content { height: auto; overflow: hidden; margin: 20px auto 10px auto; width:960px;  }
+#content { height: auto; overflow: hidden; margin: 20px auto 10px auto; width:980px;  }
 
 .login label { display: inline !important; }
 
-#user{ color:#666666; font-size:14px; /*background:url(../img/img_div.gif) top no-repeat;*/ padding-top:17px; /*border:1px solid #006;*/ float:right; width:480px;}
+#user{ color:#666666; padding-top:17px; float:right; width:480px;}
 
 h1{
     font-style:normal; font-family: "Times New Roman", Times, serif,  Arial, Helvetica, sans-serif; 
     font-weight:normal; 
-    font-size: 120%; 
+    font-size: 130%; 
     color:#666666; 
 }
 
 #sobre p{ padding:0 80px 0 80px; text-align:center;}
 
-#footer{ color:#FFF; font-size:11px; text-align:center; margin-top:50px; }
+#footer{ color:#FFF; font-size:11px; text-align:center; margin-top:20px; }
 
 #footer ul li{list-style:none; display:inline; padding-right:20px; }
 
@@ -50,25 +62,23 @@ h1{
 #infos {
     border-right:1px solid #7cae3e; 
     border-bottom:2px solid #7cae3e; 
-    padding:10px;
+    padding: 20px;
     width:940px; 
     overflow: auto;
     background:#FFF; 
-    float:left; 
-    margin-right:14px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
 
 #about { 
-    width: 585px; 
+    width: 545px; 
     float: left;
     padding: 0 10px;
 }
 #form-cadastro { 
     float: left; 
-    padding: 0 0 0 10px;
+    padding: 40px 0 0 30px;
 }
 #form-cadastro h1 {
     margin: 0 0 20px 0 !important;
@@ -76,13 +86,20 @@ h1{
 
 #infos h1 { 
     margin: 0; 
-    padding: 5px; 
+    padding: 5px 5px 10px; 
     margin: 0 0 10px;
 }
 
-#infos ul li { list-style:none; margin-left:-40px; padding:0 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
+h1.def {
+    border-bottom: 1px solid #EFEFEF;
+}
 
-#infos p {list-style:none; padding:15px 0 15px 0; font-family:Arial, Helvetica, sans-serif; color:#666; font-size:13px;}
+#infos p {
+    padding: 0; 
+    color:#666; 
+    font-size: 110%;
+    line-height: 25px;
+}
 
 .definicao { padding: 0 !important;}
 
@@ -104,9 +121,12 @@ a.botao{
         padding: 20px;
 }
 
-label { display:block; color:#666; margin:5px 0; font-size: 90%; }
-.input { float:none !important; clear:both !important; margin-bottom:10px !important; }
-.error-message { font-size: 80%; display: block; color: #E3290D; margin: 5px; }
+label { display:block; color:#666; margin:5px 0; font-size: 100%; }
+
+div.input label { padding: 0 0 0 5px; }
+
+.input { float:none !important; clear:both !important; height: 70px; margin-bottom:10px !important; }
+.error-message { font-size: 80%; display: block; color: #E3290D; margin: -7px 0 0 12px; }
 
 a.botao:hover, input.botao-cadastro:hover{
     
@@ -144,7 +164,7 @@ a.botao:hover, input.botao-cadastro:hover{
 .l-input{   
     font-size: 90%;
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    width:300px;
+    width:270px;
     margin-bottom:10px;
     padding:5px;
 }

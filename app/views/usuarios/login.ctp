@@ -2,23 +2,29 @@
 <div id="content-home"> 
     <div id="infos">
         <div id=about>
-        <h1>O que é o Dargent?</h1>
-        <p class="definicao">Sistema de controle financeiro pessoal simples e seguro.</p>
-        <p class="definicao">O sistema fornece a categorização de seus ganhos e gastos e, através de gráficos, mostra quais as suas principais categorias.</p>
-        <p class="definicao">Os relatórios são de fácil acesso, permitindo você ter um histórico rápido sobre como anda sua movimentação financeira.</p>
-        <h1>Vantagens</h1>
-        <ul>
-            <li><span>1.</span> Simples, rápido e prático. Em pouco tempo você pode inserir vários registros.</li>
-            <li><span>2.</span> Programe todas suas contas e salários com antecedência.</li>
-            <li><span>3.</span> Veja gráficos comparativos da sua movimentação financeira.</li>
-        </ul>
-        <h1>Faça seu cadastro</h1>
-        <p class="definicao">Leva menos de um minuto.</p>
-        <p class="definicao">Basta inserir nome, email, login e senha.</p>
-        <p class="definicao">É gratuito.</p>
+            <h1 class=def>O que é o Dargent?</h1>
+            <p>Sistema de controle financeiro pessoal simples.</p>
+            <p>
+                Possui um controle de caixa para suas movimentações. É possível criar
+                quantas contas achar necessário. O mesmo para categorias. O sistema
+                monta gráficos comparativos das suas movimentações e das suas
+                principais categorias. Há filtros para personalizar essas informações de
+                acordo com o periodo escolhido.
+            </p>
+            <p>
+                Não há um termo de compromisso para usar o sistema. Não há publicidade na
+                aplicação. Não há assinaturas. Use como desejar.
+            </p>
+            <p>
+                Cada usuário tem acesso apenas a suas movimentações.
+            <p>
+            <p>
+                A aplicação foi desenvolvida inicialmente como uma forma de estudo 
+                do framework CakePHP. O código está
+                disponível no <a href="https://github.com/huoxito/sistemadargent" title="sistema dargent">github</a>.
+            </p>
         </div>
         <div id=form-cadastro>
-            <h1>Cadastre-se</h1>
             <?= $this->Form->create('Usuario', array('type' => 'file', 'url' => '/cadastro'));?>
 
                 <?= $this->Form->input('nome', array( 'class' => 'l-input')); ?>
