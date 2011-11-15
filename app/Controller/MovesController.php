@@ -22,8 +22,10 @@ class MovesController extends AppController {
     
     function dados(){
         
-        $mes = $this->request->params['url']['mes'];
-        $ano = $this->request->params['url']['ano'];
+        if(isset($this->request->params['url'])){
+            $mes = $this->request->params['url']['mes'];
+            $ano = $this->request->params['url']['ano'];
+        }
         
         if(!@checkdate($mes,1,$ano)){
             $mes = date('m');
