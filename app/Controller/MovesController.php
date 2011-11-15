@@ -1,8 +1,5 @@
 <?php
-
-
 class MovesController extends AppController {
-
 
     var $name = "Moves";
     var $components = array('Data', 'Valor');
