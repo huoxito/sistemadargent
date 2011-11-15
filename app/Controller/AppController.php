@@ -2,7 +2,7 @@
 class AppController extends Controller{
     
     var $components = array('Session', 'Auth','RequestHandler', 'Acl');
-    var $helpers = array('Js' => array('Jquery'), 'Session', 'Time', 'Cache','Valor');  
+    var $helpers = array('Html', 'Js' => array('Jquery'), 'Session', 'Time', 'Cache','Valor');  
     
     function beforeFilter(){
         parent::beforeFilter();
