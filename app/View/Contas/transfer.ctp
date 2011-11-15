@@ -13,12 +13,12 @@
             
         <div class="input text">
             <label>Conta de origem</label>
-            <?= $this->Form->select('origem', $conta_origem, null,array('escape' => false)); ?>
+            <?= $this->Form->select('origem', $conta_origem, array('escape' => false)); ?>
         </div>
         
         <div class="input text">
             <label>Conta de destino</label>
-            <?= $this->Form->select('destino', $conta_destino, null,array('escape' => false)); ?>
+            <?= $this->Form->select('destino', $conta_destino, array('escape' => false)); ?>
         </div>
 
         <div class="submit">

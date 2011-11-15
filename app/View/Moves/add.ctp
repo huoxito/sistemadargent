@@ -1,9 +1,7 @@
     <div class="moves form">
-        
         <div id="contentHeader">
             <h1>Cadastro de Movimentações</h1>
         </div>
-        
         <div id=subheader>
             <div class=paddinglateral>
             <?= $this->Html->link('voltar pra listagem',
@@ -11,35 +9,30 @@
                         array('class' => 'btnadd')); ?> 
             </div>
         </div>
-
         <?php echo $this->Session->flash(); ?>
-        
         <div class="formWraper formBox">
-                 
             <?= $this->Form->create('Move',
                             array('inputDefaults' =>
                                     array('error' => array('wrap' => 'span')))); ?>
             <fieldset>                        
-                
                 <div class="input">
                     Obs. Marque o campo parcelar para agendar movimentações que 
                     obedecem uma certa frequência.
                 </div>
-
                 <div class="input required">
-                        <label>Tipo</label>
-                        <?php
-                            $options = array('Faturamento'=> ' Faturamento ', 'Despesa'=>' Despesa ');
-                            $attributes = array('legend'=> false,
-                                                'class' => 'config',
-                                                'label' => false);
-                            echo $this->Form->radio('tipo',$options,$attributes);   
-                        ?>
-                        <?php if (isset($this->validationErrors['Move']['tipo'])){ ?>
-                            <span class="error-message">
-                                <?= $this->validationErrors['Move']['tipo'] ?>
-                            </span>
-                        <?php } ?>
+                    <label>Tipo</label>
+                    <?php
+                        $options = array('Faturamento'=> ' Faturamento ', 'Despesa'=>' Despesa ');
+                        $attributes = array('legend'=> false,
+                                            'class' => 'config',
+                                            'label' => false);
+                        echo $this->Form->radio('tipo',$options,$attributes);   
+                    ?>
+                    <?php if (isset($this->validationErrors['Move']['tipo'])){ ?>
+                        <span class="error-message">
+                            <?= $this->validationErrors['Move']['tipo'] ?>
+                        </span>
+                    <?php } ?>
                 </div>
                 
                 <div id="categorias_">
@@ -108,8 +101,8 @@
                             'mensal' => 'mensal', 'bimestral' => 'bimestral', 'trimestral' => 'trimestral',
                             'semestral' => 'semestral', 'anual' => 'anual'
                          );
-                         echo $this->Form->select('frequencia', $options, null, 
-                                                array('empty' => false, 'id' => 'frequencia-a'));
+                         echo $this->Form->select('frequencia', $options,
+                                    array('empty' => false, 'id' => 'frequencia-a'));
                     ?>
                 </div>
                 
