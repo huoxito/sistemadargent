@@ -29,7 +29,7 @@
                     
                     <?= $this->Form->create('Usuario', array('controller' => '/', 'action' => 'signin'));    ?>
                         <div class="login" style="margin: 0 20px 0 10px;">
-                            <?= $this->Form->input('username', 
+                            <?= $this->Form->input('email', 
                                 array('class' => 'l-nome', 'div' => false, 'error' => false, 'label' => 'Email ')); ?>
                         </div>
                         

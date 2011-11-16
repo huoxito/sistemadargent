@@ -1,5 +1,5 @@
 *.swp
-/app/config/database.php
+/app/Config/database.php
 /app/tmp/*
 /app/webroot/uploads
 /plugins

@@ -105,7 +105,7 @@ class Usuario extends AppModel {
         # THANKS TO http://lecterror.com/articles/view/manually-hashing-password-and-password-validation
         if (isset($this->data['Usuario']['passwd']))  
         {  
-            $this->data['Usuario']['password'] = Security::hash($this->data['Usuario']['passwd'], null, true);  
+            $this->data['Usuario']['password'] = AuthComponent::password($this->data['Usuario']['passwd']);  
             unset($this->data['Usuario']['passwd']);  
         }
 

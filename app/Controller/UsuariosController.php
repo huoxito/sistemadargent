@@ -28,8 +28,7 @@ class UsuariosController extends AppController {
             if ($this->Usuario->save($this->request->data)) {
 
                 $regNewId = $this->Usuario->getLastInsertID();
-                if($this->Auth->login($this->Usuario->read(null,$regNewId))){
-                    
+                if($this->Auth->login()){
                     $conta = array(
                         'usuario_id' => $this->Usuario->id,
                         'nome' => 'livre',
@@ -189,12 +188,8 @@ class UsuariosController extends AppController {
  */
     function signin(){
 
-        if($this->request->data){
-            $data = array(
-                'email' => $this->request->data["Usuario"]["username"], 
-                'password' => $this->Auth->password($this->request->data["Usuario"]["password"])
-            );
-            if($this->Auth->login($data)){
+        if($this->request->is('post')){
+            if($this->Auth->login()){
                 $dados = array('numdeacessos' => 'numdeacessos+1', 'ultimologin' => '\''.date('Y-m-d H:i:s').'\'');
                 $this->Usuario->updateAll($dados, array('Usuario.id' => $this->Auth->user('id')));
             }else{
