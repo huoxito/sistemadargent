@@ -5,12 +5,12 @@ class AppController extends Controller{
     var $helpers = array('Form', 'Html', 'Js' => array('Jquery'), 'Session', 'Time', 'Cache','Valor');  
     
     function beforeFilter(){
-        parent::beforeFilter();
     
         $this->Auth->allow('cadastro', 'signin','enviarSenha','confirmarNovaSenha');
         $this->Auth->authenticate = array(
             'Form' => array('userModel' => 'Usuario', 'fields' => array('username' => 'email'))
         );
+        $this->Auth->loginAction = array('controller' => 'usuarios', 'action' => 'signin');
         
         $this->user_id = $this->Auth->user('id');
         /* condição pra mudar a renderização do menu lateral */

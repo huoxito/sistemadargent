@@ -24,11 +24,15 @@ class UsuariosController extends AppController {
         if (!empty($this->request->data)) {
 
             $this->Usuario->create();
-            $this->Usuario->set(array('numdeacessos' => 1, 'ultimologin' => date('Y-m-d H:i:s')));
+            $this->Usuario->set(array(
+                'numdeacessos' => 1, 'ultimologin' => date('Y-m-d H:i:s'),
+                'email'  => $this->request->data["Usuario"]["email_register"]
+            ));
             if ($this->Usuario->save($this->request->data)) {
 
                 $regNewId = $this->Usuario->getLastInsertID();
-                if($this->Auth->login()){
+                $login = array_merge($this->request->data["Usuario"], array('id' => $regNewId));
+                if($this->Auth->login($login)){
                     $conta = array(
                         'usuario_id' => $this->Usuario->id,
                         'nome' => 'livre',

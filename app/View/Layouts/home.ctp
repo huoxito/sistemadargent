@@ -35,7 +35,8 @@
                         
                         <div class="login">
                             <?= $this->Form->input('password',
-                                array('class' => 'l-senha', 'div' => false, 'maxlength' => '15', 'label' => 'Senha ')); ?>
+                                array('class' => 'l-senha', 'div' => false, 'maxlength' => '15', 
+                                      'label' => 'Senha ', 'value' => '')); ?>
                         </div>
                     <?= $this->Form->end(array('label' => 'Entrar', 'class' => 'botao-login', 'div' => false));  ?>
 

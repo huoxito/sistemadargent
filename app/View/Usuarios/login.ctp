@@ -29,7 +29,13 @@
             <?= $this->Form->create('Usuario', array('type' => 'file', 'url' => '/cadastro'));?>
 
                 <?= $this->Form->input('nome', array( 'class' => 'l-input')); ?>
-                <?= $this->Form->input('email', array( 'class' => 'l-input')); ?>
+                <div class="input text">
+                <?= $this->Form->input('email_register', 
+                        array('label' => 'Email', 'class' => 'l-input', 'div' => false)); ?>
+                    <? if(isset($this->validationErrors["Usuario"]["email"])){ ?> 
+                        <div class="error-message"><?= $this->validationErrors["Usuario"]["email"][0]; ?></div>
+                    <? } ?>
+                </div>
                 <?= $this->Form->input('passwd', array('label' => 'Senha', 'value' => '', 'class' => 'l-input')); ?>
                 <?= $this->Form->input('passwd_confirm', array('type' => 'password', 'value' => '', 'label' => 'Confirmar Senha',
                                   'class' => 'l-input')); ?>

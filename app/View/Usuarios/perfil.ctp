@@ -2,13 +2,10 @@
     <div class="usuarios index">
         
         <div id="contentHeader">
-            <h1>
-                <?php echo __('Perfil');?>
-            </h1>
+            <h1><?php echo __('Perfil');?> </h1>
         </div>
         
         <div id="perfilWraper">
-            
             <div>
                 <?php   echo $this->Session->flash(); ?>
                 <div id="UserInfo">
@@ -22,7 +19,7 @@
                     </span>
                     
                     <div class="profile" id="userName">
-                        <?php   echo $this->Session->read('Auth.Usuario.nome'); ?>
+                        <?php   echo AuthComponent::user('nome'); ?>
                     </div>
                     
                     <span class="userInfoLabel">
@@ -34,7 +31,7 @@
                     </span>
                     
                     <div class="profile" id="userEmail">
-                        <?php   echo $this->Session->read('Auth.Usuario.email'); ?>
+                        <?= AuthComponent::user('email'); ?>
                     </div>
                                          
                     <p class="profile">
