@@ -94,7 +94,7 @@ class Move extends AppModel {
         }
 
         $this->create();
-        if ( !$this->saveAll($input, array('atomic' => false)) ) {
+        if ( !$this->saveAssociated($input) ) {
             $datasource->rollback($this);
             return false;
         }
@@ -178,7 +178,6 @@ class Move extends AppModel {
         $datasource->commit($this);
         return true;
     }
-
     
     function editar($input, $usuario_id){
         

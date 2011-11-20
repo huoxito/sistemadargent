@@ -30,7 +30,7 @@
                     ?>
                     <?php if (isset($this->validationErrors['Move']['tipo'])){ ?>
                         <span class="error-message">
-                            <?= $this->validationErrors['Move']['tipo'] ?>
+                            <?= $this->validationErrors['Move']['tipo'][0] ?>
                         </span>
                     <?php } ?>
                 </div>
@@ -49,7 +49,7 @@
                         </a>
                         <?php if (isset($this->validationErrors['Move']['categoria_id'])){ ?>
                             <span class="error-message">
-                                <?= $this->validationErrors['Move']['categoria_id'] ?>
+                                <?= $this->validationErrors['Move']['categoria_id'][0] ?>
                             </span>
                         <?php } ?>
                     </div>
@@ -57,7 +57,7 @@
                     <?php }else{ ?>
                         
                     <div id="inputCategoria" class="input text required">
-                        <?= $this->Form->input('Categoria.nome',
+                        <?= $this->Form->input('Categoria.0.nome',
                                             array('label' => 'Categoria',
                                                   'div' => false,
                                                   'error' => false)) ?>
@@ -66,7 +66,7 @@
                         </a>
                         <?php if (isset($this->validationErrors['Categoria']['nome'])){ ?>
                             <span class="error-message">
-                                <?= $this->validationErrors['Categoria']['nome'] ?>
+                                <?= $this->validationErrors['Categoria']['nome'][0] ?>
                             </span>
                         <?php } ?>
                     </div>

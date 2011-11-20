@@ -1,4 +1,5 @@
 <?php
+App::uses('Sanitize', 'Utility');
 class MovesController extends AppController {
 
     var $name = "Moves";
@@ -64,7 +65,6 @@ class MovesController extends AppController {
     
     function add(){
         
-
         if(!empty($this->request->data)){
 
             if ( isset($this->request->data['Categoria']['nome']) ){
