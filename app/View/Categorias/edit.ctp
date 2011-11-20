@@ -4,7 +4,7 @@
     <?= $this->Form->input('id'); ?>
     <?= $this->Form->input('nome'); ?>
     <div class="submit">
-        <input type="submit" value="Excluir" id="submitAjax">
+        <input type="submit" value="Editar" id="submitAjax">
         <span class="ajax_error_response"></span>
     </div>
 </div>

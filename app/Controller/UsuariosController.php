@@ -131,8 +131,8 @@ class UsuariosController extends AppController {
     function insereInput(){
         if($this->request->params['isAjax']){
 
-            $this->set('value',$this->request->params['url']['value']);
-            $this->set('campo',$this->request->params['url']['campo']);
+            $this->set('value',$this->request->query['value']);
+            $this->set('campo',$this->request->query['campo']);
             $this->layout = 'ajax';
         }
     }
@@ -141,14 +141,14 @@ class UsuariosController extends AppController {
 
         if($this->request->params['isAjax']){
 
-            if( $this->request->params['url']['campo'] === 'Name' ){
+            if( $this->request->query['campo'] === 'Name' ){
                 $campo = 'nome';
             }else{
                 $campo = 'email';
             }
 
             $this->Usuario->id = $this->Auth->user('id');
-            $this->request->data['Usuario'][$campo] = $this->request->params['url']['value'];
+            $this->request->data['Usuario'][$campo] = $this->request->query['value'];
             if ( $this->Usuario->save($this->request->data, true, array($campo)) ){
 
                 $this->Usuario->id = $this->Auth->user('id');

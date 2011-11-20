@@ -23,9 +23,9 @@ class MovesController extends AppController {
     
     function dados(){
         
-        if(isset($this->request->params['url'])){
-            $mes = $this->request->params['url']['mes'];
-            $ano = $this->request->params['url']['ano'];
+        if(isset($this->request->query["mes"])){
+            $mes = $this->request->query['mes'];
+            $ano = $this->request->query['ano'];
         }
         
         if(!@checkdate($mes,1,$ano)){
@@ -118,7 +118,7 @@ class MovesController extends AppController {
         
         if( $this->request->params['isAjax'] ){
             
-            $this->request->data = array_merge($this->request->params['url']);
+            $this->request->data = array_merge($this->request->query);
             
             $result = $this->Move->editar($this->request->data, $this->user_id);           
             
@@ -138,12 +138,12 @@ class MovesController extends AppController {
         
         if( $this->request->params['isAjax'] ){
             
-            $id = $this->request->params['url']['id'];
+            $id = $this->request->query['id'];
             $result = $this->Move->excluir($id, $this->user_id);           
 
             $this->set('result', json_encode($result));  
             
-            $data = $this->request->params['url']['data'];
+            $data = $this->request->query['data'];
             list($ano, $mes, $dia) = explode('-', $data);
             
             $despesas = $this->Move->despesasNoMes($mes, $ano, $this->user_id);
@@ -175,7 +175,7 @@ class MovesController extends AppController {
      
     function confirmar(){
         
-        list($move, $id, $mes, $ano) = explode('-', $this->request->params['url']['id']);
+        list($move, $id, $mes, $ano) = explode('-', $this->request->query['id']);
         $result = $this->Move->confirmar($id, $this->user_id);
         
         

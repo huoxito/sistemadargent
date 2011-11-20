@@ -9,7 +9,6 @@ class GraficosController extends AppController{
         
     }
     
-   
     function pies(){
        
        
@@ -17,8 +16,8 @@ class GraficosController extends AppController{
             throw new NotFoundException();
         }
         
-        $inicial = $this->Data->formata($this->request->params["url"]["inicio"], 'diamesano'); 
-        $final = $this->Data->formata($this->request->params["url"]["fim"], 'diamesano');
+        $inicial = $this->Data->formata($this->request->query["inicio"], 'diamesano'); 
+        $final = $this->Data->formata($this->request->query["fim"], 'diamesano');
          
         $objDestinosValores = $objDestinos = $objFontesValores = $objFontes = null;
         $destinos = $this->Move->find('all',

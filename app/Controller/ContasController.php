@@ -81,7 +81,7 @@ class ContasController extends AppController {
         
         if ( $this->request->params['isAjax'] ) {
             
-            $this->request->data = array_merge($this->request->params['url']);
+            $this->request->data = array_merge($this->request->query);
                 
             if((float)$this->request->data['Conta']['saldo']){
                 
@@ -122,7 +122,7 @@ class ContasController extends AppController {
         
         if( $this->request->params['isAjax'] ){
         
-            $this->request->data = array_merge($this->request->params['url']);
+            $this->request->data = array_merge($this->request->query);
             
             $this->Conta->recursive = -1;
             $chk = $this->Conta->find('first',
@@ -160,8 +160,8 @@ class ContasController extends AppController {
 
     function delete($id = null) {
 
-        if( !$id && isset($this->request->params['url']['id']) ){
-            $id = (int)$this->request->params['url']['id'];
+        if( !$id && isset($this->request->query['id']) ){
+            $id = (int)$this->request->query['id'];
         }
         
         $itens = $this->Conta->read(null, $id);
@@ -185,7 +185,7 @@ class ContasController extends AppController {
         
         if( $this->request->params['isAjax'] ){ 
             
-            $data = array_merge($this->request->params['url']['Conta']);
+            $data = array_merge($this->request->query['Conta']);
             $data['usuario_id'] = $this->user_id;
            
             $result = $this->Conta->transferencia($data);

@@ -25,7 +25,7 @@ class CategoriasController extends AppController {
 
     function editResponse(){
         
-        $data = array_merge($this->request->params['url']);
+        $data = array_merge($this->request->query);
         $this->Categoria->recursive = -1;
         $chk = $this->Categoria->find('first',
                             array('conditions' => array('Categoria.id' => $data['Categoria']['id']),
