@@ -36,7 +36,7 @@ class MoveFixture extends CakeTestFixture {
 			'parent_key' => null
 		),
 		array(
-			'id' => 1,
+			'id' => 2,
 			'usuario_id' => 1,
 			'tipo' => 'Despesa',
 			'categoria_id' => 1,

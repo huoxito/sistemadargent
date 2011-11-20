@@ -1,15 +1,19 @@
 <?php
 
-App::import('Model', 'Conta');
+App::uses('Model', 'Conta');
+App::uses('Model', 'Move');
+App::uses('Sanitize', 'Utility');
 
 class MoveTest extends CakeTestCase {
 
     var $fixtures = array(
-        'app.usuario', 'app.conta', 'app.categoria'
+        'app.move', 'app.usuario', 'app.conta', 'app.categoria'
     );
 
-    function startCase(){
-        $this->Move =& ClassRegistry::init('Move');
+    function setUp(){
+        parent::setUp();
+        $this->Move = ClassRegistry::init('Move');
+        $this->Conta = ClassRegistry::init('Conta');
     }
     
     function testInsert(){
