@@ -1,14 +1,14 @@
 <?php
 
-App::import('Model', 'Conta');
-
+App::uses('Model', 'Conta');
 
 class ContaTest extends CakeTestCase {
 
     var $fixtures = array('app.usuario','app.conta');
     
-    function startCase(){
-        $this->Conta =& ClassRegistry::init('Conta');
+    function setUp(){
+        parent::setUp();
+        $this->Conta = ClassRegistry::init('Conta');
     }
 /*
  * Aprendendo a escrever testes
@@ -22,16 +22,14 @@ class ContaTest extends CakeTestCase {
     }
 /*
  * Float type is no good for money values
- * This test should not pass.
  */
     function testFloatAccuracy(){
 
         $this->Conta->id = 2;
         $this->Conta->Behaviors->detach('Modifiable');
         $result = $this->Conta->field('saldo');
-        $expected = 19830670.00;
 
-        $this->assertEqual($result, $expected);
+        $this->assertEqual($result, 200);
     }
 /*
  * Testando método para transferências.

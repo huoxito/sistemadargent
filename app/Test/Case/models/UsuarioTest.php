@@ -1,6 +1,7 @@
 <?php
 
-App::import('Model', 'Usuario'); 
+App::uses('Model', 'Usuario'); 
+App::uses('AuthComponent', 'Controller/Component'); 
 
 class UsuarioTextCase extends CakeTestCase{
     
@@ -8,23 +9,23 @@ class UsuarioTextCase extends CakeTestCase{
         'app.usuario', 'app.conta'
     );
     
-    function startTest(){
-        $this->Usuario =& ClassRegistry::init('Usuario');
+    function setUp(){
+        $this->Usuario = ClassRegistry::init('Usuario');
     }
 
     function testInsert(){
         
         $data['Usuario'] = array(
             'nome' => 'teste teste tes te',
-            'login' => 'huoxito',
             'email' => 'huoxito@mail.com',
             'passwd' => '126546542',
+            'passwd_confirm' => '126546542',
             'numdeacessos' => 1,
             'ultimologin' => date('Y-m-d H:i:s')
         );
 
-        $result = $this->Usuario->save($data);
-        $this->assertTrue($result);
+        $this->Usuario->save($data);
+        $this->assertEqual(3, $this->Usuario->id);
     }
          
 }
